@@ -1,3 +1,7 @@
+2004-07-28 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/Executing/EventHandlerAttribute.cs: added a simple EventHandler
+	attribute for binding the application logic with the UIML document.
+
 2004-07-27 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/vocabularies/gtk-sharp-1.0.uiml: Added basic support for tabs
 	* Uiml/vocabularies/swf-1.1.uiml: Added support for tabs.
