@@ -1,7 +1,10 @@
+2004-08-22 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* examples/gtk-sharp/image.uiml: fixed typo in vocabulary location
+
 2004-08-07 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Peers/Vocabulary.cs: added exception handling for the AddDClass and
 	AddDComponent methods. It writes out an error message now when duplicate
-	entries are found in the presentation/logic sections.
+	entries are found in the presentation/logic sections
 	
 2004-08-07 Kris Luyten <kris.luyten@luc.ac.be>
 	* Reordered the examples directory
