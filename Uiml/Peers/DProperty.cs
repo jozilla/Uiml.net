@@ -67,8 +67,6 @@ namespace Uiml.Peers
 			if(n.Name != IAM)
 				return;
 
-			XmlNode dummy = null;
-
 			XmlAttributeCollection attr = n.Attributes;
 			if(attr.GetNamedItem(ID) != null)
 				Identifier = attr.GetNamedItem(ID).Value;
