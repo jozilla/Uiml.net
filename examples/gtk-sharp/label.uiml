@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="fr">
+				<part class="VBox" id="box">
+					<part class="Label" id="lab"/>
+					<part class="Label" id="lab2"/>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="fr"   name="label">A Label</property>
+			<property part-name="lab"  name="text">Howdy, my name is Lebal!</property>
+			<property part-name="lab2"  name="text">Yow, I am Lebal's brother!</property>
+		</style>
+	</interface>
+	<peers>
+		<!--<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" /> -->
+		<presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+	</peers>
+</uiml>
+

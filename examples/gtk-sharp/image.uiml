@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="fr">
+				<part class="Image" id="img"/>
+			</part>
+		</structure>
+		<style>
+			<property part-name="fr"   name="label">An Image</property>
+			<property part-name="img"  name="file">Unittests/nopatents.jpg</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+

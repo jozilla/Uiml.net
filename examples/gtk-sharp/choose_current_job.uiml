@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+  <interface>
+    <structure>
+      <part   id="Top"    class="Frame">
+			<part class="VBox">
+				<part class="HBox">
+					<part class="CheckButton" id="lcurrent"/>	
+				</part>
+	       	<part id="currentjob" class="List"/>
+			 </part>
+      </part>
+    </structure>
+    <style>
+        <property part-name="Top"    name="label">Choose current Job</property>
+		  <property part-name="lcurrent" name="label">Employed</property>
+        <property part-name="currentjob" name="title">Job Types</property>
+        <property part-name="currentjob" name="content">
+		  	<constant model="list">
+					<constant value="Manager"/>
+					<constant value="Scientist"/>
+					<constant value="Salesman"/>
+					<constant value="President"/>
+					<constant value="Pilot"/>
+					<constant value="Nurse"/>
+			</constant>
+		  </property>
+    </style>
+  </interface>
+  <peers>
+<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
+  </peers>
+</uiml>

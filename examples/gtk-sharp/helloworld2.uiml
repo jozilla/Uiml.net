@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+		 <part class="Container" id="Container">
+			<part class="Frame" id="Frame">
+				<part class="Button" id="Button"/>
+			</part>
+			<part class="Frame" id="Frame">
+				<part class="Button" id="Button"/>
+			</part>
+			<part class="Frame" id="Frame">
+				<part class="Button" id="Button"/>
+			</part>
+			<part class="Frame" id="Frame">
+				<part class="Button" id="Button"/>
+			</part>
+		  </part>
+		</structure>
+		<style>
+			<property part-name="Frame" name="label">Testing</property>
+			<property part-name="Button" name="label">Uiml.Net</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="CounterFrame">
+				<part class="VBox">
+					<part class="Entry" id="counterEntry"/>
+					<part class="HBox">
+						<part class="Button" id="dec"/>
+						<part class="Button" id="clear"/>
+						<part class="Button" id="inc"/>
+					</part>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="CounterFrame" name="label">Counter</property>
+			<property part-name="dec" name="label">dec (-)</property>
+			<property part-name="clear" name="label">clear</property>
+			<property part-name="inc" name="label">inc (+)</property>
+			<property part-name="counterEntry" name="text">0</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="inc"/>
+				</condition>				
+				<action>
+					<property part-name="counterEntry" name="text">
+						<call name="MyMath.inc">
+							<param><property part-name="counterEntry" name="text"/></param>							
+						</call>	
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="clear"/>
+				</condition>				
+				<action>
+					<property part-name="counterEntry" name="text">0</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="dec"/>
+				</condition>				
+				<action>
+					<property part-name="counterEntry" name="text">
+						<call name="MyMath.dec">
+							<param><property part-name="counterEntry" name="text"/></param>
+						</call>	
+					</property>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		<presentation base="gtk-sharp-1.0.uiml"/>
+		<logic id="mmath">
+			 <d-component id="MyMath" maps-to="MyMath">
+  		     <d-method id="inc" return-type="string" maps-to="Increment">
+		          <d-param type="System.String"/>
+			  </d-method>
+    		  <d-method id="dec" return-type="string" maps-to="Decrement">
+		          <d-param type="System.String"/>
+	        </d-method>
+	     </d-component>
+		</logic>
+	</peers>
+</uiml>
+

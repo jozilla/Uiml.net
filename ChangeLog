@@ -1,3 +1,6 @@
+2004-08-07 Kris Luyten <kris.luyten@luc.ac.be>
+	* Reodered the examples directory
+
 2004-08-06 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Executing/Binding/UimlEventHandlerAttribute.cs:
 	* Uiml/Executing/Binding/UimlEventArgs.cs:

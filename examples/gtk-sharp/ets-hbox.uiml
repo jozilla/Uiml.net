@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+	<interface>
+		<structure>
+			<part class="VBox">
+				<part id="tabs" class="Tabs">
+					<part id="Tab1" class="TabPage">
+						<part id="Top" class="Frame">
+							<part class="VBox">
+								<part class="CheckButton" id="lcurrent"/>	
+								<part id="currentjob" class="List"/>
+							</part>
+						</part>
+					</part>
+					<part id="Tab2" class="TabPage">
+						<part class="HBox">
+							<part class="CheckButton" id="unemployed"/>
+						</part>
+					</part>
+				</part>
+				<part class="Button" id="confirm"/>
+			</part>
+	</structure>
+ 	<style>
+		 <property part-name="Top"    name="label">Choose current Job</property>
+		  <property part-name="lcurrent" name="label">Employed</property>
+        <property part-name="currentjob" name="title">Job Types</property>
+        <property part-name="currentjob" name="content">
+		  	<constant model="list">
+					<constant value="Manager"/>
+					<constant value="Scientist"/>
+					<constant value="Salesman"/>
+					<constant value="President"/>
+					<constant value="Pilot"/>
+					<constant value="Nurse"/>
+			</constant>
+		</property>
+		<property part-name="unemployed" name="label">Unemployed</property>
+		<property part-name="confirm" name="label">  Confirm  </property>
+    </style>
+  </interface>
+  <peers>
+ 	<presentation base="file:///home/kris/projects/uiml.net/vocabularies/gtk-sharp-1.0.uiml" />
+  </peers>
+</uiml>

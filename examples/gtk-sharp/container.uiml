@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="Frame">
+				<part class="Frame" id="Bla1">
+					<part class="Frame" id="blabla">
+						<part class="Frame" id="Blabla">
+							<part class="Text" id="Text"/>
+						</part>
+					</part>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="Frame" name="label">Testing</property>
+			<property part-name="Bla1" name="label">whether</property>
+			<property part-name="blabla" name="label">nesting</property>
+			<property part-name="Blabla" name="label">works</property>
+			<property part-name="Text" name="text">Yes!</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="http://lumumba.luc.ac.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+

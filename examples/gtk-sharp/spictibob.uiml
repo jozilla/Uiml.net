@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="picbrowser">
+				<part class="VBox" id="vert">
+					<part class="Frame" id="theimg">
+						<part class="Image" id="img"/>
+					</part> 
+					<part class="Frame" id="remote">
+						<part class="VBox" id="noname">
+						<part class="HBox" id="thumbnails">					  
+							<part class="Image" id="prev2"/>
+							<part class="Image" id="prev1"/>
+							<part class="Frame" id="currentpic">
+								<part class="Image" id="current"/>
+							</part>
+							<part class="Image" id="next1"/>
+							<part class="Image" id="next2"/>
+						</part>
+						<part class="HBox" id="controls">
+							<part class="Button" id="next"/>
+							<part class="Button" id="opendir"/>
+							<part class="Button" id="previous"/>
+						</part>
+						</part>
+					</part>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="picbrowser" name="label">Multi(ple) device picture browser</property>
+			<property part-name="currentpic" name="label">Current</property>
+			<property part-name="prev1"  name="file">examples/pix/thumb1.jpg</property>
+			<property part-name="prev2"  name="file">examples/pix/thumb2.jpg</property>
+			<property part-name="current"  name="file">examples/pix/thumb3.jpg</property>
+			<property part-name="next1"  name="file">examples/pix/thumb4.jpg</property>
+			<property part-name="next2"  name="file">examples/pix/thumb5.jpg</property>
+			<property part-name="img" name="file">examples/pix/full3.jpg</property>
+			<property part-name="next" name="label">Next</property>
+			<property part-name="previous" name="label">Previous</property>
+			<property part-name="opendir" name="label">Open Directory...</property>
+			<property part-name="remote" name="label">Controls</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+

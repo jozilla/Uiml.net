@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="HBox">
+				<part class="CheckButton" id="unemployed"/>
+			</part>
+		</structure>
+		<style>
+			<property part-name="unemployed" name="label">Unemployed</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+

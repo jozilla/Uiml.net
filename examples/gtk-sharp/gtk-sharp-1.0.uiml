@@ -1,0 +1,637 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<!--
+Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml.net)
+    
+	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
+								Limburgs Universitair Centrum
+
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public License
+	as published by the Free Software Foundation; either version 2.1
+	of	the License, or (at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU Lesser General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<uiml>
+<presentation base="gtk-sharp-1.0" id="GTK">
+	<d-class id="Button" used-in-tag="part" maps-type="class" maps-to="Gtk.Button">
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="string"/>
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
+			<d-param type="Pango.FontDescription"/>
+		</d-property>
+		<d-property id="underLineMnemonic" return-type="boolean" maps-type="getMethod" maps-to="UseUnderline"/>
+		<d-property id="underLineMnemonic" maps-type="setMethod" maps-to="UseUnderline">
+			<d-param type="system.Boolean"/>
+		</d-property>
+		<d-property id="clicked" maps-type="event" maps-to="Clicked">
+			<d-param type="GtkSharp.ButtonPressEventHandler"/>
+		</d-property>
+		<d-property id="entered" maps-type="event" maps-to="Entered">
+			<d-param type="GtkSharp.ButtonEnteredEventHandler"/>
+		</d-property>
+		<d-property id="left" maps-type="event" maps-to="Left">
+			<d-param type="GtkSharp.ButtonLeftEventHandler"/>
+		</d-property>
+		<d-property id="textDirection" maps-type="Direction">
+			<d-param name="textDir" type="Gtk.TextDirection"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="Label" used-in-tag="part" maps-type="class" maps-to="Gtk.Label">
+		<d-property id="text" maps-type="setMethod" maps-to="Text">
+			<d-param type="System.String"/>
+		</d-property>
+		<d-property id="text" return-type="string" maps-type="getMethod" maps-to="Text"/>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+		<d-property id="selectable" maps-type="setMethod" maps-to="Selectable">
+			<d-param type="bool"/>			
+		</d-property>
+		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
+			<d-param type="Pango.FontDescription"/>
+		</d-property>
+		<d-property id="wrap" maps-type="setMethod" maps-to="Wrap">
+			<d-param type="System.Boolean"/>
+		</d-property>
+		<d-property id="constructor" maps-type="constructor" maps-to="Gtk.Label">
+			<d-param id="text" type="System.String"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="Frame" used-in-tag="part" maps-type="class" maps-to="Gtk.Frame">
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="string"/>
+		</d-property>
+		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+	</d-class>
+	
+	<d-class id="Container"  used-in-tag="part" maps-type="class" maps-to="Gtk.Container">
+	</d-class>
+
+	<d-class id="Entry"  used-in-tag="part" maps-type="class" maps-to="Gtk.Entry">
+		<d-property id="cursor" maps-type="setMethod" maps-to="CursorVisible">
+			<d-param type="bool"/>
+		</d-property>
+		<d-property id="cursor" maps-type="getMethod" maps-to="CursorVisible"/>
+		<d-property id="editable" maps-type="setMethod" maps-to="Editable">
+			<d-param type="bool"/>
+		</d-property>
+		<d-property id="editable" maps-type="getMethod" maps-to="Editable"/>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text" maps-type="setMethod" maps-to="Text">
+			<d-param type="Gtk.TextBuffer"/>
+		</d-property>	
+		<d-property id="text" maps-type="getMethod" maps-to="Text"/>		
+		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
+			<d-param type="Pango.FontDescription"/>
+		</d-property>
+	</d-class>
+
+
+	<d-class id="Text"  used-in-tag="part" maps-type="class" maps-to="Gtk.TextView">
+		<d-property id="cursor" maps-type="setMethod" maps-to="CursorVisible">
+			<d-param type="bool"/>
+		</d-property>
+		<d-property id="cursor" maps-type="getMethod" maps-to="CursorVisible"/>
+		<d-property id="editable" maps-type="setMethod" maps-to="Editable">
+			<d-param type="bool"/>
+		</d-property>
+		<d-property id="editable" maps-type="getMethod" maps-to="Editable"/>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text" maps-type="setMethod" maps-to="Buffer.Text">
+			<d-param type="System.String"/>
+		</d-property>
+		<d-property id="text" maps-type="getMethod" maps-to="Buffer.Text"/>
+		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
+			<d-param type="Pango.FontDescription"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="Image" used-in-tag="part" maps-type="class" maps-to="Gtk.Image">
+		<d-property id="file" maps-type="setMethod" maps-to="FromFile">
+			<d-param type="string"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="Html" used-in-tag="part" maps-type="class" maps-to="GtkMozEmbed.EmbedWidget">
+		<d-property id="website" maps-type="setMethod" maps-to="LoadUrl">
+			<d-param type="string" />
+		</d-property>
+		<d-property id="website" return-type="string" maps-type="getMethod" maps-to="TargetBase" />
+	</d-class>
+	
+	<d-class id="CheckButton" used-in-tag="part" maps-type="class" maps-to="Gtk.CheckButton">
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="string"/>
+		</d-property>
+		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="clicked" maps-type="event" maps-to="Clicked">
+			<d-param type="GtkSharp.ButtonPressEventHandler"/>
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
+			<d-param type="Pango.FontDescription"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="RadioButton" used-in-tag="part" maps-type="class" maps-to="Gtk.RadioButton">
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="string"/>
+		</d-property>
+		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="clicked" maps-type="event" maps-to="Clicked">
+			<d-param type="GtkSharp.ButtonPressEventHandler"/>
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
+			<d-param type="Pango.FontDescription"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="ToggleButton" used-in-tag="part" maps-type="class" maps-to="Gtk.ToggleButton">
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="string"/>
+		</d-property>
+		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="clicked" maps-type="event" maps-to="Clicked">
+			<d-param type="GtkSharp.ButtonPressEventHandler"/>
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
+			<d-param type="Pango.FontDescription"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="ProgressBar"  used-in-tag="part" maps-type="class" maps-to="Gtk.ProgressBar">
+		<d-property id="text" maps-type="setMethod" maps-to="Text">
+			<d-param type="string"/>
+		</d-property>
+		<d-property id="blocks" maps-type="setMethod" maps-to="ActivityBlocks">
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="step" maps-type="setMethod" maps-to="ActivityStep">
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="fraction" maps-type="setMethod" maps-to="Fraction">
+			<d-param type="double"/>
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text" maps-type="setMethod" maps-to="TextBuffer">
+			<d-param type="Gtk.TextBuffer"/>
+		</d-property>
+		<d-property id="text" maps-type="getMethod" maps-to="TextBuffer"/>		
+		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
+			<d-param type="Pango.FontDescription"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="Combo"  used-in-tag="part" maps-type="class" maps-to="Gtk.Combo">
+		<d-property id="content" maps-type="setMethod" maps-to="PopdownStrings">
+			<d-param type="System.String[]"/>
+		</d-property>
+		<d-property id="select" maps-type="event" maps-to="Entry.Changed">
+			<d-param type="GtkSharp.SelectionNotifyEventHandler"/>
+		</d-property>
+		<d-property id="entry" maps-type="getMethod" maps-to="Entry.Text" return-type="System.String"/>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="List" used-in-tag="part" maps-type="class" maps-to="Gtk.TreeView">
+		<d-property id="content" maps-type="setMethod" maps-to="Model">
+			<d-param type="Gtk.ListStore"/>
+		</d-property>
+		<d-property id="content" return-type="Gtk.ListStore" maps-type="getMethod" maps-to="Model"/>
+		<d-property id="title" maps-type="setMethod" maps-to="TreeViewColumn.Title"/>
+		<d-property id="entry" maps-type="getMethod" maps-to="Selection.GetSelectedRows">
+			<d-param id="model" type="Gtk.TreeModel"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="Tree" used-in-tag="part" maps-type="class" maps-to="Gtk.TreeView">
+		<d-property id="content" maps-type="setMethod" maps-to="Model">
+			<d-param type="Gtk.TreeStore"/>
+		</d-property>
+		<d-property id="content" return-type="Gtk.TreeStore" maps-type="getMethod" maps-to="Model"/>
+		<d-property id="title" maps-type="setMethod" maps-to="TreeViewColumn.Title"/>
+		<d-property id="select" maps-type="event" maps-to="Model.RowChanged">
+			<d-param type="GtkSharp.SelectionNotifyEventHandler"/>
+		</d-property>
+		<d-property id="collapse-all" maps-type="setMethod" maps-to="CollapseAll"/>
+		<d-property id="expand-all" maps-type="setMethod" maps-to="ExpandAll"/>
+		<d-property id="selection" maps-type="getMethod" maps-to="Selection"  return-type="Gtk.TreeSelection"/>
+		<d-property id="selected-rows" maps-type="getMethod" maps-to="Gtk.TreeSelection.GetSelectedRows" return-type="Glib.List">
+			<d-param type="Gtk.TreeModel"/>
+		</d-property>
+		<d-property id="entry" maps-type="getMethod" maps-to="Selection.GetSelected">
+			<d-param id="model" type="Gtk.TreeModel"/>
+			<d-param id="iter" type="Gtk.TreeIter"/>
+		</d-property>
+	</d-class>
+
+
+	<d-class id="Calendar"  used-in-tag="part" maps-type="class" maps-to="Gtk.Calendar">
+		<d-property id="options" maps-type="setMethod" maps-to="DisplayOptions">
+			<d-param type="Gtk.CalendarDisplayOptions"/>
+		</d-property>
+		<d-property id="markDay" maps-type="setMethod" maps-to="MarkDay">
+			<d-param type="System.Int"/>
+		</d-property>
+		<d-property id="selectDay" maps-type="setMethod" maps-to="SelectDay">
+			<d-param type="System.Int"/>
+		</d-property>
+		<d-property id="selectMonth" maps-type="setMethod" maps-to="SelectMonth">
+			<d-param id="month" type="System.Int"/>
+			<d-param id="year" type="System.Int"/>
+		</d-property>
+		<d-property id="date" returns-type="System.DateTime" maps-type="getMethod" maps-to="GetDate"/>
+		<d-property id="day" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Day"/>
+		<d-property id="month" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Month"/>
+		<d-property id="year" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Year"/>
+		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ModifyFg">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="base-color" maps-type="setMethod" maps-to="ModifyBase">
+			<d-param type="Gtk.StateType"/>
+			<d-param type="Gdk.Color"/>
+		</d-property>
+		<d-property id="text-color" maps-type="setMethod" maps-to="ModifyText">
+			<d-param name="state" type="Gtk.StateType"/>
+			<d-param name="color" type="Gdk.Color"/>
+		</d-property>		
+		<d-property id="daySelected" maps-type="event" maps-to="DaySelected">
+			<d-param type="GtkSharp.DaySelectedEventHandler"/>
+		</d-property>
+		<d-property id="daySelectedDouble" maps-type="event" maps-to="DaySelectedDoubleClick">
+			<d-param type="GtkSharp.DaySelectedDoubleClickEventHandler"/>
+		</d-property>
+		<d-property id="monthChanged" maps-type="event" maps-to="MonthChanged">
+			<d-param type="GtkSharp.MonthChangedEventHandler"/>
+		</d-property>
+		<d-property id="nextMonth" maps-type="event" maps-to="NextMonth">
+			<d-param type="GtkSharp.NextMonthEventHandler"/>
+		</d-property>
+		<d-property id="prevMonth" maps-type="event" maps-to="PrevMonth">
+			<d-param type="GtkSharp.PrevMonthEventHandler"/>
+		</d-property>
+		<d-property id="nextYear" maps-type="event" maps-to="NextYear">
+			<d-param type="GtkSharp.NextYearEventHandler"/>
+		</d-property>
+		<d-property id="prevYear" maps-type="event" maps-to="PrevYear">
+			<d-param type="GtkSharp.PrevYearEventHandler"/>
+		</d-property>
+
+	</d-class>
+
+	<d-class id="ColorSelection"  used-in-tag="part" maps-type="class" maps-to="Gtk.ColorSelection">
+		<d-property id="color" returns-type="Gdk.Color" maps-type="getMethod" maps-to="CurrentColor"/>
+	</d-class>
+
+	<d-class id="FontSelection"  used-in-tag="part" maps-type="class" maps-to="Gtk.FontSelection">
+	</d-class>
+
+	<d-class id="Curve"  used-in-tag="part" maps-type="class" maps-to="Gtk.GammaCurve">
+	</d-class>
+
+	<d-class id="HBox"  used-in-tag="part" maps-type="class" maps-to="Gtk.HBox">
+	</d-class>
+
+	<d-class id="VBox"  used-in-tag="part" maps-type="class" maps-to="Gtk.VBox">
+	</d-class>
+
+
+
+	<d-class id="HorizontalScroll" used-in-tag="part" maps-type="class" maps-to="Gtk.HScrollbar">
+		
+	</d-class>
+
+	<d-class id="VerticalScroll" used-in-tag="part" maps-type="class" maps-to="Gtk.VScrollbar">
+		
+	</d-class>
+	
+	<d-class id="HorizontalRange" used-in-tag="part" maps-type="class" maps-to="Gtk.HScale">
+		<d-property id="constructor" maps-type="constructor" maps-to="Gtk.HScale">
+			<d-param id="min" type="System.Double"/>
+			<d-param id="max" type="System.Double"/>
+			<d-param id="step" type="System.Double"/>
+		</d-property>
+		<d-property id="min" maps-type="setMethod" maps-to="Adjustment.Lower">
+			<d-param type="System.Double" />
+		</d-property>
+		<d-property id="max" maps-type="setMethod" maps-to="Adjustment.Upper">
+			<d-param type="System.Double" />
+		</d-property>
+		<d-property id="step" maps-type="setMethod" maps-to="Adjustment.StepIncrement">
+			<d-param type="System.Double" />
+		</d-property>
+		<d-property id="increments" maps-type="setMethod" maps-to="SetIncrements">
+			<d-param id="step" type="System.Double"/>
+			<d-param id="page" type="System.Double"/>
+		</d-property>
+		<d-property id="ticks" maps-type="setMethod" maps-to="Digits">
+			<d-param type="System.Int32"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="VerticalRange" used-in-tag="part" maps-type="class" maps-to="Gtk.VScale">
+		<d-property id="constructor" maps-type="constructor" maps-to="Gtk.VScale">
+			<d-param id="min" type="System.Double"/>
+			<d-param id="max" type="System.Double"/>
+			<d-param id="step" type="System.Double"/>
+		</d-property>
+		<d-property id="min" maps-type="setMethod" maps-to="Adjustment.Lower">
+			<d-param type="System.Double" />
+		</d-property>
+		<d-property id="max" maps-type="setMethod" maps-to="Adjustment.Upper">
+			<d-param type="System.Double" />
+		</d-property>
+		<d-property id="step" maps-type="setMethod" maps-to="Adjustment.StepIncrement">
+			<d-param type="System.Double" />
+		</d-property>
+		<d-property id="ticks" maps-type="setMethod" maps-to="Digits">
+			<d-param type="System.Int"/>
+		</d-property>
+	</d-class>
+
+
+	<d-class  id="VerticalRange" used-in-tag="part" maps-type="class" maps-to="Gtk.VScale">
+		<d-property>
+		</d-property>
+		
+	</d-class>
+
+
+	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonPressEventHandler"/>
+	<d-class id="ButtonLeft" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonLeftEventHandler"/>
+	<d-class id="ButtonEntered" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonEnteredEventHandler"/>
+
+	<d-class id="DragBegin"     used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.DragBeginHandler"/>
+	<d-class id="EntrySelect"    used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.SelectionNotifyEventHandler"/>
+
+	<d-class id="NextMonth" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.NextMonthEventHandler"/>
+	<d-class id="NextYear" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.NextYearEventHandler"/>
+	<d-class id="PrevYear" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.PrevYearEventHandler"/>
+	<d-class id="PrevMonth" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.PrevMonthEventHandler"/>
+	<d-class id="DaySelected" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.DaySelectedEventHandler"/>
+	<d-class id="DaySelectedDoubleClick" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.DaySelectedDoubleClickEventHandler"/>
+	<d-class id="MonthChanged" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.MonthChangedEventHandler"/>
+
+ </presentation>
+ <logic>
+   <!-- 
+	Static methods for now. Didn't figure out how to attach to 
+	instances (objects) instead of classes.  I guess this problem has never
+	been tackled...
+	-->
+ 	<d-component id="Math" maps-to="System.Math">
+		<d-method id="absolute" returns-value="int" maps-to="Abs">
+			<d-param id="in" type="System.Int32"/>
+		</d-method>
+		<d-method id="power" return-value="double" maps-to="Pow">
+			<d-param id="ground" type="System.Double"/>
+			<d-param id="power" type="System.Double"/>
+		</d-method>
+		<d-method id="acos" return-value="double" maps-to="Acos">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="cos" return-value="double" maps-to="Cos">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="asin" return-value="double" maps-to="Asin">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="sin" return-value="double" maps-to="Sin">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="atan" return-value="double" maps-to="Atan">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="tan" return-value="double" maps-to="Tan">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="e" return-value="double" maps-to="E"/>
+		<d-method id="pi" return-value="double" maps-to="PI"/>
+	</d-component>
+	<d-component id="Int" maps-to="System.Int32">
+		<d-method id="parse" returns-value="System.Int32" maps-to="Parse">
+			<d-param type="System.String"/>
+		</d-method>
+		<d-method id="inc" returns-value="System.Int32" maps-to="op_Increment">
+			<d-param type="System.String"/>		
+		</d-method>
+		<d-method id="dec" returns-value="System.Int32" maps-to="op_Decrement">
+			<d-param type="System.Int32"/>		
+		</d-method>
+	</d-component>
+	<d-component id="Int64" maps-to="System.Int64">
+	</d-component>
+	<d-component id="String" maps-to="System.String">
+		<d-method id="concatenate" returns-value="string" maps-to="Concat">
+			<d-param id="str0" type="System.String"/>
+			<d-param id="str1" type="System.String"/>
+		</d-method>
+		<d-method id="compare" returns-value="int" maps-to="Compare">
+			<d-param id="str0" type="System.String"/>
+			<d-param id="str1" type="System.String"/>
+		</d-method>
+	</d-component>
+	<d-component id="Console" maps-to="System.Console">
+		<d-method id="print" returns-value="void" maps-to="Write">
+			<d-param id="message" type="System.String"/>
+		</d-method>
+		<d-method id="println" returns-value="void" maps-to="WriteLine">
+			<d-param id="message" type="System.String"/>
+		</d-method>
+		<d-method id="read" returns-value="System.String" maps-to="Read"/>
+		<d-method id="readln" returns-value="System.String" maps-to="ReadLine"/>
+		</d-method>
+
+	</d-component>
+	<d-component id="Date" maps-to="System.DateTime">
+		<d-method id="now"   returns-value="DateTime" maps-to="Now"/>
+		<d-method id="today" returns-value="DateTime" maps-to="Today"/>
+		<d-method id="compare" returns-value="int" maps-to="Compare">
+			<d-param id="date1" type="System.DateTime"/>
+			<d-param id="date2" type="System.DateTime"/>
+		</d-method>
+	</d-component>
+	<d-component id="TimeZone" maps-to="System.TimeZone">
+		<d-method id="current" returns-value="DateTime" maps-to="CurrentTimeZone.ToLocalTime"/>
+	</d-component>
+	<d-component id="environment" maps-to="System.Environment">
+		<d-method id="exit" returns-value="void" maps-to="Exit">
+			<d-param type="System.Int32"/>
+		</d-method>
+	</d-component>
+ </logic>
+</uiml>
+
+

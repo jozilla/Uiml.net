@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+	<interface>
+		<structure>	
+			<part class="Frame" id="Joan's crypto library">
+				<part class="VBox">
+					<part class="HBox">
+						<part class="VBox">
+							<part class="Label"><style><property name="text">Login</property></style></part>
+							<part class="Entry" id="login"/>
+						</part>
+						<part class="VBox">
+							<part class="Label"><style><property name="text">Password</property></style></part>
+							<part class="Entry" id="paswoord"/>
+						</part>
+						<part class="VBox">
+							<part class="Label"><style><property name="text">Service</property></style></part>
+							<part class="Entry" id="service"/>
+						</part>
+					</part>
+					<part class="HBox">
+						<part class="Button" id="encrypt"/>
+						<part class="Button" id="decrypt"/>
+					</part> 
+					<part class="VBox">
+						<part class="Label"><style><property name="text">Code</property></style></part>
+						<part class="Entry" id="code"/>
+					</part>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="encrypt" name="label">Crypt-it!</property>
+			<property part-name="decrypt" name="label">Decrypt-it!</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="encrypt" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="code" name="text">
+						<call name="Encoder.createLogin">
+							<param><property part-name="login" name="text"/></param>
+							<param><property part-name="paswoord" name="text"/></param>
+							<param><property part-name="service" name="text"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="decrypt" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="code" name="text">
+						<call name="Encoder.createLogin">
+							<param><property part-name="login" name="text"/></param>
+							<param><property part-name="paswoord" name="text"/></param>
+							<param><property part-name="service" name="text"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+
+		</behavior>
+	</interface>
+	<peers>
+		<!--		<presentation base="http://lumumba.luc.ac.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml" /> -->
+		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+
+		<logic id="crypto-lib">
+			 <d-component id="Encoder" maps-to="RemoteLoginDLL.Encoder">
+   		     	<d-method id="createLogin" return-type="string" maps-to="CreateLoginCode">
+			          <d-param id="login" type="System.String"/>
+			          <d-param id="pass" type="System.String"/>
+			          <d-param id="service" type="System.String"/>
+		        </d-method>
+      		  	<d-method id="checkLogin" return-type="boolean" maps-to="CheckLoginCode">  
+			          <d-param id="newOp" type="System.String"/>
+		      		 <d-param id="login" type="System.String"/>
+					    <d-param id="pass" type="System.String"/>
+			          <d-param id="service" type="System.String"/>		        
+      		    </d-method>
+      		 </d-component>
+		</logic>
+	</peers>
+</uiml>
+

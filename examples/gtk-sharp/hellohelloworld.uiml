@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="Frame">
+				<part class="HBox" id="layout">
+					<part class="Button" id="Button"/>
+					<part class="Button" id="Button2"/>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="Frame" name="label">Testing</property>
+			<property part-name="Button" name="label">hello</property>
+			<property part-name="Button2" name="label">world</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+

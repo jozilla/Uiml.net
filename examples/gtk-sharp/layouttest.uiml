@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="outerframe">
+			 <part class="VBox" id="vlayout">
+					<part class="HBox" id="blayout1">
+						<part class="Button" id="Button"/>
+						<part class="Button" id="Button2"/>
+					</part>
+					<part class="HBox" id="blayout1a">
+						<part class="Entry" id="t1"/>
+						<part class="Entry" id="t2"/>
+					</part>
+					<part class="Frame" id="fin">
+						<part class="HBox" id="blayout2">
+							<part class="VBox" id="vlayout1">
+								<part class="CheckButton" id="check1"/>
+								<part class="CheckButton" id="check2"/>
+								<part class="CheckButton" id="check3"/>
+								<part class="CheckButton" id="check4"/>
+							</part>
+							<part class="VBox" id="vlayout2">
+								<part class="Frame" id="fcal">
+									<part class="Calendar" id="cal"/>
+								</part>
+								<part class="Frame" id="fcolor">
+									<part class="ColorSelection" id="color"/> 
+								</part>
+							</part>
+						</part>
+					</part>
+			 </part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="outerframe" name="label">Two Buttons and Two Textviews</property>
+			<property part-name="Button" name="label">left</property>
+			<property part-name="Button2" name="label">right</property>
+			<property part-name="check1" name="label">VBox implemented</property>
+			<property part-name="check2" name="label">HBox implemented</property>
+			<property part-name="check3" name="label">Table not implemented</property>
+			<property part-name="check4" name="label">Spatial Constraints not implemented</property>
+			<property part-name="fin" name="label">2 VBoxes in a HBox</property>
+			<property part-name="fcal" name="label">Showing of calendar</property>
+			<property part-name="fcolor" name="label">and colorpicker</property>
+			<property part-name="t1" name="editable">false</property>
+			<property part-name="t1" name="text">this is not editable</property>
+			<property part-name="t2" name="background">red</property>
+			<property part-name="t2" name="text">this background is red</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+
