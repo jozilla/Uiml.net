@@ -114,6 +114,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+		<!-- events -->
+		<d-property id="clicked" maps-type="event" maps-to="Click">
+			<d-param type="System.Windows.Forms.Button.OnClick"/>
+		</d-property>
 	</d-class>
 	
 	<d-class id="Label" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.Label">
@@ -757,5 +761,66 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param type="System.Windows.Forms.Orientation"/>
 		</d-property>
 	</d-class>	
+
+	<!-- event classes -->
+	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Button.OnClick"/>
  </presentation>
+ <logic>
+   <!-- 
+	Static methods for now. Didn't figure out how to attach to 
+	instances (objects) instead of classes.  I guess this problem has never
+	been tackled...
+	-->
+ 	<d-component id="Math" maps-to="System.Math">
+		<d-method id="absolute" returns-value="int" maps-to="Abs">
+			<d-param id="in" type="System.Int32"/>
+		</d-method>
+		<d-method id="power" return-value="double" maps-to="Pow">
+			<d-param id="ground" type="System.Double"/>
+			<d-param id="power" type="System.Double"/>
+		</d-method>
+		<d-method id="acos" return-value="double" maps-to="Acos">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="cos" return-value="double" maps-to="Cos">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="asin" return-value="double" maps-to="Asin">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="sin" return-value="double" maps-to="Sin">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="atan" return-value="double" maps-to="Atan">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="tan" return-value="double" maps-to="Tan">
+			<d-param type="System.Double"/>
+		</d-method>
+		<d-method id="e" return-value="double" maps-to="E"/>
+		<d-method id="pi" return-value="double" maps-to="PI"/>
+	</d-component>
+	<d-component id="String" maps-to="System.String">
+		<d-method id="concatenate" returns-value="string" maps-to="Concat">
+			<d-param id="str0" type="System.String"/>
+			<d-param id="str1" type="System.String"/>
+		</d-method>
+	</d-component>
+	<d-component id="Console" maps-to="System.Console">
+		<d-method id="print" returns-value="void" maps-to="Write">
+			<d-param id="message" type="System.String"/>
+		</d-method>
+		<d-method id="println" returns-value="void" maps-to="WriteLine">
+			<d-param id="message" type="System.String"/>
+		</d-method>
+	</d-component>
+	<d-component id="Date" maps-to="System.DateTime">
+		<d-method id="now"   returns-value="DateTime" maps-to="Now"/>
+		<d-method id="today" returns-value="DateTime" maps-to="Today"/>
+		<d-method id="compare" returns-value="int" maps-to="Compare">
+			<d-param id="date1" type="System.DateTime"/>
+			<d-param id="date2" type="System.DateTime"/>
+		</d-method>
+	</d-component>
+ </logic>
 </uiml>
