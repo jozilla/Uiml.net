@@ -1,5 +1,5 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -20,10 +20,10 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-[assembly: System.Reflection.AssemblyKeyFile ("uiml.net.snk")]
+//[assembly: System.Reflection.AssemblyKeyFile ("uiml.net.snk")]
 
 
-namespace Uiml{
+namespace Uiml.FrontEnd{
 
 	using Uiml.Peers;
 

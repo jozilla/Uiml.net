@@ -238,7 +238,7 @@ namespace Uiml{
 		public const string PROPERTY    = "property";
 		public const string CONSTANT    = "constant";
 		public const string REFERENCE   = "reference";
-		private enum m_how  { Union, Cascade, Replace };
-		private enum m_export { Hidden, Optional, Required }; 
+		//private enum m_how  { Union, Cascade, Replace };
+		//private enum m_export { Hidden, Optional, Required }; 
 	}
 }

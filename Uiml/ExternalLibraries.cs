@@ -1,5 +1,5 @@
 /*
-  	 Uiml.Net: a Uiml.Net renderer (http://lumumba.luc.ac.be/kris/research/uiml.net/)
+  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
    
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -77,8 +77,11 @@ namespace Uiml
 
 		public void Add(String key, Assembly lib)
 		{
-			base.Add(key, lib);
-			m_dirty=true;
+			if(!base.ContainsKey(key))
+			{
+				base.Add(key, lib);
+				m_dirty=true;
+			}
 		}
 
 		public Assembly GetAssembly(String tkey)

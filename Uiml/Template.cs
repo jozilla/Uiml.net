@@ -1,5 +1,5 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -50,7 +50,8 @@ namespace Uiml{
 		public Template(string identifier)
 		{
 			m_identifier = identifier;
-			LoadTemplate(identifier, UimlTool.FileName);
+			//TODO:  remove UimlTool reference
+			//LoadTemplate(identifier, UimlTool.FileName);
 		}
 
 		public Template(Uri turi)

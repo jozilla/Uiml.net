@@ -1,5 +1,5 @@
 /*
-	 uiml.net: a Uiml .NET renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
+	 uiml.net: a Uiml .NET renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
     
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)

@@ -71,7 +71,7 @@ namespace Uiml.Executing
 			{
 				try{
 				((Param)enumChildren.Current).AttachLogic(logicDocs);
-				}catch(Exception e) { /* Never mind if this fails; it could be scripts */ }
+				}catch(Exception) { /* Never mind if this fails; it could be scripts */ }
 			}
 			m_logicDescriptions = logicDocs;
 		}
@@ -163,7 +163,7 @@ namespace Uiml.Executing
 			Type[] tparamTypes = null;
 			try{
 				tparamTypes = createInOutParamTypes(parameters, out outputPlaceholder);
-			}catch(ArgumentOutOfRangeException aore) { return null; }
+			}catch(ArgumentOutOfRangeException) { return null; }
 			
 			MethodInfo m = objectType.GetMethod(concreteMethodName, tparamTypes);
 			System.Object[] args = new System.Object[tparamTypes.Length];
@@ -272,7 +272,7 @@ namespace Uiml.Executing
 					{
 						obj = oe.Current;
 						
-						if(obj.GetType().Name == concreteObjectName)
+						if(obj.GetType().FullName == concreteObjectName)
 						{
 							type = obj.GetType();
 							result = ExecuteMethod(concreteMethodName, type, obj);
@@ -304,10 +304,10 @@ namespace Uiml.Executing
 				}
 
 				try { return ExecuteMethod(concreteMethodName, type/*, logic*/); } 
-				    catch(NullReferenceException nre1)//method failed, try property
+				    catch(NullReferenceException)//method failed, try property
 				    { try { return ExecuteProperty(concreteMethodName, type); }
 					        //property failed, try field
-					       catch(NullReferenceException nre2)	{ return ExecuteField(concreteMethodName, type); 	}
+					       catch(NullReferenceException)	{ return ExecuteField(concreteMethodName, type); 	}
 				    }
 			   }
 				catch(MappingNotFoundException mnfe) 
