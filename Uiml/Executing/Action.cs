@@ -38,7 +38,6 @@ namespace Uiml.Executing
 		private Event m_event = null;
 		private IRenderer       m_renderer;
 		private IPropertySetter m_propSetter;
-	
 		
 		public Action()
 		{
@@ -96,6 +95,15 @@ namespace Uiml.Executing
 					((Call)o).AttachLogic(logicDocs);
 				else if(o is Uiml.Property)
 					((Property)o).AttachLogic(logicDocs);
+			}
+		}
+		
+		public void Connect(object o)
+		{
+			foreach(object c in m_subActions)
+			{
+				if(c is Uiml.Executing.Call)
+					((Call)c).Connect(o);
 			}
 		}
 

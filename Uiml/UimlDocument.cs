@@ -111,7 +111,19 @@ namespace Uiml{
 		public void Connect(Object o)
 		{
 			//TODO: support multiple structures
+			// connect to the top part
 			((Structure)UInterface.UStructure[0]).Top.Connect(o, this);
+			
+			// connect to the rules	
+		
+			if(UInterface.UBehavior != null)
+			{
+				IEnumerator er = ((Behavior)UInterface.UBehavior[0]).Rules;
+				while(er.MoveNext())
+				{
+					((Executing.Rule)er.Current).Connect(o);
+				}
+			}
 		}
 
 		public void Connect(Object o, String identifier)
@@ -130,7 +142,6 @@ namespace Uiml{
 			//TODO: support multiple structures
 			return ((Structure)UInterface.UStructure[0]).SearchPart(identifier);
 		}
-
 
 		public ArrayList Children
 		{

@@ -85,7 +85,10 @@ namespace Uiml.Executing
 			}
 		}
 		
-
+		public void Connect(object o)
+		{
+			m_action.Connect(o);
+		}
 			
 		public System.Object Execute()
 		{

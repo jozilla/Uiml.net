@@ -42,6 +42,8 @@ namespace Uiml.Executing
 		private IRenderer m_renderer;
 		private Part m_partTree;
 		private Hashtable m_outputParams;
+		
+		private ArrayList m_connObjects = null;
 
 		private ArrayList m_logicDescriptions = null;
 
@@ -132,10 +134,23 @@ namespace Uiml.Executing
 					throw aore;					
 				}
 		}
-
-		public Object ExecuteMethod(string concreteMethodName, Type objectType/*, Logic l*/)
+		
+		public void Connect(object o)
 		{
-			
+			if(!Connected)
+				m_connObjects = new ArrayList();
+				
+			m_connObjects.Add(o);
+		}
+		
+		public object ExecuteMethod(string concreteMethodName, Type objectType)
+		{
+			// static methods
+			return ExecuteMethod(concreteMethodName, objectType, null);
+		}
+
+		public Object ExecuteMethod(string concreteMethodName, Type objectType, object obj/*, Logic l*/)
+		{
 			Uiml.Param[] parameters;
 			Hashtable outputPlaceholder = null;
 			
@@ -159,7 +174,7 @@ namespace Uiml.Executing
 				args[k] = Renderer.Decoder.GetArg(propValue, tparamTypes[k]);
 			}
 			
-			Object result =  m.Invoke(null, args); //static method
+			Object result =  m.Invoke(obj, args);
 
 			//get the updated parameters out of args
 			for(int i=0; i<parameters.Length; i++)
@@ -249,6 +264,28 @@ namespace Uiml.Executing
 				//	foundMapping = true;
 				//}
 
+				if(Connected)
+				{	
+					IEnumerator oe = m_connObjects.GetEnumerator();
+					object obj = null, result = null;
+					while(oe.MoveNext())
+					{
+						obj = oe.Current;
+						
+						if(obj.GetType().Name == concreteObjectName)
+						{
+							type = obj.GetType();
+							result = ExecuteMethod(concreteMethodName, type, obj);
+						}						
+					}
+					
+					if(type != null)
+					{
+						// FIXME: only returns the value of the last connected object's method invocation
+						return result; 
+					}
+				}
+				
 				IEnumerator enumAssemblies = ExternalLibraries.Instance.LoadedAssemblies;
 				while((enumAssemblies.MoveNext()) && (type==null))
 				{
@@ -259,11 +296,11 @@ namespace Uiml.Executing
 					type = a.GetType(concreteObjectName, false);
 					#endif
 				}
-
+				
 				if(type == null)
 				{
 					Console.WriteLine("Could not find type {0} ({1}) -- aborting call execution", concreteObjectName, ObjectName);
-					return null;
+					return null;	
 				}
 
 				try { return ExecuteMethod(concreteMethodName, type/*, logic*/); } 
@@ -301,6 +338,11 @@ namespace Uiml.Executing
 		public void AddParam(Param p)
 		{
 			m_params.Add(p);
+		}
+		
+		public bool Connected
+		{
+			get { return m_connObjects != null; }
 		}
 
 		public string Name

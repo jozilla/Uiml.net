@@ -376,6 +376,15 @@ namespace Uiml.Peers
 			return GetProperty(identifier, abstractName, DProperty.SET_METHOD);
 		}
 
+		public string MapsOnHandler(string abstractName)
+		{
+			DClass cls = FindDClass(abstractName);
+			if(cls == null || cls.MapsType != "delegate")
+				throw new MappingNotFoundException(abstractName);
+
+			return cls.MapsTo;
+		}
+
 		public string GetEventFor(string abstractName, string delegateTypeName)
 		{
 			DClass cls = FindDClass(abstractName);
@@ -403,7 +412,7 @@ namespace Uiml.Peers
 
 			throw new MappingNotFoundException(delegateTypeName);
 		}
-
+		
 		public DParam[] GetParams(string identifier, string abstractName)
 		{
 			DClass cls = FindDClass(abstractName);
