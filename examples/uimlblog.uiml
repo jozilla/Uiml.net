@@ -26,11 +26,17 @@
 			<property part-name="update"  name="label">Update</property>
 			<property part-name="newpost"  name="label">New Post</property>
 			<property part-name="quit"  name="label">Quit</property>
+			<property part-name="articles" name="content">
+		  	  <constant model="list">
+				  <constant value="Blog title 1"/>
+				  <constant value="Entry 2"/>
+				  <constant value="Another Title"/>
+			  </constant>
+		  </property>
 		</style>
 	</interface>
 	<peers>
-		<!--		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/> -->
-		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml"/>
+		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/> 
 	</peers>
 </uiml>
 

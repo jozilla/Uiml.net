@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="Container1" class="Container">
+			<part id="Button1" class="Button"/>
+			<part id="Label1" class="Label"/>
+			<part id="Button2" class="Button"/>
+			<part id="Label2" class="Label"/>			
+		</part>
+		</structure>
+		<style>
+			<property part-name="Container1" name="size">300,300</property>
+			<property part-name="Container1" name="background">248,238,199</property>
+			<property part-name="Container1" name="foreground">255,0,0</property>
+			<property part-name="Button1" name="label">Press Me</property>
+			<property part-name="Label1" name="label">It's alive, alive!</property>			
+			<property part-name="Label1" name="position">50,50</property>
+			<property part-name="Button2" name="label">Kick Me</property>
+			<property part-name="Button2" name="position">150,150</property>
+			<property part-name="Label2" name="label">Zed is dead.</property>			
+			<property part-name="Label2" name="position">100,100</property>			
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>

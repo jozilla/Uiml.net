@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="Container1" class="Container">			
+			<part id="Progress" class="ProgressBar"/>
+			<part id="Loading" class="Label"/>			
+		</part>
+		</structure>
+		<style>
+			<property part-name="Container1" name="size">300,300</property>
+			<property part-name="Loading" name="label">Loading .NET assemblies</property>
+			<property part-name="Loading" name="position">50,5</property>
+			<property part-name="Loading" name="width">200</property>
+			<property part-name="Progress" name="position">50,50</property>
+			<property part-name="Progress" name="width">100</property>
+			<property part-name="Progress" name="value">65</property>
+			<property part-name="Progress" name="minimum">0</property>
+			<property part-name="Progress" name="maximum">100</property>
+			<property part-name="Progress" name="step">1</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+			<part id="Body" class="Container">
+				<part id="PizzaForm" class="Frame">
+					<part id="Toppings" class="Frame">			
+						<part id="Ansjovis" class="CheckButton"/>			
+						<part id="Mozarella" class="CheckButton"/>
+						<part id="Olives" class="CheckButton"/>
+					</part>
+					<part id="Size" class="Frame">
+						<part id="Small" class="RadioButton"/>
+						<part id="Medium" class="RadioButton"/>
+						<part id="Large" class="RadioButton"/>	
+					</part>
+					<part id="Order" class="Button"/>
+					<part id="Cancel" class="Button"/>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="Body" name="size">400,400</property>
+
+			<property part-name="PizzaForm" name="position">5,5</property>
+			<property part-name="PizzaForm" name="size">310,200</property>
+			<property part-name="PizzaForm" name="label">Pizza Form</property>
+			
+			<property part-name="Toppings" name="position">15,20</property>
+			<property part-name="Toppings" name="size">140,120</property>
+			<property part-name="Toppings" name="label">Toppings</property>
+			<property part-name="Ansjovis" name="checked">false</property>
+			<property part-name="Ansjovis" name="position">20,20</property>
+			<property part-name="Ansjovis" name="width">80</property>
+			<property part-name="Ansjovis" name="label">Ansjovis</property>
+			<property part-name="Mozarella" name="checked">true</property>
+			<property part-name="Mozarella" name="position">20,50</property>
+			<property part-name="Mozarella" name="width">80</property>
+			<property part-name="Mozarella" name="label">Mozarella</property>
+			<property part-name="Olives" name="checked">false</property>
+			<property part-name="Olives" name="position">20,80</property>
+			<property part-name="Olives" name="width">80</property>
+			<property part-name="Olives" name="label">Olives</property>
+
+			<property part-name="Size" name="position">160,20</property>
+			<property part-name="Size" name="size">140,120</property>
+			<property part-name="Size" name="label">Size</property>
+			<property part-name="Small" name="checked">false</property>
+			<property part-name="Small" name="position">20,20</property>
+			<property part-name="Small" name="width">80</property>
+			<property part-name="Small" name="label">Small</property>
+			<property part-name="Medium" name="checked">true</property>
+			<property part-name="Medium" name="position">20,50</property>
+			<property part-name="Medium" name="width">80</property>
+			<property part-name="Medium" name="label">Medium</property>
+			<property part-name="Large" name="checked">false</property>
+			<property part-name="Large" name="position">20,80</property>
+			<property part-name="Large" name="width">80</property>
+			<property part-name="Large" name="label">Large</property>
+			
+			<property part-name="Order" name="position">100,155</property>
+			<property part-name="Order" name="label">Order</property>
+			<property part-name="Cancel" name="position">170,155</property>
+			<property part-name="Cancel" name="label">Cancel</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>

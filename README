@@ -1,8 +1,11 @@
-You need mono and Gtk# (preferably from CVS).
-You need Wx.Net (preferably from CVS)
+Uiml.net is a Uiml renderer for the .Net framework. 
+It has support for the Gtk#, system.Windows.Forms and Wx.NET widget sets.
+It is still under heavy development, so building the code can be challinging
+but it should work...
+
 
 HOW TO BUILD THE CODE:
-"make" in Uiml directory.
+On Linux with mono: "make" in Uiml directory.
 
 HOW TO RUN:
 uiml.net.exe -uiml <myuimlfile>

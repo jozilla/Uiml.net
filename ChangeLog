@@ -1,3 +1,15 @@
+2004-07-09 Kris Luyten <kris.luyten@luc.ac.be>
+	* Initial System.Windows.Forms rendering code checked in. Contributed
+	by Jo Vermeulen <jo.vermeulen@student.luc.ac.be>:
+	* Uiml/Rendering/SWF/SWFRenderedInstance.cs: initial check in SWF Rendering
+	container
+	* Uiml/Rendering/SWF/SWFRenderer.cs: initial check in SWF Rendering engine
+	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: initial check in SWF Type convertor
+	* vocabularies/: holds all vocabularies now
+	* vocabularies/swf-1.1.uiml: initial check in swf vocabulary
+	* Uiml/Rendering/Renderer.cs: fixed ApplyPorperties to use correct target
+	(Jo Vermeulen)
+
 2004-06-21 Kris Luyten <kris.luyten@luc.ac.be>
 	* Works with the gac installation now
 	* Mostly API fixes
