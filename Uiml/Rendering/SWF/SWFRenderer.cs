@@ -46,19 +46,8 @@ namespace Uiml.Rendering.SWF
 		{ 
 			Decoder = new SWFTypeDecoder();
 
-			// TODO: use suggestion on microsoft.public.dotnet.framework newsgroup instead of LoadWithPartialName!
-
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
 			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, Assembly.LoadWithPartialName(DRAWING_ASSEMBLY));
-			/*
-			string sysRoot = Environment.GetEnvironmentVariable("systemroot");
-			string version = System.Environment.Version.ToString();
-			version = version.Substring(0, version.LastIndexOf("."));
-			string assemblyName = sysRoot + @"\Microsoft.NET\Framework\v" 
-				+ version + @"\" + SWF_ASSEMBLY; // SWF_ASSEMBLY == "System.Windows.Forms.dll"
-						
-			GuiAssembly = Assembly.LoadFrom(assemblyName);			
-			*/
 
 			GuiAssembly = Assembly.LoadWithPartialName(SWF_ASSEMBLY);
 			ExternalLibraries.Instance.Add(SWF_ASSEMBLY, GuiAssembly);
