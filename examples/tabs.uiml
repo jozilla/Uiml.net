@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+  <interface>
+    <structure>
+			<part id="tabs" class="Tabs">
+				<part id="Tab1" class="TabPage">
+					<part class="VBox">
+						<part class="Label" id="thelabel"/>
+		        <part id="combo1" class="Combo"/>
+					  <part class="Label" id="thelabel2"/>
+					</part>
+				</part>
+				<part id="Tab2" class="TabPage">
+					<part id="spinal" class="Entry"/>
+				</part>
+			</part>
+    </structure>
+    <style>
+			<property part-name="Tab1" name="label">UIML Combo Example</property>
+		  <property part-name="thelabel" name="text">Belgian Alternative Music</property>
+		  <property part-name="thelabel2" name="text">Pick one!</property>
+      <property part-name="combo1" name="content">
+		  	<constant model="list">
+					<constant value="dEUS"/>
+					<constant value="Nemo"/>
+					<constant value="The Evil Superstars"/>
+					<constant value="Channel Zero"/>
+					<constant value="Star Industry"/>
+				</constant>					
+	  	</property>
+			<property part-name="Tab2" name="label">Other bands</property>
+			<property part-name="spinal" name="text">Spinal Tab</property>
+   </style>
+	 <behavior>
+	 	<rule>
+			<condition>
+				<event part-name="combo1" class="EntrySelect"/>
+			</condition>
+			<action>
+				<property part-name="thelabel2" name="text">
+					<call name="String.concatenate">
+						<param>Want to buy a CD from </param>
+						<param><property part-name="combo1" name="entry"/></param>
+					</call>
+				</property>
+			</action>
+		</rule>
+	 </behavior>
+  </interface>
+  <peers>
+		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
+  </peers>
+</uiml>
