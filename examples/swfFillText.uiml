@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="c_body" class="Container">			
+			<part id="l_fill" class="Label"/>		
+			<part id="e_fill" class="Entry"/>
+			<part id="b_fill" class="Button"/>
+			<part id="l_output" class="Label"/>
+			<part id="t_output" class="Text"/>	
+		</part>
+		</structure>
+		<style>
+			<property part-name="c_body" name="size">400,400</property>
+			
+			<property part-name="l_fill" name="position">20,10</property>
+			<property part-name="l_fill" name="text">Fill Sequence:</property>
+
+			<property part-name="e_fill" name="position">20,35</property>
+			
+			<property part-name="b_fill" name="label">Fill</property>
+			<property part-name="b_fill" name="position">230,35</property>
+
+			<property part-name="l_output" name="position">20,65</property>
+			<property part-name="l_output" name="text">Output:</property>
+			
+			<!-- multiline should be set automatically for a Text class -->
+			<property part-name="t_output" name="multiline">true</property>
+			<property part-name="t_output" name="position">20,90</property>
+			<property part-name="t_output" name="size">200,100</property>
+			<property part-name="t_output" name="scrollbars">Both</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="b_fill" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="t_output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="t_output" name="text"></property></param>
+							<param><property part-name="e_fill" name="text"></property></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
