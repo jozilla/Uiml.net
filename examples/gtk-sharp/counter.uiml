@@ -56,7 +56,7 @@
 		</behavior>
 	</interface>
 	<peers>
-		<presentation base="gtk-sharp-1.0.uiml"/>
+		<presentation base="http://research.edm.luc.ac.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
 		<logic id="mmath">
 			 <d-component id="MyMath" maps-to="MyMath">
   		     <d-method id="inc" return-type="string" maps-to="Increment">

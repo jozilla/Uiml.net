@@ -120,7 +120,8 @@ namespace Uiml.Rendering.GTKsharp
 				case "Gdk.Color":
 					if(oValue.GetType().FullName == "Gdk.Color")
 						return oValue;
-					return DecodeColor(value);
+					else
+						return DecodeColor(value);
 				case "Gtk.StateType":
 					return DecodeStateType(value);
 				case "GLib.List":
@@ -143,7 +144,8 @@ namespace Uiml.Rendering.GTKsharp
 				case "Gdk.Color":
 					if(p.Value.GetType().FullName == "Gdk.Color"	)
 						return p.Value;
-					return DecodeColor((System.String)p.Value);
+					else
+						return DecodeColor((System.String)p.Value);
 				case "Gtk.StateType":
 					return DecodeStateType(p.Name);
 				case "Pango.FontDescription":
@@ -164,8 +166,7 @@ namespace Uiml.Rendering.GTKsharp
 		}
 
 		///<summary>
-		/// This method decodes a color from a string value. Is this the right way for implementing
-		/// Gtk Type conversions?
+		/// This method decodes a color from a string value. 
 		///</summary>
 		private Gdk.Color DecodeColor(string value)
 		{
@@ -192,6 +193,10 @@ namespace Uiml.Rendering.GTKsharp
 		}
 		
 
+		///<summary>
+		///Decodes the StateType value. This method only returns StateType.Normal; it should
+		///be fixed for more complex behavior of widgets.
+		///</summary>
 		private System.Object DecodeStateType(string value)
 		{
 			switch(value)

@@ -35,6 +35,13 @@ namespace Uiml{
 			Query = query;
 		}
 
+		public MappingNotFoundException(string query, string from) : base(query)
+		{ 
+			Query = query;
+			From = from;
+		}
+
+
 		public MappingNotFoundException(string query, string from, string to) : base(query)
 		{
 			From = from;

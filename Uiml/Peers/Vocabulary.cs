@@ -380,7 +380,7 @@ namespace Uiml.Peers
 			if(prop != null)
 				return prop.MapsTo;
 			else
-				throw new MappingNotFoundException(identifier);			
+				throw new MappingNotFoundException(abstractName, identifier);			
 		}
 
 		public string GetPropertyGetter(string identifier, string abstractName)

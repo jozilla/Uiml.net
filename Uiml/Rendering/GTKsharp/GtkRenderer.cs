@@ -47,8 +47,8 @@ namespace Uiml.Rendering.GTKsharp
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
 			GuiAssembly = Assembly.Load(GTK_ASSEMBLY);
 			ExternalLibraries.Instance.Add(GTK_ASSEMBLY, GuiAssembly);
-			ExternalLibraries.Instance.Add(GDK_ASSEMBLY, Assembly.Load(GDK_ASSEMBLY));
-			ExternalLibraries.Instance.Add(PANGO_ASSEMBLY, Assembly.Load(PANGO_ASSEMBLY));
+			//ExternalLibraries.Instance.Add(GDK_ASSEMBLY, Assembly.Load(GDK_ASSEMBLY));
+			//ExternalLibraries.Instance.Add(PANGO_ASSEMBLY, Assembly.Load(PANGO_ASSEMBLY));
 			ExternalLibraries.Instance.Add(GLIB_ASSEMBLY, Assembly.Load(GLIB_ASSEMBLY));
 		}
 
@@ -215,7 +215,7 @@ namespace Uiml.Rendering.GTKsharp
 		     String paramsString = "";
 			  for(int j=0; j< parameters.Length; j++)
 				  paramsString +=  parameters[j].Identifier + ":" + parameters[j].Type + ", ";
-			  Console.WriteLine("Error in uiml document: required properties \"{0}\" are not available for {1} ({2})", paramsString, uiPart.Identifier, uiPart.Class);
+			  Console.WriteLine("Error in uiml document: required properties \"{0}\" are not available for {1} (of class {2})", paramsString, uiPart.Identifier, uiPart.Class);
 			  Environment.Exit(-1);
 			  return null; //useless statement
 			 }
@@ -225,11 +225,11 @@ namespace Uiml.Rendering.GTKsharp
 			  //and pass it to the constuctor immediately
 			  try{ return (Widget)construct.Invoke(Decoder.GetMultipleArgs(props,tparamTypes));}
 			  catch 
-			  { //TODO: remove redundant statements!!
+			  { 
 				  String paramsString = "";
 				  for(int j=0; j< parameters.Length; j++)
 					  paramsString +=  parameters[j].Identifier + ":" + parameters[j].Type + ", ";
-				  Console.WriteLine("Error in uiml document: required properties \"{0}\" are not available for {1} ({2})", paramsString, uiPart.Identifier, uiPart.Class);
+				  Console.WriteLine("Error in uiml document: required properties \"{0}\" are not available for {1} (of class {2})", paramsString, uiPart.Identifier, uiPart.Class);
 				  Environment.Exit(-1);
 				  return null; //useless statement
 			  }

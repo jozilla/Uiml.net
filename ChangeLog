@@ -1,3 +1,17 @@
+2005-02-19 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/Rendering/Renderer.cs: refactored ApplyProperty method; extracted
+	two new methods: "SetProperty" and "InvokeMethod". Need to take into
+	account mismatching argument lists for setting properties (ad-hoc procedure
+	necessary?)
+
+
+2005-01-13 Kris Luyten <kris.luyten@luc.ac.be>
+	* examples/gtk-sharp/template-test.uiml: shows first working 
+	template case (Jo Vermeulen)
+	* Uiml/Frontend/*.cs: rewrote fronted to support automatic frontend
+	GUI dependending on the available widget set libraries
+
+
 2005-01-12 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/ReplaceTemplateResolver.cs:
 	* Uiml/Style.cs:
@@ -7,7 +21,12 @@
 	demonstrates these changes
 	* examples/gtk-sharp/helloworld_template_data.uiml: the uiml file
 	which contains the template element for the previous example
-	
+
+2004-11-2 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/FrontEnd/SwfGUI.cs: added implementation of SWF frontend
+	* Uiml/Rendering/SWF/SWFRenderedInstance.cs: running UI can create
+	modal dialog now
+
 2004-09-17 Kris Luyten <kris.luyten@luc.ac.be>
 	* Uiml/FrontEnd/*.cs: rewrote FrontEnd system for uiml.net
 	* Uiml/Rendering/Renderer.cs: moved "ResolveProperty" method from

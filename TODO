@@ -1,7 +1,7 @@
 
 - Make examples and test test test
 - Write unittests using the nunit package
-- Switch to Nant files instead of Makefiles or premake
+- Switch to Nant files instead of Makefiles
 
 Bugs:
 =====
@@ -50,4 +50,4 @@ Experimental topics:
 - Add support for WSDL, XML-RPC and SOAP in the call element
 - Generic Layout management module
 - Emit code for behavioral conditions?
-
+- Make a GUI builder like Glade

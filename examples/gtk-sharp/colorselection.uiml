@@ -5,7 +5,7 @@
 		<structure>
 			<part class="Frame" id="Frame">
 				<part class="VBox">
-					<part class="ColorSelection" id="color"/>
+					<part class="ColorSelection" id="colorbox"/>
 					<part class="HBox">
 						<part class="Label" id="Iwantcolor"/>
 						<part class="Button" id="Illgivecolor"/>
@@ -21,11 +21,11 @@
 	   <behavior>
 			<rule>
 				<condition>
-					<event class="ButtonPressed" part-name="Button"/>
+					<event class="ButtonPressed" part-name="Illgivecolor"/>
         		</condition>
 				<action>
-					<property part-name="Iwantcolor" name="">
-						<property part-name="" name=""/>
+					<property part-name="Iwantcolor" name="background">
+						<property part-name="colorbox" name="color"/>
 					</property>
 				</action>
 			</rule>

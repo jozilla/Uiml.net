@@ -6,6 +6,7 @@ but it should work...
 
 HOW TO BUILD THE CODE:
 On Linux with mono: "make" in Uiml directory.
+On MS Windows: mail me for the MS Developer Studio project files
 
 HOW TO RUN:
 uiml.net.exe -uiml <myuimlfile>

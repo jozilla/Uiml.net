@@ -1,8 +1,8 @@
 /*
  	 Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
     
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@luc.ac.be)
+	                     Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
@@ -215,7 +215,7 @@ namespace Uiml.Rendering
 		/// This method sets the concrete property on a concrete widget. It is the most important
 		/// method to get the defined properties reflected in the User Interface
 		///</summary>
-		///<param name="uiObject"></param>
+		///<param name="uiObject">The (widget set dependent) object that represents the part in the widget set</param>
 		///<param name="p"></param>
 		///<param name="part"></param>
 		///<param name="tclassType"></param>
@@ -250,10 +250,6 @@ namespace Uiml.Rendering
 							                                               BindingFlags.Public | BindingFlags.Instance,
 																						  Type.FilterName, setter);
 					#endif
-
-					//if lazy, execute it!
-					if(p.Lazy)
-						p.Resolve(this);
 					
 					if (arrayMemberInfo == null || arrayMemberInfo.Length == 0) 
 					{
@@ -261,33 +257,16 @@ namespace Uiml.Rendering
 						Console.WriteLine("Warning: could not load setter \"{0}\" for {1} (type {2}), please check your vocabulary", setter, part.Identifier, tclassType.FullName); 
 						return uiObject;
 					}
+
+					//if lazy, resolve property value first
+					if(p.Lazy)
+						p.Resolve(this);
+
+					//
 					if (arrayMemberInfo[0] is PropertyInfo)
-					{
-						pInfo = (PropertyInfo)arrayMemberInfo[0];
-						System.Object bla= Decoder.GetArg(p.Value, pInfo.PropertyType);
-						pInfo.SetValue(targetObject, bla, null);
-					}
+						SetProperty(targetObject, p, (PropertyInfo)arrayMemberInfo[0]);
 					else
-						{
-							Console.WriteLine("setter \"{0}\" is a Method", setter );
-							Param[] paramTypes = Voc.GetParams(p.Name, part.Class);
-							//convert the params to types
-							Type[] tparamTypes = new Type[paramTypes.Length];
-							for(int i=0; i<paramTypes.Length; i++)
-							{
-								tparamTypes[i] = null;
-								int k = 0;
-								while(tparamTypes[i] == null)
-									tparamTypes[i] = ((Assembly)ExternalLibraries.Instance.Assemblies[k++]).GetType(paramTypes[i].Type);
-							   
-							}
-							MethodInfo m = classType.GetMethod(setter, tparamTypes);
-							System.Object[] args = Decoder.GetArgs(p, tparamTypes);
-	
-							// We must invoke it on the target Object, not on the UI Object!							
-							//m.Invoke(uiObject, args);
-							m.Invoke(targetObject, args);
-					   }
+						InvokeMethod(targetObject, part, p, (MethodInfo)arrayMemberInfo[0]);
 					}
 					/*
 					catch(TypeLoadException tle)
@@ -306,6 +285,48 @@ namespace Uiml.Rendering
 						Console.WriteLine("Trying to continue...");
 					}
 				return uiObject;
+		}
+
+		///<summary>
+		///Sets the value of property p for the object targetobject
+		///</summary>
+		private void SetProperty(System.Object targetObject, Property prop, PropertyInfo pInfo)
+		{
+			System.Object bla= Decoder.GetArg(prop.Value, pInfo.PropertyType);
+  		   pInfo.SetValue(targetObject, bla, null);
+		}
+
+		///<summary>
+		/// Invokes the method "setter" that sets the value of the property prop for the object targetObject
+		///</summary>
+		///<todo>
+		///Add an ad-hoc procedure for matching interfaces, cfr. the ArgumentOutOfRangeException
+		///</todo>
+		private void InvokeMethod(System.Object targetObject, Part part, Property prop, MethodInfo mInfo)
+		{
+			Param[] paramTypes = Voc.GetParams(prop.Name, part.Class);								
+			//convert the params to types
+			Type[] tparamTypes = new Type[paramTypes.Length];
+			try
+			{
+				for(int i=0; i<paramTypes.Length; i++)
+				{
+					tparamTypes[i] = null;
+					int k = 0;
+			   	while(tparamTypes[i] == null)
+						tparamTypes[i] = ((Assembly)ExternalLibraries.Instance.Assemblies[k++]).GetType(paramTypes[i].Type);
+				}
+				System.Object[] args = Decoder.GetArgs(prop, tparamTypes);
+
+				// We must invoke it on the target Object, not on the UI Object!							
+				//m.Invoke(uiObject, args);
+				mInfo.Invoke(targetObject, args);
+			}
+			catch(ArgumentOutOfRangeException  e)
+			{
+				Console.WriteLine("Can not set property \"" + prop.Name + "\" due to mismatch interface with widget set API (\""+ mInfo +"\")");
+				//Console.WriteLine(e);
+			}
 		}
 
 		///<summary>
