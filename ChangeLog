@@ -1,15 +1,17 @@
 2004-07-26 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/: added preprocessing directives to support compiling for the .NET
+	Compact platform. To do this, define "COMPACT" when invoking the compiler
+	* Uiml/vocabularies/cswf-1.0.uiml: thoroughly checked the vocabulary for
+	compatibility with the Compact .NET SWF widget set
+	* Uiml/vocabularies/cswf-1.0.uiml: a few wrong mappings, which I stumbled
+	upon when working on the cswf-1.0 vocabulary, were fixed
 	* Uiml/Rendering/CompactSWF/CompactSWFRenderer.cs: Added LoadAdHocProperties
 	method to emulate Items.AddRange method for ComboBox, ListBox and List
-	classes.
+	classes
 	* Uiml/Rendering/Renderer.cs: Changed calling order of Load[..]Properties
-	methods. The LoadAdHocProperties method is called first now.
-	* Uiml/: added preprocessing directives to support compiling for the .NET
-	Compact platform. To do this, define "COMPACT" when invoking the compiler.
-	* Uiml/vocabularies/cswf-1.0.uiml: thoroughly checked the vocabulary for
-	compatibility with the Compact .NET SWF widget set.
-	* Uiml/vocabularies/cswf-1.0.uiml: a few wrong mappings, which I stumbled
-	upon when working on the cswf-1.0 vocabulary, were fixed.
+	methods. The LoadAdHocProperties method is called first now
+	* Uiml/examples/helloworldEvent.uiml: I added a simple Hello World! GTK# 
+	event example 
 
 2004-07-23 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Transition to the new vocabulary class:
