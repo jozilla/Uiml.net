@@ -91,6 +91,7 @@
 			<property part-name="e" name="size">48,18</property>
 			<!-- /Absolute scaling -->
 
+			<property part-name="output" name="readonly">true</property>
 			<property part-name="b0" name="label">0</property>
 			<property part-name="b1" name="label">1</property>
 			<property part-name="b2" name="label">2</property>
