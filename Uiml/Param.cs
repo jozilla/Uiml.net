@@ -42,7 +42,36 @@ namespace Uiml{
 			Console.WriteLine("PARAM!");
 			Process(n);
 		}
-
+		
+		/// <summary>
+		/// This function is used by the DParam class.
+		/// </summary>
+		/// <param name="n">the XmlNode to process</param>
+		/// <param name="additionalName">the name which must be checked instead of IAM</param>
+		public void Process(XmlNode n, string additionalName)
+		{
+			if(n.Name == additionalName)
+			{
+				Value = n.Value;
+				XmlAttributeCollection attr = n.Attributes;
+				if(attr.GetNamedItem(ID) != null)
+					Identifier = attr.GetNamedItem(ID).Value;
+				if(attr.GetNamedItem(TYPE) != null)
+					Type = attr.GetNamedItem(TYPE).Value;
+				if(attr.GetNamedItem(DIRECTION) != null)
+				{
+					switch(attr.GetNamedItem(DIRECTION).Value)
+					{
+						case IN : IsOut = false;
+							break;
+						case OUT: IsOut = true;
+							break;
+						case INOUT: IsOut = false;
+							break;
+					}
+				}
+			}
+		}
 
 		public void Process(XmlNode n)
 		{
@@ -65,8 +94,7 @@ namespace Uiml{
 						case INOUT: IsOut = false;
 										break;
 					}
-				}
-					
+				}					
 			}
 		}
 
