@@ -525,6 +525,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param type="System.Windows.Forms.ListViewItem[]"/>
 		</d-property>
 		<!-- /ad hoc -->
+		<d-property id="add" maps-type="setMethod" maps-to="Items.Add">
+			<d-param type="System.Windows.Forms.ListViewItem"/>
+		</d-property>
 		<d-property id="entry" return-type="System.Windows.Forms.ListView.SelectedIndexCollection" maps-type="getMethod" maps-to="SelectedItems"/>
 		<d-property id="view" maps-type="setMethod" maps-to="View">
 			<d-param type="System.Windows.Forms.View"/>
@@ -568,6 +571,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		</d-property>
 		<d-property id="content" maps-type="setMethod" maps-to="Nodes.AddRange">
 			<d-param type="System.Windows.Forms.TreeNode[]"/>
+		</d-property>
+		<d-property id="add" maps-type="setMethod" maps-to="Nodes.Add">
+			<d-param type="System.Windows.Forms.TreeNode"/>
 		</d-property>
 		<d-property id="selectedNode" maps-type="setMethod" maps-to="SelectedNode">
 			<d-param type="System.Windows.Forms.TreeNode"/>

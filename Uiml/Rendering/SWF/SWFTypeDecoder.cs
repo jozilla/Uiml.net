@@ -160,8 +160,12 @@ namespace Uiml.Rendering.SWF
 					ColumnHeader result = new ColumnHeader();
 					result.Text = (string)p.Value;
 					return result;
+				case "System.Windows.Forms.ListViewItem":
+					return new System.Windows.Forms.ListViewItem((string)p.Value);
 				case "System.Windows.Forms.ListViewItem[]":
 					return DecodeListViewItemArray(p);
+				case "System.Windows.Forms.TreeNode":
+					return new System.Windows.Forms.TreeNode((string)p.Value);
 				case "System.Windows.Forms.TreeNode[]":
 					return DecodeTreeNodeArray(p);
 				default:
