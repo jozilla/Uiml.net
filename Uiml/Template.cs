@@ -67,7 +67,7 @@ namespace Uiml{
 
 		private void LoadTemplate(string identifier, string path)
 		{
-			
+			/*	
 			if(TemplateRepository.Instance.Query(m_identifier)==null)
 			{
 				XmlDocument doc = new XmlDocument();
@@ -78,6 +78,7 @@ namespace Uiml{
 			}
 			else
 				throw new TemplateAlreadyProcessedException(identifier);
+			*/
 		}
 
 		public void Process(XmlNode n)
