@@ -375,6 +375,11 @@ namespace Uiml {
 					{
 						Console.WriteLine("\tFAILED");
 					}
+					catch(NullReferenceException nre)
+					{
+						Console.WriteLine(nre);
+						Console.WriteLine("Make sure to connect the objects after calling Render!");
+					}
 				}
 			}
 			

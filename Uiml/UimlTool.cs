@@ -20,6 +20,8 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+[assembly: System.Reflection.AssemblyKeyFile ("uiml.net.snk")]
+
 
 namespace Uiml{
 
@@ -36,6 +38,7 @@ namespace Uiml{
 
 	using Uiml.Executing;
 
+	
 	///<summary>
 	/// Main application class; serves as a comand-line front-end for
 	/// the uiml.net library
@@ -49,9 +52,10 @@ namespace Uiml{
 		public static String FileName;
 //		public static log4net.ILog logger;
 		
-
+		
 		public static void Main(string[] args)
 		{
+			Console.WriteLine("bla");
 			Options opt = new Options(args, options);
 			if((opt.NrSwitches == 0)||(opt[options[2]].Equals("-"))) 
 			{
