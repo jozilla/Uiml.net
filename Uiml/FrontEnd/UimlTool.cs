@@ -33,7 +33,6 @@ namespace Uiml.FrontEnd{
 
 	using CommandLine;
 
-	//using Uiml.Rendering.GTKsharp;
 	using Uiml.Rendering;
 
 	using Uiml.Executing;
@@ -43,12 +42,11 @@ namespace Uiml.FrontEnd{
 	/// Main application class; serves as a comand-line front-end for
 	/// the uiml.net library
 	///</summary>
-	public class UimlTool{
+	public class UimlTool : UimlFrontEnd
+	{
 		static public String[] options = {"voc","uiml","help","libs","version", "log"};
-		static public String VERSION = "0.0.6-pre (09-07-2004)";
 		static public char LIBSEP;
 
-		private BackendFactory backendFactory;
 		public static String FileName;
 //		public static log4net.ILog logger;
 		
@@ -56,11 +54,38 @@ namespace Uiml.FrontEnd{
 		public static void Main(string[] args)
 		{
 			Options opt = new Options(args, options);
-			if((opt.NrSwitches == 0)||(opt[options[2]].Equals("-"))) 
+			if(opt.NrSwitches == 0)
+			{
+				//if there were no switches/arguments, try to use a GUI front-end
+				//check whether this executable is working on Compact .Net
+				#if COMPACT
+					new CompactGUI();
+				#else
+					//try the Gtk# GUI first and then the Windows.Form GUI
+					try{
+						new GtkGUI(); 
+					}
+						catch(Exception excep)
+						{
+							//the compact SWF GUI also works on with normal SWF
+							new CompactGUI(); 
+						}
+				#endif
+			}
+			else
+			{
+				CommandLine(opt);
+			}		
+			
+		}
+
+		static public void CommandLine(Options opt)
+		{
+			if(opt[options[2]].Equals("-"))
 			{
 				Help();
 				return;
-			}
+			}				
 			string document="", vocabulary="";
 
 			if(opt.IsUsed(options[5])) //initialise logging facilities
@@ -109,7 +134,6 @@ namespace Uiml.FrontEnd{
 				Console.WriteLine("You have to specify a uiml document as input");
 				Help();
 			}
-			
 		}
 
 		static public void Help()
@@ -119,7 +143,7 @@ namespace Uiml.FrontEnd{
 			Console.WriteLine("                                                                             	  ");
 			Console.WriteLine("Copyright: Expertise Centre for Digital Media -- Limburgs Universitair Centrum	  ");
 			Console.WriteLine("contact: kris.luyten@luc.ac.be                                                	  ");
-			Console.WriteLine("web: http://lumumba.luc.ac.be/kris/projects/uiml.net                              ");
+			Console.WriteLine("web: http://research.edm.luc.ac.be/kris/projects/uiml.net                         ");
 			Console.WriteLine("                                                                          	     ");
 			Console.WriteLine("Please email the bugs you find using this tool to us                     	        ");
 			Console.WriteLine("                                                                         	        ");
@@ -131,10 +155,12 @@ namespace Uiml.FrontEnd{
 			Console.WriteLine("    -version                     Print version info                               ");	
 		}
 
-		static public void Version()
+		public override void OpenUimlFile()
 		{
-			Console.WriteLine("uiml.net version {0}", VERSION);
+			//is useless here...
 		}
+
+
 
 		static public void LoadLibraries(String libs)
 		{
@@ -151,35 +177,26 @@ namespace Uiml.FrontEnd{
 		}
 
 
-		private UimlDocument m_uimlDocument;
-		private static IRenderer m_renderer;
 		static public Uri InputFile = null;
 
 		public UimlTool(string fName)
 		{
-			backendFactory = new BackendFactory();
-			try{
-				//validate(fName)
-				Load(fName);
-			}catch(XmlException e){
-				Console.WriteLine(e.Message);
-			}
+			UimlFileName = fName;
+			Render();
 		}
 
 		public UimlTool(string fName, string voc)
 		{
-			try{
-				Load(fName, voc);
-			}catch(XmlException e){
-				Console.WriteLine(e);
-			}
+			Console.WriteLine("Separate or external vocabulary specification not supported yet.");
+			Console.WriteLine("Change the peer reference in the UIML document to change the vocabulary.");
 		}
-
+/*
 		public void Load(String fName)
 		{
 			Load(fName,null);
 		}
 
+	
 		public void Load(String fName, String strVoc)
 		{
 			FileName = fName;
@@ -210,21 +227,16 @@ namespace Uiml.FrontEnd{
 				#endif
 			}
 		}
+		*/
 
-		public UimlDocument Document
-		{
-			get
-			{
-				return m_uimlDocument;
-			}
-		}
 
 
 		private void Process(XmlNode n)
 		{
-			m_uimlDocument = new UimlDocument(n);
+			UimlDoc = new UimlDocument(n);
 		}
 
+		/*
 		private void Render()
 		{
 			Console.WriteLine(Document.UHead);
@@ -250,11 +262,8 @@ namespace Uiml.FrontEnd{
 			Console.WriteLine("Showing the ui");
 			instance.ShowIt();
 		}
+		*/
 
-		public static IRenderer CurrentRenderer
-		{
-			get { return m_renderer; }
-		}
 
 		public const string UIML = "uiml";
 

@@ -48,6 +48,6 @@ Interaction part:
 Experimental topics:
 ====================
 - Add support for WSDL, XML-RPC and SOAP in the call element
-
+- Generic Layout management module
 - Emit code for behavioral conditions?
 

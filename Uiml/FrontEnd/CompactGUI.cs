@@ -28,46 +28,24 @@ namespace Uiml.FrontEnd{
 
 	using System;
 	using System.Collections;
+	using System.Reflection;
 	using Uiml.Rendering;
 	using Uiml.Executing;
 	using Uiml.Executing.Binding;
-	using System.Windows.Forms;
 	using System.Xml;
 
 	/// <summary>
 	/// GUI front-end to select an UIML file for the Pocket PC
 	/// </summary>
-	public class CompactGUI
+	public class CompactGUI : UimlFrontEnd
 	{
-		static public string UIMLFILE = @"compactgui.uiml";
-		private ArrayList aList = new ArrayList();
-		private String uiFileName;
-		private UimlDocument uimlDoc;
-		private IRenderedInstance instance;
-		private IRenderer renderer;
+		//static public string UIMLFILE = @"compactgui.uiml";
+		static public string UIMLFILE = @"\\Program Files\\uimldotnetcf\\compactgui.uiml";
+		static public string UIMLLIB=@"uimldotnetcf.dll";
+		public const string SWF_ASSEMBLY		= "System.Windows.Forms";
 
-		public CompactGUI()
+		public CompactGUI() : base(UIMLFILE, UIMLLIB)
 		{
-			//OpenFileDialog ofd = new OpenFileDialog();
-			//if(ofd.ShowDialog() == DialogResult.OK)
-			//{
-				try
-				{
-					//uimlDoc = new UimlDocument(ofd.FileName);
-					//XmlDocument doc = new XmlDocument();
-					//doc.Load("\\Program Files\\uimldotnetcf\\compactgui.uiml");
-					//XmlTextReader reader = new XmlTextReader("\\Program Files\\uimldotnetcf\\compactgui.uiml");
-					//doc.Load(UIMLFILE);
-					uimlDoc = new UimlDocument("\\Program Files\\uimldotnetcf\\compactgui.uiml");
-					//uimlDoc = new UimlDocument(UIMLFILE);
-					renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);
-					instance = renderer.Render(uimlDoc);
-					ExternalLibraries.Instance.Add(@"uimldotnetcf.dll");
-					uimlDoc.Connect(this);
-					instance.ShowIt();
-				}
-				catch(Exception e){ Console.WriteLine(e); }
-			//}
 		}
 
 		public static void Main(string[] args)
@@ -80,31 +58,35 @@ namespace Uiml.FrontEnd{
 		}
 
 		//[UimlEventHandler("ButtonPressed")]
-		public void OpenUimlFile()
+		public override void OpenUimlFile()
 		{
-			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.Filter = "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" ;
-			if(ofd.ShowDialog() == DialogResult.OK)
-				uiFileName = ofd.FileName;
-		}
-
-		public String UimlFileName
-		{
-			get { return uiFileName; }
-		}
-
-		public void Render()
-		{
-			try
+			//dynamically load the code to create "OpenFileDialog"
+			Assembly guiAssembly = Assembly.Load(SWF_ASSEMBLY);
+			//OpenFileDialog ofd = new OpenFileDialog();
+			Type ofClassType = guiAssembly.GetType("System.Windows.Forms.OpenFileDialog");
+			Object fs = Activator.CreateInstance(ofClassType, null);
+			//ofd.Filter = "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" ;
+			PropertyInfo filterMe = ofClassType.GetProperty("Filter");
+			filterMe.SetValue(fs, "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" , null);
+		
+	
+			//if(ofd.ShowDialog() == DialogResult.OK)
+			MethodInfo runner = ofClassType.GetMethod("ShowDialog", null );
+			Object o = runner.Invoke(fs, null);
+			Object ok = (guiAssembly.GetType("System.Windows.Forms..DialogResult")).GetProperty("OK").GetValue(null, null);
+			
+			//	UimlFileName = ofd.FileName;
+			if(ok == o)
 			{
-				UimlDocument uimlDoc = new UimlDocument(UimlFileName);
-				IRenderer renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);
-				IRenderedInstance instance = renderer.Render(uimlDoc);
-				instance.ShowIt();
+				PropertyInfo fname = ofClassType.GetProperty("FileName");
+				UimlFileName = (string)fname.GetValue(fs, null);
 			}
-				catch(Exception e)
-				{
-				}
+
+			//fs.Hide();
+
+
 		}
+
+
 	}
 }

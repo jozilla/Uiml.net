@@ -198,6 +198,7 @@ namespace Uiml.Rendering.SWF
 			return targetObject;
 		}
 
+		/* Moved to super class
 		///<summary>
 		/// Dissects the method information for a specific property
 		///</summary>
@@ -220,7 +221,7 @@ namespace Uiml.Rendering.SWF
 				nextValue = ((PropertyInfo)m).GetValue(nextValue, null);
 			}
 			return m;
-		}
+		}*/
 
 		///<summary>
 		/// Applies several properties to an individual concrete widget instance   

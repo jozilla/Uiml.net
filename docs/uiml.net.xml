@@ -12,9 +12,9 @@ Copyright (c) 2004 Kris Luyten <kris.luyten@luc.ac.be>.
     Free Documentation License".
 -->
 
-<title>Uiml.net: An Open UIML Renderer for the .Net Framework</title>
+<title>Uiml.net Tool and Libary Overview</title>
 <section>
-	<title>Tool and Library Overview</title>
+	<title>Basic Components</title>
 	<para>
 		Uiml.net is a <emphasis>user interface creation library</emphasis>, that converts a user interface
 		described as a UIML file into a working user interface on the .Net virtual machine. Uiml.net
@@ -74,4 +74,47 @@ instance.ShowIt();
 				</variablelist>
 	</para>
 </section>
+<section>
+	<title>Usage of the Front-end</title>
+	<para>
+		This section discusses how the Uiml.net front-ends can be used to test your UIML documents. For each platform is a front-end available
+		that allows you to load a UIML document and render it for the current platform. The front-ends are fairly simple: their task is limited to 
+		allow you to load and render the UIML document. Each subsection is devoted to a separate platform that can be used. The front-ends are included 
+		in one of the precompiled versions of an uiml.net executable.
+	</para>
+	<para>
+		Notice these front-ends are just to help you to test your UIML files with uiml.net. It is not meant to be deployed with your final application;
+		for this purpose you can link with the uiml.net.dll library and bundle it with the preferred back-end(s).
+	</para>
+	<section>
+		<title>Command Line tool</title>
+		<para>
+			This front-end allows you to specify options for the uiml.net executable on the command line. Just start &ldquo;uiml.net.exe&rdquo; without
+			options to see all possible options and a short explanation for each option. You can specify a UIML file and one or more libraries to 
+			be linked with your UIML file.
+		</para>
+	</section>
+	<section>
+		<title>Gtk# front-end</title>
+		<para>
+			This front-end gives you a simple Gtk# front-end to open an UIML file and select one or more libraries that have to be linked with your
+			UIML file.
+		</para>
+	</section>
+	<section>
+		<title>System.Windows.Forms front-end</title>
+		<para>
+			This front-end gives you a simple System.Windows.Forms front-end to open an UIML file and select one or more libraries that have to be linked with your
+			UIML file.
+		</para>
+	</section>
+	<section>
+		<title>Compact.Windows.Forms front-end</title>
+		<para>
+			This front-end gives you a simple Compact System.Windows.Forms front-end to open an UIML file and select one or more libraries that have to be linked with your
+			UIML file.
+		</para>
+	</section>
+
+</scetion>
 </chapter>

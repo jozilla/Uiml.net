@@ -1,3 +1,9 @@
+2004-09-17 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/FrontEnd/*.cs: rewrote FrontEnd system for uiml.net
+	* Uiml/Rendering/Renderer.cs: moved "ResolveProperty" method from
+	subclasses to Renderer class
+	* docs/*: wrote some new documentation
+
 2004-08-27 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* vocabularies/gtk-sharp-1.0.uiml: updated Html class
 	* examples/gtk-sharp/browser.uiml: updated browser example

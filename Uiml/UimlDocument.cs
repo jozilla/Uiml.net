@@ -86,7 +86,20 @@ namespace Uiml{
 			get { return m_head;}
 			set { m_head = value; }
 		}
-
+/*
+		public String Title
+		{
+			get 
+			{
+				if(UHead!=null)
+				{
+				}
+				else
+					return "Uiml container";
+					
+			}
+		}
+*/
 		public IEnumerator Peers
 		{
 			get { return m_peers.GetEnumerator(); }

@@ -1,5 +1,5 @@
 /*
- 	 Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
+ 	 Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
     
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -18,9 +18,6 @@
 	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-ChangeLog:
-	* 07-09-2004 ApplyProperties uses the correct targetObject now (Jo Vermeulen)
 */
 
 namespace Uiml.Rendering
@@ -310,6 +307,31 @@ namespace Uiml.Rendering
 					}
 				return uiObject;
 		}
+
+		///<summary>
+		/// Dissects the method information for a specific property
+		///</summary>
+		///<param name="baseT"></param>
+		///<param name="newT"></param>
+		///<param name="retType"></param>
+		///<param name="nextValue"></param>
+		protected MemberInfo ResolveProperty(Type baseT, String newT, out Type retType, ref System.Object nextValue)
+		{			
+			MemberInfo m = baseT.GetProperty(newT);
+			if(m == null)
+			{
+				m = baseT.GetMethod(newT, new Type[0]);
+				retType = ((MethodInfo)m).ReturnType;
+				nextValue = ((MethodInfo)m).Invoke(nextValue, null);
+			}
+			else
+			{
+				retType = ((PropertyInfo)m).PropertyType;
+				nextValue = ((PropertyInfo)m).GetValue(nextValue, null);
+			}
+			return m;
+		}
+
 
 		#if COMPACT
 		protected MemberInfo[] SearchMembers(Type t, string setter)

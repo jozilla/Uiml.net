@@ -198,6 +198,7 @@ namespace Uiml.Rendering.CompactSWF
 			return targetObject;
 		}
 
+/* Moved to super class
 		///<summary>
 		/// Dissects the method information for a specific property
 		///</summary>
@@ -221,7 +222,8 @@ namespace Uiml.Rendering.CompactSWF
 			}
 			return m;
 		}
-
+*/
+		
 		///<summary>
 		/// Applies several properties to an individual concrete widget instance   
 		/// relying on hard-coded knowledge about the widgets

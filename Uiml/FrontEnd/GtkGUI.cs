@@ -28,46 +28,25 @@ namespace Uiml.FrontEnd{
 
 	using System;
 	using System.Collections;
+	using System.Reflection;
 	using Uiml.Rendering;
 	using Uiml.Executing;
 	using Uiml.Executing.Binding;
 	using System.Xml;
-	using Gtk;
+
 
 	/// <summary>
-	/// GUI front-end to select an UIML file for the Pocket PC
+	/// GUI front-end to select an UIML file with Gtk
 	/// </summary>
-	public class GtkGUI
+	public class GtkGUI : UimlFrontEnd
 	{
 		static public string UIMLFILE = @"gtkgui.uiml";
-		private ArrayList aList = new ArrayList();
-		private String uiFileName;
-		private UimlDocument uimlDoc;
-		private IRenderedInstance instance;
-		private IRenderer renderer;
+		static public string UIMLLIB=@"uiml.net.dll";
+		public const string GTK_ASSEMBLY    = "gtk-sharp";
 
-		public GtkGUI()
+
+		public GtkGUI() : base(UIMLFILE, UIMLLIB)
 		{
-			//OpenFileDialog ofd = new OpenFileDialog();
-			//if(ofd.ShowDialog() == DialogResult.OK)
-			//{
-				try
-				{
-					//uimlDoc = new UimlDocument(ofd.FileName);
-					//XmlDocument doc = new XmlDocument();
-					//doc.Load("\\Program Files\\uimldotnetcf\\compactgui.uiml");
-					//XmlTextReader reader = new XmlTextReader("\\Program Files\\uimldotnetcf\\compactgui.uiml");
-					//doc.Load(UIMLFILE);
-					uimlDoc = new UimlDocument(UIMLFILE);
-					//uimlDoc = new UimlDocument(UIMLFILE);
-					renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);
-					instance = renderer.Render(uimlDoc);
-					ExternalLibraries.Instance.Add(@"uiml.net.dll");
-					uimlDoc.Connect(this);
-					instance.ShowIt();
-				}
-				catch(Exception e){ Console.WriteLine(e); }
-			//}
 		}
 
 		public static void Main(string[] args)
@@ -80,33 +59,31 @@ namespace Uiml.FrontEnd{
 		}
 
 		//[UimlEventHandler("ButtonPressed")]
-		public void OpenUimlFile()
+		public override void OpenUimlFile()
 		{
-			FileSelection fs = new FileSelection ("Choose a file");
-         fs.Run ();
-			uiFileName = fs.Filename;
-			fs.Hide();
-			if(uiFileName == "")
-				uiFileName = null;
-		}
+			//dynamically load the code to create "FileSelection"
+			Assembly guiAssembly = Assembly.Load(GTK_ASSEMBLY);
+			if(guiAssembly == null)
+				Console.WriteLine("Can not find GTK# Assembly");
+			
+			//FileSelection fs = new FileSelection ("Choose a file");
+			Type ofClassType = guiAssembly.GetType("Gtk.FileSelection");
+			Object fs = Activator.CreateInstance(ofClassType, new System.Object[] { "Choose a file" } );			
+			Console.WriteLine("Loaded object {0}",fs);
+         //fs.Run ();
+			MethodInfo runner = ofClassType.GetMethod("Run");
+			Console.WriteLine("Retrieved runner {0}", runner);
+			runner.Invoke(fs, null);
+			//UimlFileName = fs.Filename;
+			PropertyInfo fname = ofClassType.GetProperty("Filename");			
+			UimlFileName = (string)fname.GetValue(fs, null);
 
-		public String UimlFileName
-		{
-			get { return uiFileName; }
-		}
+			//fs.Hide();
+			MethodInfo hideMe = ofClassType.GetMethod("Hide");
+			hideMe.Invoke(fs, null);
 
-		public void Render()
-		{
-			try
-			{
-				UimlDocument uimlDoc = new UimlDocument(UimlFileName);
-				IRenderer renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);
-				IRenderedInstance instance = renderer.Render(uimlDoc);
-				instance.ShowIt();
-			}
-				catch(Exception e)
-				{
-				}
+			if(UimlFileName == "")
+				UimlFileName = null;
 		}
 	}
 }

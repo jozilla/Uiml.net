@@ -1,5 +1,5 @@
 /*
- 	 Uiml.Net: a Uiml.Net renderer (http://lumumba.luc.ac.be/kris/research/uiml.net/)
+ 	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -67,7 +67,8 @@ namespace Uiml.Rendering.GTKsharp
 			{
 				Application.Init();
 				m_topWindow = new GtkRenderedInstance();
-				m_topWindow.Title = "Uiml container"; //TODO fix this! Set the appropriate title
+				m_topWindow.Title = "Uiml container"; 
+				//m_topWindow.Title = uimlDoc.Title; //TODO fix this! Set the appropriate title
 				Structure uiStruct   = (Structure)uimlDoc.UInterface.UStructure[0];
 				Style     uiStyle    = (Style)uimlDoc.UInterface.UStyle[0];
 				Behavior  uiBehavior = null;
@@ -294,6 +295,7 @@ namespace Uiml.Rendering.GTKsharp
 			return targetObject;
 		}
 
+		/* moved to super class
 		///<summary>
 		/// Dissects the method information for a specific property
 		///</summary>
@@ -317,11 +319,15 @@ namespace Uiml.Rendering.GTKsharp
 			}
 			return m;
 		}
+		*/
 
 		///<summary>
 		/// Applies several properties to an individual concrete widget instance   
 		/// relying on hard-coded knowledge about the widgets
 		///</summary>
+		///<param name="UiObject"></param>
+		///<param name="part"></param>
+		///<param name"s"></param>
 		///<todo>
 		// Change to the .custom format, like used for the gtk# bindings
 		///</todo>
@@ -376,11 +382,6 @@ namespace Uiml.Rendering.GTKsharp
 
 
 		public const int SPACE = 3;
-//		public const string GTK_ASSEMBLY    = "gtk-sharp.dll";
-//		public const string SYSTEM_ASSEMBLY = "mscorlib.dll"; 
-//		public const string GDK_ASSEMBLY    = "gdk-sharp.dll";
-//		public const string PANGO_ASSEMBLY  = "pango-sharp.dll";
-//		public const string GLIB_ASSEMBLY   = "glib-sharp.dll";
 		public const string GTK_ASSEMBLY    = "gtk-sharp";
 		public const string SYSTEM_ASSEMBLY = "mscorlib"; 
 		public const string GDK_ASSEMBLY    = "gdk-sharp";

@@ -1,8 +1,8 @@
 /*
-  	 Uiml.Net: a Uiml.Net renderer (http://lumumba.luc.ac.be/kris/research/uiml.net/)
+  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
    
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
+	                     Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
@@ -174,7 +174,16 @@ namespace Uiml.Executing
 				args[k] = Renderer.Decoder.GetArg(propValue, tparamTypes[k]);
 			}
 			
-			Object result =  m.Invoke(obj, args);
+			Object result = null;
+			try
+			{
+				result = m.Invoke(obj, args);
+			}
+				catch(System.Reflection.TargetInvocationException tie)
+				{
+					Console.WriteLine("Error while executing \"{0}\" from \"{1}\"; please check this method", m, obj.GetType());
+					throw tie;
+				}
 
 			//get the updated parameters out of args
 			for(int i=0; i<parameters.Length; i++)
