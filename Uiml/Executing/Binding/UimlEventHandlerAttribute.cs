@@ -35,19 +35,37 @@ namespace Uiml.Executing.Binding
 		private string m_event;
 		private ArrayList m_args = null;			
 
+		///  <param name="eventName">
+		///   The event class we're interested in.
+		///  </param>
 		public UimlEventHandlerAttribute(string eventName)
 		{
 			m_event = eventName;
 		}
+	
+		/*
+		 * This constructor's signature used to be:
+		 * 
+		 * public UimlEventHandlerAttribute(string eventName, params object[] args)
+		 * 
+		 * There was a bug in Mono which caused the runtime to abort
+		 * when I used the params object[] argument. When I changed it
+		 * to params string[], everything worked fine. 
+		 *
+		 * Later it occured that params string[] was much more intuitive. 
+		 * After all, part identifiers _are_ strings!
+		 */
 		
-		public UimlEventHandlerAttribute(string eventName, params object[] args)
+		/// <param name="eventName">
+		///  The event class we're interested in.
+		/// </param>
+		/// <param name="args">
+		///  A number of part identifiers. These represent the parts which
+		///  we want to examine.
+		/// </param>
+		public UimlEventHandlerAttribute(string eventName, params string[] args)
 		{
 			m_event = eventName;
-			m_args = new ArrayList(args);
-		}
-
-		public UimlEventHandlerAttribute(params object[] args)
-		{
 			m_args = new ArrayList(args);
 		}
 
@@ -56,12 +74,12 @@ namespace Uiml.Executing.Binding
 			get { return m_args != null; }
 		}
 		
-		public object[] Params 
+		public string[] Params 
 		{
 			get 
 			{
-				if(m_args != null)
-					return m_args.ToArray(); 
+				if(HasParams)
+					return (string[])m_args.ToArray(typeof(string)); 
 				else
 					return null;
 			}
@@ -73,3 +91,4 @@ namespace Uiml.Executing.Binding
 		}
 	}
 }
+

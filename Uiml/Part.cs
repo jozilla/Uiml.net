@@ -452,7 +452,7 @@ namespace Uiml {
 			
 			for(int i = 0; i < a.Params.Length; i++)
 			{
-				Part p = SearchPart((string)a.Params[i]);
+				Part p = SearchPart(a.Params[i]);
 				if(p != null)
 					m_eventArgs.AddPart(p);
 				else
