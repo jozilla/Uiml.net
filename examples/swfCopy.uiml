@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="Frame">
+				<part class="Entry" id="leftentry"/>
+				<part class="Button" id="copyleft"/>
+				<part class="Button" id="copyright"/>
+				<part class="Entry" id="rightentry"/>
+			</part>
+		</structure>
+		<style>
+			<!-- Absolute Positioning -->
+			<property part-name="Frame" name="position">5,5</property>
+			<property part-name="Frame" name="size">302,150</property>
+			
+			<property part-name="leftentry" name="position">5,50</property>	
+			<property part-name="leftentry" name="size">100,25</property>				
+			<property part-name="rightentry" name="position">195,50</property>
+			<property part-name="rightentry" name="size">100,25</property>	
+
+			<property part-name="copyleft" name="position">125,25</property>
+			<property part-name="copyleft" name="size">50,50</property>
+			<property part-name="copyright" name="position">125,75</property>
+			<property part-name="copyright" name="size">50,50</property>
+			
+			<!-- /Absolute Positioning -->
+			
+			<property part-name="Frame" name="label">Copy</property>
+			<property part-name="copyleft" name="label">copy left</property>
+			<property part-name="copyright" name="label">copy right</property>
+			<!-- set empty text for entries -->
+			<property part-name="leftentry" name="text"></property>
+			<property part-name="rightentry" name="text"></property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="copyleft"/>
+				</condition>				
+				<action>
+					<property part-name="rightentry" name="text">
+						<property part-name="leftentry" name="text"/>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="copyright"/>
+				</condition>				
+				<action>
+					<property part-name="leftentry" name="text">
+						<property part-name="rightentry" name="text"/>
+					</property>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		 <presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
+
