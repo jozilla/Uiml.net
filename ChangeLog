@@ -1,3 +1,14 @@
+2004-07-14 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* vocabularies/swf-1.1.uiml: updated vocabulary to solve some compatibility issues between the SWF and GTK# vocabularies
+	* examples/: Updated examples to reflect changes in vocabulary
+	* Uiml/Rendering/SWF/SWFEventLink.cs: first check in SWF Event Link class to build the behaviour subtree
+	* Uiml/Rendering/SWF/SWFEventLinker.cs: first check in Adaptor class to call
+	Condition.Execute with the SWF arguments
+	* Uiml/Constant.cs: renamed NoChildren to HasChildren and changed the implementation accordingly
+	* Uiml/Rendering/SWF/SWFRenderer.cs: cleaned up the code and added some todo's
+	* Uiml/Rendering/SWF/SWFRenderedInstance.cs: cleaned up the code
+	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: updated to reflect the changes in Constant.cs
+
 2004-07-13 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* vocabularies/swf-1.1.uiml: added frequently used widgets to bring the SWF backend on a par with
 	the GTK	backend: ToggleButton, ListBox, List, Tree, Text, HorizontalScroll, VerticalScroll, HorizontalRange, 
