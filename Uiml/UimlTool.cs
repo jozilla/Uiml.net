@@ -39,12 +39,13 @@ namespace Uiml{
 	/// the uiml.net library
 	///</summary>
 	public class UimlTool{
-		static public String[] options = {"voc","uiml","help","libs","version"};
+		static public String[] options = {"voc","uiml","help","libs","version", "log"};
 		static public String VERSION = "0.0.5-pre (22-01-2004)";
 		static public char LIBSEP;
 
 		private BackendFactory backendFactory;
 		public static String FileName;
+		public static log4net.ILog logger;
 		
 
 		public static void Main(string[] args)
@@ -56,6 +57,27 @@ namespace Uiml{
 				return;
 			}
 			string document="", vocabulary="";
+
+			if(opt.IsUsed(options[5])) //initialise logging facilities
+			{
+				if(!opt.HasArgument(options[5]))
+				{
+					Console.WriteLine("You have to specify an appender for logging");
+					Console.WriteLine("Available appenders: log4net.Appender.ConsoleAppender log4net.Appender.CountingAppender");
+				}
+				else
+				{
+					logger =  log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+					//SimpleLayout sl = new SimpleLayout();
+					//IAppender appender =  
+					//TODO
+				}
+				
+			}
+			else
+			{
+				//TODO
+			}
 		   
 			if(opt.IsUsed(options[1])&&opt.HasArgument(options[1]))
 			{
@@ -97,10 +119,11 @@ namespace Uiml{
 			Console.WriteLine("Please email the bugs you find using this tool to us                     	        ");
 			Console.WriteLine("                                                                         	        ");
 			Console.WriteLine("Options:                                                                     	  ");
-			Console.WriteLine("    -uiml <file>                 Specify the input file (required)                    ");
-			Console.WriteLine("    -help                        Print this message                                   ");
+			Console.WriteLine("    -uiml <file>                 Specify the input file (required)                ");
+			Console.WriteLine("    -help                        Print this message                               ");
 			Console.WriteLine("    -libs <file["+LIBSEP+"file"+LIBSEP+"...]>        The libraries containing te application logic        ");	
-			Console.WriteLine("    -version                     Print version info                                   ");	
+			Console.WriteLine("    -log <appender>                                                               ");
+			Console.WriteLine("    -version                     Print version info                               ");	
 		}
 
 		static public void Version()
@@ -200,12 +223,15 @@ namespace Uiml{
 
 			//Check the vocabulary, and whether there is a registerd Renderer for this vocabulary			
 			m_renderer =  backendFactory.CreateRenderer(Document.Vocabulary);
+			Console.WriteLine("Loading renderer for {0}", Document.Vocabulary);
 			if(m_renderer == null)
 			{
 				Console.WriteLine("No Vocabulary specified, please update the <peers> section of {0}", FileName);
 				Environment.Exit(-1);
 			}
+			Console.WriteLine("Building ui instance");
 			IRenderedInstance instance = m_renderer.Render(Document);
+			Console.WriteLine("Showing the ui");
 			instance.ShowIt();
 		}
 
