@@ -20,7 +20,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-	Author: Jo Vermeulen
+	Author: 
+		Jo Vermeulen
+		jo.vermeulen@student.luc.ac.be
 -->
 <uiml>
  <presentation base="swf-1.1" id="SWF">
