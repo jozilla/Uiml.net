@@ -1,3 +1,13 @@
+2004-07-27 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/vocabularies/gtk-sharp-1.0.uiml: Added basic support for tabs
+	* Uiml/vocabularies/swf-1.1.uiml: Added support for tabs.
+	* Uiml/vocabularies/cswf-1.0.uiml: Added support for tabs.
+	* Uiml/Rendering/GTKsharp/GtkRenderer.cs: Updated the LoadAdHocProperties
+	method to set the label of a TabPage. This currently doesn't work though.
+	* Uiml/examples/tabs.uiml: GTKsharp tabs example.
+	* Uiml/examples/swfTabs.uiml: SWF tabs example.
+	* Uiml/examples/cswfTabs.uiml: Compact SWF example.
+
 2004-07-26 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/: added preprocessing directives to support compiling for the .NET
 	Compact platform. To do this, define "COMPACT" when invoking the compiler
