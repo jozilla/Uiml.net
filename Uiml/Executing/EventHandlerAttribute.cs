@@ -26,8 +26,11 @@
 
 namespace Uiml.Executing
 {
+	using System;
+	using System.Collections;
+	
 	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-	public class EventHandlerAttribute
+	public class EventHandlerAttribute : Attribute
 	{
 		private ArrayList m_args = null;			
 
@@ -41,13 +44,12 @@ namespace Uiml.Executing
 
 		public bool HasParams
 		{
-			get { return m_args != null }
+			get { return m_args != null; }
 		}
 		
-		public Params 
+		public object[] Params 
 		{
-			get { return m_args; }
-			set { m_args = value; }
+			get { return m_args.ToArray(); }
 		}
 	}
 }
