@@ -521,6 +521,24 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		</d-property>
 	</d-class>
 
+	<d-class id="Tabs" used-in-tag="part" maps-type="class" maps-to="Gtk.Notebook">
+		<d-property id="tabPos" return-type="Gtk.PositionType" maps-type="getMethod"/>
+		<d-property id="tabPos" maps-type="setMethod" maps-to="TabPos">
+			<d-param type="Gtk.PositionType"/>
+		</d-property>
+		<d-property id="scrollable" maps-type="setMethod" maps-to="Scrollable">
+			<d-param type="System.Boolean"/>
+		</d-property>
+		<!-- events -->
+		<d-property id="switch" maps-type="event" maps-to="SwitchPage">
+			<d-param type="Gtk.SwitchPageHandler"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="TabPage" used-in-tag="part" maps-type="class" maps-to="Gtk.HBox">
+		<d-property id="label" maps-type="setMethod" maps-to="parent.Label"/>
+	</d-class>
+
 	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonPressEventHandler"/>
 	<d-class id="ButtonLeft" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonLeftEventHandler"/>
 	<d-class id="ButtonEntered" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonEnteredEventHandler"/>
