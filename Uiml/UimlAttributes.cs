@@ -34,11 +34,15 @@ namespace Uiml{
 		protected string m_how;
 		protected string m_export;
 
-		public enum HOW_VALS    { union,  cascade,  replace };
+		public enum HOW_VALS { Union,  Cascade,  Replace };
 		public const string REPLACE = "replace";
 		public const string CASCADE = "cascade";
 		public const string UNION   = "union";
-		public enum EXPORT_VALS { hidden, optional, required };
+		
+		public enum EXPORT_VALS { Hidden, Optional, Required };
+		public const string HIDDEN = "hidden";
+		public const string OPTIONAL = "optional";
+		public const string REQUIRED = "required";
 
 		protected void ReadAttributes(XmlNode n)
 		{
