@@ -208,6 +208,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="multiline" maps-type="setMethod" maps-to="Multiline">
 			<d-param type="System.Boolean"/>
 		</d-property>
+		<d-property id="scrollbars" maps-type="setMethod" maps-to="ScrollBars">
+			<d-param type="System.Windows.Forms.ScrollBars"/>
+		</d-property>
 	</d-class>
 	
 	<d-class id="CheckButton" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.CheckBox">
