@@ -27,6 +27,7 @@ namespace Uiml.Rendering
 {
 
 	using Uiml;
+	using Uiml.Peers;
 
 	using System;
 	using System.Collections;

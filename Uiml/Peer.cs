@@ -22,6 +22,7 @@
 
 
 namespace Uiml{
+	using Uiml.Peers;
 
 	using System;
 	using System.Xml;
