@@ -1,6 +1,7 @@
 2004-07-15 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* examples/: added SWF equivalents of the copy.uiml and calculator.uiml
-	examples
+	examples and a new example (swfComboEvent) illustrating other events than 
+	the ButtonPressed event
 	* vocabularies/swf-1.1.uiml: now has roughly the same support for events as the
 	GTK# vocabulary
 
