@@ -44,7 +44,7 @@
 	</behavior>
 </interface>
 <peers>
-	<presentation base="\My Documents\cswf-1.0.uiml"/>
+	<presentation base="\Program Files\uimldotnetcf\cswf-1.0.uiml"/>
 	<logic id="CompactGUI">
 		<d-component id="GUI" maps-to="Uiml.FrontEnd.CompactGUI">
 			<d-method id="Open" return-type="void" maps-to="OpenUimlFile" />
