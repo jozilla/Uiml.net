@@ -170,6 +170,20 @@ namespace Uiml.Rendering.SWF
 						return View.List;
 					else
 						return View.Details;
+				case "System.Windows.Forms.Orientation":
+					if(value == "Vertical")
+						return Orientation.Vertical;
+					else
+						return Orientation.Horizontal;
+				case "System.Windows.Forms.TickStyle":
+					if(value == "Both")
+						return TickStyle.Both;
+					else if(value == "BottomRight")
+						return TickStyle.BottomRight;
+					else if(value == "None")
+						return TickStyle.None;
+					else
+						return TickStyle.TopLeft;
 				default:
 					return value;
 			}			
