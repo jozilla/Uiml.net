@@ -49,7 +49,7 @@ namespace Uiml{
 
 		public void Process(XmlNode n)
 		{
-			if(n.Name == LOGIC)
+			if(n.Name == IAM)
 			{
 				base.ReadAttributes(n);
 				m_logicDocument = n.CreateNavigator();
@@ -133,7 +133,7 @@ namespace Uiml{
 			get { return null; }
 		}
 
-		public const string LOGIC = "logic";
+		public const string IAM = "logic";
 	}
 }
 

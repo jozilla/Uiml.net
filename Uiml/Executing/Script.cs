@@ -6,8 +6,8 @@
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
+	modify it under the terms of the GNU Lesser General Public License
+	as published by the Free Software Foundation; either version 2.1
 	of	the License, or (at your option) any later version.
 
 	This program is distributed in the hope that it will be useful,
@@ -15,7 +15,7 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
+	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
@@ -56,16 +56,24 @@ namespace Uiml.Executing
 			Type   = scriptType;
 		}
 
+		public Script(XmlNode n) : this()
+		{
+			//TODO this should be replaced by
+			//"waiting for the parent Part" when the Script
+			//element is more complete
+			Process(n);
+		}
+
 		public void Process(XmlNode n)
 		{
-			if(n.Name != SCRIPT)
+			if(n.Name != IAM)
 				return;
 
 			XmlAttributeCollection attr = n.Attributes;
 			if(attr.GetNamedItem(TYPE) != null)
 				Type = attr.GetNamedItem(TYPE).Value;
 			else
-				Console.WriteLine("Warning: " + SCRIPT + " should have \"" + TYPE + "\" attribute!");
+				Console.WriteLine("Warning: " + IAM + " should have \"" + TYPE + "\" attribute!");
 			Source = n.InnerText;
 		}
 
@@ -172,7 +180,7 @@ namespace Uiml.Executing
 		}
 
 		
-		public const string SCRIPT  = "script";
+		public const string IAM  = "script";
 		public const string TYPE  = "type";
 
 	}

@@ -7,7 +7,7 @@
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
+	as published by the Free Software Foundation; either version 2.1
 	of	the License, or (at your option) any later version.
 
 	This program is distributed in the hope that it will be useful,
@@ -15,7 +15,7 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
+	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
@@ -52,6 +52,57 @@ namespace Uiml{
 		{
 			if(n.Name != TEMPLATE)
 				return;
+
+			//need a Factory here to replace the 
+			//overloaded case
+			XmlNodeList xnl = n.ChildNodes;
+			switch(xnl[0].Name)
+			{
+				//TODO: change the Behavior impelementation to allow 
+				//behavior creation as part of a template
+				//case Behavior.IAM:
+				//	m_top = new Behavior(xnl[0]);
+				//	break;
+				case Constant.IAM:
+					m_top = new Constant(xnl[0]);
+					break;
+				case Content.IAM:
+					m_top = new Content(xnl[0]);
+					break;
+				case Interface.IAM:
+					m_top = new Interface(xnl[0]);
+					break;
+				case Logic.IAM:
+					m_top = new Logic(xnl[0]);
+					break;
+				case Part.IAM:
+					m_top = new Part(xnl[0]);
+					break;
+				case Peer.IAM:
+					m_top = new Peer(xnl[0]);
+					break;
+				case Presentation.IAM:
+					m_top = new Presentation(xnl[0]);
+					break;
+				case Property.IAM:
+					m_top = new Property(xnl[0]);
+					break;
+				case Restructure.IAM:
+					m_top = new Restructure(xnl[0]);
+					break;
+				case Executing.Rule.IAM:
+					m_top = new Executing.Rule(xnl[0]);
+					break;
+				case Executing.Script.IAM:
+					m_top = new Executing.Script(xnl[0]);
+					break;
+				case Structure.IAM:
+					m_top = new Structure(xnl[0]);
+					break;
+				default:
+					Console.WriteLine("Templates can not contain \"{0}\" ", xnl[0].Name);
+					break;
+			}
 
 
 		}

@@ -38,6 +38,8 @@ namespace Uiml.Executing
 		private Action    m_action;
 		private Part      m_partTree;
 
+		private XmlNode   m_waitingNode;
+
 		public Rule()
 		{
 		}
@@ -48,10 +50,30 @@ namespace Uiml.Executing
 			Process(xmlNode);
 		}
 
+		///<summary>
+		///This constructor is for rules that are contained in a Template element:
+		///ar parse-time there is no logical parent for this node
+		///</summary>
+		public Rule(XmlNode xmlNode) : this()
+		{
+			m_waitingNode = xmlNode;
+		}
+
+		///<summary>
+		///Factory method that resolves this Rule for a given Part 
+		///</summary>
+		public Rule Resolve(Part partTop)
+		{
+			if(m_waitingNode != null)
+				return new Rule(m_waitingNode, partTop);
+			else
+				return null;//this should never happen!
+		}
+
 		public void Process(XmlNode n)
 		{
 			ReadAttributes(n);
-			if(n.Name == RULE)
+			if(n.Name == IAM)
 			{
 				if(n.HasChildNodes)
 				{
@@ -62,6 +84,7 @@ namespace Uiml.Executing
 				}
 			}
 		}
+		
 
 			
 		public System.Object Execute()
@@ -94,7 +117,7 @@ namespace Uiml.Executing
 			get { return null; }
 		}
 
-		public const string RULE      = "rule";
+		public const string IAM      = "rule";
 
 	}
 

@@ -43,7 +43,7 @@ namespace Uiml{
 		}
 
 		public void Process(XmlNode n){//Exception toevoegen
-			if(n.Name == PRESENTATION){
+			if(n.Name == IAM){
 				base.ReadAttributes(n);
 				XmlAttributeCollection attr = n.Attributes;
 				if(attr.GetNamedItem(BASE) != null){
@@ -79,7 +79,7 @@ namespace Uiml{
 			get { return null; }
 		}
 
-		public const string PRESENTATION = "presentation";
+		public const string IAM = "presentation";
 		public const string BASE         = "base";
 		public const string DEFCLASS		= "d=class";
 

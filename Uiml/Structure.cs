@@ -51,7 +51,7 @@ namespace Uiml{
 		///precondition: n has children
 		///</remarks>
 		public void Process(XmlNode n){
-			if(n.Name !=  STRUCTURE)
+			if(n.Name !=  IAM)
 				return;
 			
 			base.ReadAttributes(n);
@@ -96,7 +96,7 @@ namespace Uiml{
 		}
 
 
-		public const string STRUCTURE = "structure";
+		public const string IAM = "structure";
 
 	}
 }

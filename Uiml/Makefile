@@ -1,7 +1,7 @@
 CLASSPATH=.:../../..
 OPTIONS=-g
 LIBS=/r:gtk-sharp.dll /r:glib-sharp.dll /r:gdk-sharp.dll /r:pango-sharp.dll /r:wx.NET.dll /r:System.Drawing.dll /r:log4net.dll
-DEBUG=-debug+
+DEBUG=-debug+ -warn:2
 
 Uiml2GtkSharp.exe : Part.cs Peer.cs Presentation.cs IUimlElement.cs Interface.cs Structure.cs Behavior.cs\
 						Style.cs Vocabulary.cs UimlTool.cs UimlDocument.cs Property.cs Options.cs Rendering/IRenderedInstance.cs\

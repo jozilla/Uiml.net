@@ -28,24 +28,21 @@ namespace Uiml{
 	using System.Collections;
 
 	///<summary>
-	///Represents the content element:
-	///  &lt;!ELEMENT content (constant*)&gt;
-	///  &lt;!ATTLIST content id NMTOKEN #IMPLIED 
-	///               source CDATA #IMPLIED 
-	///               how (union|cascade|replace) "replace" 
-	///               export (hidden|optional|required) "optional"&gt;
+	///Implementation for the restructure element. This allows to change
+	/// the structure of the User Interface at runtime
+	/// &lt;!ELEMENT restructure (template)?&gt; 
+	/// &lt;!ATTLIST restructure at-part NMTOKEN #IMPLIED 
+	///              how (union|cascade|replace|delete) "replace" 
+	///              where (first|last|before|after) "last" 
+	///              where-part NMTOKEN #IMPLIED source CDATA #IMPLIED&gt;
 	///</summary>
-	public class Content : UimlAttributes, IUimlElement {
-		private String m_urlName;
-
-		private ArrayList m_constantList;
-
-		public Content()
+	public class Restructure : IUimlElement{
+	
+		public Restructure()
 		{
-			m_constantList = new ArrayList();
 		}
-
-		public Content(XmlNode n) : this()
+		
+		public Restructure(XmlNode n) : this()
 		{
 			Process(n);
 		}
@@ -54,32 +51,13 @@ namespace Uiml{
 		{
 			if(n.Name != IAM)
 				return;
-			base.ReadAttributes(n);
-
-			if(n.HasChildNodes)
-			{
-				XmlNodeList xnl = n.ChildNodes;
-				for(int i=0; i<xnl.Count; i++)
-					m_constantList.Add(new Constant(xnl[i]));
-			}
 		}
 
 		public ArrayList Children
 		{
-			get { return m_constantList; }
+			get { return null; }//for now
 		}
 
-		public Constant Query(String constantName)
-		{
-			IEnumerator enumConsts = m_constantList.GetEnumerator();
-			while(enumConsts.MoveNext())
-				if(((Constant)enumConsts.Current).Identifier == constantName)
-					return (Constant)enumConsts.Current;
-			return null;
-		}
-
-
-		public const String IAM = "content";
-
+		public const String IAM     = "restructure";
 	}
 }
