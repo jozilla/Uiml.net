@@ -49,6 +49,7 @@ namespace Uiml{
 		private ArrayList m_children;
 		private ArrayList m_properties;
 		private string    m_class;
+		private Part		parent = null;
 
 		///<summary>
 		/// The (final) concrete interface object representing this part
@@ -126,7 +127,9 @@ namespace Uiml{
 							m_children.Add(new Content(xnl[i]));
 							break;
 						case IAM:
-							m_children.Add(new Part(xnl[i]));
+							Part p = new Part(xnl[i]);
+							p.Parent = this;
+							m_children.Add(p);
 							break;
 					}
 				}
@@ -151,6 +154,17 @@ namespace Uiml{
 			if(m_children == null)
 				m_children = new ArrayList();
 			m_children.Add(p);
+		}
+
+		public Part Parent
+		{
+			get { return parent; }
+			set { parent = value; }
+		}
+
+		public bool Top
+		{
+			get { return (parent==null); }
 		}
 
 		public bool HasSubParts()
