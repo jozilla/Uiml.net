@@ -50,9 +50,9 @@ namespace Uiml.Peers
 			Process(n);
 		}
 
-		public void Process(XmlNode n)
+		public new void Process(XmlNode n)
 		{
-			base.Process(n);
+			base.Process(n, IAM);
 		}
 
 		public bool HasChildren
@@ -72,11 +72,11 @@ namespace Uiml.Peers
 			return m_children.GetEnumerator();
 		}
 
-		public ArrayList Children
+		public new ArrayList Children
 		{
 			get { return m_children; }
 		}
 
-		public const string IAM				= "d-param";
+		public new const string IAM				= "d-param";
 	}
 }
