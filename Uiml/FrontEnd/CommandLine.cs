@@ -194,6 +194,11 @@ namespace Uiml.FrontEnd{
 			}
 		}
 		*/
+
+		public static void Main(string[] args)
+		{
+			new CommandLine(new Options(args, options));
+		}
 		
 	}
 

@@ -30,6 +30,11 @@ exe:
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 
+cli-exe:
+	@echo "building executable" 
+	mcs ${DEBUG} -keyfile:uiml.net.snk -o uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
+	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.CommandLine
+	@echo "done"
 
 lib :
 	@echo "building library"
