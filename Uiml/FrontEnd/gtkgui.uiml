@@ -8,6 +8,13 @@
 					<part id="uimlfileOpen" class="Button"/>
 					<part id="uimlfileName" class="Label"/>
 				</part>
+				<part class="HBox">
+					<part id="libList" class="List"/>
+					<part class="VBox">
+						<part id="addLib" class="Button"/>
+						<part id="remLib" class="Button"/>
+					</part>
+				</part>
 				<part id="render" class="Button"/>
 			</part>
 		</part>
@@ -15,7 +22,10 @@
 	<style>
 		<property part-name="uimlfileOpen" name="label">Select UIML file...</property>
 		<property part-name="uimlfileName" name="text">No UIML file selected</property>
-      <property part-name="render" name="label">Engage Magic!</property>
+		<property part-name="render" name="label">Render UIML Document</property>
+		<property part-name="libList" name="title">Linked Libraries</property>
+		<property part-name="addLib" name="label">Add Library</property>
+		<property part-name="remLib" name="label">Remove Library</property>
 	</style>
 	<behavior>
 	  <rule>
@@ -26,6 +36,27 @@
 			<call name="GUI.Open"/>
 			<property part-name="uimlfileName" name="text">
 				<call name="GUI.Name"/>
+			</property>
+		</action>
+	  </rule>
+	  <rule>
+		<condition>
+			<event part-name="addLib" class="ButtonPressed"/>
+		</condition>
+		<action>
+			<property part-name="libList" name="append">
+				<call name="GUI.AddLib"/>
+			</property>
+		</action>
+     </rule>
+	  <rule>
+		<condition>
+			<event part-name="remLib" class="ButtonPressed"/>
+		</condition>
+		<action>
+			<!-- this is not very logical -->
+			<property part-name="libList" name="remove">
+				<property part-name=""  name=""/>
 			</property>
 		</action>
 	   </rule>
@@ -40,7 +71,8 @@
 	</behavior>
 </interface>
 <peers>
- 	<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+	<!-- 	<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/> -->
+	<presentation base="file:///home/kris/projects/uiml.net/vocabularies/gtk-sharp-1.0.uiml"/>
 	<logic id="GtkGUI">
 		<d-component id="GUI" maps-to="Uiml.FrontEnd.GtkGUI">
 			<d-method id="Open" return-type="void" maps-to="OpenUimlFile" />
