@@ -1,3 +1,7 @@
+2004-07-16 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/Rendering/SWF/SWFRenderer.cs: added dynamic loading of
+	System.Drawing.dll assembly
+
 2004-07-15 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* examples/: added SWF equivalents of the copy.uiml and calculator.uiml
 	examples and a new example (swfComboEvent) illustrating other events than 
