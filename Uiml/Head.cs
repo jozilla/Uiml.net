@@ -25,61 +25,68 @@ namespace Uiml{
 	
 	using System;
 	using System.Xml;
+	using System.Text;
 	using System.Collections;
 
 	///<summary>
-	///Represents the content element:
-	///  &lt;!ELEMENT content (constant*)&gt;
-	///  &lt;!ATTLIST content id NMTOKEN #IMPLIED 
-	///               source CDATA #IMPLIED 
-	///               how (union|cascade|replace) "replace" 
-	///               export (hidden|optional|required) "optional"&gt;
+	///Implementation for the head element
+	///   &lt;!ELEMENT head (meta*)&gt; 
+	///   &lt;!ELEMENT meta EMPTY&gt;
+	///   &lt;!ATTLIST meta 
+	///                name NMTOKEN #REQUIRED 
+	///                content CDATA #REQUIRED&gt;
 	///</summary>
-	public class Content : UimlAttributes, IUimlElement {
-		private String m_urlName;
+	public class Head : IUimlElement{
+		private Hashtable metaChildren;
 
-		private ArrayList m_constantList;
-
-		public Content()
+		public Head()
 		{
-			m_constantList = new ArrayList();
+			metaChildren = new Hashtable();
 		}
 
-		public Content(XmlNode n) : this()
+		public Head(XmlNode n) : this()
 		{
 			Process(n);
 		}
 
 		public void Process(XmlNode n)
 		{
-			if(n.Name != CONTENT)
+			if(n.Name != IAM)
 				return;
-			base.ReadAttributes(n);
 
 			if(n.HasChildNodes)
 			{
 				XmlNodeList xnl = n.ChildNodes;
 				for(int i=0; i<xnl.Count; i++)
-					m_constantList.Add(new Constant(xnl[i]));
+					if(xnl[i].Name == META)
+					{
+						XmlAttributeCollection attr = xnl[i].Attributes;
+						metaChildren.Add(attr.GetNamedItem(NAME).Value, attr.GetNamedItem(CONTENT).Value);
+					}
 			}
+		}
+
+		public override String ToString()
+		{
+			StringBuilder strBuffer = new StringBuilder();
+			strBuffer.Append("\n");
+			foreach(DictionaryEntry entry in metaChildren)
+			{
+				strBuffer.Append(entry.Key).Append(":").Append(entry.Value);
+				strBuffer.Append("\n");
+			}
+			strBuffer.Append("\n");
+			return strBuffer.ToString();
 		}
 
 		public ArrayList Children
 		{
-			get { return m_constantList; }
+			get { return null; }
 		}
 
-		public Constant Query(String constantName)
-		{
-			IEnumerator enumConsts = m_constantList.GetEnumerator();
-			while(enumConsts.MoveNext())
-				if(((Constant)enumConsts.Current).Identifier == constantName)
-					return (Constant)enumConsts.Current;
-			return null;
-		}
-
-
+		public const String IAM     = "head";
+		public const String META    = "meta"; 
+		public const String NAME    = "name";
 		public const String CONTENT = "content";
-
 	}
 }

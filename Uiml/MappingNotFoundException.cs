@@ -47,6 +47,8 @@ namespace Uiml{
 			String resultStr = Query;
 			if((To!=null)&&(From!=null))
 				resultStr += "[" + From + " => " + To + "]";
+			else
+				resultStr += "[ incomplete mapping in vocabulary (To=\""+To+"\",From=\""+From+"\")]" ;
 			return resultStr;
 		}
 

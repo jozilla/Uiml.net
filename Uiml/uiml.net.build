@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<project name="uiml.net" default="build" basedir=".">
+	<description>uiml.net: an open UIML renderer for the .Net Framework</description>
+	
+	<property name="debug" value="true" />
+
+	<target name="clean" description="remove all generated files">
+		<delete file="uiml.net.exe" failonerror="false" />
+	</target>
+	
+	<target name="build" description="compiles the source code">
+		<csc target="exe" output="uiml.net.exe" debug="${debug}">
+			<sources>
+				<includes name="**/*.cs" />
+			</sources>
+		</csc>
+   </target>
+</project>

@@ -59,9 +59,9 @@ namespace Uiml{
 
 		public void Process(XmlNode n)
 		{
-			base.ReadAttributes(n);
-			if(n.Name == CONSTANT)
+			if(n.Name == IAM)
 			{
+				base.ReadAttributes(n);
 				XmlAttributeCollection attr = n.Attributes;
 				if(attr.GetNamedItem(MODEL) != null) //it is a model == other sub constants are there!!
 					m_model = attr.GetNamedItem(MODEL).Value;
@@ -120,7 +120,7 @@ namespace Uiml{
 			set { m_children = value; }
 		}
 
-		public const string CONSTANT = "constant";
+		public const string IAM = "constant";
 		public const string VALUE = "value";
 		public const string MODEL = "model";
 	

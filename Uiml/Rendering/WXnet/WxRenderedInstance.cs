@@ -70,7 +70,7 @@ namespace Uiml.Rendering.WXnet
 	{
 		
 		//TODO: remove the static parameters
-		public ContainerFrame(string title) :	base(title, new Point(50,50), new Size(450,450))
+		public ContainerFrame(string title) :	base(title, new Point(50,50), new Size(-1,-1))
 		{
 		}
 

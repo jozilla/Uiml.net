@@ -93,8 +93,8 @@ namespace Uiml.Rendering.GTKsharp
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine("Unexpected failure:");
-					Console.WriteLine(e);
+					Console.WriteLine("Unexpected failure ({0}) while processing {1}:", e.GetType(), uimlDoc);
+					Console.WriteLine(e.ToString());
 					Console.WriteLine("Please contact the uiml.net maintainer with the above output.");
 					throw e;
 				}

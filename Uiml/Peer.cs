@@ -148,5 +148,6 @@ namespace Uiml{
 
 		public const string PRESENTATION = "presentation";
 		public const string LOGIC        = "logic";
+		public const string IAM          = "peers";
 	}
 }

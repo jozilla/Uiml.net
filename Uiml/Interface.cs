@@ -55,7 +55,7 @@ namespace Uiml{
 		}
 
 		public void Process(XmlNode n){
-			if(n.Name == INTERFACE){
+			if(n.Name == IAM){
 				ReadAttributes(n);
 				if(n.HasChildNodes){
 					XmlNodeList xnl = n.ChildNodes;
@@ -144,7 +144,8 @@ namespace Uiml{
 		public const string STYLE     = "style";
 		public const string CONTENT   = "content";
 		public const string BEHAVIOR  = "behavior";
-		public const string INTERFACE = "interface";
-		
+		//public const string INTERFACE = "interface";
+		public const string IAM = "interface";
+	
 	}
 }
