@@ -1,3 +1,15 @@
+2004-07-13 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* vocabularies/swf-1.1.uiml: added frequently used widgets to bring the SWF backend on a par with
+	the GTK	backend: ToggleButton, ListBox, List, Tree, Text, HorizontalScroll, VerticalScroll, HorizontalRange, 
+	VerticalRange and Calendar
+	* examples/: has examples for all swf widgets now
+	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: added decoders for some SWF enums such
+	as ScrollBars, Appearance, SelectionMode, View, Orientation and TickStyle. Also added decoders for
+	System.DateTime and SWF ListViewItem[] and 	TreeNode[] arrays
+	* Uiml/Constant.cs: added two properties: ChildCount and NoChildren to
+	provide information about a constant's list of children. This was useful for
+	implementing the TreeNode[] decoder
+
 2004-07-09 Kris Luyten <kris.luyten@luc.ac.be>
 	* Initial System.Windows.Forms rendering code checked in. Contributed
 	by Jo Vermeulen <jo.vermeulen@student.luc.ac.be>:
@@ -7,7 +19,7 @@
 	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: initial check in SWF Type convertor
 	* vocabularies/: holds all vocabularies now
 	* vocabularies/swf-1.1.uiml: initial check in swf vocabulary
-	* Uiml/Rendering/Renderer.cs: fixed ApplyPorperties to use correct target
+	* Uiml/Rendering/Renderer.cs: fixed ApplyProperties to use correct target
 	(Jo Vermeulen)
 
 2004-06-21 Kris Luyten <kris.luyten@luc.ac.be>
