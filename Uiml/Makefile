@@ -2,6 +2,7 @@ CLASSPATH=.:../../..
 OPTIONS=-g
 GTKLIBS= -pkg:gtk-sharp 
 WXLIBS=/r:wx.NET.dll /r:System.Drawing
+SWFLIBS=/r:System.Windows.Forms.dll /r:System.Drawing
 #LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
 #LIBS=-gtk -L/usr/local/lib/
@@ -16,7 +17,7 @@ all: lib exe
 #	mcs ${DEBUG} -o uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
 #	cscc -o uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
 exe:
-	mcs ${DEBUG} -keyfile:uiml.net.snk -o uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
+	mcs ${DEBUG} -pkg:gtk-sharp -keyfile:uiml.net.snk -o uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/UimlTool.cs
 
 
@@ -39,4 +40,4 @@ cswf:
 
 
 clean:
-	rm uiml.net.exe
+	rm *.exe *.dll *.mdb

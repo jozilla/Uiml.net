@@ -1,0 +1,77 @@
+<chapter id="uimlnet-chapter" xreflabel="Tool and Library Overview">
+<!--
+Copyright (c) 2004 Kris Luyten <kris.luyten@luc.ac.be>.
+    Limburgs Universitair Centrum
+	Expertisecentrum Digitale Media
+
+    Permission is granted to copy, distribute and/or modify this document
+    under the terms of the GNU Free Documentation License, Version 1.2
+    or any later version published by the Free Software Foundation;
+    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    A copy of the license is included in the section entitled "GNU
+    Free Documentation License".
+-->
+
+<title>Uiml.net: An Open UIML Renderer for the .Net Framework</title>
+<section>
+	<title>Tool and Library Overview</title>
+	<para>
+		Uiml.net is a <emphasis>user interface creation library</emphasis>, that converts a user interface
+		described as a UIML file into a working user interface on the .Net virtual machine. Uiml.net
+		can be used with multiple widget sets, like <ulink url="http://gtk-sharp.sourceforge.net">Gtk-sharp</ulink>,
+		<ulink url="http://msdn.microsoft.com/library/en-us/cpref/html/frlrfSystemWindowsForms.asp">System.Windows.Forms</ulink> and 
+		<ulink url="http://wxnet.sourceforge.net">Wx.NET</ulink>. It is truly multi-platform: it works with <ulink url="http://www.mono-project.com">Mono</ulink>,
+		<ulink url="http://msdn.microsoft.com/netframework/">Microsoft .Net Framework</ulink> 
+		and <ulink url="http://msdn.microsoft.com/library/en-us/dv_evtuv/html/etconNETCompactFramework.asp">Microsoft Compact .Net Framework</ulink>.
+	</para>
+	<para>
+		The Uiml.net software is packaged as a set of libraries:
+				<variablelist>
+					<varlistentry>
+						<term>uiml.net.dll</term>
+						<listitem>
+							<para>
+								Is the core library: it contains the software that reads and processes an UIML document.
+								It can be linked with your application and used from within your application as shown in example <xref linkend="uimlnetlib-example"/>.
+								There is also a front-end application the offers a command line interface or a graphical interface for the uiml.net.dll library;
+								uiml.net.exe. Uiml.net.dll also contains all the core functionality to render a UIML file, but it 
+								can only render the user interface if there is a matching widget set backend available for the widget set that is referenced
+								by the UIML vocabulary. Each supported widget-set is packaged as a separate assembly.
+							   <example id="uimlnetlib-example">
+					          <title>A simple UIML front-end user interface to illustrate Connect</title>
+								 <programlisting>
+<![CDATA[
+UimlDocument uimlDoc = new UimlDocument("myinterface.uiml");
+IRenderer renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);
+IRenderedInstance instance = renderer.Render(uimlDoc);
+instance.ShowIt();									 
+]]>
+                         </programlisting>
+							   </example>
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>uiml-&lt;widgetset&gt;.dll</term>
+						<listitem>
+							<para>
+								A set of separate assemblies, each containing widget-set specific rendering code. These assemblies are very small,
+								since the core functionality is contained in uimnl.net.dll. Currently, uiml-compact-swf.dll, uiml-gtk-sharp.dll,
+								uiml-swf.dll and uiml-wx-net.dll can be used. Just drop these in the same directory as uiml.net.dll so the rendering
+								library can find them and load them on-demand.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>uiml.net.exe</term>
+						<listitem>
+							<para>
+								A front-end for the library, that supports easy testing of UIML documents. Both a command-line tool and a graphical
+								interface can be used.
+							</para>
+						</listitem>
+					</varlistentry>
+				</variablelist>
+	</para>
+</section>
+</chapter>

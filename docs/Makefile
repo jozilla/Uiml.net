@@ -7,7 +7,7 @@ PS = db2ps
 # de hoofdfile van de tekst
 FILE = uiml.net.docs
 TARGETS = $(FILE).rtf $(FILE).pdf $(FILE).html $(FILE).ps
-XMLFILES = uiml.net.docs.xml fdl-1.2.xml
+XMLFILES = uiml.net.docs.xml fdl-1.2.xml uiml.xml uiml.net.xml behavior.xml
 OUTDIR = uiml.net.docs
 
 # welke bestanden mogen weg gedaan worden

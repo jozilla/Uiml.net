@@ -29,8 +29,8 @@ namespace Uiml.Rendering.WXnet
 	using wx;
 
 	///<summary>
-	/// This class serves as a container for rendering a GTK# User Interface.
-	/// The GtkRenderer will return an instance of this class. Use
+	/// This class serves as a container for rendering a Wx.NET User Interface.
+	/// The WxRenderer will return an instance of this class. Use
 	/// ShowIt to show the interface on screen.
 	///</summary>
 	public class WxRenderedInstance : App, IRenderedInstance{
@@ -40,36 +40,47 @@ namespace Uiml.Rendering.WXnet
 
 		public WxRenderedInstance(String title)
 		{
+			Console.WriteLine("In constructor");
 			m_title = title;
-			m_topFrame = new ContainerFrame(m_title);
 		}
 
 		public Frame TopFrame
 		{
-			get { return m_topFrame; }
+			get {	
+				Console.WriteLine("In TopFrame getter, before test: {0}", m_topFrame);
+				if(m_topFrame==null)
+					m_topFrame = new ContainerFrame(m_title);
+				Console.WriteLine("In TopFrame getter, after test: {0}", m_topFrame);
+				return m_topFrame; 
+			}
 		}
 	
+
+		public override bool OnInit()
+		{
+			Console.WriteLine("In OnInit, before show: {0}", m_topFrame);
+			TopFrame.Show(true);
+			Console.WriteLine("In OnInit, after show: {0}", m_topFrame);
+			return true;
+		}
 
 		[STAThread]
 		public void ShowIt()
 		{
-			Run();			
+			Console.WriteLine("let's show");
+			Run();
 		}
 
-		public override bool OnInit()
-		{
-			m_topFrame.Show(true);
-			return true;
-		}
+
 
 
 	}
-
 
 	class ContainerFrame : Frame
 	{
 		public ContainerFrame(string title) :	base(null, -1, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE )
 		{
+			Console.WriteLine("In ContainerFrame constructor");
 		}
 	}
 	

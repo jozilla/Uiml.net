@@ -73,9 +73,9 @@ namespace Uiml.Rendering.WXnet
 				}catch(Exception e){ /* no behavior specified */ }
 
 				Top = uiStruct.Top;
-				if(uimlDoc.SearchPeers(NAME) == null)
-					Console.WriteLine("uimlDoc.SearchPeers(NAME)==null");
 				Voc = uimlDoc.SearchPeers(NAME).GetVocabulary();
+				Console.WriteLine("Calling TopFrame...");
+				Console.WriteLine("In Render; TopFrame is {0}", m_topWindow.TopFrame);
 				Window c = Render(uiStruct.Top, uiStyle, m_topWindow.TopFrame);
 				//Render has filled the part-tree with the concrete object references
 				//to the individual widgets, now attach the behavior

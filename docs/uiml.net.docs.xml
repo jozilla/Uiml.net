@@ -6,6 +6,8 @@
 <!ENTITY INTRODUCTION SYSTEM "intro.xml">
 <!ENTITY REVHISTORY SYSTEM "revhistory.xml">
 <!ENTITY UIML SYSTEM "uiml.xml">
+<!ENTITY UIMLNET SYSTEM "uiml.net.xml">
+<!ENTITY BEHAVIOR SYSTEM "behavior.xml">
 <!ENTITY FDL12 SYSTEM "fdl-1.2.xml">
 <!ENTITY o "<![CDATA[<]]>">
 <!ENTITY w3c "http://www.w3.org">
@@ -22,7 +24,7 @@ author: Kris Luyten <kris.luyten@luc.ac.be>.
 -->
 
 	<bookinfo>		
-		<title>Uiml.net: Manual</title>
+		<title>Grokking Uiml.net</title>
 		<address>http://research.edm.luc.ac.be/kris/projects/uiml.net</address>
 		<authorgroup>
 			<author>
@@ -74,6 +76,8 @@ author: Kris Luyten <kris.luyten@luc.ac.be>.
 
 &INTRODUCTION;
 &UIML;
+&UIMLNET;
+&BEHAVIOR;
 &FDL12;
 </book>
 

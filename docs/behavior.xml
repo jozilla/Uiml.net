@@ -1,0 +1,105 @@
+<chapter id="behavior-chapter" xreflabel="behavior">
+<!--
+Copyright (c) 2004 Kris Luyten <kris.luyten@luc.ac.be>.
+    Limburgs Universitair Centrum
+	Expertisecentrum Digitale Media
+
+    Permission is granted to copy, distribute and/or modify this document
+    under the terms of the GNU Free Documentation License, Version 1.2
+    or any later version published by the Free Software Foundation;
+    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    A copy of the license is included in the section entitled "GNU
+    Free Documentation License".
+-->
+
+	<title>Behavior</title>
+	<para>
+		This chapter discusses how a user interface that is created with
+		uiml.net can be linked with application logic. 
+	</para>
+	  <section>
+      <title>Connect the interface</title>
+		<para>
+			Based on the  <ulink url="http://xml.apache.org/">libGlade autoconnect funtion</ulink>, 
+			the uiml.net library provides a Connect function that allows a developer to
+			connect a user interface with its program code. The programmer can register
+			objects for usage when a call is executed. For example, a call can be specified
+			as follows: <![CDATA[<call name="GUI.Open"/>]]>. If this is executed,
+			<![CDATA[GUI]]> will be mapped on a class; <![CDATA[GtkGUI]]> and Name on an attribute or operation
+			from this class; <![CDATA[OpenUimlFile]]>. The programmer can now register objects from the type
+			<![CDATA[GtkGUI]]>, and  <![CDATA[OpenUimlFile]]> will be called on these object instances. If
+			no instance is registered, uiml.net will try to invoke a static  <![CDATA[OpenUimlFile]]> on
+			the class, if this exists.
+		</para>
+		<para>
+			Consider the UIML document in example <xref linkend="gtkuimlfe"/>.
+         <example id="gtkuimlfe">
+          <title>A simple UIML front-end user interface to illustrate Connect</title>
+			 <programlisting>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8" ?> 
+<uiml>
+<interface>
+	<structure>
+		<part id="cont" class="Frame">
+			<part class="VBox">
+				<part class="HBox">
+					<part id="uimlfileOpen" class="Button"/>
+					<part id="uimlfileName" class="Label"/>
+				</part>
+				<part id="render" class="Button"/>
+			</part>
+		</part>
+	</structure>
+	<style>
+		<property part-name="uimlfileOpen" name="label">
+			Select UIML file...
+		</property>
+		<property part-name="uimlfileName" name="text">
+			No UIML file selected
+		</property>
+		<property part-name="render" name="label">
+			Engage Magic!
+		</property>
+	</style>
+	<behavior>
+	  <rule>
+		<condition>
+			<event part-name="uimlfileOpen" class="ButtonPressed"/>
+		</condition>
+		<action>
+			<call name="GUI.Open"/>
+			<property part-name="uimlfileName" name="text">
+				<call name="GUI.Name"/>
+			</property>
+		</action>
+	   </rule>
+	   <rule>
+	    <condition>
+			<event part-name="render" class="ButtonPressed"/>
+	    </condition>
+	    <action>
+			<call name="GUI.Show"/>
+	    </action>
+	   </rule>
+	</behavior>
+</interface>
+<peers>
+ 	<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+	<logic id="GtkGUI">
+		<d-component id="GUI" maps-to="Uiml.FrontEnd.GtkGUI">
+			<d-method id="Open" return-type="void" maps-to="OpenUimlFile" />
+			<d-method id="Name" return-type="String" maps-to="UimlFileName" />
+			<d-method id="Show" return-tyep="void" maps-to="Render" />
+		</d-component>
+	</logic>
+</peers>
+</uiml>	 
+]]>				 
+			 </programlisting>
+			</example>
+
+		</para>
+	</section>
+							  
+</chapter>

@@ -34,7 +34,9 @@ namespace Uiml{
 		
 		public virtual IUimlElement Resolve(Template t, IUimlElement placeholder)
 		{
-			return null;//TODO
+			//to do: replace all existing children of placeholder with the elemens
+			//from template t
+			return placeholder;
 		}
 	}
 }

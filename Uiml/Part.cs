@@ -118,14 +118,14 @@ namespace Uiml {
 				return;
 
 			ReadAttributes(n);
+			ProcessSubTree(n);
+
 			if(SourceAvailable)
 			{
 				ITemplateResolver templateResolver = Template.GetResolver(How);
-				Template t = TemplateRepository.Instance.Query(Source);
-				ProcessSubTree(n);
+				Template t = TemplateRepository.Instance.Query(Source);				
+				templateResolver.Resolve(t,this);
 			}
-			else
-				ProcessSubTree(n);
 		}
 
 		private void ProcessSubTree(XmlNode n)
@@ -274,14 +274,7 @@ namespace Uiml {
 			get { return m_children; }
 		}
 
-		///<summary>
-		///Libglade style autoconnect funtion. Makes binding a declarative UI specification
-		///with the object oriented approach much more feasible.
-		///</summary>
-		public void AutoConnect(Object o)
-		{
-			//get all On<Name><Event>() functions
-		}
+
 		
 		public delegate void UimlEventHandler(Part sender, UimlEventArgs e);
 		public event UimlEventHandler Signal;

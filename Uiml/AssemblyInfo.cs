@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 //TODO make sure the library is completely CLS compliant!
 //[assembly:CLSCompliant(false)]
 
+[assembly: System.Reflection.AssemblyKeyFile ("uiml.net.snk")]
+
 
 [assembly:AssemblyTitle("Uiml.net")]
 [assembly:AssemblyDescription("An open UIML renderer for the .Net Framework")]
