@@ -1,5 +1,5 @@
 /*
- 	 Uiml.Net: a Uiml.Net renderer (http://lumumba.luc.ac.be/kris/research/uiml.net/)
+ 	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
 
 	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -103,7 +103,7 @@ namespace Uiml.Rendering
 					Console.Write("Renderer for {0} vocabulary", dynname);
 					if(dynname == name)
 					{
-						Console.WriteLine("...match. OK!");
+						Console.WriteLine("...match. OK! Loading renderer type {0}.", t);
 						return (IRenderer)Activator.CreateInstance(t);
 					}
 					else
@@ -111,6 +111,7 @@ namespace Uiml.Rendering
 				}
 				catch(Exception e)
 				{
+					Console.WriteLine(e);
 					// do nothing here: an exception means the backend renderer specified 
 					// in assemblies[i] is not available
 				}

@@ -12,5 +12,5 @@ using System.Runtime.CompilerServices;
 [assembly:AssemblyTitle("Uiml.net")]
 [assembly:AssemblyDescription("An open UIML renderer for the .Net Framework")]
 [assembly:AssemblyConfiguration("Debug")]
-[assembly:AssemblyCompany("Expertise Centre for Digital Media, Limburgs Universitair Centrum")]
-[assembly:AssemblyCopyright("2004 Expertise Centre for Digital Media")]
+[assembly:AssemblyCompany("Expertise Center for Digital Media, Limburgs Universitair Centrum")]
+[assembly:AssemblyCopyright("2005 Expertise Centre for Digital Media")]

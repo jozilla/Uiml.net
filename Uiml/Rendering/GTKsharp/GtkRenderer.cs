@@ -31,6 +31,8 @@ namespace Uiml.Rendering.GTKsharp
 
 	using Uiml;
 	using Uiml.Rendering;
+
+	using Style = Uiml.Style;
 	
 
 	public class GtkRenderer : Renderer, IPropertySetter

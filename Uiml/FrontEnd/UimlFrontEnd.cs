@@ -68,7 +68,11 @@ namespace Uiml.FrontEnd{
 				feUimlDoc.Connect(this);
 				instance.ShowIt();
 			}
-			catch(Exception e){ Console.WriteLine(e); throw e; }
+				catch(Exception e)
+				{
+					//no interace available, use command-line options!
+					throw new NoGuiAvailableException();
+				}
 		}
 
 
@@ -101,14 +105,16 @@ namespace Uiml.FrontEnd{
 		{
 			try
 			{
-				UimlDoc  = new UimlDocument(UimlFileName);
-				IRenderer renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);
+				UimlDoc  = new UimlDocument(UimlFileName);		
+				IRenderer renderer =  backendFactory.CreateRenderer(uimlDoc.Vocabulary);			
 				IRenderedInstance instance = renderer.Render(uimlDoc);
-				instance.ShowIt();
+				instance.ShowIt();			
+
 			}
 				catch(Exception e)
 				{
-				Console.WriteLine(e);
+					Console.WriteLine(e);
+					Console.WriteLine("Could not create GUI for {0} with uiml.net", UimlFileName);
 				}
 		}
 	}

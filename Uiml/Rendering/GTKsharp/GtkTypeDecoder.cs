@@ -37,6 +37,8 @@ namespace Uiml.Rendering.GTKsharp
 		
 	using Uiml;
 	using Uiml.Rendering;
+
+	using Property = Uiml.Property;
 	
 
 	public class GtkTypeDecoder : TypeDecoder

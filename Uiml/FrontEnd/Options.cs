@@ -1,8 +1,8 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
+	                     Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
@@ -21,7 +21,7 @@
 */
 
 
-namespace CommandLine
+namespace Uiml.FrontEnd
 {
 	using System;
 	using System.Collections;
@@ -31,6 +31,11 @@ namespace CommandLine
 		private Hashtable m_options;
 		private int m_usedOptions; 
 
+		///<summary>
+		///Processes command line options, given the arguments passed
+		///on the command line and all the possible arguments the program 
+		///understands.
+		///</summary>
 		public Options(string[] args, string[] possibilities)
 		{
 			Store(args,possibilities);			
@@ -85,6 +90,9 @@ namespace CommandLine
 			
 		}
 
+		///<summary>
+		///See whether the argument "key" is passed on the command line
+		///</summary>
 		public bool IsUsed(string key)
 		{
 			if(this[key].Length != 0)
@@ -92,6 +100,10 @@ namespace CommandLine
 			return false;
 		}
 
+		///<summary>
+		///See whether the argument "key" is passed on the command line
+		///with a value
+		///</summary>
 		public bool HasArgument(string key)
 		{
 			if(this[key].Length == 0)
@@ -101,12 +113,30 @@ namespace CommandLine
 			return true;
 		}
 
+		///<summary>
+		///Queries for the value that was passed with the argument
+		///</summary>
 		public String this[String key]
 		{
 			get
 			{
 				return (String)m_options[key];
 			}
+		}
+
+		///<summary>
+		///Shows all the options and their values that are stored
+		///</summary>
+		public override String ToString()
+		{
+			IDictionaryEnumerator henum = m_options.GetEnumerator();
+			String s = "[Command line options, switches used: "+NrSwitches+"]\n";
+			while(henum.MoveNext())
+			{
+				s += "\tkey: "+henum.Key+"; value:" + henum.Value + "\n";
+			}
+			s += "[/Command line options]";
+			return s;
 		}
 	}
 }

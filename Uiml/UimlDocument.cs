@@ -32,6 +32,9 @@ namespace Uiml{
 		private ArrayList m_peers;
 		private Head m_head;
 
+		///<summary>
+		///Reads a UIML document in memory specified in fName
+		///</summary>
 		public UimlDocument(String fName)
 		{
 			try
@@ -41,8 +44,8 @@ namespace Uiml{
 				Load(doc);
 			}
 				catch(Exception e)
-				{
-					Console.WriteLine("Error loading {0} ({1})", fName, e);
+				{					
+					Console.WriteLine("Error loading {0}", fName);
 				}
 		}
 

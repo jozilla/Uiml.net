@@ -90,6 +90,7 @@ namespace Uiml.Peers
 			}
 			catch(Exception e)
 			{						
+				Console.WriteLine("Could not load {0}", vocName);
 				Console.WriteLine(e);
 			}				
 		}

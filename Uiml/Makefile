@@ -1,6 +1,6 @@
 CLASSPATH=.:../../..
 OPTIONS=-g
-GTKLIBS= -pkg:gtk-sharp 
+GTKLIBS= -pkg:gtk-sharp-2.0 
 WXLIBS=/r:wx.NET.dll /r:System.Drawing
 SWFLIBS=/r:System.Windows.Forms.dll /r:System.Drawing
 #LIBS=-pkg:gtk-sharp
@@ -26,7 +26,7 @@ all: lib exe
 #	cscc -o uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
 exe:
 	@echo "building executable" 
-	mcs ${DEBUG} -pkg:gtk-sharp -keyfile:uiml.net.snk -o uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
+	mcs ${DEBUG} -pkg:gtk-sharp-2.0 -keyfile:uiml.net.snk -o uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 
