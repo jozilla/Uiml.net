@@ -1,7 +1,7 @@
 /*
 	 uiml.net: a Uiml .NET renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
     
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
@@ -45,7 +45,7 @@ namespace Uiml{
 			}
 				catch(Exception e)
 				{					
-					Console.WriteLine("Error loading {0}", fName);
+					Console.WriteLine("Error loading {0} ({1})", fName, e);
 				}
 		}
 
@@ -148,19 +148,19 @@ namespace Uiml{
 			//TODO: support multiple structures
 			// connect to the top part
 			((Structure)UInterface.UStructure[0]).Top.Connect(o, this);
+			
+			ExternalObjects.Instance.Add(o.GetType().ToString(),o);
 		
-			// connect to the rules	
-		
+			// connect to the rules		
 			if(UInterface.UBehavior != null)
-			{
-				
+			{				
 				IEnumerator er = ((Behavior)UInterface.UBehavior[0]).Rules;
 				while(er.MoveNext())
 				{
 					((Executing.Rule)er.Current).Connect(o);
 				}
-			}
-		}
+			}			
+		}		
 
 		public void Connect(Object o, String identifier)
 		{

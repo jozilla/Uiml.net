@@ -134,7 +134,10 @@ namespace Uiml.Executing
 					throw aore;					
 				}
 		}
-		
+	
+		///<summary>
+		///Used by the Rule to indicate this call will use object o when part of a rule
+		///</summary>
 		public void Connect(object o)
 		{
 			if(!Connected)
@@ -223,11 +226,11 @@ namespace Uiml.Executing
 		}
 
 		///<summary>
-		/// This Execute function needs serious rewriting and debugging :-(, allthough... it seems to work
 		/// It loads a method and its params from this call and executes it at runtime
 		///</summary>
 		public Object Execute()
 		{
+
 			if(Name == null || Name == "" || Name == ".")
 			{ //it is an "internal script"
 				ArrayList l = Children;
@@ -257,34 +260,9 @@ namespace Uiml.Executing
 				string concreteObjectName = null; 
 				string concreteMethodName = null;
 				
-				//Logic logic = null;
-				//bool foundMapping = false;
-				/*if(m_logicDescriptions != null)
-				{
-					IEnumerator enumDocs = m_logicDescriptions.GetEnumerator();				
-					while(enumDocs.MoveNext() && (!foundMapping))
-					{
-						try
-						{
-							logic = (Logic)enumDocs.Current;
-							concreteObjectName = logic.MapsOnComponent(ObjectName);
-							concreteMethodName = logic.GetMethodComponent(MethodName, ObjectName);
-							foundMapping = true;
-						}
-							catch(MappingNotFoundException mnfe)
-							{
-								//Console.WriteLine("Mapping not found in Logic document \"{0}->{1}\"...", ObjectName, MethodName);
-							}
-					}
-				}*/
-			
-				//if(!foundMapping)
-				//{
-				//	logic = null;
-					concreteObjectName = Renderer.Voc.MapsOnCmp(ObjectName);				
-					concreteMethodName = Renderer.Voc.GetMethodCmp(MethodName, ObjectName);
-				//	foundMapping = true;
-				//}
+	
+				concreteObjectName = Renderer.Voc.MapsOnCmp(ObjectName);
+				concreteMethodName = Renderer.Voc.GetMethodCmp(MethodName, ObjectName);
 
 				if(Connected)
 				{	
@@ -292,8 +270,7 @@ namespace Uiml.Executing
 					object obj = null, result = null;
 					while(oe.MoveNext())
 					{
-						obj = oe.Current;
-						
+						obj = oe.Current;						
 						if(obj.GetType().FullName == concreteObjectName)
 						{
 							type = obj.GetType();
@@ -313,17 +290,41 @@ namespace Uiml.Executing
 						return result; 
 					}
 				}
-				
-				IEnumerator enumAssemblies = ExternalLibraries.Instance.LoadedAssemblies;
-				while((enumAssemblies.MoveNext()) && (type==null))
-				{
-					Assembly a = (Assembly)enumAssemblies.Current;
-					#if !COMPACT
-					type = a.GetType(concreteObjectName, false, true);
-					#else
-					type = a.GetType(concreteObjectName, false);
-					#endif
+
+				//first check whether the required object is an individual connected object
+				IEnumerator enumObjects = ExternalObjects.Instance.LoadedObjects;				
+				while((enumObjects.MoveNext()) && (type==null))
+				{			
+					Object obj = enumObjects.Current;
+					if(obj.GetType().FullName == concreteObjectName)
+					{
+						type = obj.GetType();
+						try { return ExecuteMethod(concreteMethodName, type, obj); } 
+						catch(NullReferenceException)//method failed, try property
+						{
+								try { return ExecuteProperty(concreteMethodName, type,obj); }
+							  //property failed, try field
+						  catch(NullReferenceException)	{ return ExecuteField(concreteMethodName, type, obj); 	}
+						}
+					}	
 				}
+
+			
+				//If type is still null, try to find the concrete functionality in a library that has been loaded
+				if(type == null)
+				{
+							IEnumerator enumAssemblies = ExternalLibraries.Instance.LoadedAssemblies;
+					while((enumAssemblies.MoveNext()) && (type==null))
+					{
+						Assembly a = (Assembly)enumAssemblies.Current;
+						#if !COMPACT
+						type = a.GetType(concreteObjectName, false, true);
+						#else
+						type = a.GetType(concreteObjectName, false);
+						#endif
+					}
+				}
+
 				
 				if(type == null)
 				{

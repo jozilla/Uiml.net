@@ -49,11 +49,6 @@ namespace Uiml.FrontEnd{
 		{
 		}
 
-		public static void Main(string[] args)
-		{
-			new GtkGUI();
-		}
-
 		public void AddLibrary(String lib)
 		{
 		}

@@ -42,7 +42,7 @@ namespace Uiml.FrontEnd{
 	///</summary>
 	public abstract class UimlFrontEnd
 	{
-		static public String VERSION = "0.0.6-pre (09-07-2004)";
+		static public String VERSION = "0.0.7-pre (31-03-2005)";
 		private String uiFileName;
 		private ArrayList aList = new ArrayList();
 		protected IRenderedInstance instance;
@@ -59,9 +59,9 @@ namespace Uiml.FrontEnd{
 		public UimlFrontEnd(string uimlDoc, string uimlLib) : this()
 		{
 			
-			try
+			try //try to load a GUI as frontend
 			{
-				UimlDocument feUimlDoc = new UimlDocument(uimlDoc);	
+				UimlDocument feUimlDoc = new UimlDocument(uimlDoc);
 				renderer =  (new BackendFactory()).CreateRenderer(feUimlDoc.Vocabulary);
 				instance = renderer.Render(feUimlDoc);
 				ExternalLibraries.Instance.Add(uimlLib);
@@ -105,10 +105,11 @@ namespace Uiml.FrontEnd{
 		{
 			try
 			{
-				UimlDoc  = new UimlDocument(UimlFileName);		
-				IRenderer renderer =  backendFactory.CreateRenderer(uimlDoc.Vocabulary);			
+				UimlDoc = new UimlDocument(UimlFileName);	
+				Console.WriteLine("render [" + uimlDoc.Vocabulary + "]-[" + UimlFileName);
+				IRenderer renderer =  backendFactory.CreateRenderer(uimlDoc.Vocabulary);	
 				IRenderedInstance instance = renderer.Render(uimlDoc);
-				instance.ShowIt();			
+				instance.ShowIt();	
 			}
 				catch(Exception e)
 				{

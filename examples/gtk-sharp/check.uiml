@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <uiml>
 	<interface>
 		<structure>
@@ -8,14 +7,19 @@
 					<part class="CheckButton" id="g"/>
 					<part class="CheckButton" id="s"/>
 					<part class="CheckButton" id="w"/>
+					<part class="HBox">
+						<part class="Button" id="thabutton"/>
+						<part class="Entry"  id="entry"/>
+					</part>
 				</part>
 			</part>
 		</structure>
 		<style>
-			<property part-name="Frame" name="label">Indicate your preferences</property>
+			<property part-name="Frame" name="label">Learn about yourself: indicate your preferences</property>
 			<property part-name="g" name="label">Gtk#</property>
 			<property part-name="s" name="label">System.Windows.Forms</property>
 			<property part-name="w" name="label">Wx.Net</property>
+			<property part-name="thabutton" name="label">Tell me what I am</property>
 			<property part-name="g" name="checked">
 				<call name="YourChoice.isitgtk"/>
 			</property>
@@ -26,17 +30,37 @@
 				<call name="YourChoice.isitwxnet"/>
 			</property>
 		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="thabutton" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="entry" name="text">
+						<call name="YourChoice.youare">
+							<param id="gtk"><property part-name="g" name="checked"/></param>
+							<param id="swf"><property part-name="s" name="checked"/></param>
+							<param id="wxnet"><property part-name="w" name="checked"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+		</behavior>
 	</interface>
 	<peers>
 		<presentation base="http://research.edm.luc.ac.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml" />		
 		<logic id="checker">
 		  <d-component id="YourChoice" maps-to="CheckTest">
-			  <d-method id="isitgtk" return-type="boolean" maps-to="Gtk" />
-			  <d-method id="isitswf" return-type="boolean" maps-to="Swf" />
-			  <d-method id="isitwxnet" return-type="boolean" maps-to="Wxnet" />
-	     </d-component>
+			  <d-method id="isitgtk" return-type="System.Boolean" maps-to="Gtk" />
+			  <d-method id="isitswf" return-type="System.Boolean" maps-to="Swf" />
+			  <d-method id="isitwxnet" return-type="System.Boolean" maps-to="Wxnet" />
+			  <d-method id="youare" return-type="System.String" maps-to="TellMe">
+				   <d-param id="gtk" type="System.Boolean"/>
+			      <d-param id="swf" type="System.Boolean"/>
+			    	<d-param id="wxnet" type="System.Boolean"/>
+			  </d-method>
+		  </d-component>		  
 		</logic>
-
 	</peers>
 </uiml>
 

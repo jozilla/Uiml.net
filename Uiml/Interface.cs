@@ -64,18 +64,18 @@ namespace Uiml{
 						switch(xnl[i].Name){
 							case STRUCTURE:
 							   //UStructure = new Structure(xnl[i]);
-								UStructure.Add(new Structure(xnl[i]));
+								m_structure.Add(new Structure(xnl[i]));
 								break;
 							case STYLE:
 								//UStyle = new Style(xnl[i]);
-								UStyle.Add(new Style(xnl[i]));
+								m_style.Add(new Style(xnl[i]));
 								break;
 							case CONTENT:
-								UContent.Add(new Content(xnl[i]));
+								m_content.Add(new Content(xnl[i]));
 								break;
 							case BEHAVIOR:
 								//UBehavior = new Behavior(xnl[i], UStructure.Top);
-								UBehavior.Add(new Behavior(xnl[i], ((Structure)UStructure[0]).Top));
+								m_behavior.Add(new Behavior(xnl[i], ((Structure)UStructure[0]).Top));
 								break;
 						}
 					}

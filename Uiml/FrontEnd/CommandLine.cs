@@ -43,22 +43,30 @@ namespace Uiml.FrontEnd{
 	{
 		static public String[] options = {"voc","uiml","help","libs","version", "log"};
 		static public char LIBSEP;
+		static public int VOCABULARY = 0;
+		static public int UIMLDOCUMENT = 1;
+		static public int HELP = 2;
+		static public int LIBRARIES = 3;
+		static public int VERSIONINFO = 4;
+		static public int LOGGING = 5;
+
+		
 
 		public static String FileName;
 		
 	
 		public CommandLine(Options opt) : base()
 		{
-			if(opt[options[2]].Equals("-"))
+			if(opt[options[HELP]].Equals("-"))
 			{
 				Help();
 				return;
 			}				
 			string document="", vocabulary="";
 
-			if(opt.IsUsed(options[5])) //initialise logging facilities
+			if(opt.IsUsed(options[LOGGING])) //initialise logging facilities
 			{
-				if(!opt.HasArgument(options[5]))
+				if(!opt.HasArgument(options[LOGGING]))
 				{
 					Console.WriteLine("You have to specify an appender for logging");
 					Console.WriteLine("Available appenders: log4net.Appender.ConsoleAppender log4net.Appender.CountingAppender");
@@ -77,24 +85,24 @@ namespace Uiml.FrontEnd{
 				//TODO
 			}
 		   
-			if(opt.IsUsed(options[1])&&opt.HasArgument(options[1]))
+			if(opt.IsUsed(options[UIMLDOCUMENT])&&opt.HasArgument(options[UIMLDOCUMENT]))
 			{
-				if(opt.IsUsed(options[3]))
+				if(opt.IsUsed(options[LIBRARIES]))
 				{
-					LoadLibraries(opt[options[3]]);
+					LoadLibraries(opt[options[LIBRARIES]]);
 				}
-				document = opt[options[1]];
+				document = opt[options[UIMLDOCUMENT]];
 				UimlFileName = document;
 
-				if(opt.IsUsed(options[0]))
+				if(opt.IsUsed(options[VOCABULARY]))
 				{
-					vocabulary = opt[options[0]];
+					vocabulary = opt[options[VOCABULARY]];
 					Render();
 				}
 				else
 					Render();
 			}
-			else if(opt.IsUsed(options[4]))
+			else if(opt.IsUsed(options[VERSIONINFO]))
 			{
 				Version();
 			}
@@ -117,11 +125,11 @@ namespace Uiml.FrontEnd{
 			Console.WriteLine("Please email the bugs you find using this tool to us                     	        ");
 			Console.WriteLine("                                                                         	        ");
 			Console.WriteLine("Options:                                                                     	  ");
-			Console.WriteLine("    -uiml <file>                 Specify the input file (required)                ");
-			Console.WriteLine("    -help                        Print this message                               ");
-			Console.WriteLine("    -libs <file["+LIBSEP+"file"+LIBSEP+"...]>        The libraries containing te application logic        ");	
-			Console.WriteLine("    -log <appender>                                                               ");
-			Console.WriteLine("    -version                     Print version info                               ");	
+			Console.WriteLine("    -{0} <file>                 Specify the input file (required)                ", options[UIMLDOCUMENT]);
+			Console.WriteLine("    -{0}                        Print this message                               ", options[HELP]);
+			Console.WriteLine("    -{0} <file["+LIBSEP+"file"+LIBSEP+"...]>        The libraries containing the application logic", options[LIBRARIES]);	
+			Console.WriteLine("    -{0} <appender>                                                               ", options[LOGGING]);
+			Console.WriteLine("    -{0}                     Print version info                               ", options[VERSIONINFO]);	
 		}
 	
 
@@ -195,10 +203,6 @@ namespace Uiml.FrontEnd{
 		}
 		*/
 
-		public static void Main(string[] args)
-		{
-			new CommandLine(new Options(args, options));
-		}
 		
 	}
 

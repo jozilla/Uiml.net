@@ -45,12 +45,7 @@ namespace Uiml.FrontEnd
 		public SwfGUI() : base(UIMLFILE, UIMLLIB)
 		{
 		}
-
-		public static void Main(string[] args)
-		{
-			new SwfGUI();
-		}
-
+	
 		public void AddLibrary(String lib)
 		{
 		}
