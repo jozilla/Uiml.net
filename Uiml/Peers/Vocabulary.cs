@@ -227,33 +227,29 @@ namespace Uiml.Peers
 		protected DClass FindDClass(string abstractName)
 		{
 			IDictionaryEnumerator e = m_dictDCls.GetEnumerator();
-			DClass cls = null;
-
+			
 			while (e.MoveNext())
 			{
 				if(((string)e.Key) == abstractName)
-				{
-					cls = (DClass) e.Value;					
-				}
+					return (DClass) e.Value;
 			}
-
-			return cls;
+			
+			// no such class
+			return null;
 		}
 
 		protected DComponent FindDComponent(string abstractName)
 		{
-			IDictionaryEnumerator e = m_dictDCmp.GetEnumerator();
-			DComponent cmp = null;
+			IDictionaryEnumerator e = m_dictDCmp.GetEnumerator();			
 
 			while (e.MoveNext())
 			{
 				if(((string)e.Key) == abstractName)
-				{
-					cmp = (DComponent) e.Value;					
-				}
+					return (DComponent) e.Value;					
 			}
 
-			return cmp;
+			// no such component
+			return null;
 		}
 
 		public string MapsOnCls(string abstractName)
