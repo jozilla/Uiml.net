@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="body" class="Container">			
+			<part id="Button" class="Button"/>
+		</part>
+		</structure>
+		<style>
+			<property part-name="body" name="size">200,200</property>
+			<property part-name="Button" name="position">20,20</property>
+			<property part-name="Button" name="size">120,20</property>
+			<property part-name="Button" name="label">Press me</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="Button"/>
+				</condition>
+				<action>
+					<property part-name="Button" name="label">Button pressed.</property>
+					<call name="Console.println">
+						<param>Changing button text...</param>
+					</call>
+				</action>
+			</rule>
+		</behavior>	
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
