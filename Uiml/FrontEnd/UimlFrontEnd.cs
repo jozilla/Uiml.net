@@ -68,7 +68,7 @@ namespace Uiml.FrontEnd{
 				feUimlDoc.Connect(this);
 				instance.ShowIt();
 			}
-			catch(Exception e){ Console.WriteLine(e); }
+			catch(Exception e){ Console.WriteLine(e); throw e; }
 		}
 
 

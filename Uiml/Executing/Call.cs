@@ -181,6 +181,7 @@ namespace Uiml.Executing
 			}
 				catch(System.Reflection.TargetInvocationException tie)
 				{
+					Console.WriteLine(tie);
 					Console.WriteLine("Error while executing \"{0}\" from \"{1}\"; please check this method", m, obj.GetType());
 					throw tie;
 				}

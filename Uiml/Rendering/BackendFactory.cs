@@ -113,7 +113,7 @@ namespace Uiml.Rendering
 				catch(Exception e)
 				{
 					Console.WriteLine(e);
-					//do nothin here: an exception means the backend renderer is not available
+					//do nothing here: an exception means the backend renderer is not available
 				}
 			}
 			return null;
