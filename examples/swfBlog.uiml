@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part id="fr" class="Frame">
+				<part id="left" class="Container">
+					<part id="l_recent" class="Label"><style><property name="text">Recent Posts</property></style></part>
+					<part id="articles" class="List"/>
+				</part>
+				<part id="right" class="Container">
+					<part id="topRight" class="Container">
+						<part id="l_title" class="Label"><style><property name="text">Entry Title</property></style></part>
+						<part id="title" class="Entry"/>
+						<part id="l_body" class="Label"><style><property name="text">Entry Body</property></style></part>
+						<part id="blogentry" class="Text"/>
+					</part>
+					<part id="bottomRight" class="Container">
+						<part id="update" class="Button"/>
+						<part id="newpost" class="Button"/>
+						<part id="quit" class="Button"/>
+					</part>
+				</part>				
+			</part>
+		</structure>
+		<style>
+			<!-- <Absolute Positioning and Scaling> -->
+			<property part-name="fr" name="size">650,490</property>
+			<property part-name="fr" name="position">0,0</property>
+			
+			<property part-name="left" name="position">5,15</property>
+			<property part-name="left" name="size">200,470</property>
+			
+			<property part-name="right" name="position">205,15</property>
+			<property part-name="right" name="size">430,470</property>
+
+			<property part-name="topRight" name="position">5,5</property>
+			<property part-name="topRight" name="size">420,410</property>
+			
+			<property part-name="bottomRight" name="position">5,420</property>
+			<property part-name="bottomRight" name="size">420,37</property>
+
+			<property part-name="l_recent" name="position">70,10</property>
+			
+			<property part-name="articles" name="position">5,40</property>
+			<property part-name="articles" name="size">180,415</property>
+			
+			<property part-name="l_title" name="position">170,10</property>
+			
+			<property part-name="title" name="position">5,35</property>
+			<property part-name="title" name="width">400</property>
+
+			<property part-name="l_body" name="position">170,65</property>
+
+			<property part-name="blogentry" name="position">5,90</property>
+			<property part-name="blogentry" name="size">400,315</property>
+			
+			<property part-name="update" name="position">5,10</property>
+			<property part-name="update" name="size">130,25</property>
+			
+			<property part-name="newpost" name="position">140,10</property>
+			<property part-name="newpost" name="size">130,25</property>
+
+			<property part-name="quit" name="position">275,10</property>
+			<property part-name="quit" name="size">130,25</property>
+			
+			<!-- </Absolute Positioning and Scaling> -->
+
+			<property part-name="blogentry" name="scrollbars">Both</property>
+			<!-- this property should be set automatically -->
+			<property part-name="blogentry" name="multiline">true</property>
+		
+			<property part-name="update" name="label">Update</property>
+			<property part-name="newpost" name="label">New Post</property>
+			<property part-name="quit" name="label">Quit</property>
+			<property part-name="articles" name="content">
+		  	  <constant model="list">
+				  <constant value="Blog title 1"/>
+				  <constant value="Entry 2"/>
+				  <constant value="Another Title"/>
+			  </constant>
+		  </property>
+			<property part-name="articles" name="scrollable">true</property>
+			<property part-name="articles" name="view">Details</property>
+			<property part-name="articles" name="title">Title</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/> 
+	</peers>
+</uiml>
+
