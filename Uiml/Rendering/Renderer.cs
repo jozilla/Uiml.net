@@ -6,8 +6,8 @@
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
+	modify it under the terms of the GNU Lesser General Public License
+	as published by the Free Software Foundation; either version 2.1
 	of	the License, or (at your option) any later version.
 
 	This program is distributed in the hope that it will be useful,
@@ -15,7 +15,7 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
+	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
@@ -129,12 +129,8 @@ namespace Uiml.Rendering
 		private System.Object LoadPartProperties(ref System.Object uiObject, Part part)
 		{
 			string className  = Voc.MapsOn(part.Class);
-			if(GuiAssembly == null)
-			{
-				Console.WriteLine("GuiAssemlby is null!");
-			}
 			Type classType = GuiAssembly.GetType(className);
-			
+		
 			IEnumerator enumProps = part.Properties;
 			while(enumProps.MoveNext())
 			{
@@ -188,6 +184,8 @@ namespace Uiml.Rendering
 		///too complex the IPropertySetter implementation will be isolated from
 		///this rendering class.
 		///</summary>
+		 ///<param name="part">The part on which prop will be applied</param>
+		///<param name="prop">the property that will be applied</param>
 		///<remarks>
 		/// If part is null, the top part will be assumed
 		///</remarks>
@@ -209,6 +207,10 @@ namespace Uiml.Rendering
 		/// This method sets the concrete property on a concrete widget. It is the most important
 		/// method to get the defined properties reflected in the User Interface
 		///</summary>
+		///<param name="uiObject"></param>
+		///<param name="p"></param>
+		///<param name="part"></param>
+		///<param name="tclassType"></param>
 		private System.Object ApplyProperty(ref System.Object uiObject, Property p, Part part, Type tclassType)
 		{
 				string setter = Voc.GetSetProperty(p.Name, part.Class);
@@ -230,18 +232,32 @@ namespace Uiml.Rendering
 						targetObject = pInfo.GetValue(targetObject, null);
 						j = setter.IndexOf('.');
 					}
-					pInfo = classType.GetProperty(setter);
 
+					
+					///thanks to Rafael "Monoman" Teixeira for this code
+					//pInfo = classType.GetProperty(setter);
+               MemberInfo[] arrayMemberInfo = classType.FindMembers(MemberTypes.Method  | MemberTypes.Property,
+							                                               BindingFlags.Public | BindingFlags.Instance,
+																						  Type.FilterName, setter);
 					//if lazy, execute it!
 					if(p.Lazy)
 						p.Resolve(this);
-						
-					try
-					{	
-						pInfo.SetValue(targetObject, Decoder.GetArg(p.Value, pInfo.PropertyType), null);						
+					
+					if (arrayMemberInfo == null || arrayMemberInfo.Length == 0) 
+					{
+						 // throw some error here, about not having the appropriate member
+						Console.WriteLine("Warning: could not load setter \"{0}\" for {1} (type {2}), please check your vocabulary", setter, part.Identifier, tclassType.FullName); 
+						return uiObject;
 					}
-						catch(Exception e)
+					if (arrayMemberInfo[0] is PropertyInfo)
+					{
+						pInfo = (PropertyInfo)arrayMemberInfo[0];
+						System.Object bla= Decoder.GetArg(p.Value, pInfo.PropertyType);
+						pInfo.SetValue(targetObject, bla, null);
+					}
+					else
 						{
+							Console.WriteLine("setter \"{0}\" is a Method", setter );
 							Param[] paramTypes = Voc.GetParams(p.Name, part.Class);
 							//convert the params to types
 							Type[] tparamTypes = new Type[paramTypes.Length];
@@ -257,7 +273,7 @@ namespace Uiml.Rendering
 							System.Object[] args = Decoder.GetArgs(p, tparamTypes);
 							m.Invoke(uiObject, args);
 					   }
-				}
+					}
 					/*
 					catch(TypeLoadException tle)
 					{

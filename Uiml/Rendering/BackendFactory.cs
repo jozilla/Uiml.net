@@ -38,8 +38,9 @@ namespace Uiml.Rendering
 			{
 				case Uiml.Rendering.GTKsharp.GtkRenderer.NAME:
 					return new Uiml.Rendering.GTKsharp.GtkRenderer();
-				case Uiml.Rendering.WXnet.WxRenderer.NAME:
-					return new Uiml.Rendering.WXnet.WxRenderer();
+//Temporary disabled the Wx.NET backend
+//				case Uiml.Rendering.WXnet.WxRenderer.NAME:
+//					return new Uiml.Rendering.WXnet.WxRenderer();
 				default:
 					return null;
 			}

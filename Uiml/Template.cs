@@ -38,7 +38,6 @@ namespace Uiml{
 	/// Templates that are resolved only if they are "sourced" by an element.
 	/// This means we have to execute an open file operation each time an element
 	/// sources a template. 
-	///
 	///</summary>
 	public class Template : IUimlElement{
 		public String m_identifier;
@@ -156,7 +155,7 @@ namespace Uiml{
 		{
 			get 
 			{ 
-				ArrayList a = new ArrayList(); 
+				ArrayList a = new ArrayList();
 				a.Add(Top); 
 				return a; 
 			}

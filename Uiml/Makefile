@@ -1,6 +1,6 @@
 CLASSPATH=.:../../..
 OPTIONS=-g
-LIBS=/r:gtk-sharp.dll /r:glib-sharp.dll /r:gdk-sharp.dll /r:pango-sharp.dll /r:wx.NET.dll /r:System.Drawing.dll /r:log4net
+LIBS=-L /usr/local/lib/mono/gtk-sharp/ /r:gtk-sharp.dll /r:gdk-sharp.dll /r:glib-sharp.dll /r:pango-sharp.dll 
 DEBUG=-debug+ -warn:2
 
 Uiml2GtkSharp.exe : Part.cs Peer.cs Presentation.cs IUimlElement.cs Interface.cs Structure.cs Behavior.cs\
@@ -11,8 +11,8 @@ Uiml2GtkSharp.exe : Part.cs Peer.cs Presentation.cs IUimlElement.cs Interface.cs
 						Executing/Action.cs Executing/Condition.cs Executing/Rule.cs Executing/Event.cs Executing/IExecutable.cs\
 						Executing/Call.cs Rendering/TypeDecoder.cs Executing/ValueNotEvaluatedException.cs\
 						Utils/TodoAttribute.cs Rendering/GTKsharp/GtkEventLink.cs Rendering/GTKsharp/GtkEventLinker.cs\
-						Logic.cs Rendering/WXnet/WxRenderedInstance.cs Rendering/WXnet/WxRenderer.cs
-	mcs ${DEBUG} ${LIBS} -o uiml.net.exe *.cs Rendering/*.cs Rendering/GTKsharp/*.cs Executing/*.cs Utils/*.cs Rendering/WXnet/*.cs
+						Logic.cs
+	mcs ${DEBUG} ${LIBS} -o uiml.net.exe *.cs Rendering/*.cs Rendering/GTKsharp/*.cs Executing/*.cs Utils/*.cs
 
 clean:
 	rm uiml.net.exe

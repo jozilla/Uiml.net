@@ -20,6 +20,14 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+
+/*
+TODO:
+	- add support for property placeholders in scripts. E.g. like asp.net allows
+	C#/vb.net code inside html
+	- add support for result capturing, so results from scripts can be used inside the user interface
+*/
+
 namespace Uiml.Executing
 {
 	using Uiml;

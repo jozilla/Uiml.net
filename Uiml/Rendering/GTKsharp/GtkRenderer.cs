@@ -81,7 +81,6 @@ namespace Uiml.Rendering.GTKsharp
 				//Render has filled the part-tree with the concrete object references
 				//to the individual widgets, now attach the behavior			
 				GtkEventLinker gll = new GtkEventLinker(this);
-				//Console.WriteLine("Connecting events...");
 				gll.Link(uiStruct, uiBehavior);
 				m_topWindow.Add(c);
 				return m_topWindow;
@@ -106,7 +105,6 @@ namespace Uiml.Rendering.GTKsharp
 		///</summary>
 		private Widget Render(Part uiPart, Style uiStyle) //throws WrongNestingException, MappingNotFoundException
 		{
-			  //Console.WriteLine("Processing part {0}:{1}", uiPart.Identifier,uiPart.Class);
 		     string className = Voc.MapsOn(uiPart.Class);
 			  Type classType = GuiAssembly.GetType(className);
 			  Type containerType = GuiAssembly.GetType(CONTAINER);
@@ -146,7 +144,6 @@ namespace Uiml.Rendering.GTKsharp
 							Widget b = Render(subPart, uiStyle);
 							//((Container)gtkObject).Add(b); replaced by:
 							MethodInfo m = classType.GetMethod(m_adder, new Type[] { b.GetType() } );
-							if(m==null){	Console.WriteLine("Could not load {0} on {1} with argument {2}", m_adder, classType, b); }
 							m.Invoke(gtkObject, new System.Object[] { b });
 						}
 						return (Container)ApplyProperties((Container)gtkObject, uiPart, uiStyle);
@@ -173,6 +170,7 @@ namespace Uiml.Rendering.GTKsharp
 		{
 		  System.Object gtkObject = null;
 		  Param[] parameters = Voc.GetParams(CONSTRUCTOR, uiPart.Class);
+
 		  Type[] tparamTypes = new Type[parameters.Length];
 		  int i = 0;
 		  foreach(Param p in parameters)
@@ -183,6 +181,7 @@ namespace Uiml.Rendering.GTKsharp
 					 try
 					 {
 						tparamTypes[i] = ((Assembly)ExternalLibraries.Instance.Assemblies[j++]).GetType(p.Type, true, true);
+
 					 }
 					 	catch(TypeLoadException tle)
 						{
@@ -295,6 +294,13 @@ namespace Uiml.Rendering.GTKsharp
 			return targetObject;
 		}
 
+		///<summary>
+		/// Dissects the method information for a specific property
+		///</summary>
+		///<param name="baseT"></param>
+		///<param name="newT"></param>
+		///<param name="retType"></param>
+		///<param name="nextValue"></param>
 		private MemberInfo ResolveProperty(Type baseT, String newT, out Type retType, ref System.Object nextValue)
 		{			
 			MemberInfo m = baseT.GetProperty(newT);
@@ -316,6 +322,9 @@ namespace Uiml.Rendering.GTKsharp
 		/// Applies several properties to an individual concrete widget instance   
 		/// relying on hard-coded knowledge about the widgets
 		///</summary>
+		///<todo>
+		// Change to the .custom format, like used for the gtk# bindings
+		///</todo>
 		protected override System.Object LoadAdHocProperties(ref System.Object uiObject, Part part, Style s)
 		{
 			if(part.Class == "Tree")
@@ -340,11 +349,17 @@ namespace Uiml.Rendering.GTKsharp
 
 
 		public const int SPACE = 3;
-		public const string GTK_ASSEMBLY    = "gtk-sharp.dll";
-		public const string SYSTEM_ASSEMBLY = "mscorlib.dll"; 
-		public const string GDK_ASSEMBLY    = "gdk-sharp.dll";
-		public const string PANGO_ASSEMBLY  = "pango-sharp.dll";
-		public const string GLIB_ASSEMBLY   = "glib-sharp.dll";
+//		public const string GTK_ASSEMBLY    = "gtk-sharp.dll";
+//		public const string SYSTEM_ASSEMBLY = "mscorlib.dll"; 
+//		public const string GDK_ASSEMBLY    = "gdk-sharp.dll";
+//		public const string PANGO_ASSEMBLY  = "pango-sharp.dll";
+//		public const string GLIB_ASSEMBLY   = "glib-sharp.dll";
+		public const string GTK_ASSEMBLY    = "gtk-sharp";
+		public const string SYSTEM_ASSEMBLY = "mscorlib"; 
+		public const string GDK_ASSEMBLY    = "gdk-sharp";
+		public const string PANGO_ASSEMBLY  = "pango-sharp";
+		public const string GLIB_ASSEMBLY   = "glib-sharp";
+
 		public const int MAX_ASSSEMBLIES = 5;
 
 		public const string CONTAINER = "Gtk.Container";

@@ -41,6 +41,7 @@ namespace Uiml.Executing
 		//private IPropertySetter m_propertySetter;
 		private IRenderer m_renderer;
 		private Part m_partTree;
+		private Hashtable m_outputParams;
 
 		private ArrayList m_logicDescriptions = null;
 
@@ -101,16 +102,10 @@ namespace Uiml.Executing
 
 		} 
 
-		public Object ExecuteMethod(string concreteMethodName, Type objectType, Logic l)
+		private Type[] createInOutParamTypes(Uiml.Param[] parameters, out Hashtable outputPlaceholder)
 		{
-			Uiml.Param[] parameters;
-			if(l == null)
-				parameters = Renderer.Voc.GetMethodParams(ObjectName, MethodName);
-			else
-				parameters = l.GetMethodParams(ObjectName, MethodName);
-
-			//convert the params to types
-			Type[] tparamTypes = new Type[parameters.Length];
+			outputPlaceholder = null;
+			Type[] tparamTypes =  new Type[parameters.Length]; 
 			int i=0;
 			try
 			{
@@ -120,15 +115,41 @@ namespace Uiml.Executing
 					int j = 0;
 					while(tparamTypes[i] == null)	
 						tparamTypes[i] = ((Assembly)ExternalLibraries.Instance.Assemblies[j++]).GetType(parameters[i].Type);
+					//also prepare a placeholder when this is an output parameter
+					if(parameters[i].IsOut)
+					{
+						if(outputPlaceholder == null)
+							outputPlaceholder = new Hashtable();
+						outputPlaceholder.Add(parameters[i].Identifier, null);
+					}
 				}
+				return tparamTypes;
 			}
 				catch(ArgumentOutOfRangeException aore)
 				{
 					Console.WriteLine("Can not resolve type {0} of parameter {1} while calling method {2}",parameters[i].Type ,i , Name);
 					Console.WriteLine("Trying to continue without executing {0}...", Name);
-					return null;
+					throw aore;					
 				}
-				
+		}
+
+		public Object ExecuteMethod(string concreteMethodName, Type objectType, Logic l)
+		{
+			
+			Uiml.Param[] parameters;
+			Hashtable outputPlaceholder = null;
+			
+			if(l == null)
+				parameters = Renderer.Voc.GetMethodParams(ObjectName, MethodName);
+			else
+				parameters = l.GetMethodParams(ObjectName, MethodName);
+
+			//convert the params to types
+			Type[] tparamTypes = null;
+			try{
+				tparamTypes = createInOutParamTypes(parameters, out outputPlaceholder);
+			}catch(ArgumentOutOfRangeException aore) { return null; }
+			
 			MethodInfo m = objectType.GetMethod(concreteMethodName, tparamTypes);
 			System.Object[] args = new System.Object[tparamTypes.Length];
 
@@ -138,7 +159,18 @@ namespace Uiml.Executing
 				args[k] = Renderer.Decoder.GetArg(propValue, tparamTypes[k]);
 			}
 			
-			return m.Invoke(null, args); //static method
+			Object result =  m.Invoke(null, args); //static method
+
+			//get the updated parameters out of args
+			for(int i=0; i<parameters.Length; i++)
+				if(parameters[i].IsOut)
+				{
+					outputPlaceholder[parameters[i].Identifier] = args[i];
+				}
+			m_outputParams = outputPlaceholder;
+			
+			
+			return result;
 		}		
 
 		public Object ExecuteProperty(string concreteMethodName, Type objectType)
@@ -279,6 +311,11 @@ namespace Uiml.Executing
 		{
 			get { return m_objectName;  }
 			set { m_objectName = value; }
+		}
+
+		public Hashtable OutputParameters
+		{
+			get { return m_outputParams; }
 		}
 /*
 		public ITypeDecoder Decoder

@@ -55,6 +55,7 @@ namespace Uiml{
 		public Constant(XmlNode n) : this()
 		{
 			Process(n);
+
 		}
 
 		public void Process(XmlNode n)

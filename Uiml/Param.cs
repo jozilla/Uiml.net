@@ -31,6 +31,7 @@ namespace Uiml{
 		private string m_type;
 		private string m_value;
 		private string m_identifier;
+		private bool m_isout;
 
 		public Param()
 		{
@@ -53,13 +54,24 @@ namespace Uiml{
 					Identifier = attr.GetNamedItem(ID).Value;
 				if(attr.GetNamedItem(TYPE) != null)
 					Type = attr.GetNamedItem(TYPE).Value;
+				if(attr.GetNamedItem(DIRECTION) != null)
+				{
+					switch(attr.GetNamedItem(DIRECTION).Value)
+					{
+						case IN : IsOut = false;
+									 break;
+						case OUT: IsOut = true;
+									 break;
+						case INOUT: IsOut = false;
+										break;
+					}
+				}
+					
 			}
 		}
 
 		public string Type
 		{
-			//TODO fix this test! GetType("string") apparantly fails in some cases
-			//this should be tested
 			get { return m_type;  }
 			set { m_type = value; }
 		}
@@ -76,6 +88,13 @@ namespace Uiml{
 			set { m_value = value; }
 		}
 
+		public bool IsOut
+		{
+			get { return m_isout;  }
+			set { m_isout = value; }
+		}
+
+
 		public override string ToString()
 		{
 			return "{" + Identifier + "}:" + Value + ":" + Type;
@@ -90,6 +109,10 @@ namespace Uiml{
 		public const string TYPE = "type";
 		public const string ID = "id";
 		public const string PARAM = "param";
+		public const string DIRECTION = "direction";
+		public const string IN = "in";
+		public const string OUT = "out";
+		public const string INOUT = "inout";
 		
 	}
 }

@@ -96,7 +96,6 @@ namespace Uiml.Executing
 					((Call)o).AttachLogic(logicDocs);
 				else if(o is Uiml.Property)
 					((Property)o).AttachLogic(logicDocs);
-
 			}
 		}
 

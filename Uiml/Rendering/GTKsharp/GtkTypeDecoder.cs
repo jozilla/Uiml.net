@@ -94,7 +94,10 @@ namespace Uiml.Rendering.GTKsharp
 				return ConvertComplex(t, o);
 			}
 		}
-	
+
+		///<summary>
+		/// Converts the object oValue to the type given by t
+		///</summary>
 		protected override System.Object ConvertComplex(Type t, System.Object oValue)
 		{
 			string value = "";
@@ -102,7 +105,8 @@ namespace Uiml.Rendering.GTKsharp
 				value = (string)oValue;
 			else if(t.FullName == "System.String")
 				return oValue.ToString();
-			
+		
+
 			switch(t.FullName)
 			{
 				case "System.Int32":
@@ -112,6 +116,8 @@ namespace Uiml.Rendering.GTKsharp
 				case "System.Int16":
 					return System.Int16.Parse(value);
 				case "Gdk.Color":
+					if(oValue.GetType().FullName == "Gdk.Color")
+						return oValue;
 					return DecodeColor(value);
 				case "Gtk.StateType":
 					return DecodeStateType(value);
@@ -121,6 +127,8 @@ namespace Uiml.Rendering.GTKsharp
 					return DecodeTree(oValue);
 				case "System.String":
 					return (System.String)value;
+				case "System.String[]":
+					return DecodeStringArray(oValue);
 				default:
 					return value;
 			}
@@ -131,6 +139,8 @@ namespace Uiml.Rendering.GTKsharp
 			switch(t.FullName)
 			{
 				case "Gdk.Color":
+					if(p.Value.GetType().FullName == "Gdk.Color"	)
+						return p.Value;
 					return DecodeColor((System.String)p.Value);
 				case "Gtk.StateType":
 					return DecodeStateType(p.Name);
@@ -138,6 +148,8 @@ namespace Uiml.Rendering.GTKsharp
 					return DecodeFont((System.String)p.Value);
 				case "GLib.List":
 					return DecodeList(p.Value);
+				case "System.String[]":
+					return DecodeStringArray(p.Value);
 				default:
 					return p.Value;
 			}
@@ -176,6 +188,7 @@ namespace Uiml.Rendering.GTKsharp
 					}			
 			}
 		}
+		
 
 		private System.Object DecodeStateType(string value)
 		{
@@ -201,6 +214,19 @@ namespace Uiml.Rendering.GTKsharp
 			}
 			return list;
 		}
+
+		private System.String[] DecodeStringArray(System.Object value)
+		{
+			ArrayList strArrayList = new ArrayList();
+			IEnumerator enumConstants = (((Constant)value).Children).GetEnumerator();	
+			while(enumConstants.MoveNext())
+			{
+				Constant c = (Constant)enumConstants.Current;
+				strArrayList.Add(c.Value);
+			}
+			return (System.String[])(strArrayList.ToArray(Type.GetType("System.String")));
+		}
+
 
 		private Gtk.TreeModel DecodeTree(System.Object value)
 		{
@@ -238,7 +264,6 @@ namespace Uiml.Rendering.GTKsharp
 			IEnumerator enumConst = (c.Children).GetEnumerator();
 			while(enumConst.MoveNext())
 			{
-				Console.WriteLine("Appending {0}", ((Constant)enumConst.Current).Value);
 				ls.AppendValues(((Constant)enumConst.Current).Value);
 			}
 			return ls;

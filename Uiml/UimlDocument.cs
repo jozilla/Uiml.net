@@ -40,6 +40,9 @@ namespace Uiml{
 
 		public void Process(XmlNode n){
 			if(n.Name == Head.IAM)
+			//if(n.Name == ""interface")
+			//{ }
+			//
 				m_head = new Head(n);
 			if(n.Name == Peer.IAM)
 				AddPeer(new Peer(n));

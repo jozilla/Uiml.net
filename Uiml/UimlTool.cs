@@ -45,7 +45,7 @@ namespace Uiml{
 
 		private BackendFactory backendFactory;
 		public static String FileName;
-		public static log4net.ILog logger;
+//		public static log4net.ILog logger;
 		
 
 		public static void Main(string[] args)
@@ -67,7 +67,7 @@ namespace Uiml{
 				}
 				else
 				{
-					logger =  log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+					//logger =  log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 					//SimpleLayout sl = new SimpleLayout();
 					//IAppender appender =  
 					//TODO
@@ -188,6 +188,7 @@ namespace Uiml{
 				XmlDocument doc = new XmlDocument();
 				Console.WriteLine("Loading UIML document...");
 				doc.Load(fName);
+				//doc.Load("copy.uiml");
 				Console.WriteLine("Processing UIML document...");
 				Process(doc);
 				Console.WriteLine("Rendering UIML document...");
