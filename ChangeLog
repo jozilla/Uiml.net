@@ -1,3 +1,8 @@
+2004-08-07 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/Peers/Vocabulary.cs: added exception handling for the AddDClass and
+	AddDComponent methods. It writes out an error message now when duplicate
+	entries are found in the presentation/logic sections.
+	
 2004-08-07 Kris Luyten <kris.luyten@luc.ac.be>
 	* Reordered the examples directory
 	* Changed the built process so a set of libraries and a front-end exe are
