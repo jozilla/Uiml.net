@@ -44,7 +44,7 @@ namespace Uiml.Rendering
 
 			switch(name)
 			{
-				//Uncomment this if you want to use wx.NET as a backend renderer
+				//Uncomment this if you want to use GTK# as a backend renderer
 				case Uiml.Rendering.GTKsharp.GtkRenderer.NAME:
 				return new Uiml.Rendering.GTKsharp.GtkRenderer();
 					
