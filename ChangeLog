@@ -1,3 +1,9 @@
+2004-07-15 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* examples/: added SWF equivalents of the copy.uiml and calculator.uiml
+	examples
+	* vocabularies/swf-1.1.uiml: now has roughly the same support for events as the
+	GTK# vocabulary
+
 2004-07-14 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* vocabularies/swf-1.1.uiml: updated vocabulary to solve some compatibility
 	issues between the SWF and GTK# vocabularies. Also added basic support for
