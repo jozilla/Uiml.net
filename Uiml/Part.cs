@@ -47,6 +47,34 @@ namespace Uiml {
 	///</summary>
 	public class Part : UimlAttributes, IUimlElement
 	{
+		#if COMPACT
+		public class Connection
+		{
+			private object m_obj;
+			private MethodInfo m_method;
+			
+			public Connection()
+			{}
+
+			public Connection(object o, MethodInfo mi)
+			{
+				m_obj = o;
+				m_method = mi;
+			}
+
+			public MethodInfo Method
+			{
+				get { return m_method; }
+				set { m_method = value; }
+			}
+
+			public object Object
+			{
+				get { return m_obj; }
+				set { m_obj = value; }
+			}
+		}
+		#endif
 
 		private ArrayList m_children;
 		private ArrayList m_properties;
@@ -63,6 +91,10 @@ namespace Uiml {
 		///  initialized in the Connect method. 
 		/// </summary>
 		private UimlEventArgs m_eventArgs = null;
+
+		#if COMPACT
+		private ArrayList m_connections = null;
+		#endif
 
 		public Part()
 		{
@@ -244,6 +276,13 @@ namespace Uiml {
 			// not found
 			return null;
 		}
+
+		#if COMPACT
+		public bool Connected
+		{
+			get	{ return m_connections != null; }
+		}
+		#endif
 		
 		public ArrayList Children
 		{
@@ -282,10 +321,26 @@ namespace Uiml {
 					
 					initEventArgs(eHandler);
 					
+					#if !COMPACT
 					Delegate handler = Delegate.CreateDelegate(typeof(EventHandler), this, "OnWidgetEvent");
+					#else
+					Delegate handler = new EventHandler(OnWidgetEvent);
+					#endif
+
 					// connect the Signal event to o's event handler
+					#if !COMPACT
 					UimlEventHandler ObjectHandler = (UimlEventHandler)Delegate.CreateDelegate(typeof(UimlEventHandler), o, mi.Name);
 					Signal += ObjectHandler;
+					#else
+					/* This is done with a ugly hack in the .NET Compact framework:
+					 * - we keep a list of MethodInfo objects
+					 * - when the event should be signalled, we invoke these methods
+					 */
+					if(!Connected)
+						m_connections = new ArrayList();
+
+					m_connections.Add(new Connection(o, mi));
+					#endif		
 					
 					try
 					{
@@ -364,8 +419,24 @@ namespace Uiml {
 
 		protected void OnWidgetEvent(object sender, EventArgs e)
 		{
+			#if COMPACT
+			/* we are always connected when this method is called
+			 * this test could thus be eliminated
+			 */
+			if(Connected) 
+			{
+				IEnumerator ce = m_connections.GetEnumerator();
+				while(ce.MoveNext())
+				{
+					Connection conn = (Connection)ce.Current;
+					conn.Method.Invoke(conn.Object, new object[] {this, m_eventArgs});
+				}
+			}
+			#else
 			if(Signal!=null)
 			 Signal(this, m_eventArgs); 
+			#endif
+			
 		}
 
 		protected void initEventArgs(UimlEventHandlerAttribute a)
