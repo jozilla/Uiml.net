@@ -497,7 +497,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param id="page" type="System.Double"/>
 		</d-property>
 		<d-property id="ticks" maps-type="setMethod" maps-to="Digits">
-			<d-param type="Ssytem.Int32"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 	</d-class>
 
@@ -517,7 +517,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param type="System.Double" />
 		</d-property>
 		<d-property id="ticks" maps-type="setMethod" maps-to="Digits">
-			<d-param type="Ssytem.Int32"/>
+			<d-param type="System.Int"/>
 		</d-property>
 	</d-class>
 
