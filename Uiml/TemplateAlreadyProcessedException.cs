@@ -1,6 +1,6 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
-
+	 Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
+    
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
 								Limburgs Universitair Centrum
@@ -20,21 +20,46 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+
 namespace Uiml{
 
+	using System;
 
-	///<summary>
-	///</summary>
-	public class ReplaceTemplateResolver : ITemplateResolver{
+	public class TemplateAlreadyProcessedException : Exception
+	{
 
-		public ReplaceTemplateResolver()
-		{
+		private String m_identifier;
+		private Uri m_location = null;
+
+		public TemplateAlreadyProcessedException(string id) : base(id)
+		{ 
+			Identifier = m_identifier;
 		}
 
-		
-		public virtual IUimlElement Resolve(Template t, IUimlElement placeholder)
+		public TemplateAlreadyProcessedException(string id, Uri location) : this(id)
+		{ 
+			m_location = location;
+		}
+
+
+		public override String ToString()
+		{		
+			String resultStr = "Template id \""+ Identifier +"\" already processed";
+			if(m_location!=null)
+				resultStr  += "\n          location=\""+ m_location +"\"";
+			return resultStr;
+		}
+
+		public String Identifier
 		{
-			return null;//TODO
+			get { return m_identifier;  }
+			set { m_identifier = value; }
+		}
+
+		public Uri Location
+		{
+			get { return m_location;  }
+			set { m_location = value; }
 		}
 	}
 }

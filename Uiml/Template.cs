@@ -6,7 +6,7 @@
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
+	modify it under the terms of the GNU Lesser General Public License
 	as published by the Free Software Foundation; either version 2.1
 	of	the License, or (at your option) any later version.
 
@@ -34,6 +34,11 @@ namespace Uiml{
 	///                    interface |logic|part|peers|presentation|property| 
 	///                    restructure|rule |script|structure|style)&gt;
 	///    &lt;!ATTLIST template id NMTOKEN #IMPLIED&gt;
+	///
+	/// Templates that are resolved only if they are "sourced" by an element.
+	/// This means we have to execute an open file operation each time an element
+	/// sources a template. 
+	///
 	///</summary>
 	public class Template : IUimlElement{
 		public String m_identifier;
@@ -43,9 +48,37 @@ namespace Uiml{
 		{
 		}
 
+		public Template(string identifier)
+		{
+			m_identifier = identifier;
+			LoadTemplate(identifier, UimlTool.FileName);
+		}
+
+		public Template(Uri turi)
+		{
+			m_identifier = turi.Fragment;
+			//split the identifier and the actual uri
+			LoadTemplate(turi.Fragment, turi.GetLeftPart(UriPartial.Path));
+		}
+
 		public Template(XmlNode n) : this()
 		{
 			Process(n);
+		}
+
+		private void LoadTemplate(string identifier, string path)
+		{
+			
+			if(TemplateRepository.Instance.Query(m_identifier)==null)
+			{
+				XmlDocument doc = new XmlDocument();
+				doc.Load(path);
+				//get the node with identifier "identifier"
+				XmlNodeList nl = doc.SelectNodes("//template[@id='" +  identifier + "']");
+				Process(nl[0]);
+			}
+			else
+				throw new TemplateAlreadyProcessedException(identifier);
 		}
 
 		public void Process(XmlNode n)
@@ -54,7 +87,7 @@ namespace Uiml{
 				return;
 
 			//need a Factory here to replace the 
-			//overloaded case
+			//overloaded case here with a polymorf create method
 			XmlNodeList xnl = n.ChildNodes;
 			switch(xnl[0].Name)
 			{
@@ -103,6 +136,9 @@ namespace Uiml{
 					Console.WriteLine("Templates can not contain \"{0}\" ", xnl[0].Name);
 					break;
 			}
+
+			//register this template in the repository
+			TemplateRepository.Instance.Register(this);
 		}
 
 		public string Identifier

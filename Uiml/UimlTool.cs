@@ -6,7 +6,7 @@
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU Leser General Public License
+	modify it under the terms of the GNU Lesser General Public License
 	as published by the Free Software Foundation; either version 2.1
 	of	the License, or (at your option) any later version.
 
@@ -34,14 +34,19 @@ namespace Uiml{
 
 	using Uiml.Executing;
 
+	///<summary>
+	/// Main application class; serves as a comand-line front-end for
+	/// the uiml.net library
+	///</summary>
 	public class UimlTool{
 		static public String[] options = {"voc","uiml","help","libs","version"};
 		static public String VERSION = "0.0.5-pre (22-01-2004)";
 		static public char LIBSEP;
 
 		private BackendFactory backendFactory;
-		private String fileName;
+		public static String FileName;
 		
+
 		public static void Main(string[] args)
 		{
 			Options opt = new Options(args, options);
@@ -120,6 +125,7 @@ namespace Uiml{
 
 		private UimlDocument m_uimlDocument;
 		private static IRenderer m_renderer;
+		static public Uri InputFile = null;
 
 		public UimlTool(string fName)
 		{
@@ -148,7 +154,9 @@ namespace Uiml{
 
 		public void Load(String fName, String strVoc)
 		{
-			fileName = fName;
+			FileName = fName;
+			//get the current directory:
+			//InputFile = new Uri("file://" + Application.ExecutablePath() + "/" + FileName);
 
 			if(strVoc!=null)
 				new BaseVocabulary(strVoc);
@@ -164,7 +172,7 @@ namespace Uiml{
 			}
 				catch(System.IO.FileNotFoundException sif)
 				{
-					Console.WriteLine("Could not read file {0}",fileName);
+					Console.WriteLine("Could not read file {0}",FileName);
 					Environment.Exit(-1);
 				}
 		}
@@ -194,7 +202,7 @@ namespace Uiml{
 			m_renderer =  backendFactory.CreateRenderer(Document.Vocabulary);
 			if(m_renderer == null)
 			{
-				Console.WriteLine("No Vocabulary specified, please update the <peers> section of {0}", fileName);
+				Console.WriteLine("No Vocabulary specified, please update the <peers> section of {0}", FileName);
 				Environment.Exit(-1);
 			}
 			IRenderedInstance instance = m_renderer.Render(Document);
