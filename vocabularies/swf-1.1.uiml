@@ -611,6 +611,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="view" maps-type="setMethod" maps-to="View">
 			<d-param type="System.Windows.Forms.View"/>
 		</d-property>
+		<d-property id="title" maps-type="setMethod" maps-to="Columns.Add">
+			<d-param type="System.Windows.Forms.ColumnHeader"/>
+		</d-property>
 	</d-class>
 
 	<d-class id="Tree" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TreeView">
