@@ -114,7 +114,7 @@ namespace Uiml.Rendering.SWF
 				}
 				Control w = (Control)thePart.UiObject;
 
-				string concreteEventName = m_renderer.Voc.MapsOn(e.Class);
+				string concreteEventName = m_renderer.Voc.MapsOnCls(e.Class);
 				/* TODO: eventhandling is done with an ugly hack: 
 				 * see the comments in the GTK# event handling classes for details.
 				 */

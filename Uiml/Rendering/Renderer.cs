@@ -132,7 +132,7 @@ namespace Uiml.Rendering
 
 		private System.Object LoadPartProperties(ref System.Object uiObject, Part part)
 		{
-			string className  = Voc.MapsOn(part.Class);
+			string className  = Voc.MapsOnCls(part.Class);
 			Type classType = GuiAssembly.GetType(className);
 		
 			IEnumerator enumProps = part.Properties;
@@ -150,7 +150,7 @@ namespace Uiml.Rendering
 		//</summary>
 		private System.Object LoadNamedProperties(ref System.Object uiObject, Part part, Style style)
 		{
-			string className  = Voc.MapsOn(part.Class);
+			string className  = Voc.MapsOnCls(part.Class);
 			Type classType = GuiAssembly.GetType(className);
 
 			IEnumerator enumProps = style.GetNamedProperties(part.Identifier);
@@ -168,7 +168,7 @@ namespace Uiml.Rendering
 		//</summary>
 		private System.Object LoadClassProperties(ref System.Object uiObject, Part part, Style style)
 		{
-			string className  = Voc.MapsOn(part.Class);
+			string className  = Voc.MapsOnCls(part.Class);
 			Type classType = GuiAssembly.GetType(className);
 
 			IEnumerator enumProps = style.GetClassProperties(part.Identifier);
@@ -200,7 +200,7 @@ namespace Uiml.Rendering
 			Part p = part.SearchPart(prop.PartName);
 			if(prop.Lazy)
 				prop.Resolve(this);
-			string className  = Voc.MapsOn(p.Class);
+			string className  = Voc.MapsOnCls(p.Class);
 			Type classType = GuiAssembly.GetType(className);
 			System.Object uiObj =  p.UiObject;
 			ApplyProperty(ref uiObj, prop, p, classType);	
@@ -217,7 +217,7 @@ namespace Uiml.Rendering
 		///<param name="tclassType"></param>
 		private System.Object ApplyProperty(ref System.Object uiObject, Property p, Part part, Type tclassType)
 		{
-				string setter = Voc.GetSetProperty(p.Name, part.Class);
+				string setter = Voc.GetPropertySetter(p.Name, part.Class);
 
 				//try to use Properties first,
 				//if that fails, look for the appropriate setters in the available methods

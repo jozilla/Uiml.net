@@ -119,7 +119,7 @@ namespace Uiml.Rendering.SWF
 		///</summary>
 		private Control Render(Part uiPart, Style uiStyle) //throws WrongNestingException, MappingNotFoundException
 		{
-			string className = Voc.MapsOn(uiPart.Class);				
+			string className = Voc.MapsOnCls(uiPart.Class);				
 			Type classType = GuiAssembly.GetType(className);
 			Type containerType = GuiAssembly.GetType(CONTAINER);
 
@@ -183,9 +183,9 @@ namespace Uiml.Rendering.SWF
 				part = Top;
 			//search for the part, and get the widget
 			Part p = part.SearchPart(prop.PartName);
-			string className  = Voc.MapsOn(p.Class);
+			string className  = Voc.MapsOnCls(p.Class);
 			Type classType = GuiAssembly.GetType(className);
-			string getter = Voc.GetGetProperty(prop.Name, p.Class);
+			string getter = Voc.GetPropertyGetter(prop.Name, p.Class);
 
 			System.Object targetObject = p.UiObject;
 			MemberInfo mInfo = null;

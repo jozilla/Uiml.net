@@ -244,8 +244,8 @@ namespace Uiml.Executing
 				if(!foundMapping)
 				{
 					logic = null;
-					concreteObjectName = Renderer.Voc.MapsOnComponent(ObjectName);				
-					concreteMethodName = Renderer.Voc.GetMethodComponent(MethodName, ObjectName);
+					concreteObjectName = Renderer.Voc.MapsOnCmp(ObjectName);				
+					concreteMethodName = Renderer.Voc.GetMethodCmp(MethodName, ObjectName);
 					foundMapping = true;
 				}
 
