@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="frame" class="Frame">			
+			<part id="bandsList" class="ListBox"/>
+		</part>
+		</structure>
+		<style>
+			<property part-name="frame" name="label">Belgian Bands</property>
+			<property part-name="frame" name="size">170,150</property>
+			<property part-name="bandsList" name="position">20,20</property>
+			<property part-name="bandsList" name="selectionMode">MultiExtended</property>
+			<property part-name="bandsList" name="content">
+		  		<constant model="list">
+					<constant value="dEUS"/>
+					<constant value="Nemo"/>
+					<constant value="The Evil Superstars"/>
+					<constant value="Channel Zero"/>
+					<constant value="Star Industry"/>
+				</constant>
+		  </property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
