@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="outerframe">
+			 <part class="VBox" id="vlayout">
+					<part class="HBox" id="blayout1">
+						<part class="Button" id="Button"/>
+						<part class="Button" id="Button2">
+							<style>
+								<property name="label">Color me!</property>
+								<property name="background">blue</property>
+							</style>
+						</part>
+					</part>
+					<part class="HBox" id="blayout1a">
+						<part class="Entry" id="t1"/>
+						<part class="Entry" id="t2">
+							<style><property name="foreground">red</property></style>
+						</part>
+					</part>
+					<part class="HBox" id="labels">
+						<part class="Label" id="l1">
+							<style><property name="foreground">blue</property></style>
+						</part>
+						<part class="Label" id="l2"/>
+					</part>
+					<part class="Frame" id="fin">
+						<part class="HBox" id="blayout2">
+							<part class="VBox" id="vlayout1">
+								<part class="CheckButton" id="check1"/>
+								<part class="ToggleButton" id="check2"/>
+								<part class="ToggleButton" id="check3"/>
+								<part class="CheckButton" id="check4"/>
+							</part>
+							<part class="VBox" id="vlayout2">
+								<part class="Frame" id="fcal">
+									<part class="Calendar" id="cal"/>
+								</part>
+								<part class="Frame" id="fcolor">
+									<part class="ColorSelection" id="color"/> 
+								</part>
+								<part class="HBox">
+									<part class="Entry" id="textfield" />
+									<part class="Entry" id="textfield2" />
+								</part>
+							</part>
+						</part>
+					</part>
+					<part class="Combo" id="combo">
+						<style>
+							 <property name="content">
+							  	<constant model="list">
+									<constant value="dEUS"/>
+									<constant value="Nemo"/>
+									<constant value="The Evil Superstars"/>
+									<constant value="Channel Zero"/>
+									<constant value="Star Industry"/>
+								</constant>
+						  </property>
+						</style>
+					</part>
+					<part class="ProgressBar" id="progr">
+						<style><property name="fraction">0.7</property></style>
+					</part>
+			 </part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="outerframe" name="label">Two Buttons and Two Textviews</property>
+			<property part-name="Button" name="label">Picked an item?</property>
+			<property part-name="check1" name="label">VBox implemented</property>
+			<property part-name="check2" name="label">HBox implemented</property>
+			<property part-name="check3" name="label">Table not implemented</property>
+			<property part-name="check4" name="label">Spatial Constraints not implemented</property>
+			<property part-name="fin" name="label">2 VBoxes in a HBox</property>
+			<property part-name="fcal" name="label">Showing of calendar</property>
+			<property part-name="fcolor" name="label">and colorpicker</property>
+			<property part-name="t1" name="editable">false</property>
+			<property part-name="t1" name="text">this is not editable</property>
+			<property part-name="t2" name="base-color">green</property>
+			<property part-name="t2" name="text">this background is green</property>
+			<property part-name="t2" name="font">Bonzai 18</property>
+			<property part-name="l1" name="text">Left Label (selectable)</property>
+			<property part-name="l1" name="font">Kristen ITC 14</property>
+			<property part-name="l2" name="text">Right Label (not selectable)</property>
+			<property part-name="l2" name="background">green</property>
+			<property part-name="l1" name="selectable">true</property>
+			<property part-name="l2" name="selectable">false</property> 
+			<property part-name="progr" name="blocks">10</property>
+			<property part-class="ProgressBar" name="text">...making progress...</property>
+			<property part-name="textfield" name="text">text set by property</property>
+			<property part-name="textfield2" name="text">
+				<call name="String.concatenate">
+					<param>Nested call property:</param>
+					<param>
+						<call name="String.concatenate">
+							<param>4^3 = </param>
+							<param>
+								<call name="Math.power">
+								  <param name="ground">4.0</param>
+								  <param name="power">3.0</param>
+								</call>			
+							</param>
+						</call>
+					</param>
+				</call>
+			</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="Button"/>
+				</condition>				
+				<action>
+					<property part-name="t1" name="text">
+						<property part-name="combo" name="entry"/>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="Button2"/>
+				</condition>				
+				<action>
+					<property part-name="Button2" name="text-color">
+						<property part-name="color" name="color"/>
+				    </property>
+				</action>
+			</rule>
+		</behavior>
+
+	</interface>
+	<peers>
+		<!--		<presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/> -->
+	  <presentation base="file://home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml"/>
+	</peers>
+</uiml>
+

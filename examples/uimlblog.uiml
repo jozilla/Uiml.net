@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="fr">
+				<part class="HBox">
+					<part class="VBox">
+						<part class="Label"><style><property name="text">Recent Posts</property></style></part>
+						<part id="articles" class="List"/>
+					</part>
+					<part class="VBox">
+						<part class="Label"><style><property name="text">Entry Title</property></style></part>
+						<part id="title" class="Entry"/>
+						<part class="Label"><style><property name="text">Entry Body</property></style></part>
+						<part id="blogentry" class="Text"/>
+						<part class="HBox">
+							<part id="update" class="Button"/>
+							<part id="newpost" class="Button"/>
+							<part id="quit" class="Button"/>
+						</part>
+					</part>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="update"  name="label">Update</property>
+			<property part-name="newpost"  name="label">New Post</property>
+			<property part-name="quit"  name="label">Quit</property>
+		</style>
+	</interface>
+	<peers>
+		<!--		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/> -->
+		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml"/>
+	</peers>
+</uiml>
+

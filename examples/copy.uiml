@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="Frame">
+				<part class="HBox">
+					<part class="Entry" id="leftentry"/>
+					<part class="VBox">
+						<part class="Button" id="copyleft"/>
+						<part class="Button" id="copyright"/>
+					</part>
+					<part class="Entry" id="rightentry"/>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="Frame" name="label">Copy</property>
+			<property part-name="copyleft" name="label">copy left</property>
+			<property part-name="copyright" name="label">copy right</property>
+			<property part-name="leftentry" name="text">          </property>
+			<property part-name="rightentry" name="text">          </property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="copyleft"/>
+				</condition>				
+				<action>
+					<property part-name="rightentry" name="text">
+						<property part-name="leftentry" name="text"/>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="copyright"/>
+				</condition>				
+				<action>
+					<property part-name="leftentry" name="text">
+						<property part-name="rightentry" name="text"/>
+					</property>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		<!--		<presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml" /> -->
+		 <presentation base="file://home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml"/>
+	</peers>
+</uiml>
+

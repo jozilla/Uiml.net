@@ -50,12 +50,11 @@ namespace Uiml{
 		{
 			try{
 				templates.Add(t.Identifier, t);
-			}catch(ArgumentException ae){
-				Console.WriteLine("Template {0} is already in templates repository", t.Identifier);
 			}catch(ArgumentNullException ane){
 				Console.WriteLine("Template with no identifier!");
-			}
-		}
+			}catch(ArgumentException ae){
+				Console.WriteLine("Template {0} is already in templates repository", t.Identifier);
+			}		}
 
 
 		

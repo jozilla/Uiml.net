@@ -329,15 +329,22 @@ namespace Uiml.Rendering.GTKsharp
 		{
 			if(part.Class == "Tree")
 			{
-				string title = (string)s.SearchProperty(part.Identifier, "title").Value;
-				if(title==null) 
+				Property p = s.SearchProperty(part.Identifier, "title");
+				string title;
+				if(p!=null)
+					title = (string)p.Value;
+				else	
 					title="";
 				((Gtk.TreeView)uiObject).AppendColumn(title, new CellRendererText(), "text", 0);
 				
-			}else if(part.Class == "List")
+			}
+			else if(part.Class == "List")
 			{
-				string title = (string)s.SearchProperty(part.Identifier, "title").Value;
-				if(title==null) 
+				Property p = s.SearchProperty(part.Identifier, "title");
+				string title;
+				if(p!=null)
+					title = (string)p.Value;
+				else	
 					title="";
 				((Gtk.TreeView)uiObject).AppendColumn(title, new CellRendererText(), "text", 0);
 				((Gtk.TreeView)uiObject).HeadersVisible = true;

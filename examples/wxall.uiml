@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+  <interface>
+    <structure>
+	 	<part id="topperA" class="BoxSizer">
+		 	<part id="topperE" class="BoxSizer">
+   	     <part id="leftentry" class="Entry"/>
+      	  <part id="rightentry" class="Entry"/> 			  
+			</part>
+		 	<part id="topperB" class="BoxSizer">
+   	     <part id="leftb" class="Button"/>
+      	  <part id="rightb" class="Button"/> 
+			</part>
+			 <part id="otherButtons" class="BoxSizer">
+   	     <part id="check" class="CheckButton"/>
+      	  <part id="radio" class="RadioButton"/> 
+			</part>
+			<part id="complexcontrols" class="BoxSizer">
+				<part id="date" class="Calendar"/>
+<!--				<part id="color" class="ColorSelection"/> -->
+			</part>
+		</part>
+    </structure>
+    <style>	 	 
+		  <property part-name="topperA" name="orientation">8</property>
+		  <property part-name="topperE" name="orientation">4</property>
+		  <property part-name="topperB" name="orientation">4</property>
+	 	  <property part-name="leftentry"  name="identifier">-1</property>
+        <property part-name="leftentry" name="label">Left</property>
+	 	  <property part-name="rightentry"  name="identifier">-1</property>
+        <property part-name="rightentry" name="label">righT</property>
+	 	  <property part-name="leftb"  name="identifier">-1</property>
+        <property part-name="leftb" name="label">Left button</property>
+	 	  <property part-name="rightb"  name="identifier">-1</property>
+        <property part-name="rightb" name="label">right buttoN</property>
+        <property part-name="check" name="label">Checkbutton</property>
+        <property part-name="check" name="identifier">-1</property>
+        <property part-name="radio" name="label">Radiobutton</property>
+        <property part-name="radio" name="identifier">-1</property>
+        <property part-name="date" name="identifier">-1</property>
+		  <property part-name="otherButtons" name="orientation">4</property>
+		  <property part-name="complexcontrols" name="orientation">4</property>
+    </style>
+  </interface>
+  <peers>
+<!-- 	 <presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/wx-net-1.0.uiml"/>  -->
+ 	 <presentation base="file:///home/kris/projects/uiml.net/project/uiml.net/Uiml/wx-net-1.0.uiml"/>
+  </peers>
+</uiml>

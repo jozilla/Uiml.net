@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="fr">
+				<part class="VBox">
+					<part class="Entry" id="lab" />
+					<part class="Entry" id="lab2"/>
+					<part class="Entry" id="lab3"/>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="lab" name="text">
+				<call name="String.concatenate">
+					<param>Nested call property:</param>
+					<param>
+						<call name="String.concatenate">
+							<param>4^3 = </param>
+							<param>
+								<call name="Math.power">
+								  <param name="ground">4.0</param>
+								  <param name="power">3.0</param>
+								</call>			
+							</param>
+						</call>
+					</param>
+				</call>
+			</property>
+			<property part-name="lab2" name="text">
+				<call name="Date.now"/>
+			</property>
+			<property part-name="lab3" name="text">
+				<call name="Math.pi"/>
+			</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+	</peers>
+</uiml>
+

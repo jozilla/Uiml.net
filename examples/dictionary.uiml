@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml 
+	PUBLIC "-//Harmonia//DTD UIML 3.0a Draft//EN" "http://uiml.org/dtds/UIML3_0a.dtd">
+
+<!-- Dictionary.ui; the example from the uiml spec with minimal changes to make
+	  it work with uiml.net 
+	  -->
+
+<uiml>
+  <interface>
+  	<structure>
+		<part class="Frame" id="OuterFrame">
+			<part class="HBox" id="hl1">
+				<part class="VBox" id="vl1">
+					<part class="Label" id="TermLabel" />
+					<part class="Combo"  id="TermList" />
+				</part>
+				<part class="VBox" id="vl2">
+					<part class="Label" id="DefnLabel" />
+					<part class="Text"  id="DefnArea" />
+				</part>
+			</part>
+		</part>
+	</structure>
+	<style>
+		<property part-name="OuterFrame" name="label">Simple Dictionary</property>
+		<property part-name="TermLabel" name="text">Pick a term:</property>
+		<property part-name="DefnLabel" name="text">Definition:</property>
+		<property part-name="TermList" name="content">
+			<constant model="list">
+				<constant id="Cat" value="Cat" />
+				<constant id="Dog" value="Dog" />
+				<constant id="Mouse" value="Mouse" />
+			</constant>
+		</property>
+	</style>
+	<behavior>
+		<rule>
+			<condition>
+				<event part-name="TermList" class="EntrySelect"/>
+			</condition>
+			<action>
+				<property part-name="DefnArea" name="text">
+					<call name="Dict.lookup">
+						<param><property part-name="TermList" name="entry"/></param>
+					</call>
+				</property>
+			</action>
+		</rule>
+	</behavior>
+  </interface>
+  <peers>
+	  <!--  		<presentation base="http://lumumba.luc.ac.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml" /> -->
+	  <presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+		<logic id="dictionary">
+		  <d-component id="Dict" maps-to="Dictionary">
+   	    <d-method id="lookup" return-type="string" maps-to="Lookup">
+		    	<d-param id="animal" type="System.String"/>
+		    </d-method>
+	     </d-component>
+		</logic>
+  </peers>
+</uiml>

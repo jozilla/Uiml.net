@@ -7,8 +7,11 @@ HOW TO BUILD THE CODE:
 HOW TO RUN:
 uiml.net.exe -uiml <myuimlfile>
 
+uiml.net.exe -uiml <myuimlfile> -libs <mylib1.dll;mylib2.dll;...> to link the user interface
+with mylib1,mylib2,...
+
 uiml.net.exe -help for a full explanation
 
 
 
-You can find uiml examples on http://lumumba.luc.ac.be/kris/projects/uiml.net/examples/
+You can find uiml examples on http://research.edm.luc.ac.be/kris/projects/uiml.net/examples/

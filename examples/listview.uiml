@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+  <interface>
+    <structure>
+      <part   id="Top"    class="Frame">
+			<part class="VBox">
+			  <part class="Label" id="thelabel"/>
+	        <part id="list" class="List"/>
+			  <part class="Label" id="thelabel2"/>
+		   </part>
+      </part>
+    </structure>
+    <style>
+        <property part-name="Top"    name="label">UIML Tree Example</property>
+		  <property part-name="thelabel" name="text">This example shows the TreeView mapping</property>
+		  <property part-name="thelabel" name="wrap">true</property>
+		  <property part-name="list" name="title">Bands</property>
+        <property part-name="list" name="content">
+		  	<constant model="list">
+				<constant value="dEUS"/>
+				<constant value="Nemo"/>
+				<constant value="The Evil Superstars"/>
+				<constant value="Channel Zero"/>
+				<constant value="Star Industry"/>
+			</constant>
+		  </property>
+		  <property part-name="thelabel2" name="text">Pick one!</property>
+    </style>
+	 <behavior>
+	 	<rule>
+			<condition>
+				<event part-name="list" class="EntrySelect"/>
+			</condition>
+			<action>
+				<property part-name="thelabel2" name="text">
+					<call name="String.concatenate">
+						<param>Want to buy a CD from </param>
+						<param><property part-name="list" name="entry"/></param>
+					</call>
+				</property>
+			</action>
+		</rule>
+	 </behavior>
+
+  </interface>
+  <peers>
+<!--  	 <presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/> -->
+<presentation base="file://home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+  </peers>
+</uiml>

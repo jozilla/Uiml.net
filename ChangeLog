@@ -1,3 +1,9 @@
+2004-06-21 Kris Luyten <kris.luyten@luc.ac.be>
+	* Works with the gac installation now
+	* Mostly API fixes
+	* Added examples to the sourceforge repository
+
+
 2004-01-29 Kris Luyten <kris.luyten@luc.ac.be>
 	* Embedded scripting is possible now. E.g. one can specify in
 	  the behavior of the interface:

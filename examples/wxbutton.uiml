@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+  <interface>
+    <structure>
+        <part id="Button" class="Button"/>
+    </structure>
+    <style>
+	 	  <property part-name="Button" name="identifier">5100</property>
+        <property part-name="Button" name="label">Press Me</property>
+    </style>
+  </interface>
+  <peers>
+ 	 <presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/wx-net-1.0.uiml"/>
+  </peers>
+</uiml>

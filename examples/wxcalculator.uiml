@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+	<interface>
+		<structure>	
+			<part class="BoxSizer" id="everything">
+			<part class="BoxSizer" id="out_and_ac">
+		 		<part class="Entry" id="output"/>
+				<part class="Button" id="ac"/>
+			</part>
+			<part class="BoxSizer" id="simple">
+				 <part class="BoxSizer" id="vlayout">
+						<part class="BoxSizer" id="row1">
+							<part class="Button" id="b1"/>
+							<part class="Button" id="b2"/>
+							<part class="Button" id="b3"/>
+						</part>
+						<part class="BoxSizer" id="row2">
+							<part class="Button" id="b4"/>
+							<part class="Button" id="b5"/>
+							<part class="Button" id="b6"/>
+						</part>
+						<part class="BoxSizer" id="row3">
+							<part class="Button" id="b7"/>
+							<part class="Button" id="b8"/>
+							<part class="Button" id="b9"/>
+						</part>
+						<part class="BoxSizer" id="row4">
+							<part class="Button" id="b0"/>
+							<part class="Button" id="bpoint"/>
+							<part class="Button" id="bplusminus"/>
+						</part>
+					</part>
+					<part class="BoxSizer" id="op">
+						<part class="Button" id="bmin"/>
+						<part class="Button" id="bplus"/>
+						<part class="Button" id="bmul"/>
+						<part class="Button" id="bdiv"/>
+						<part class="Button" id="bsol"/>
+					</part>
+					<part class="BoxSizer" id="scientific">
+						<part class="Button" id="sin"/>						
+						<part class="Button" id="cos"/>
+						<part class="Button" id="tan"/>
+						<part class="Button" id="pi"/>
+						<part class="Button" id="e"/>
+					</part>
+				</part>
+			 </part>
+		</structure>
+		<style>
+			<property part-name="everything" name="orientation">8</property>
+			<property part-name="out_and_ac" name="orientation">4</property>
+			<property part-name="simple" name="orientation">4</property>
+			<property part-name="vlayout" name="orientation">8</property>
+			<property part-name="row1" name="orientation">4</property>
+			<property part-name="row2" name="orientation">4</property>
+			<property part-name="row3" name="orientation">4</property>
+			<property part-name="row4" name="orientation">4</property>
+			<property part-name="op" name="orientation">8</property>
+			<property part-name="scientific" name="orientation">8</property>
+			<property part-name="b0" name="label">0</property>
+			<property part-name="b1" name="label">1</property>
+			<property part-name="b2" name="label">2</property>
+			<property part-name="b3" name="label">3</property>
+			<property part-name="b4" name="label">4</property>
+			<property part-name="b5" name="label">5</property>
+			<property part-name="b6" name="label">6</property>
+			<property part-name="b7" name="label">7</property>
+			<property part-name="b8" name="label">8</property>
+			<property part-name="b9" name="label">9</property>
+			<property part-name="b0" name="identifier">-1</property>
+			<property part-name="b1" name="identifier">-1</property>
+			<property part-name="b2" name="identifier">-1</property>
+			<property part-name="b3" name="identifier">-1</property>
+			<property part-name="b4" name="identifier">-1</property>
+			<property part-name="b5" name="identifier">-1</property>
+			<property part-name="b6" name="identifier">-1</property>
+			<property part-name="b7" name="identifier">-1</property>
+			<property part-name="b8" name="identifier">-1</property>
+			<property part-name="b9" name="identifier">-1</property>
+			<property part-name="bpoint" name="label">.</property>
+			<property part-name="bplusminus" name="label">+/-</property>
+			<property part-name="bplus" name="label">+</property>
+			<property part-name="bmin" name="label">-</property>
+			<property part-name="bmul" name="label">*</property>
+			<property part-name="bdiv" name="label">/</property>
+			<property part-name="bsol" name="label">=</property>
+			<property part-name="ac" name="label">AC</property>
+			<property part-name="sin" name="label">Sin</property>
+			<property part-name="cos" name="label">Cos</property>
+			<property part-name="tan" name="label">Tan</property>
+			<property part-name="pi" name="label">Pi</property>
+			<property part-name="e" name="label">e</property>
+			<property part-name="bpoint" name="identifier">-1</property>
+			<property part-name="bplusminus" name="identifier">-1</property>
+			<property part-name="bplus" name="identifier">-1</property>
+			<property part-name="bmin" name="identifier">-1</property>
+			<property part-name="bmul" name="identifier">-1</property>
+			<property part-name="bdiv" name="identifier">-1</property>
+			<property part-name="bsol" name="identifier">-1</property>
+			<property part-name="ac" name="identifier">-1</property>
+			<property part-name="sin" name="identifier">-1</property>
+			<property part-name="cos" name="identifier">-1</property>
+			<property part-name="tan" name="identifier">-1</property>
+			<property part-name="pi" name="identifier">-1</property>
+			<property part-name="e" name="identifier">-1</property>
+			<property part-name="output" name="identifier">-1</property>
+			<property part-name="output" name="label">                </property>
+		</style>
+	</interface>
+	 <peers>
+		 <!-- 	 <presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/wx-net-1.0.uiml"/>  -->
+		 <presentation base="file:///home/kris/projects/uiml.net/Uiml/wx-net-1.0.uiml"/>
+  	 </peers>
+</uiml>
+

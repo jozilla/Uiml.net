@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="fr">
+				<part class="VBox">
+					<part class="Html" id="browser"/>
+				</part>
+			</part>
+		</structure>
+		<style>
+			<property part-name="browser"  name="website">
+				http://lumumba.luc.ac.be/~kris/projects/uiml.net/
+			</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+	</peers>
+</uiml>
+

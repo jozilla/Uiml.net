@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="Frame">
+				<part class="ColorSelection" id="color"/>
+			</part>
+		</structure>
+		<style>
+			<property part-name="Frame" name="label">ColorSelection Widget</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+

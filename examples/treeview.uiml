@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd">
+<uiml>
+  <interface>
+    <structure>
+      <part   id="Top"    class="Frame">
+			<part class="VBox">
+			  <part class="Label" id="thelabel"/>
+	        <part id="edm" class="Tree"/>
+			 </part>
+      </part>
+    </structure>
+    <style>
+        <property part-name="Top"    name="label">UIML Tree Example</property>
+		  <property part-name="thelabel" name="text">This example shows the TreeView mapping</property>
+		  <property part-name="thelabel" name="wrap">true</property>
+		  <property part-name="edm" name="title">Organigram</property>
+        <property part-name="edm" name="content">
+		  	<constant model="tree" value="EDM">
+				<constant value="Director">
+					<constant value="prof. dr. Eddy Flerackers"/>
+				</constant>
+				<constant value="HCI">
+					<constant value="prof. dr. Karin Coninx"/>					
+				</constant>
+				<constant value="Graphics">
+					<constant value="prof. dr. Philippe Bekaert"/>
+					<constant value="prof. dr. Frank Van Reeth"/>
+				</constant>
+				<constant value="Networked Virtual Environments">
+					<constant value="prof. dr. Wim Lamotte"/>
+				</constant>
+			</constant>
+		  </property>
+    </style>
+  </interface>
+  <peers>
+<!--  	 <presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/> -->
+<presentation base="file://home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+  </peers>
+</uiml>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="Frame">
+				<part class="CheckButton" id="b"/>
+			</part>
+		</structure>
+		<style>
+			<property part-name="Frame" name="label">What do you think of UIML?</property>
+			<property part-name="b" name="label">I like UIML!</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+
