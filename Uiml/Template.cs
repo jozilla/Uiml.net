@@ -103,8 +103,6 @@ namespace Uiml{
 					Console.WriteLine("Templates can not contain \"{0}\" ", xnl[0].Name);
 					break;
 			}
-
-
 		}
 
 		public string Identifier
@@ -125,6 +123,22 @@ namespace Uiml{
 				ArrayList a = new ArrayList(); 
 				a.Add(Top); 
 				return a; 
+			}
+		}
+
+		public static ITemplateResolver GetResolver(string how)
+		{
+			switch(how)
+			{
+				case UimlAttributes.UNION :
+					return new UnionTemplateResolver();
+				case UimlAttributes.REPLACE :
+					return new ReplaceTemplateResolver();
+				case UimlAttributes.CASCADE :
+					return new CascadeTemplateResolver();
+				default:
+					Console.WriteLine("Unknown template strategy \"{0}\"", how);
+					return null;
 			}
 		}
 

@@ -34,8 +34,11 @@ namespace Uiml{
 		protected string m_how;
 		protected string m_export;
 
-		public enum HOW_VALS    {union,  cascade,  replace  };
-		public enum EXPORT_VALS {hidden, optional, required };
+		public enum HOW_VALS    { union,  cascade,  replace };
+		public const string REPLACE = "replace";
+		public const string CASCADE = "cascade";
+		public const string UNION   = "union";
+		public enum EXPORT_VALS { hidden, optional, required };
 
 		protected void ReadAttributes(XmlNode n)
 		{
@@ -60,6 +63,11 @@ namespace Uiml{
 		{
 			get { return m_source;}
 			set { m_source = value; }
+		}
+
+		public bool SourceAvailable
+		{
+			get { return (m_source != null); }
 		}
 
 		public string How
