@@ -42,7 +42,7 @@ Copyright (c) 2004 Kris Luyten <kris.luyten@luc.ac.be>.
 								 <programlisting>
 <![CDATA[
 UimlDocument uimlDoc = new UimlDocument("myinterface.uiml");
-IRenderer renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);
+IRenderer renderer =  BackendFactory.CreateRenderer(uimlDoc.Vocabulary);
 IRenderedInstance instance = renderer.Render(uimlDoc);
 instance.ShowIt();									 
 ]]>

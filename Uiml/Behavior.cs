@@ -119,6 +119,18 @@ namespace Uiml{
 			get {	return m_rules.GetEnumerator(); }
 		}
 
+		public override string ToString()
+		{
+			string str= "<behavior>";
+			
+			IEnumerator er = Rules;
+			while(er.MoveNext())
+					str += er.Current + "\n";
+			str += "</behavior>";
+			return str;
+			
+		}
+
 		public ArrayList Children
 		{
 			get { return m_rules; }

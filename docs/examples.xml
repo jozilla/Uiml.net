@@ -1,0 +1,107 @@
+<chapter id="examples-chapter" xreflabel="behavior">
+<!--
+Copyright (c) 2004 Kris Luyten <kris.luyten@luc.ac.be>.
+    Limburgs Universitair Centrum
+	Expertisecentrum Digitale Media
+
+    Permission is granted to copy, distribute and/or modify this document
+    under the terms of the GNU Free Documentation License, Version 1.2
+    or any later version published by the Free Software Foundation;
+    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    A copy of the license is included in the section entitled "GNU
+    Free Documentation License".
+-->
+
+	<title>Examples</title>
+	<para>
+		This chapter shows some practical examples of using UIML to create
+		a user interface for your .Net application. The first example is the calculator
+		example in section <xref linkend="calc-example"/>. The second example <xref linkend="feed-example"/> shows
+		how a user interface for keeping track of different blog feeds can be created
+		with UIML. 
+	</para>
+	
+	<section id="calc-example">
+      <title>Example 1: The Calculator</title>
+		<para>
+		</para>
+	</section>
+
+	<section id="feed-example">
+		<title>Example 2: The Feed Aggregator</title>
+		<section>
+			<title>Prerequisites</title>		
+			<para>
+			To give the reader an idea what a feed aggregate exactly does, here are some existing ones:
+			<ulink url="http://www.imendio.com/projects/blam/">Blam!</ulink> and <ulink url="http://www.nongnu.org/straw/">Straw</ulink> are 
+			two execellent examples. This example tries to show it is easy to create a user interface that is loosely coupled 
+			with the application logic but still provides equal functionality as the aformentioned examples. 
+			To handle the <acronym>RSS</acronym><footnote><para><ulink url="http://en.wikipedia.org/wiki/RSS_(protocol)">Rich Site Summary</ulink></para></footnote> 
+			parsing an external library will be used. 
+			</para>
+		</section>
+		<section>
+			<title>the UIML document</title>
+			<section>
+				<title>Structure</title>
+				<para>
+					The user interface for our Feed Aggregator is a simpliefied version of the user interface one can find
+					for <ulink url="http://www.imendio.com/projects/blam/">Blam!</ulink> and <ulink url="http://www.nongnu.org/straw/">Straw</ulink>
+					for illustration reasons. 
+				   <example id="feedstruct-example">
+	            <title>Structure for the Feed Aggregator</title>
+					<programlisting>
+<![CDATA[
+<structure>
+	<part class="Frame" id="fr">
+		<part class="HBox">
+			<part class="VBox">
+				<part class="Label"><style><property name="text">Recent Posts</property></style></part>
+				<part id="articles" class="List"/>
+			</part>
+			<part class="VBox">
+				<part class="Label"><style><property name="text">Entry Title</property></style></part>
+				<part id="title" class="Entry"/>
+				<part class="Label"><style><property name="text">Entry Body</property></style></part>
+				<part id="blogentry" class="Text"/>
+				<part class="HBox">
+					<part id="update" class="Button"/>
+					<part id="newpost" class="Button"/>
+					<part id="quit" class="Button"/>
+				</part>
+			</part>
+		</part>
+	</part>
+</structure>
+]]>
+					</programlisting>
+				</example>
+				</para>
+			</section>
+			<section>
+				<title>Style</title>
+				<para>
+				</para>
+			</section>
+			<section>
+				<title>Behavior</title>
+				<para>
+				</para>
+			</section>
+			<section>
+				<title>Content</title>
+				<para>
+				</para>
+			</section>
+			<section>
+				<title>Peers</title>
+				<para>
+				</para>
+			</section>
+		</section>
+	
+
+	</section>
+	
+							  
+</chapter>

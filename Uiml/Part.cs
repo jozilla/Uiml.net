@@ -351,7 +351,7 @@ namespace Uiml {
 					}
 					catch(MappingNotFoundException e)
 					{
-						Console.WriteLine("\tFAILED");
+						Console.WriteLine("Could not accomplish connection with application logic: {0}", e);
 					}
 					catch(NullReferenceException nre)
 					{
@@ -379,7 +379,7 @@ namespace Uiml {
 			}
 
 			//each part should connect separately (and allow the 
-			//redundancy). Otherwise restructure could change the event notification
+			//redundancy). Otherwise <restructure> could change the event notification
 			//behavior and we don't want that to happen!
 		}
 		

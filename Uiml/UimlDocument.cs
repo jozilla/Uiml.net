@@ -148,11 +148,12 @@ namespace Uiml{
 			//TODO: support multiple structures
 			// connect to the top part
 			((Structure)UInterface.UStructure[0]).Top.Connect(o, this);
-			
+		
 			// connect to the rules	
 		
 			if(UInterface.UBehavior != null)
 			{
+				
 				IEnumerator er = ((Behavior)UInterface.UBehavior[0]).Rules;
 				while(er.MoveNext())
 				{

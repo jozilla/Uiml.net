@@ -1,3 +1,7 @@
+2005-03-31 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/Interface: added additional controls to avoid an Exception when
+	Connect is used with a document that contains no behavior
+
 2005-03-25 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* vocabularies/swf-1.1.uiml: Added getters and setters for all
 	relevant absolute positioning properties

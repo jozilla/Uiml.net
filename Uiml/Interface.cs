@@ -88,25 +88,45 @@ namespace Uiml{
 
 		public ArrayList UStructure
 		{
-			get { return m_structure;  }
+			get { 
+				if(m_structure.Count == 0)
+					return null;
+				else
+					return m_structure;  
+			}
 			set { m_structure.Add(value); }
 		}
 
 		public ArrayList UStyle
 		{
-			get { return m_style;  }
+			get {
+				if(m_style.Count == 0)
+					return null;
+				else
+					return m_style;  
+			}
 			set { m_style.Add(value); }
 		}
 
 		public ArrayList UBehavior
 		{
-			get { return m_behavior;  }
+			get { 
+				if(m_behavior.Count == 0)
+					return null;
+				else
+					return m_behavior;  
+			}
 			set { m_behavior.Add(value); }
 		}
 
 		public ArrayList UContent
 		{
-			get { return m_content; }
+			get {
+				if(m_content.Count == 0)
+					return null;
+				else
+				 return m_content; 
+			}
 			set { m_content.Add(value); }
 		}
 

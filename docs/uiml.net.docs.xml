@@ -8,6 +8,7 @@
 <!ENTITY UIML SYSTEM "uiml.xml">
 <!ENTITY UIMLNET SYSTEM "uiml.net.xml">
 <!ENTITY BEHAVIOR SYSTEM "behavior.xml">
+<!ENTITY EXAMPLES SYSTEM "examples.xml">
 <!ENTITY FDL12 SYSTEM "fdl-1.2.xml">
 <!ENTITY o "<![CDATA[<]]>">
 <!ENTITY w3c "http://www.w3.org">
@@ -78,6 +79,7 @@ author: Kris Luyten <kris.luyten@luc.ac.be>.
 &UIML;
 &UIMLNET;
 &BEHAVIOR;
+&EXAMPLES;
 &FDL12;
 </book>
 

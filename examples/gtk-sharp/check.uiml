@@ -4,16 +4,39 @@
 	<interface>
 		<structure>
 			<part class="Frame" id="Frame">
-				<part class="CheckButton" id="b"/>
+				<part class="VBox">
+					<part class="CheckButton" id="g"/>
+					<part class="CheckButton" id="s"/>
+					<part class="CheckButton" id="w"/>
+				</part>
 			</part>
 		</structure>
 		<style>
-			<property part-name="Frame" name="label">What do you think of UIML?</property>
-			<property part-name="b" name="label">I like UIML!</property>
+			<property part-name="Frame" name="label">Indicate your preferences</property>
+			<property part-name="g" name="label">Gtk#</property>
+			<property part-name="s" name="label">System.Windows.Forms</property>
+			<property part-name="w" name="label">Wx.Net</property>
+			<property part-name="g" name="checked">
+				<call name="YourChoice.isitgtk"/>
+			</property>
+			<property part-name="s" name="checked">
+				<call name="YourChoice.isitswf"/>
+			</property>
+			<property part-name="w" name="checked">
+				<call name="YourChoice.isitwxnet"/>
+			</property>
 		</style>
 	</interface>
 	<peers>
-		<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" />
+		<presentation base="http://research.edm.luc.ac.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml" />		
+		<logic id="checker">
+		  <d-component id="YourChoice" maps-to="CheckTest">
+			  <d-method id="isitgtk" return-type="boolean" maps-to="Gtk" />
+			  <d-method id="isitswf" return-type="boolean" maps-to="Swf" />
+			  <d-method id="isitwxnet" return-type="boolean" maps-to="Wxnet" />
+	     </d-component>
+		</logic>
+
 	</peers>
 </uiml>
 
