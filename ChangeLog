@@ -3,7 +3,8 @@
 	issues between the SWF and GTK# vocabularies. Also added basic support for
 	event handling on some widgets
 	* examples/: updated examples to reflect changes in vocabulary. Added a
-	simple "Hello World!"-like example illustrating event handling
+	few examples illustrating event handling (swfHello, swfFillText, and
+	swfChangeTheButton)
 	* Uiml/Rendering/SWF/SWFEventLink.cs: first check in SWF Event Link class to
 	build the behaviour subtree
 	* Uiml/Rendering/SWF/SWFEventLinker.cs: first check in Adaptor class to call
