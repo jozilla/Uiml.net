@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="Frm" class="Frame">			
+			<part id="Com" class="Combo"/>
+		</part>
+		</structure>
+		<style>
+			<!-- Absolute positioning -->
+			<property part-name="Com" name="position">50, 50</property>
+			<!-- /Absolute positioning -->
+			
+			<property part-name="Frm" name="label">Belgian Bands</property>
+			<property part-name="Com" name="content">
+		  		<constant model="list">
+					<constant value="dEUS"/>
+					<constant value="Nemo"/>
+					<constant value="The Evil Superstars"/>
+					<constant value="Channel Zero"/>
+					<constant value="Star Industry"/>
+				</constant>
+		  </property>
+			<property part-name="Com" name="selectedIndex">0</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="Com" class="EntrySelect"/>
+				</condition>
+				<action>
+					<call name="Console.println">
+						<param>
+							<call name="String.concatenate">
+								<param>
+									<call name="String.concatenate">
+										<param>You have selected "</param>
+										<param><property part-name="Com" name="entry"/></param>
+									</call>
+								</param>
+								<param>"</param>
+							</call>
+						</param>
+					</call>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
