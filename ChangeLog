@@ -1,6 +1,8 @@
 2004-07-16 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Rendering/SWF/SWFRenderer.cs: added dynamic loading of
 	System.Drawing.dll assembly
+	* Uiml/uiml.net.build: updated to support building on MS .NET. However, you
+	must edit the Rendering/BackendFactory.cs file manually to use SWF.
 
 2004-07-15 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* examples/: added SWF equivalents of the copy.uiml and calculator.uiml
