@@ -1,3 +1,17 @@
+2004-07-23 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Transition to the new vocabulary class:
+	* Updated the license to GNU LGPL on all files
+	* Uiml/Peers/: updated all peers element classes and added the vocabulary
+	class. The new datastructure for querying the vocabulary should be complete
+	now. The CustomVocabulary class was also moved to this namespace. The DParam
+	class inherits from Param now
+	* Uiml/: lots of changes to complete the transition to the new vocabulary
+	BaseVocabulary.cs was removed, while other classes now reference the
+	Peers/Vocabulary class
+	* Uiml/Executing/: some small changes to Call.cs to improve exception handling
+	* Uiml/Rendering/: updated the Renderer and IRenderer classes to use the new
+	vocabulary. Changed all method calls on the vocabulary to the correct ones.
+
 2004-07-19 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Peers/: initial check in of the peers element classes. These
 	define a one-to-one mapping to the UIML structure. They will be used by a
