@@ -194,14 +194,19 @@ namespace Uiml.Executing
 			if(Name == null || Name == "" || Name == ".")
 			{ //it is an "internal script"
 				ArrayList l = Children;
-				Object script2;
+				Object script2 = null;
 				foreach(Object script in l)
 				{
 					script2 = script;
 					((IExecutable)script).Execute();
 				}
-				//only return the return value of the last script
-				return ((Script)script2).ReturnValue;
+				if(script2 != null)
+				{
+					//only return the return value of the last script
+					return ((Script)script2).ReturnValue;
+				}
+				else
+					return null;  // TODO: throw an exception perhaps?
 			}
 			
 			Type type = null;				
