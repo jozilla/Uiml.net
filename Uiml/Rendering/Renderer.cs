@@ -116,10 +116,10 @@ namespace Uiml.Rendering
 
 			try
 			{
+				LoadAdHocProperties(ref uiObject, part, style);
 				LoadPartProperties(ref uiObject, part);
 				LoadNamedProperties(ref uiObject, part, style);
 				LoadClassProperties(ref uiObject, part, style);
-				LoadAdHocProperties(ref uiObject, part, style);
 			}
 				catch(MappingNotFoundException mnfe)
 				{
