@@ -108,6 +108,7 @@ namespace Uiml.Rendering.SWF
 
 			string[] coords = null;
 			// TODO: use reflection to create SWF types!
+			// TODO: make different methods for complex types!
 			switch(t.FullName)
 			{
 				case "System.Int32":
@@ -151,6 +152,24 @@ namespace Uiml.Rendering.SWF
 						return ScrollBars.Vertical;
 					else
 						return ScrollBars.None;
+				case "System.Windows.Forms.SelectionMode":
+					if(value == "MultiExtended")
+						return SelectionMode.MultiExtended;
+					else if(value == "MultiSimple")
+						return SelectionMode.MultiSimple;
+					else if(value == "None")
+						return SelectionMode.None;
+					else
+						return SelectionMode.One;
+				case "System.Windows.Forms.View":
+					if(value == "LargeIcon")
+						return View.LargeIcon;
+					else if(value == "SmallIcon")
+						return View.SmallIcon;
+					else if(value == "List")
+						return View.List;
+					else
+						return View.Details;
 				default:
 					return value;
 			}			
@@ -162,9 +181,61 @@ namespace Uiml.Rendering.SWF
 			{
 				case "System.String[]":
 					return DecodeStringArray(p.Value);
+				case "System.Windows.Forms.ColumnHeader":
+					ColumnHeader result = new ColumnHeader();
+					result.Text = (string)p.Value;
+					return result;
+				case "System.Windows.Forms.ListViewItem[]":
+					return DecodeListViewItemArray(p);
+				case "System.Windows.Forms.TreeNode[]":
+					return DecodeTreeNodeArray(p);
 				default:
 					return p.Value;
 			}			
+		}
+
+		private System.Object DecodeListViewItemArray(Property p)
+		{
+			TreeView x = new TreeView();
+			
+			string[] a = DecodeStringArray(p.Value);
+			ListViewItem[] b = new ListViewItem[a.Length];
+			for(int i = 0; i < a.Length; i++)
+			{
+				b[i] = new ListViewItem(a[i]);
+			}
+
+			return b;
+		}
+
+		private System.Object DecodeTreeNodeArray(Property p)
+		{
+			Constant top = (Constant) p.Value;
+			TreeNode[] a = new TreeNode[top.ChildCount];
+
+			int i = 0;
+			foreach(Constant c in top.Children)
+			{
+				a[i] = (TreeNode)DecodeConstant(c);
+				i++;
+			}
+
+			return a;
+		}
+
+		private System.Object DecodeConstant(Constant c)
+		{
+			TreeNode result = new TreeNode((string)c.Value);
+			
+			if(c.NoChildren)
+				return result;
+						
+			foreach(Constant child in c.Children)
+			{
+				result.Nodes.Add((TreeNode)DecodeConstant(child));
+			}
+
+			return result;
 		}
 
 		private System.Object DecodeStateType(string value)
