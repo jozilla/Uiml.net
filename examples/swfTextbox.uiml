@@ -4,15 +4,16 @@
 	<interface>
 		<structure>
 		<part id="Container1" class="Container">			
-			<part id="Entry1" class="Entry"/>			
+			<part id="Text1" class="Text"/>			
 		</part>
 		</structure>
 		<style>
 			<property part-name="Container1" name="size">200,200</property>
-			<property part-name="Entry1" name="multiline">true</property>
-			<property part-name="Entry1" name="position">20,20</property>
-			<property part-name="Entry1" name="label">Fill me in on the details.</property>
-			<property part-name="Entry1" name="height">50</property>
+			<!-- multiline should be set automatically for a Text class -->
+			<property part-name="Text1" name="multiline">true</property>
+			<property part-name="Text1" name="position">20,20</property>
+			<property part-name="Text1" name="label">Fill me in on the details.</property>
+			<property part-name="Text1" name="height">50</property>
 		</style>
 	</interface>
 	<peers>
