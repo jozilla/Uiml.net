@@ -351,21 +351,6 @@ namespace Uiml.Rendering.GTKsharp
 			}
 			else if(part.Class == "TabPage")
 			{
-				Property p = s.SearchProperty(part.Identifier, "label");
-				string label;
-				if(p != null)
-					label = (string)p.Value;
-				else
-					label = "";
-
-				if(!part.Top) // if we have a parent
-				{
-					Notebook n = (Notebook)part.Parent.UiObject;
-					n.SetTabLabelText((Widget)part.UiObject, label);
-				}
-			}
-			else if(part.Class == "TabPage")
-			{
 				/* FIXME: this implementation does not work because the TabPage has not yet been added
 				 * to the Tabs parent! 
 				 */

@@ -200,6 +200,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="file" maps-type="setMethod" maps-to="FromFile">
 			<d-param type="string"/>
 		</d-property>
+		<d-property id="line" maps-type="setMethod" maps-to="PixMap.DrawLine">
+			<d-param name="context" type="Gdk.GC"/>
+			<d-param name="x1" type="System.Int"/>
+			<d-param name="x2" type="System.Int"/>
+			<d-param name="y1" type="System.Int"/>
+			<d-param name="y2" type="System.Int"/>
+		</d-property>
 	</d-class>
 
 	<d-class id="Html" used-in-tag="part" maps-type="class" maps-to="Gecko.WebControl">
