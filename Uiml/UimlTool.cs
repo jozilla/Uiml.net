@@ -23,6 +23,8 @@
 
 namespace Uiml{
 
+	using Uiml.Peers;
+
 	using System;
 	using System.Xml;
 	using System.IO;
@@ -182,7 +184,7 @@ namespace Uiml{
 			//InputFile = new Uri("file://" + Application.ExecutablePath() + "/" + FileName);
 
 			if(strVoc!=null)
-				new BaseVocabulary(strVoc);
+				new Vocabulary(strVoc);
 			try
 			{
 				XmlDocument doc = new XmlDocument();

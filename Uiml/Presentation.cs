@@ -49,7 +49,7 @@ namespace Uiml{
 				XmlAttributeCollection attr = n.Attributes;
 				if(attr.GetNamedItem(BASE) != null){
 					//the presentation is loaded from an URI
-					m_voc = new BaseVocabulary(attr.GetNamedItem(BASE).Value);
+					m_voc = new Vocabulary(attr.GetNamedItem(BASE).Value);
 					m_base = attr.GetNamedItem(BASE).Value;
 				}else if(attr.GetNamedItem(ID) != null){
 					m_identifier = attr.GetNamedItem(ID).Value;
