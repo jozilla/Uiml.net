@@ -384,7 +384,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="content" maps-type="setMethod" maps-to="Items.AddRange">
 			<d-param type="System.String[]"/>
 		</d-property>
+		<d-property id="selectedindex" maps-type="setMethod" maps-to="SelectedIndex">
+			<d-param type="System.Int"/>
+		</d-property>
 	</d-class>
-	
  </presentation>
 </uiml>
