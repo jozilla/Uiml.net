@@ -64,7 +64,12 @@ namespace Uiml{
 					if(xnl[i].Name == PRESENTATION)
 						AddPeer(new Presentation(xnl[i]));
 					else if(xnl[i].Name == LOGIC)
-						AddLogic(new Logic(xnl[i]));
+					{
+						Logic l = new Logic(xnl[i]); 
+						AddLogic(l);
+						// add logic to the vocabulary
+						GetVocabulary().MergeLogic(l);
+					}
 				}
 			}
 		}
@@ -84,7 +89,7 @@ namespace Uiml{
 		}
 
 		///<summary>
-		///Returns the Vocabulay that matches pattern
+		///Returns the Vocabulary that matches pattern
 		///</summary>
 		public Vocabulary GetVocabulary(string pattern)
 		{
@@ -96,7 +101,7 @@ namespace Uiml{
 		}
 
 		///<summary>
-		///Returns the first Vocabulay that fits this Peer
+		///Returns the first Vocabulary that fits this Peer
 		///</summary>
 		public Vocabulary GetVocabulary()
 		{
