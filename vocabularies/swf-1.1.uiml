@@ -723,12 +723,8 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="content" maps-type="setMethod" maps-to="Nodes.AddRange">
 			<d-param type="System.Windows.Forms.TreeNode[]"/>
 		</d-property>
-		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
-			<d-param type="System.Int"/>
-		</d-property>
-		<d-property id="selection" return-type="System.Windows.Forms.ListView.SelectedListViewItemCollection" maps-type="getMethod" maps-to="SelectedItems"/>
-		<d-property id="multiSelect" maps-type="setMethod" maps-to="MultiSelect">
-			<d-param type="System.Boolean"/>
+		<d-property id="selectedNode" maps-type="setMethod" maps-to="SelectedNode">
+			<d-param type="System.Windows.Forms.TreeNode"/>
 		</d-property>
 		<d-property id="scrollable" maps-type="setMethod" maps-to="Scrollable">
 			<d-param type="System.Boolean"/>
@@ -840,7 +836,6 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	<!-- TODO: make this event actually work! -->
 	<d-class id="DaySelected" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.DateRangeEventHandler"/>
 	<!-- /TODO -->
-	<d-class id="EntrySelect" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
  </presentation>
  <logic>
    <!-- 
