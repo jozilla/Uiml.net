@@ -25,7 +25,6 @@ namespace Uiml.Peers
 
 	using System;
 	using System.Xml;
-	using System.Xml.XPath;
 	using System.IO;
 
 	public class CustomVocabulary : Vocabulary {
@@ -40,21 +39,13 @@ namespace Uiml.Peers
 
 		private void Load(string idName, XmlNode subDoc)
 		{
-			//TODO
-			//UimlVocabulary = subDoc.CreateNavigator();
+			//TODO			
 		}
 
 		public string QueryMapsTo(string name)
 		{
 			//TODO
 			return "dummy";
-			
-			/*
-			XPathNodeIterator  xpnn = m_vocabulary.Select("//descendant-or-self::component[@name='" + name + "'][last()]");
-			while(xpnn.MoveNext())
-				;
-			return xpnn.Current.GetAttribute(MAPSTO, "");
-			*/
 		}
 
 		public const string MAPSTO = "maps-to";

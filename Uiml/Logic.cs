@@ -25,7 +25,6 @@ namespace Uiml{
 
 	using System;
 	using System.Xml;
-	using System.Xml.XPath;
 	using System.Collections;
 
 	public class Logic : UimlAttributes, IUimlElement
@@ -35,7 +34,6 @@ namespace Uiml{
 		public Logic()
 		{
 		}
-
 
 		public Logic(XmlNode n) : this() 
 		{

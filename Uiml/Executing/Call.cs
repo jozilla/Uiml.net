@@ -133,16 +133,16 @@ namespace Uiml.Executing
 				}
 		}
 
-		public Object ExecuteMethod(string concreteMethodName, Type objectType, Logic l)
+		public Object ExecuteMethod(string concreteMethodName, Type objectType/*, Logic l*/)
 		{
 			
 			Uiml.Param[] parameters;
 			Hashtable outputPlaceholder = null;
 			
-			if(l == null)
+			//if(l == null)
 				parameters = Renderer.Voc.GetMethodParams(ObjectName, MethodName);
-			else
-				parameters = l.GetMethodParams(ObjectName, MethodName);
+			//else
+			//	parameters = l.GetMethodParams(ObjectName, MethodName);
 
 			//convert the params to types
 			Type[] tparamTypes = null;
@@ -220,9 +220,9 @@ namespace Uiml.Executing
 				string concreteObjectName = null; 
 				string concreteMethodName = null;
 				
-				Logic logic = null;
-				bool foundMapping = false;
-				if(m_logicDescriptions != null)
+				//Logic logic = null;
+				//bool foundMapping = false;
+				/*if(m_logicDescriptions != null)
 				{
 					IEnumerator enumDocs = m_logicDescriptions.GetEnumerator();				
 					while(enumDocs.MoveNext() && (!foundMapping))
@@ -239,15 +239,15 @@ namespace Uiml.Executing
 								//Console.WriteLine("Mapping not found in Logic document \"{0}->{1}\"...", ObjectName, MethodName);
 							}
 					}
-				}
+				}*/
 			
-				if(!foundMapping)
-				{
-					logic = null;
+				//if(!foundMapping)
+				//{
+				//	logic = null;
 					concreteObjectName = Renderer.Voc.MapsOnCmp(ObjectName);				
 					concreteMethodName = Renderer.Voc.GetMethodCmp(MethodName, ObjectName);
-					foundMapping = true;
-				}
+				//	foundMapping = true;
+				//}
 
 				IEnumerator enumAssemblies = ExternalLibraries.Instance.LoadedAssemblies;
 				while((enumAssemblies.MoveNext()) && (type==null))
@@ -262,7 +262,7 @@ namespace Uiml.Executing
 					return null;
 				}
 
-				try { return ExecuteMethod(concreteMethodName, type, logic); } 
+				try { return ExecuteMethod(concreteMethodName, type/*, logic*/); } 
 				    catch(NullReferenceException nre1)//method failed, try property
 				    { try { return ExecuteProperty(concreteMethodName, type); }
 					        //property failed, try field
