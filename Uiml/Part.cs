@@ -344,6 +344,7 @@ namespace Uiml {
 					
 					try
 					{
+						// only handle events of the class eHandler.Event
 						string concreteEventName = voc.MapsOnHandler(eHandler.Event);
 						string eventId = voc.GetEventFor(Class, concreteEventName);
 					
