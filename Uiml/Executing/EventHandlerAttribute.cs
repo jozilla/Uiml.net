@@ -29,13 +29,21 @@ namespace Uiml.Executing
 	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
 	public class EventHandlerAttribute
 	{
-		private ArrayList m_args;			
+		private ArrayList m_args = null;			
 
+		public EventHandlerAttribute()
+		{}
+		
 		public EventHandlerAttribute(params object[] args)
 		{
 			m_args = new ArrayList(args);
 		}
 
+		public bool HasParams
+		{
+			get { return m_args != null }
+		}
+		
 		public Params 
 		{
 			get { return m_args; }
