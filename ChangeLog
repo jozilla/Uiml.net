@@ -1,24 +1,33 @@
 2004-07-14 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
-	* vocabularies/swf-1.1.uiml: updated vocabulary to solve some compatibility issues between the SWF and GTK# vocabularies
-	* examples/: Updated examples to reflect changes in vocabulary
-	* Uiml/Rendering/SWF/SWFEventLink.cs: first check in SWF Event Link class to build the behaviour subtree
+	* vocabularies/swf-1.1.uiml: updated vocabulary to solve some compatibility
+	issues between the SWF and GTK# vocabularies. Also added basic support for
+	event handling on some widgets
+	* examples/: updated examples to reflect changes in vocabulary. Added a
+	simple "Hello World!"-like example illustrating event handling
+	* Uiml/Rendering/SWF/SWFEventLink.cs: first check in SWF Event Link class to
+	build the behaviour subtree
 	* Uiml/Rendering/SWF/SWFEventLinker.cs: first check in Adaptor class to call
 	Condition.Execute with the SWF arguments
-	* Uiml/Constant.cs: renamed NoChildren to HasChildren and changed the implementation accordingly
-	* Uiml/Rendering/SWF/SWFRenderer.cs: cleaned up the code and added some todo's
+	* Uiml/Constant.cs: renamed NoChildren to HasChildren and changed the 
+	implementation accordingly
+	* Uiml/Rendering/SWF/SWFRenderer.cs: cleaned up the code and added some 
+	todo's. Wrote a few lines to use the SWFEventLinker class
 	* Uiml/Rendering/SWF/SWFRenderedInstance.cs: cleaned up the code
-	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: updated to reflect the changes in Constant.cs
+	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: updated to reflect the changes in 
+	Constant.cs
 
 2004-07-13 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
-	* vocabularies/swf-1.1.uiml: added frequently used widgets to bring the SWF backend on a par with
-	the GTK	backend: ToggleButton, ListBox, List, Tree, Text, HorizontalScroll, VerticalScroll, HorizontalRange, 
-	VerticalRange and Calendar. Also renamed the label property in the Label class to the text property.
+	* vocabularies/swf-1.1.uiml: added frequently used widgets to bring the SWF
+	backend on a par with the GTK	backend: ToggleButton, ListBox, List, Tree, 
+	Text, HorizontalScroll, VerticalScroll, HorizontalRange, VerticalRange and 
+	Calendar. Also renamed the label property in the Label class to the text 
+	property.
 	* examples/: has examples for all swf widgets now and the big blog example
-	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: added decoders for some SWF enums such
-	as ScrollBars, Appearance, SelectionMode, View, Orientation and TickStyle. Also added decoders for
-	System.DateTime and SWF ListViewItem[] and 	TreeNode[] arrays. Refactored
-	and cleaned up the code.
-	* Uiml/Constant.cs: added two properties: ChildCount and NoChildren to
+	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: added decoders for some SWF enums 
+	such as ScrollBars, Appearance, SelectionMode, View, Orientation and 
+	TickStyle. Also added decoders for System.DateTime and SWF ListViewItem[] 
+	and TreeNode[] arrays. Refactored and cleaned up the code.
+	* Uiml/Constant.cs: added two properties: ChildCount and NoChildren to 
 	provide information about a constant's list of children. This was useful for
 	implementing the TreeNode[] decoder
 
