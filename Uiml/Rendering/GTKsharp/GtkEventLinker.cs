@@ -34,6 +34,9 @@ namespace Uiml.Rendering.GTKsharp
 	using Uiml.Rendering;
 	
 
+	///<summary>
+	///Links the events from the concrete widget set with the behavior specified in a UIML document
+	///</summary>
 	public class GtkEventLinker
 	{
 		private Structure m_uiStruct;
@@ -47,11 +50,14 @@ namespace Uiml.Rendering.GTKsharp
 		}
 
 
+		///<summary>
+		///Links the different rules in the behavior with the parts of the structure. 
+		///This method uses link(Rule, Part) for each rule that is available in the behavior section.
+		///</summary>
 		public void Link(Structure uiStruct, Behavior uiBehavior)
 		{
-			if(uiBehavior == null)
+			if((uiBehavior == null)||(uiStruct == null))
 				return;
-			//notice this is not necessary for the uiStruct
 
 			m_uiStruct   = uiStruct;
 			m_uiBehavior = uiBehavior;
@@ -76,6 +82,17 @@ namespace Uiml.Rendering.GTKsharp
 		{
 	   	link(r,p,new GtkEventLink(r.Condition, m_renderer));
 		}
+
+		///<summary>
+		///Searches the parts that are used in the condition of Rule r. Events of a certain type emitted
+		///by thow parts are connected to the condition of Rule r so it can be evaluated if such an event
+		///occurs
+		///</summary>
+		///<param name="r">The rule with a condition and action</param>
+		///<param name="p">A part where p itself or one of it subparts will emit events that are of interest
+		///for the condition of Rule r</param>
+		///<param name="gel">Links the renderer with the condition so appropriate queries can be executed by the condition.
+		///It also allows the action to use the renderer afterwards to change properties in the user interface at runtime</param>
 
 		protected void link(Rule r, Part p, GtkEventLink gel)
 		{

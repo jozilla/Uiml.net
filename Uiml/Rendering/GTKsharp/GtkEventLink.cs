@@ -1,7 +1,7 @@
 /*
  	 Uiml.Net: a Uiml.Net renderer (http://lumumba.luc.ac.be/kris/research/uiml.net/)
 
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
@@ -34,6 +34,10 @@ namespace Uiml.Rendering.GTKsharp
 	using Uiml.Rendering;
 	
 
+	///<summary>
+	///Connects a condition from a rule with a renderer. It executes the condition
+	///when an event is invoked and passes it a reference to the current renderer
+	///</summary>
 	public class GtkEventLink
 	{
 		IExecutable m_exer;
