@@ -55,7 +55,7 @@ namespace Uiml.Executing
 
 		public void Process(XmlNode n)
 		{
-			if(n.Name == PARAM)
+			if(n.Name == IAM)
 			{
 				m_value = n.InnerText;
 			   XmlAttributeCollection attr = n.Attributes;

@@ -46,7 +46,7 @@ namespace Uiml{
 
 		public void Process(XmlNode n)
 		{
-			if(n.Name == PARAM)
+			if(n.Name == IAM)
 			{
 				Value = n.Value;
 			   XmlAttributeCollection attr = n.Attributes;
@@ -108,7 +108,7 @@ namespace Uiml{
 
 		public const string TYPE = "type";
 		public const string ID = "id";
-		public const string PARAM = "param";
+		public const string IAM = "param";
 		public const string DIRECTION = "direction";
 		public const string IN = "in";
 		public const string OUT = "out";
