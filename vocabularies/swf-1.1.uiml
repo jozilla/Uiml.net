@@ -567,5 +567,92 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 	</d-class>
+
+	<d-class id="List" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.ListView">
+		<d-property id="label" maps-type="setMethod" maps-to="Text">
+			<d-param type="System.String"/>
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="Location">
+			<d-param type="System.Drawing.Point"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="Size">
+			<d-param type="System.Drawing.Size"/>		
+		</d-property>
+		<d-property id="width" maps-type="setMethod" maps-to="Width">
+			<d-param type="System.Int"/>	
+		</d-property>
+		<d-property id="height" maps-type="setMethod" maps-to="Height">
+			<d-param type="System.Int"/>		
+		</d-property>
+		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
+			<d-param type="System.Drawing.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+			<d-param type="System.Drawing.Color"/>
+		</d-property>
+		<d-property id="content" maps-type="setMethod" maps-to="Items.AddRange">
+			<d-param type="System.Windows.Forms.ListViewItem[]"/>
+		</d-property>
+		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
+			<d-param type="System.Int"/>
+		</d-property>
+		<d-property id="multiSelect" maps-type="setMethod" maps-to="MultiSelect">
+			<d-param type="System.Boolean"/>
+		</d-property>
+		<d-property id="scrollable" maps-type="setMethod" maps-to="Scrollable">
+			<d-param type="System.Boolean"/>
+		</d-property>
+		<d-property id="view" maps-type="setMethod" maps-to="View">
+			<d-param type="System.Windows.Forms.View"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="Tree" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TreeView">
+		<d-property id="label" maps-type="setMethod" maps-to="Text">
+			<d-param type="System.String"/>
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="Location">
+			<d-param type="System.Drawing.Point"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="Size">
+			<d-param type="System.Drawing.Size"/>		
+		</d-property>
+		<d-property id="width" maps-type="setMethod" maps-to="Width">
+			<d-param type="System.Int"/>	
+		</d-property>
+		<d-property id="height" maps-type="setMethod" maps-to="Height">
+			<d-param type="System.Int"/>		
+		</d-property>
+		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
+			<d-param type="System.Drawing.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+			<d-param type="System.Drawing.Color"/>
+		</d-property>
+		<d-property id="content" maps-type="setMethod" maps-to="Nodes.AddRange">
+			<d-param type="System.Windows.Forms.TreeNode[]"/>
+		</d-property>
+		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
+			<d-param type="System.Int"/>
+		</d-property>
+		<d-property id="multiSelect" maps-type="setMethod" maps-to="MultiSelect">
+			<d-param type="System.Boolean"/>
+		</d-property>
+		<d-property id="scrollable" maps-type="setMethod" maps-to="Scrollable">
+			<d-param type="System.Boolean"/>
+		</d-property>
+	</d-class>	
  </presentation>
 </uiml>
