@@ -29,7 +29,7 @@ namespace Uiml{
 
 	using CommandLine;
 
-	using Uiml.Rendering.GTKsharp;
+	//using Uiml.Rendering.GTKsharp;
 	using Uiml.Rendering;
 
 	using Uiml.Executing;
