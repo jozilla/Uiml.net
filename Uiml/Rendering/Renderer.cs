@@ -124,8 +124,14 @@ namespace Uiml.Rendering
 				catch(MappingNotFoundException mnfe)
 				{
 					Console.WriteLine("Could not find appropriate mapping: " + mnfe.ToString());
+					
 					if(m_stopOnError)
-						Environment.Exit(0);
+					#if COMPACT
+					//TODO
+					;						
+					#else
+					Environment.Exit(0);
+					#endif
 				}
 			return uiObject;
 		}
@@ -237,12 +243,16 @@ namespace Uiml.Rendering
 						j = setter.IndexOf('.');
 					}
 
-					
+					#if COMPACT
+					MemberInfo[] arrayMemberInfo = SearchMembers(classType, setter);
+					#else
 					///thanks to Rafael "Monoman" Teixeira for this code
 					//pInfo = classType.GetProperty(setter);
-               MemberInfo[] arrayMemberInfo = classType.FindMembers(MemberTypes.Method  | MemberTypes.Property,
+					MemberInfo[] arrayMemberInfo = classType.FindMembers(MemberTypes.Method  | MemberTypes.Property,
 							                                               BindingFlags.Public | BindingFlags.Instance,
 																						  Type.FilterName, setter);
+					#endif
+
 					//if lazy, execute it!
 					if(p.Lazy)
 						p.Resolve(this);
@@ -300,8 +310,21 @@ namespace Uiml.Rendering
 				return uiObject;
 		}
 
+		#if COMPACT
+		protected MemberInfo[] SearchMembers(Type t, string setter)
+		{
+			ArrayList l = new ArrayList();
+					
+			foreach(MemberInfo m in t.GetMembers())
+			{
+				bool condition = (m.MemberType == MemberTypes.Property || m.MemberType == MemberTypes.Method)
+					&& m.Name == setter;
+				if(condition)
+					l.Add(m);
+			}
 
-
-
+			return (MemberInfo[])l.ToArray(typeof(MemberInfo));
+		}
+		#endif
 	}
 }

@@ -55,6 +55,11 @@ namespace Uiml.Rendering
 				//case Uiml.Rendering.SWF.SWFRenderer.NAME:
 				//		return new Uiml.Rendering.SWF.SWFRenderer();
 
+				//Uncomment this if you want to use System.Windows.Forms on 
+				//the .NET Compact framework as a backend renderer
+				//case Uiml.Rendering.CompactSWF.CompactSWFRenderer.NAME:
+				//		return new Uiml.Rendering.CompactSWF.CompactSWFRenderer();
+
 				default:
 					return null;
 			}

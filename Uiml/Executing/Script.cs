@@ -38,7 +38,9 @@ namespace Uiml.Executing
 	using System.IO;
 
 	using System.Reflection;
+	#if !COMPACT
 	using System.CodeDom.Compiler;
+	#endif
 
 	public class Script :  IExecutable, IUimlElement
 	{
@@ -91,6 +93,7 @@ namespace Uiml.Executing
 
 		protected void PreCompile()
 		{
+			#if !COMPACT
 			CodeDomProvider theProvider;
 			switch(Type)
          {
@@ -129,6 +132,7 @@ namespace Uiml.Executing
 					Console.WriteLine(crs.Errors[i]);
 		   m_compiledAssemly = crs.CompiledAssembly;
 			//if fails: wrap source in main method + class -> recompile
+			#endif			
 		}
 
 

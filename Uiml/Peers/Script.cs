@@ -43,7 +43,9 @@ namespace Uiml.Peers
 	using System.IO;
 
 	using System.Reflection;
+	#if !COMPACT
 	using System.CodeDom.Compiler;
+	#endif
 
 	/// <summary>
 	/// This class represents a &lt;script&gt; element in the vocabulary, specified by the following DTD:
@@ -107,6 +109,7 @@ namespace Uiml.Peers
 
 		protected void PreCompile()
 		{
+			#if !COMPACT
 			CodeDomProvider theProvider;
 			switch(Type)
 			{
@@ -145,6 +148,7 @@ namespace Uiml.Peers
 					Console.WriteLine(crs.Errors[i]);
 			m_compiledAssemly = crs.CompiledAssembly;
 			//if fails: wrap source in main method + class -> recompile
+			#endif
 		}
 
 

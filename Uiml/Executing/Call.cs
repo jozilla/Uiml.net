@@ -253,7 +253,11 @@ namespace Uiml.Executing
 				while((enumAssemblies.MoveNext()) && (type==null))
 				{
 					Assembly a = (Assembly)enumAssemblies.Current;
+					#if !COMPACT
 					type = a.GetType(concreteObjectName, false, true);
+					#else
+					type = a.GetType(concreteObjectName, false);
+					#endif
 				}
 
 				if(type == null)

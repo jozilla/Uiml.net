@@ -63,10 +63,12 @@ namespace Uiml
 				{
 					Console.WriteLine("Could not locate assembly {0}", libRef);
 				}
+				#if !COMPACT
 				catch(BadImageFormatException bimf)
 				{
 					Console.WriteLine("Library {0} is not a valid assembly", libRef);
 				}
+				#endif
 				catch(System.Security.SecurityException se)
 				{
 					Console.WriteLine("Usage of assembly {0} is not permitted", libRef);
