@@ -670,6 +670,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnClick"/>
 	<d-class id="ButtonLeft" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnLeave"/>
 	<d-class id="ButtonEntered" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnEnter"/>
+	<d-class id="EntrySelect" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
  </presentation>
  <logic>
    <!-- 

@@ -836,6 +836,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	<!-- TODO: make this event actually work! -->
 	<d-class id="DaySelected" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.DateRangeEventHandler"/>
 	<!-- /TODO -->
+	<d-class id="EntrySelect" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
  </presentation>
  <logic>
    <!-- 
