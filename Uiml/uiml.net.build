@@ -1,18 +1,162 @@
-<?xml version="1.0"?>
-<project name="uiml.net" default="build" basedir=".">
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="uiml.net" default="test">
 	<description>uiml.net: an open UIML renderer for the .Net Framework</description>
 	
-	<property name="debug" value="true" />
+	<property name="debug" value="false" />
+	<property name="dir.output" value=".\bin" />
+	<property name="dir.lib" value="..\lib" />
+	<property name="dir.dist" value="..\dist" />
+	<property name="target.type" value="exe" />
+	<property name="project.FormalName" value="uiml.net" />
 
-	<target name="clean" description="remove all generated files">
-		<delete file="uiml.net.exe" failonerror="false" />
+	<target name="init" description="Initialize properties for the build" depends="init-Debug,init-Release">
+		<tstamp />
+		
+		<mkdir dir="${dir.output}" />
+		<mkdir dir="${dir.lib}" />
+		<mkdir dir="${dir.lib}" />
+		<mkdir dir="${dir.dist}" />
+		
+		<property name="project.output" value="${project.FormalName}.exe" />
+		<property name="dist.name" value="${dir.dist}\${project.FormalName}" />
+		<property name="vbc.optionCompare" value="" />
+		<property name="vbc.optionExplicit" value="false" />
+		<property name="vbc.optionStrict" value="false" />
+		<property name="rootNamespace" value="Uiml.net" />
+	</target>
+
+	<target name="init-Debug" if="${debug}">
+		<property name="define" value="DEBUG;TRACE" />
+		<property name="optimize" value="false" />		
+		<property name="incremental" value="false" />		
+		<property name="unsafe" value="/unsafe-" />		
+		<property name="debug" value="true" />
+		<property name="doc" value="documentation" />		
+		<property name="removeintchecks" value="false" />		
+	</target>
+
+	<target name="init-Release" unless="${debug}">
+		<property name="define" value="TRACE" />
+		<property name="optimize" value="true" />
+		<property name="incremental" value="false" />
+		<property name="unsafe" value="/unsafe-" />
+		<property name="debug" value="false" />
+		<property name="doc" value="documentation" />
+		<property name="removeintchecks" value="false" />
+	</target>
+
+	<target name="compile" description="Compile project" depends="init">
+		<csc target="${target.type}" output="${dir.output}\${project.output}" debug="${debug}" define="${define}" doc="${doc}" optioncompare="${vbc.optionCompare}" optionexplicit="${vbc.optionExplicit}" optionstrict="${vbc.optionStrict}" removeintchecks="${removeIntChecks}" rootnamespace="${rootNamespace}">
+			<arg value="${unsafe}" />
+
+			<sources>
+				<includes name="BaseVocabulary.cs" />
+				<includes name="Behavior.cs" />				
+				<includes name="CascadeTemplateResolver.cs" />				
+				<includes name="Constant.cs" />				
+				<includes name="Content.cs" />
+				<includes name="CustomVocabulary.cs" />
+				<includes name="ExternalLibraries.cs" />
+				<includes name="Head.cs" />
+				<includes name="Interface.cs" />
+				<includes name="ITemplateResolver.cs" />
+				<includes name="IUimlElement.cs" />
+				<includes name="Logic.cs" />
+				<includes name="MappingNotFoundException.cs" />
+				<includes name="Options.cs" />
+				<includes name="Param.cs" />
+				<includes name="Part.cs" />
+				<includes name="Peer.cs" />
+				<includes name="Presentation.cs" />
+				<includes name="Property.cs" />
+				<includes name="Reference.cs" />
+				<includes name="ReplaceTemplateResolver.cs" />
+				<includes name="Restructure.cs" />
+				<includes name="Structure.cs" />
+				<includes name="Style.cs" />
+				<includes name="Template.cs" />
+				<includes name="TemplateAlreadyProcessedException.cs" />
+				<includes name="TemplateRepository.cs" />
+				<includes name="UimlAttributes.cs" />
+				<includes name="UimlDocument.cs" />
+				<includes name="UimlElement.cs" />
+				<includes name="UimlTool.cs" />
+				<includes name="UnionTemplateResolver.cs" />
+				<includes name="Vocabulary.cs" />
+				<includes name="VocabularyUnavailableException.cs" />
+				<includes name="WrongNestingException.cs" />
+				<includes name="Executing\Action.cs" />
+				<includes name="Executing\Call.cs" />
+				<includes name="Executing\Condition.cs" />
+				<includes name="Executing\Equal.cs" />
+				<includes name="Executing\Event.cs" />
+				<includes name="Executing\IExecutable.cs" />
+				<includes name="Executing\Op.cs" />
+				<includes name="Executing\Param.cs" />
+				<includes name="Executing\Rule.cs" />
+				<includes name="Executing\Script.cs" />
+				<includes name="Executing\ValueNotEvaluatedException.cs" />
+				<includes name="Rendering\BackendFactory.cs" />
+				<includes name="Rendering\InvalidTypeValueException.cs" />
+				<includes name="Rendering\IPropertySetter.cs" />
+				<includes name="Rendering\IRenderedInstance.cs" />
+				<includes name="Rendering\IRenderer.cs" />
+				<includes name="Rendering\ITypeDecoder.cs" />
+				<includes name="Rendering\Renderer.cs" />
+				<includes name="Rendering\TypeDecoder.cs" />
+				<includes name="Rendering\SWF\SWFEventLink.cs" />
+				<includes name="Rendering\SWF\SWFEventLinker.cs" />
+				<includes name="Rendering\SWF\SWFRenderedInstance.cs" />
+				<includes name="Rendering\SWF\SWFRenderer.cs" />
+				<includes name="Rendering\SWF\SWFTypeDecoder.cs" />
+				<includes name="Utils\TodoAttribute.cs" />
+			</sources>
+
+			<references>
+				<includes name="System.Data.dll" />
+				<includes name="System.dll" />
+				<includes name="System.Drawing.dll" />
+				<includes name="System.Windows.Forms.dll" />
+				<includes name="System.Xml.dll" />
+			</references>
+		</csc>
 	</target>
 	
-	<target name="build" description="compiles the source code">
-		<csc target="exe" output="uiml.net.exe" debug="${debug}">
-			<sources>
-				<includes name="**/*.cs" />
-			</sources>
-		</csc>
-   </target>
+
+	<target name="build" description="Do an incremental build" depends="init,compile,test">
+		<copy file="${dir.output}\${project.output}" todir="${dir.lib}" />
+	</target>
+
+	<target name="test" depends="init,compile">
+	</target>
+
+	<target name="clean" depends="init" description="Delete output of a build">
+		<delete file="${dir.output}\${project.output}" verbose="true" failonerror="false" />
+		<delete file="${dir.output}\${project.FormalName}.pdb" verbose="true" failonerror="false" />
+		<delete file="${doc}" verbose="true" failonerror="false" />
+	</target>
+
+	<target name="package" depends="init" description="Create a redistributable package">
+		<delete failonerror="false">
+			<fileset basedir="${dist.name}">
+				<includes name="**" />
+			</fileset>
+		</delete>
+
+		<mkdir dir="${dist.name}" />
+
+		<copy todir="${dist.name}">
+			<fileset basedir="${nant.project.basedir}">
+			</fileset>
+		</copy>
+
+		<mkdir dir="${dist.name}" />
+
+		<copy todir="${dist.name}">
+			<fileset basedir="${dir.lib}">
+				<includes name="${project.output}" />
+			</fileset>
+		</copy>
+	</target>
 </project>
+
