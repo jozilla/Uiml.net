@@ -84,11 +84,11 @@ namespace Uiml{
 			Children.Add(c);
 		}
 
-		public bool NoChildren
+		public bool HasChildren
 		{
 			get
 			{
-				return Children == null;
+				return Children != null;
 			}			
 		}
 
