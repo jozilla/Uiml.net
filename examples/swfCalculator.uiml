@@ -6,7 +6,7 @@
 			<part class="Container" id="body">
 		 		<part class="Entry" id="output"/>
 				<part class="Button" id="ac">
-					<property name="background">red</property>
+					<property name="background">255,0,0</property>
 				</part>
 				<part class="Button" id="b1"/>
 				<part class="Button" id="b2"/>
