@@ -228,10 +228,56 @@ namespace Uiml.Rendering.CompactSWF
 		///</summary>
 		///<todo>
 		// Change to the .custom format, like used for the gtk# bindings
-		///</todo>
+		///</todo>		
 		protected override System.Object LoadAdHocProperties(ref System.Object uiObject, Part part, Style s)
 		{
-			// TODO -> use this method to automatically set properties for specific classes (such as multiline for Text) 
+			// emulate the Items.AddRange() functionality
+			Property prop = s.SearchProperty(part.Identifier, "content");			
+			
+			if(prop != null)
+			{
+				if(prop.Lazy)
+					prop.Resolve(this);
+
+				Param[] paramTypes = Voc.GetParams(prop.Name, part.Class);
+				//convert the params to types
+				Type[] tparamTypes = new Type[paramTypes.Length];
+				for(int i = 0; i < paramTypes.Length; i++)
+				{
+					tparamTypes[i] = null;
+					int k = 0;
+					while(tparamTypes[i] == null)
+						tparamTypes[i] = ((Assembly)ExternalLibraries.Instance.Assemblies[k++]).GetType(paramTypes[i].Type);
+				}
+
+				System.Object[] blaai = Decoder.GetArgs(prop, tparamTypes);
+				string[] content = (string[])blaai[0];
+
+				switch(part.Class)
+				{
+					case "Combo":
+						ComboBox cmb = (ComboBox) uiObject;						
+						for(int i = 0; i < content.Length; i++)
+						{
+							cmb.Items.Add(content[i]);
+						}
+						return cmb;						
+					case "ListBox":
+						ListBox lb = (ListBox) uiObject;
+						for(int i = 0; i < paramTypes.Length; i++)
+						{
+							lb.Items.Add(paramTypes[i].Value);
+						}
+						return lb;						
+					case "List":
+						ListView lv = (ListView) uiObject;
+						for(int i = 0; i < paramTypes.Length; i++)
+						{
+							lv.Items.Add(new ListViewItem(paramTypes[i].Value));							
+						}
+						return lv;						
+				}				
+			}	
 			return uiObject;
 		}
 	
