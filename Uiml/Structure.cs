@@ -6,8 +6,8 @@
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public License
-	as published by the Free Software Foundation; either version 2
+	modify it under the terms of the GNU Lesser General Public License
+	as published by the Free Software Foundation; either version 2.1
 	of	the License, or (at your option) any later version.
 
 	This program is distributed in the hope that it will be useful,
@@ -15,7 +15,7 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
+	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
@@ -33,6 +33,12 @@ namespace Uiml{
 	/// this implementation only allows one part as a top element. When the structure element
 	/// has several part elements it embeds these children as the children of one part element "Top".
 	/// Top will be the only child of structure then.
+	///
+	///&lt;!ELEMENT structure (part*)&gt; 
+	///&lt;!ATTLIST structure id NMTOKEN #IMPLIED 
+	///                       source CDATA #IMPLIED 
+	///                       how (append|cascade|replace) "replace" 
+	///                       export (hidden|optional|required) "optional"&gt;
 	///</summary>
 	public class Structure : UimlAttributes, IUimlElement{
 		private Part m_top;
