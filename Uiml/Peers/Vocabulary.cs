@@ -135,7 +135,7 @@ namespace Uiml.Peers
 			catch(NullReferenceException nre)
 			{
 				Console.WriteLine("The presentation has no base attribute, please check your UIML file!");
-				Console.WriteLine(nre.StackTrace);
+				Console.WriteLine(nre);
 			}			
 
 			IEnumerator enumChildren = n.ChildNodes.GetEnumerator();
