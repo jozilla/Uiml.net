@@ -60,6 +60,11 @@ namespace Uiml{
 			}
 		}
 
+		public string Base
+		{
+			get { return m_base; }
+		}
+
 		public bool Provides(string pattern)
 		{
 			return ( m_base.ToLower().IndexOf(pattern.ToLower()) > -1 );
