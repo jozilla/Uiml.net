@@ -18,6 +18,9 @@
 	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+ChangeLog:
+	* 07-09-2004 ApplyProperties uses the correct targetObject now (Jo Vermeulen)
 */
 
 namespace Uiml.Rendering
@@ -271,7 +274,10 @@ namespace Uiml.Rendering
 							}
 							MethodInfo m = classType.GetMethod(setter, tparamTypes);
 							System.Object[] args = Decoder.GetArgs(p, tparamTypes);
-							m.Invoke(uiObject, args);
+	
+							// We must invoke it on the target Object, not on the UI Object!							
+							//m.Invoke(uiObject, args);
+							m.Invoke(targetObject, args);
 					   }
 					}
 					/*

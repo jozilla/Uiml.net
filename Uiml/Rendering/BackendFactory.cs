@@ -32,15 +32,25 @@ namespace Uiml.Rendering
 		}
 
 
+		///<summary>
+		/// Creates a renderer for a given vocabulary name
+		///</summary>
+		///TODO: replace by more generic code!
 		public IRenderer CreateRenderer(String name)
 		{
 			switch(name)
 			{
 				case Uiml.Rendering.GTKsharp.GtkRenderer.NAME:
 					return new Uiml.Rendering.GTKsharp.GtkRenderer();
-//Temporary disabled the Wx.NET backend
-//				case Uiml.Rendering.WXnet.WxRenderer.NAME:
-//					return new Uiml.Rendering.WXnet.WxRenderer();
+					
+				//Uncomment this if you want to use wx.NET as a backend renderer
+				//case Uiml.Rendering.WXnet.WxRenderer.NAME:
+				//		return new Uiml.Rendering.WXnet.WxRenderer();
+				
+				//Uncomment this if you want to use System.Windows.Forms as a backend renderer
+				//case Uiml.Rendering.SWF.SWFRenderer.NAME:
+				//		return new Uiml.Rendering.SWF.SWFRenderer();
+
 				default:
 					return null;
 			}

@@ -40,7 +40,7 @@ namespace Uiml{
 	///</summary>
 	public class UimlTool{
 		static public String[] options = {"voc","uiml","help","libs","version", "log"};
-		static public String VERSION = "0.0.5-pre (22-01-2004)";
+		static public String VERSION = "0.0.6-pre (09-07-2004)";
 		static public char LIBSEP;
 
 		private BackendFactory backendFactory;

@@ -108,10 +108,40 @@ namespace Uiml{
 			}
 		}
 
+		public void Connect(Object o)
+		{
+			//TODO: support multiple structures
+			((Structure)UInterface.UStructure[0]).Top.Connect(o);
+		}
+
+		public void Connect(Object o, String identifier)
+		{
+			//TODO: support multiple structures
+			Part p = ((Structure)UInterface.UStructure[0]).SearchPart(identifier);
+			if(p!=null)
+				p.Connect(o);
+		}
+
+		/**
+		 * Search the part of the interface that matches identifier.
+		 **/
+		public Part SearchPart(String identifier)
+		{
+			//TODO: support multiple structures
+			return ((Structure)UInterface.UStructure[0]).SearchPart(identifier);
+		}
+
 
 		public ArrayList Children
 		{
-			get { return null; }
+			get 
+			{ 
+				ArrayList al = new ArrayList();
+				al.Add(UHead);
+				al.Add(UInterface);
+				al.Add(m_peers);
+				return al; 
+			}
 		}
 
 		public const string PEER      = "peers";
