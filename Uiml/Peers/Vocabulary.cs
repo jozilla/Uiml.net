@@ -142,7 +142,7 @@ namespace Uiml.Peers
 		{
 			n = n.FirstChild;
 
-			while(n != null && n.Name != "uiml")			
+			while(n != null && !(n.Name == "uiml" && n.NodeType == XmlNodeType.Element))			
 			{
 				n = n.NextSibling;
 			}
