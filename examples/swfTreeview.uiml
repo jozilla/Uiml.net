@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="frame" class="Frame">			
+			<part id="bandsList" class="Tree"/>
+		</part>
+		</structure>
+		<style>
+			<property part-name="frame" name="label">Belgian Bands</property>
+			<property part-name="frame" name="size">240,250</property>
+			<property part-name="bandsList" name="position">20,20</property>
+			<property part-name="bandsList" name="size">200,200</property>
+			<property part-name="bandsList" name="content">
+		  		<constant model="tree">
+					<constant value="Alternative">
+						<constant value="dEUS"/>
+						<constant value="Novastar"/>
+						<constant value="Arid"/>
+						<constant value="Hooverphonic"/>
+					</constant>
+					<constant value="Metal">
+						<constant value="Aborted"/>
+					</constant>
+					<constant value="Hardcore">
+						<constant value="Liar"/>
+					</constant>
+				</constant>
+		  </property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
