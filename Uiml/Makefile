@@ -22,13 +22,13 @@ gtk:
 	mcs ${DEBUG} ${GTKLIBS} -keyfile:Rendering/GTKsharp/uiml-gtk-sharp.snk /r:uiml.net.dll -o uiml-gtk-sharp.dll -target:library Rendering/GTKsharp/*.cs
 
 wx:
-	mcs ${DEBUG} ${WXLIBS} /r:uiml.net.dll -o uiml-gtk-sharp.dll -target:library Rendering/WXnet/*.cs
+	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -o uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
 
 swf:
-	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -o uiml-gtk-sharp.dll -target:library Rendering/SWF/*.cs
+	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -o uiml-swf.dll -target:library Rendering/SWF/*.cs
 
 cswf:
-	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -o uiml-gtk-sharp.dll -target:library Rendering/CompactSWF/*.cs
+	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -o uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
 
 
 

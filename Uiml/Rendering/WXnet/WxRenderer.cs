@@ -1,8 +1,8 @@
 /*
- 	 Uiml.Net: a Uiml.Net renderer (http://lumumba.luc.ac.be/kris/research/uiml.net/)
+ 	 Uiml.Net: a Uiml.Net renderer (http://resaerch.edm.luc.ac.be/kris/project/uiml.net/)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
+	                     Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
 	This program is free software; you can redistribute it and/or
@@ -38,13 +38,15 @@ namespace Uiml.Rendering.WXnet
 		
 		public WxRenderer()
 		{
+			Console.WriteLine("creating WxRenderer");
 			Decoder = new WxTypeDecoder();
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
 			GuiAssembly = Assembly.Load(WX_ASSEMBLY);
 			ExternalLibraries.Instance.Add(WX_ASSEMBLY, GuiAssembly);
 			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, Assembly.Load(DRAWING_ASSEMBLY));
-			Gtk.Application.Init();
-			wx.App.Initialize();
+			//Gtk.Application.Init();
+			//wx.App.Initialize();
+			Console.WriteLine("WxRenderer created");
 		}
 
 		public IRenderedInstance TopWindow
@@ -91,7 +93,7 @@ namespace Uiml.Rendering.WXnet
 		///</summary>
 		private Window Render(Part uiPart, Style uiStyle, Window parent) //throws WrongNestingException, MappingNotFoundException
 		{
-		     string className = Voc.MapsOn(uiPart.Class);
+		     string className = Voc.MapsOnCls(uiPart.Class);
 			  Type classType = GuiAssembly.GetType(className);
 			  Type containerType = GuiAssembly.GetType(CONTAINER);
 
@@ -316,9 +318,9 @@ namespace Uiml.Rendering.WXnet
 				part = Top;
 			//search for the part, and get the widget
 			Part p = part.SearchPart(prop.PartName);
-			string className  = Voc.MapsOn(p.Class);
+			string className  = Voc.MapsOnCls(p.Class);
 			Type classType = GuiAssembly.GetType(className);
-			string getter = Voc.GetGetProperty(prop.Name, p.Class);
+			string getter = Voc.GetPropertyGetter(prop.Name, p.Class);
 
 			System.Object targetObject = p.UiObject;
 			PropertyInfo pInfo = null;
@@ -361,9 +363,9 @@ namespace Uiml.Rendering.WXnet
 
 
 		public const int SPACE = 3;
-		public const string WX_ASSEMBLY    = "wx.NET.dll";
-		public const string SYSTEM_ASSEMBLY = "mscorlib.dll";
-		public const string DRAWING_ASSEMBLY = "System.Drawing.dll";
+		public const string WX_ASSEMBLY    = "wx.NET";
+		public const string SYSTEM_ASSEMBLY = "mscorlib";
+		public const string DRAWING_ASSEMBLY = "System.Drawing";
 		public const int MAX_ASSSEMBLIES = 3;
 
 		public const string NAME = "wx-net-1.0";

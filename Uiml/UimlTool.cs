@@ -55,7 +55,6 @@ namespace Uiml{
 		
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("bla");
 			Options opt = new Options(args, options);
 			if((opt.NrSwitches == 0)||(opt[options[2]].Equals("-"))) 
 			{

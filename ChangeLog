@@ -12,6 +12,11 @@
 	* Uiml/uiml.net.snk: added strong name key pair for uiml.net.[exe|dll]
 	* Uiml/Rendering/GTKsharp/uiml-gtk-sharp.snk: added strong name key pair for 
 	uiml-gtk-sharp.dll
+	* Uiml/Rendering/WXnet/uiml-wx-net.snk: added strong name key pair for 
+	uiml-wx-net.dll
+	* Cleaned ip some Wx.NET issues, but still having problems with finding
+	libwx-c.so
+
 
 2004-08-06 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Executing/Binding/UimlEventHandlerAttribute.cs:

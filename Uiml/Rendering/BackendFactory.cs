@@ -29,7 +29,7 @@ namespace Uiml.Rendering
 	public class BackendFactory
 	{
 		public String[] assemblies = { "uiml-gtk-sharp.dll",
-												 "uiml-wx.net.dll",
+												 "uiml-wx-net.dll",
 												 "uiml-swf.dll",
 												 "uiml-compact-swf.dll" };
 
@@ -92,25 +92,27 @@ namespace Uiml.Rendering
 			//new code; try to load backend renderer dynamically:
 			
 			//IRenderer renderer = null;
+			Console.WriteLine("Looking for {0} renderer", name);
 			for(int i=0; i< renderers.Length; i++)
 			{
 				try
 				{
 					Assembly a = Assembly.LoadFrom(assemblies[i]);
 					Type t = a.GetType(renderers[i]);
-					/* Mono crashes on this
-					renderer = (IRenderer)Activator.CreateInstance(t);
-					if(renderer.Name == name)
-						return renderer;
-					*/
-					//code to prevent crash with mono:
 					FieldInfo m = t.GetField(NAME);
 					String dynname = (String)m.GetValue(t);
+					Console.Write("Renderer for {0} vocabulary", dynname);
 					if(dynname == name)
+					{
+						Console.WriteLine("...match. OK!");
 						return (IRenderer)Activator.CreateInstance(t);
+					}
+					else
+						Console.WriteLine("...no match with {0}", name);
 				}
 				catch(Exception e)
 				{
+					Console.WriteLine(e);
 					//do nothin here: an exception means the backend renderer is not available
 				}
 			}
