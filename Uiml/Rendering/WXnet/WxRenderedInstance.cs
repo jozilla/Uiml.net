@@ -68,12 +68,9 @@ namespace Uiml.Rendering.WXnet
 
 	class ContainerFrame : Frame
 	{
-		
-		//TODO: remove the static parameters
-		public ContainerFrame(string title) :	base(title, new Point(50,50), new Size(-1,-1))
+		public ContainerFrame(string title) :	base(null, -1, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE )
 		{
 		}
-
 	}
 	
 }

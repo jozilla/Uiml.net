@@ -73,6 +73,8 @@ namespace Uiml.Rendering.WXnet
 				}catch(Exception e){ /* no behavior specified */ }
 
 				Top = uiStruct.Top;
+				if(uimlDoc.SearchPeers(NAME) == null)
+					Console.WriteLine("uimlDoc.SearchPeers(NAME)==null");
 				Voc = uimlDoc.SearchPeers(NAME).GetVocabulary();
 				Window c = Render(uiStruct.Top, uiStyle, m_topWindow.TopFrame);
 				//Render has filled the part-tree with the concrete object references
@@ -83,6 +85,7 @@ namespace Uiml.Rendering.WXnet
 				catch(NullReferenceException nrfe)
 				{
 					Console.WriteLine("The Rendering Engine says: Check the input documents, they seem to be invalid");
+					Console.WriteLine(nrfe);
 					throw nrfe;
 				}
 		}
