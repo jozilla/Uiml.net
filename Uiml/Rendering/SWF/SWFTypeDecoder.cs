@@ -107,8 +107,7 @@ namespace Uiml.Rendering.SWF
 				return oValue.ToString();
 
 			string[] coords = null;
-			// TODO: use reflection to create SWF types!
-			// TODO: make different methods for complex types!
+			// TODO: use reflection to create SWF types!			
 			switch(t.FullName)
 			{
 				case "System.Int32":
@@ -133,57 +132,19 @@ namespace Uiml.Rendering.SWF
 				case "System.String[]":
 					return DecodeStringArray(oValue);				
 				case "System.DateTime":
-					coords = value.Split(new Char[] {'/'});
-					int month = int.Parse(coords[0]);
-					int day = int.Parse(coords[1]);
-					int year = int.Parse(coords[2]);
-					return new DateTime(year, month, day);
+					return DecodeDateTime(value);
 				case "System.Windows.Forms.Appearance":
-					if(value == "Button")
-						return Appearance.Button;
-					else
-						return Appearance.Normal;
+					return DecodeAppearance(value);
 				case "System.Windows.Forms.ScrollBars":
-					if(value == "Both")
-						return ScrollBars.Both;
-					else if(value == "Horizontal")
-						return ScrollBars.Horizontal;
-					else if(value == "Vertical")
-						return ScrollBars.Vertical;
-					else
-						return ScrollBars.None;
+					return DecodeScrollBars(value);
 				case "System.Windows.Forms.SelectionMode":
-					if(value == "MultiExtended")
-						return SelectionMode.MultiExtended;
-					else if(value == "MultiSimple")
-						return SelectionMode.MultiSimple;
-					else if(value == "None")
-						return SelectionMode.None;
-					else
-						return SelectionMode.One;
+					return DecodeSelectionMode(value);
 				case "System.Windows.Forms.View":
-					if(value == "LargeIcon")
-						return View.LargeIcon;
-					else if(value == "SmallIcon")
-						return View.SmallIcon;
-					else if(value == "List")
-						return View.List;
-					else
-						return View.Details;
+					return DecodeView(value);
 				case "System.Windows.Forms.Orientation":
-					if(value == "Vertical")
-						return Orientation.Vertical;
-					else
-						return Orientation.Horizontal;
+					return DecodeOrientation(value);
 				case "System.Windows.Forms.TickStyle":
-					if(value == "Both")
-						return TickStyle.Both;
-					else if(value == "BottomRight")
-						return TickStyle.BottomRight;
-					else if(value == "None")
-						return TickStyle.None;
-					else
-						return TickStyle.TopLeft;
+					return DecodeTickStyle(value);
 				default:
 					return value;
 			}			
@@ -206,6 +167,78 @@ namespace Uiml.Rendering.SWF
 				default:
 					return p.Value;
 			}			
+		}
+
+		private System.Object DecodeDateTime(string value)
+		{
+			string[] coords = value.Split(new Char[] {'/'});
+			int month = int.Parse(coords[0]);
+			int day = int.Parse(coords[1]);
+			int year = int.Parse(coords[2]);
+			return new DateTime(year, month, day);
+		}
+
+		private System.Object DecodeAppearance(string value)
+		{
+			if(value == "Button")
+				return Appearance.Button;
+			else
+				return Appearance.Normal;
+		}
+
+		private System.Object DecodeScrollBars(string value)
+		{
+			if(value == "Both")
+				return ScrollBars.Both;
+			else if(value == "Horizontal")
+				return ScrollBars.Horizontal;
+			else if(value == "Vertical")
+				return ScrollBars.Vertical;
+			else
+				return ScrollBars.None;
+		}
+
+		private System.Object DecodeSelectionMode(string value)
+		{
+			if(value == "MultiExtended")
+				return SelectionMode.MultiExtended;
+			else if(value == "MultiSimple")
+				return SelectionMode.MultiSimple;
+			else if(value == "None")
+				return SelectionMode.None;
+			else
+				return SelectionMode.One;
+		}
+
+		private System.Object DecodeView(string value)
+		{
+			if(value == "LargeIcon")
+				return View.LargeIcon;
+			else if(value == "SmallIcon")
+				return View.SmallIcon;
+			else if(value == "List")
+				return View.List;
+			else
+				return View.Details;
+		}
+		private System.Object DecodeOrientation(string value)
+		{
+			if(value == "Vertical")
+				return Orientation.Vertical;
+			else
+				return Orientation.Horizontal;
+		}
+
+		private System.Object DecodeTickStyle(string value)
+		{
+			if(value == "Both")
+				return TickStyle.Both;
+			else if(value == "BottomRight")
+				return TickStyle.BottomRight;
+			else if(value == "None")
+				return TickStyle.None;
+			else
+				return TickStyle.TopLeft;
 		}
 
 		private System.Object DecodeListViewItemArray(Property p)
@@ -252,36 +285,6 @@ namespace Uiml.Rendering.SWF
 			return result;
 		}
 
-		private System.Object DecodeStateType(string value)
-		{
-			return value;
-			/*
-			switch(value)
-			{
-				case "background" :
-				case "foreground" :
-				case "base-color" :
-					return StateType.Normal;
-				default:
-					return value;
-			}
-			*/
-		}
-
-		/*
-		private GLib.List DecodeList(System.Object value)
-		{
-			List list = new GLib.List((IntPtr) 0, typeof (System.String));
-			IEnumerator enumConstants = (((Constant)value).Children).GetEnumerator();	
-			while(enumConstants.MoveNext())
-			{
-				Constant c = (Constant)enumConstants.Current;
-				list.Append((String)c.Value);
-			}
-			return list;
-		}
-		*/
-
 		private System.String[] DecodeStringArray(System.Object value)
 		{
 			ArrayList strArrayList = new ArrayList();
@@ -293,52 +296,6 @@ namespace Uiml.Rendering.SWF
 			}
 			return (System.String[])(strArrayList.ToArray(Type.GetType("System.String")));
 		}
-
-		/*
-		private Gtk.TreeModel DecodeTree(System.Object value)
-		{
-			Constant c = (Constant)value;
-			if(c.Model == Constant.LIST)
-				return DecodeListStore(c);
-			else
-				return DecodeTreeStore(c);
-		}
-		
-		private Gtk.TreeModel DecodeTreeStore(Constant c)
-		{
-			TreeStore ts = new TreeStore(typeof(string), typeof(string));
-			TreeIter parent = ts.AppendValues(c.Value);
-			IEnumerator enumConst = c.Children.GetEnumerator();
-			while(enumConst.MoveNext())
-				FillTree(parent, (Constant)enumConst.Current, ref ts);
-			return ts;
-		}
-
-		private void FillTree(TreeIter it, Constant c, ref TreeStore ts)
-		{
-			TreeIter it2 = ts.AppendValues(it, c.Value);
-			if(c.Children != null)
-			{
-				IEnumerator enumConst = c.Children.GetEnumerator();
-				while(enumConst.MoveNext())
-					FillTree(it2, (Constant)enumConst.Current, ref ts);
-			}
-		}
-
-		private Gtk.TreeModel DecodeListStore(Constant c)
-		{
-			ListStore ls = new ListStore(typeof(string));			
-			IEnumerator enumConst = (c.Children).GetEnumerator();
-			while(enumConst.MoveNext())
-			{
-				ls.AppendValues(((Constant)enumConst.Current).Value);
-			}
-			return ls;
-		}
-
-
-		public static string COLOR = "Gdk.Color";
-		*/
 	}	
 }
 
