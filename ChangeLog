@@ -1,3 +1,7 @@
+2005-03-25 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* vocabularies/swf-1.1.uiml: Added getters and setters for all
+	relevant absolute positioning properties
+
 2005-03-14 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/FrontEnd/CommandLine.cs: added a Main() method to complete this 
 	frontend 
