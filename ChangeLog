@@ -1,3 +1,6 @@
+2004-08-25 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/Makefile: updated references for compiling GTK# rendering backend
+
 2004-08-22 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* examples/gtk-sharp/image.uiml: fixed typo in vocabulary location
 
