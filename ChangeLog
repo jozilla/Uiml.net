@@ -1,3 +1,7 @@
+2004-08-27 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* vocabularies/gtk-sharp-1.0.uiml: updated Html class
+	* examples/gtk-sharp/browser.uiml: updated browser example
+
 2004-08-27 Kris Luyten <kris.luyten@luc.ac.be>
 	* docs/: initial creation of uiml.net documentation directory
 
