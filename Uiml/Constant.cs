@@ -84,6 +84,25 @@ namespace Uiml{
 			Children.Add(c);
 		}
 
+		public bool NoChildren
+		{
+			get
+			{
+				return Children == null;
+			}			
+		}
+
+		public int ChildCount
+		{
+			get
+			{
+				if(Children == null)
+					return 0;
+				else
+					return Children.Count;
+			}			
+		}
+
 		public string Model
 		{
 			get { return m_model;  }
