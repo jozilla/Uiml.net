@@ -580,8 +580,17 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-method id="e" return-value="double" maps-to="E"/>
 		<d-method id="pi" return-value="double" maps-to="PI"/>
 	</d-component>
+	<d-component id="Int" maps-to="System.Int32">
+		<d-method id="parse" returns-value="System.Int32" maps-to="Parse">
+			<d-param type="System.String"/>
+		</d-method>
+	</d-component>
 	<d-component id="String" maps-to="System.String">
 		<d-method id="concatenate" returns-value="string" maps-to="Concat">
+			<d-param id="str0" type="System.String"/>
+			<d-param id="str1" type="System.String"/>
+		</d-method>
+		<d-method id="compare" returns-value="int" maps-to="Compare">
 			<d-param id="str0" type="System.String"/>
 			<d-param id="str1" type="System.String"/>
 		</d-method>
@@ -593,6 +602,8 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-method id="println" returns-value="void" maps-to="WriteLine">
 			<d-param id="message" type="System.String"/>
 		</d-method>
+		<d-method id="read" returns-value="System.String" maps-to="Read"/>
+		<d-method id="readln" returns-value="System.String" maps-to="ReadLine"/>
 	</d-component>
 	<d-component id="Date" maps-to="System.DateTime">
 		<d-method id="now"   returns-value="DateTime" maps-to="Now"/>
@@ -600,6 +611,14 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-method id="compare" returns-value="int" maps-to="Compare">
 			<d-param id="date1" type="System.DateTime"/>
 			<d-param id="date2" type="System.DateTime"/>
+		</d-method>
+	</d-component>
+	<d-component id="TimeZone" maps-to="System.TimeZone">
+		<d-method id="current" returns-value="DateTime" maps-to="CurrentTimeZone.ToLocalTime"/>
+	</d-component>
+	<d-component id="environment" maps-to="System.Environment">
+		<d-method id="exit" returns-value="void" maps-to="Exit">
+			<d-param type="System.Int32"/>
 		</d-method>
 	</d-component>
  </logic>
