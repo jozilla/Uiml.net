@@ -40,7 +40,7 @@ namespace Uiml.Rendering.GTKsharp
 		private string m_adder = "Add";
 
 		public GtkRenderer()
-		{ 
+		{
 			Decoder = new GtkTypeDecoder();
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
 			GuiAssembly = Assembly.Load(GTK_ASSEMBLY);

@@ -72,6 +72,7 @@ namespace Uiml.Rendering
 			set { m_typeDecoder = value; }
 		}
 
+
 		///<summary>
 		/// The assmebly that containts the widgets used by the backend renderer.
 		///</summary>

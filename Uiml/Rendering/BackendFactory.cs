@@ -23,10 +23,23 @@
 namespace Uiml.Rendering
 {
 	using System;
+	using System.Reflection;
 	using System.Collections;
 
 	public class BackendFactory
 	{
+		public String[] assemblies = { "uiml-gtk-sharp.dll",
+												 "uiml-wx.net.dll",
+												 "uiml-swf.dll",
+												 "uiml-compact-swf.dll" };
+
+		public String[] renderers = { "Uiml.Rendering.GTKsharp.GtkRenderer",
+			                           "Uiml.Rendering.WXnet.WxRenderer",
+			                           "Uiml.Rendering.SWF.SWFRenderer",
+			                           "Uiml.Rendering.CompactSWF.CompactSWFRenderer"};
+
+		public const string NAME = "NAME";
+
 		public BackendFactory()
 		{
 		}
@@ -38,33 +51,73 @@ namespace Uiml.Rendering
 		///TODO: replace by more generic code!
 		public IRenderer CreateRenderer(String name)
 		{
-			//load all known subclasses from the IRenderer interface,
-			//check whether the name matches the renderer name
-			//and create a new renderer
 
-			switch(name)
+			/* old, static code to load backend renderers
+			try
 			{
-				//Uncomment this if you want to use GTK# as a backend renderer
-				case Uiml.Rendering.GTKsharp.GtkRenderer.NAME:
-					return new Uiml.Rendering.GTKsharp.GtkRenderer();
+				switch(name)
+				{
 					
-				//Uncomment this if you want to use wx.NET as a backend renderer
-				//case Uiml.Rendering.WXnet.WxRenderer.NAME:
-				//	return new Uiml.Rendering.WXnet.WxRenderer();
+					//Uncomment this if you want to use GTK# as a backend renderer
+					case Uiml.Rendering.GTKsharp.GtkRenderer.NAME:
+						return new Uiml.Rendering.GTKsharp.GtkRenderer();
+					
+					//Uncomment this if you want to use wx.NET as a backend renderer
+					case Uiml.Rendering.WXnet.WxRenderer.NAME:
+						return new Uiml.Rendering.WXnet.WxRenderer();
 				
-				//Uncomment this if you want to use System.Windows.Forms as a backend renderer
-				//case Uiml.Rendering.SWF.SWFRenderer.NAME:
-				//	return new Uiml.Rendering.SWF.SWFRenderer();
+					//Uncomment this if you want to use System.Windows.Forms as a backend renderer
+					case Uiml.Rendering.SWF.SWFRenderer.NAME:
+						return new Uiml.Rendering.SWF.SWFRenderer();
 
-				//Uncomment this if you want to use System.Windows.Forms on 
-				//the .NET Compact framework as a backend renderer
-				//case Uiml.Rendering.CompactSWF.CompactSWFRenderer.NAME:
-				//	return new Uiml.Rendering.CompactSWF.CompactSWFRenderer();
+					//Uncomment this if you want to use System.Windows.Forms on 
+					//the .NET Compact framework as a backend renderer
+					case Uiml.Rendering.CompactSWF.CompactSWFRenderer.NAME:
+						return new Uiml.Rendering.CompactSWF.CompactSWFRenderer();						
 
-				default:
-					return null;
+					default:
+						return renderer;
+				}
+
 			}
+			catch(Exception e)
+			{
+				Console.WriteLine("Could not find required libraries for the {0} widget set", name);
+				Console.WriteLine("Please make sure the required libraries to use {0} are installed on your platform,", name);
+				Console.WriteLine("Or choose another rendering backend.");
+				return null;
+			}
+			*/
+
+			//new code; try to load backend renderer dynamically:
+			
+			//IRenderer renderer = null;
+			for(int i=0; i< renderers.Length; i++)
+			{
+				try
+				{
+					Assembly a = Assembly.LoadFrom(assemblies[i]);
+					Type t = a.GetType(renderers[i]);
+					/* Mono crashes on this
+					renderer = (IRenderer)Activator.CreateInstance(t);
+					if(renderer.Name == name)
+						return renderer;
+					*/
+					//code to prevent crash with mono:
+					FieldInfo m = t.GetField(NAME);
+					String dynname = (String)m.GetValue(t);
+					if(dynname == name)
+						return (IRenderer)Activator.CreateInstance(t);
+				}
+				catch(Exception e)
+				{
+					//do nothin here: an exception means the backend renderer is not available
+				}
+			}
+			return null;
+
 		}
+
 	}
 }
 
