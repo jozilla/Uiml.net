@@ -49,7 +49,10 @@ namespace Uiml{
 		public void Register(Template t)
 		{
 			try{
-				templates.Add(t.Identifier, t);
+				if(templates.Contains(t.Identifier))
+					Console.WriteLine("Ignoring duplicate entry of template {1}.", t.Identifier);
+				else
+					templates.Add(t.Identifier, t);
 			}catch(ArgumentNullException ane){
 				Console.WriteLine("Template with no identifier!");
 			}catch(ArgumentException ae){
@@ -60,7 +63,12 @@ namespace Uiml{
 
 		public Template Query(string id)
 		{
-			return (Template)templates[id];
+			if(id.Contains('#')==-1)
+				return (Template)templates[id];
+			else
+			{
+				
+			}
 		}
 		
 		

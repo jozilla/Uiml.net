@@ -1,7 +1,7 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://reseaech.edm.luc.ac.be/kris/research/uiml.net)
 
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
@@ -119,26 +119,11 @@ namespace Uiml {
 
 			ReadAttributes(n);
 			if(SourceAvailable)
-				switch(How)
-				{ 
-				  case REPLACE:
-					 {
-					 }
-					 break;
-				  case CASCADE:
-					 {
-					 }
-					 break;
-				  case UNION:
-					 {
-					 }
-					 break;
-				  default:
-					 { //TODO: isolate this body in a separate private method 
-						ProcessSubTree(n);
-					 }
-					 break;
-				}
+			{
+				ITemplateResolver templateResolver = Template.GetResolver(How);
+				Template t = TemplateRepository.Instance.Query(Source);
+				ProcessSubTree(n);
+			}
 			else
 				ProcessSubTree(n);
 		}

@@ -66,19 +66,52 @@ namespace Uiml{
 			Process(n);
 		}
 
-		private void LoadTemplate(string identifier, string path)
+		private void LoadTemplate(string tidentifier, string path)
 		{			
-			if(TemplateRepository.Instance.Query(m_identifier)==null)
+			if(TemplateRepository.Instance.Query(tidentifier)==null)
 			{
 				XmlDocument doc = new XmlDocument();
 				doc.Load(path);
-				//get the node with identifier "identifier" <- Doesn't work in compact .Net!
-				//XmlNodeList nl = doc.SelectNodes("//template[@id='" +  identifier + "']");
-				//Process(nl[0]);
+				//search for the template with identifier tidentifier
+				//and process it accordingly
+				XmlNode n = SearchTemplate(doc, tidentifier);
+				if(n==null)
+					Console.WriteLine("Template {1} could not be found in {2}",tidentifier, path);
+				else
+					Process(n);
 			}
 			else
-				throw new TemplateAlreadyProcessedException(identifier);
+				throw new TemplateAlreadyProcessedException(tidentifier);
 		}
+
+		///<summary>
+		///Does a recursive search for a template with the identifier tidentifier. 
+		///</summary>
+		private XmlNode SearchTemplate(XmlNode xmlNode, String tidentifier)
+		{
+			XmlNode found=null;
+			XmlAttributeCollection attr = xmlNode.Attributes;
+			
+			if((xmlNode.Name == IAM) && (attr.GetNamedItem(ID) != null))
+			{
+				if(attr.GetNamedItem(ID).Value == tidentifier)
+					return xmlNode;
+			}
+			
+			if(xmlNode.HasChildNodes)
+			{
+				XmlNodeList xnl = xmlNode.ChildNodes;
+				for(int i=0; i<xnl.Count; i++)
+				{
+					found=SearchTemplate(xnl[i],tidentifier);
+					if(found!=null)
+						return found;
+				}
+			}
+			return null;
+		}
+
+		
 
 		public void Process(XmlNode n)
 		{
@@ -179,6 +212,7 @@ namespace Uiml{
 
 
 		public const String IAM = "template";
+		public const String ID = "id";
 
 	}
 }
