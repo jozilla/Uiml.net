@@ -1,4 +1,9 @@
 2004-07-26 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/Rendering/CompactSWF/CompactSWFRenderer.cs: Added LoadAdHocProperties
+	method to emulate Items.AddRange method for ComboBox, ListBox and List
+	classes.
+	* Uiml/Rendering/Renderer.cs: Changed calling order of Load[..]Properties
+	methods. The LoadAdHocProperties method is called first now.
 	* Uiml/: added preprocessing directives to support compiling for the .NET
 	Compact platform. To do this, define "COMPACT" when invoking the compiler.
 	* Uiml/vocabularies/cswf-1.0.uiml: thoroughly checked the vocabulary for
