@@ -1,3 +1,6 @@
+2004-08-27 Kris Luyten <kris.luyten@luc.ac.be>
+	* docs/: initial creation of uiml.net documentation directory
+
 2004-08-25 Kris Luyten <kris.luyten@luc.ac.be>
 	* Uiml/FrontEnd/CompactGUI.cs: A GUI frontend for the SWF backend	on compact .Net.
 	* Uiml/FrontEnd/compactgui.uiml: user interface description for the GUI frontend

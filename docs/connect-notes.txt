@@ -1,0 +1,515 @@
+By Jo Vermeulen on http://lumumba.luc.ac.be/~jo/weblog/2004/08/connecting-uiml-with-object-instances.html
+
+Basic connectivity
+
+
+At first I wrote code to receive events from a subtree of the part tree (located in the <structure> element). I will explain this with an extended version of the swfBlog example (uiml|screenshot). Methods which can handle events must be accompanied by the UimlEventHandler attribute. They specify which event class they are interested in and optionally provide a list of identifiers for <part> elements. These identifiers are used to add the corresponding Part instances in the UimlEventArgs class, which can be examined when the event is handled. Here is the event handler method from our example. Don't concentrate on the implementation of the method for now. It's meaning will become clear when you see a screenshot of the resulting application:
+
+
+[UimlEventHandler("ButtonPressed", "fr", "l_recent")]
+
+public void OnQuitEvent(Part sender, UimlEventArgs a)
+
+{
+
+	  Console.WriteLine("Received event from a part:");
+
+	    Console.WriteLine("\tApparantly it's the \"{0}\" part",
+
+		       sender.Identifier);
+
+		   Console.WriteLine("\tIt's class is <{0}>", sender.Class);
+
+			  Console.WriteLine("\tThe UI object is of the type [{0}]",
+
+			        sender.UiObject.GetType());
+
+
+
+			    Part fr = a.GetPart("fr");
+
+
+
+				   Console.WriteLine("\nPart \"{0}\" of type <{1}> has" + 
+
+					      "the following subparts:", fr.Identifier, fr.Class);
+
+
+
+					  System.Collections.IEnumerator e = fr.GetSubParts();
+
+					    while(e.MoveNext())
+
+							   {
+
+									    Part sub = (Part)e.Current;
+
+										     Console.WriteLine("\t\"{0}\" of type <{1}>;",
+
+											          sub.Identifier, sub.Class);
+
+											    }
+
+
+
+												   Part l_recent = a.GetPart("l_recent");
+
+													  string propertyName = "text";
+
+													    Console.WriteLine("The [{0}] property of part \"{1}\"" +
+
+														       " is: {2}",
+
+																       propertyName, l_recent.Identifier,
+
+																		       l_recent.GetProperty(propertyName));
+
+}
+
+
+
+As you can see this method is interested in ButtonPressed events. It asks for parts with identifiers "fr" and "l_recent". The Part instances can be acquired using UimlEventArgs.GetPart(string identifier). It's possible to examine their properties by using Part.GetProperty(string name).
+
+To connect this method's class to the UIML document, we would do something like this:
+
+
+using System;
+
+using System.Xml;
+
+using Uiml;
+
+using Uiml.Rendering;
+
+using Uiml.Executing.Binding;
+
+
+
+public class BlogTool
+
+{
+
+	  public BlogTool()
+
+	    {
+
+			     UimlDocument uimlDoc = new UimlDocument("swfBlog.uiml");
+
+
+
+				      Console.WriteLine("Loading renderer for {0}", 
+
+						      uimlDoc.Vocabulary);
+
+						    BackendFactory bf = new BackendFactory();
+
+							     IRenderer renderer = 
+
+								        bf.CreateRenderer(uimlDoc.Vocabulary);
+
+
+
+										      Console.WriteLine("Building ui instance");
+
+												    IRenderedInstance instance = renderer.Render(uimlDoc);
+
+
+
+													     Console.WriteLine("Connecting user interface events...");
+
+														      uimlDoc.Connect(this);
+
+
+
+																    Console.WriteLine("Showing the ui");
+
+																	     instance.ShowIt();
+
+																		    }
+
+
+
+																			   public static void Main()
+
+																				  {
+
+																					      BlogTool x = new BlogTool();
+
+																							  }
+
+
+
+																							    [UimlEventHandler(...)]
+
+																								   ...
+
+}
+
+
+
+A lot of the code in the constructor is normally done by the UimlTool class: loading and parsing of the UIML document and vocabulary, rendering and showing the interface. The important part is new: the Connect method, which receives a reference to the object instance which is to be connected. It's also possible to specify which <part> element to connect to. All elements of that part's subtree (and their events) will be available to the connected object instances. When no part is specified, they are connected to the top of the part tree, which means that every part is available.
+
+No additional changes to the UIML document are required for this connect mechanism. Here's the console output when you click the "newpost" button: [screenshot]
+
+Connecting the Logic section
+
+
+The next challenge was to allow calls on object instances from within the UIML document. At that time, only static methods (such as System.String.Concat) were supported. I wrote a simple example using the Compact System.Windows.Forms rendering backend. It's in fact a modified version of the calculator example. When you hit the '=' button, the contents of the output Entry is sent to the Write method of an instance of the CalcInspector class. Depending on a member "m_times", this value is written out m_times times.
+
+Here's the relevant UIML code:
+
+
+<behavior>
+
+...
+
+  <rule>
+
+      <condition>
+
+		      <event part-name="bsol" class="ButtonPressed"/>
+
+				    </condition>
+
+					     <action>
+
+						        <call name="CalcInspector.Print">
+
+								          <param>
+
+											           <property part-name="output" name="text"/>
+
+														          </param>
+
+																	       </call>
+
+																			     </action>
+
+																				    </rule>
+
+																					 ...
+
+																					 </behavior>
+
+																					 ...
+
+																					 <logic>
+
+																					   <d-component id="CalcInspector" maps-to="CalcInspector">
+
+																						    <d-method id="Print" maps-to="Print">
+
+																							       <d-param id="output" type="System.String"/>
+
+																									     </d-method>
+
+																										    </d-component>
+
+																											 </logic>
+
+																											 ...
+
+
+
+																											 We thus define a mapping of the CalcInspector class in the <logic> section. It maps on it's own here. We also specify a rule to state what happens when we click the '=' button. This is completely similar to the syntax we used for static functions.
+
+																											 I changed the mechanism which resolves calls to first check if a call can be invoked on one of the connected object instances. When that fails, we'll try to invoke it statically liked we did before.
+
+																											 Here is the application code:
+
+
+																											 using System;
+
+																											 using System.Xml;
+
+																											 using Uiml;
+
+																											 using Uiml.Rendering;
+
+																											 using Uiml.Executing.Binding;
+
+
+
+																											 public class ConnectDemo
+
+																											 {
+
+																												   public ConnectDemo()
+
+																													  {
+
+																														      Console.WriteLine("Loading external libraries...");
+
+																																    ExternalLibraries eLib = ExternalLibraries.Instance;
+
+																																	     eLib.Add(@"\My Documents\Personal\cfCalc.dll");
+
+
+
+																																		      Console.WriteLine("Loading UIML document...");
+
+																																				    UimlDocument uimlDoc = 
+
+																																					       new UimlDocument(@"\My Documents\" +
+
+																																							         @"Personal\cswfCalculator.uiml");
+
+																																							       
+																																									     Console.WriteLine("Loading renderer for {0}", 
+
+																																										        uimlDoc.Vocabulary);
+
+																																										      BackendFactory bf = new BackendFactory();
+
+																																												    IRenderer renderer = 
+
+																																													       bf.CreateRenderer(uimlDoc.Vocabulary);
+
+
+
+																																															     Console.WriteLine("Building ui instance");
+
+																																																      IRenderedInstance instance = renderer.Render(uimlDoc);
+
+
+
+																																																		    CalcInspector small = new CalcInspector(2);
+
+																																																			     CalcInspector large = new CalcInspector(5);
+
+
+
+																																																				      Console.WriteLine("Connecting user interface events...");
+
+																																																						    // connect to the '1' button
+
+																																																							     uimlDoc.Connect(this, "b1");
+
+																																																								      uimlDoc.Connect(small);
+
+																																																										    uimlDoc.Connect(large);
+
+
+
+																																																											     Console.WriteLine("Showing the ui");
+
+																																																												      instance.ShowIt();
+
+																																																														  }
+
+
+
+																																																														    public static void Main()
+
+																																																															   {
+
+																																																																	    ConnectDemo x = new ConnectDemo();
+
+																																																																		   }
+
+
+
+																																																																			  [UimlEventHandler("ButtonPressed")]
+
+																																																																			    public void OnQuitEvent(Part sender, UimlEventArgs a)
+
+																																																																				   {
+
+																																																																						    Console.WriteLine("Received event from a part:");
+
+																																																																							     Console.WriteLine("\tApparantly it's the \"{0}\" part",
+
+																																																																								          sender.Identifier);
+
+																																																																								      Console.WriteLine("\tIt's class is <{0}>", sender.Class);
+
+																																																																										    Console.WriteLine("\tThe UI object is of the type [{0}]",
+
+																																																																											         sender.UiObject.GetType());
+
+																																																																											   }
+
+																											 }
+
+
+
+																											 public class CalcInspector
+
+																											 {
+
+																												   int m_times;
+
+
+
+																													  public CalcInspector(int times)
+
+																													    {
+
+																															     m_times = times;
+
+																																    }
+
+
+
+																																	   /// <summary>
+
+																																		  /// Prints the output m_times times.
+
+																																		    /// </summary>
+
+																																			   /// <param name="output"></param>
+
+																																				  public void Print(string output)
+
+																																				    {
+
+																																						     for(int i = 0; i < m_times; i++)
+
+																																								      {
+
+																																											      Console.WriteLine(output);
+
+																																													    }
+
+																																														     Console.WriteLine("...Done!");
+
+																																															    }
+
+																											 }
+
+
+
+																											 As you can see, we created two CalcInspector instances: small and large. One will write the output 2 times while the other will print it 5 times. This example also shows that it's possible to connect to a specific part subtree. In this case we connect to the "b1" part. Since a Button can not have subparts, we only take this button into account.
+
+I executed the application and did a few calculations. Just before I pressed the '=' button, I took a screenshot: [screenshot] 
+This is the corresponding console window: 
+[screenshot]
+
+Since we connected small first, small's Write method get's executed first.
+
+Finally I made another example based on swfBlog. I made one change though, to make the example a bit more interesting:
+
+
+ <rule>
+
+     <condition>
+
+	        <event part-name="newpost" class="ButtonPressed"/>
+
+			      </condition>
+
+					    <action>
+
+						       <property part-name="articles" name="add">
+
+								         <property part-name="title" name="text"/>
+
+											      </property>
+
+													    </action>
+
+														   </rule>
+
+
+
+															When you click the "New Post" button, the post's title is added to the "Recent Posts" list. This is useful when we would want to mimick MonoBlog's behaviour using UIML. I hoped I could write a working UIML-blog application, but I didn't have the time anymore. It shouldn't be too difficult though.
+
+															The application code:
+
+
+															using System;
+
+															using System.Xml;
+
+															using Uiml;
+
+															using Uiml.Rendering;
+
+															using Uiml.Executing.Binding;
+
+
+
+															public class BlogSender
+
+															{
+
+																  public BlogSender()
+
+																    {
+
+																		     UimlDocument uimlDoc = new UimlDocument("swfBlog.uiml");
+
+
+
+																			      Console.WriteLine("Loading renderer for {0}", 
+
+																					      uimlDoc.Vocabulary);
+
+																					    BackendFactory bf = new BackendFactory();
+
+																						     IRenderer renderer = 
+
+																							        bf.CreateRenderer(uimlDoc.Vocabulary);
+
+
+
+																									      Console.WriteLine("Building ui instance");
+
+																											    IRenderedInstance instance = renderer.Render(uimlDoc);
+
+
+
+																												     Console.WriteLine("Connecting user interface events...");
+
+																													      uimlDoc.Connect(this);
+
+
+
+																															    Console.WriteLine("Showing the ui");
+
+																																     instance.ShowIt();
+
+																																	    }
+
+
+
+																																		   public static void Main()
+
+																																			  {
+
+																																				      BlogSender x = new BlogSender();
+
+																																						  }
+
+
+
+																																						    /// <summary>
+
+																																							   /// This method is connected using a rule
+
+																																								  /// </summary>  
+
+																																								    public void Post(string title, string body)
+
+																																									   {
+
+																																											    Console.WriteLine("Title: {0}\n\nBody: {1}\n", 
+
+																																												       title, body);
+
+																																												   }
+
+															}
+
+
+
+															The Post method simply writes out the blog title and blog body.
+
+															A screenshot taken before I clicked the "New Post" button: [screenshot]
+
+
+And of course, a screenshot after I clicked the button: 
+[screenshot]
+
+
+																											 

@@ -1,0 +1,79 @@
+<?xml version="1.0" standalone="no"?>
+<!-- <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.1//EN" "file:///usr/share/sgml/docbook/dtd/xml/4.1.2/docbookx.dtd" [ -->
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"file:///usr/share/sgml/docbook/dtd/xml/4.2/docbookx.dtd" [ 
+<!ENTITY VERSION "0.0.7">
+<!ENTITY INTRODUCTION SYSTEM "intro.xml">
+<!ENTITY REVHISTORY SYSTEM "revhistory.xml">
+<!ENTITY UIML SYSTEM "uiml.xml">
+<!ENTITY FDL12 SYSTEM "fdl-1.2.xml">
+<!ENTITY o "<![CDATA[<]]>">
+<!ENTITY w3c "http://www.w3.org">
+<!ENTITY EDM "&o;ulink url=&quot;http://edm.luc.ac.be&quot;>Expertisecentrum voor Digitale Media&o;/ulink>">
+<!ENTITY LUC "&o;ulink url=&quot;http://www.luc.ac.be&quot;>Limburgs Universitair Centrum&o;/ulink>">
+]>
+<book lang="en" id="index">
+<!--
+Copyright (c)  2004
+author: Kris Luyten <kris.luyten@luc.ac.be>.
+	    Limburgs Universitair Centrum
+		Expertisecentrum Digitale Media
+
+-->
+
+	<bookinfo>		
+		<title>Uiml.net: Manual</title>
+		<address>http://research.edm.luc.ac.be/kris/projects/uiml.net</address>
+		<authorgroup>
+			<author>
+				<firstname>Kris</firstname>
+				<surname>Luyten</surname>
+				<affiliation>
+					<orgname><ulink url="http://www.luc.ac.be">Limburgs Universitair Centrum</ulink></orgname>
+					<orgdiv><ulink url="http://www.edm.luc.ac.be">Expertisecentrum Digitale Media</ulink></orgdiv>
+					<address>
+						<email>
+							kris.luyten@luc.ac.be
+						</email>
+					</address>
+				</affiliation>
+			</author>
+		</authorgroup>
+		<copyright>
+			<year>2004</year>
+			<holder>Kris Luyten</holder>
+		</copyright>
+
+		<releaseinfo>
+			This is version &VERSION; of the Uiml.net manual.
+			A pdf version is available <ulink url="uiml.net.docs.pdf">here</ulink>
+			and the DocBook sources are available here: [<ulink url="uiml.net.docs.tar.bz2">tar.bz2</ulink>]
+			[<ulink url="uiml.net.docs.tar.gz">tar.gz</ulink>].
+		</releaseinfo>
+		
+		<keywordset>
+		  <keyword>UIML</keyword>
+		  <keyword>.Net</keyword>
+		  <keyword>Uiml.net</keyword>
+		</keywordset>
+
+		<legalnotice>
+			<para id="gnu-fdl" xreflabel="The &quot;GNU
+				Free Documentation License&quot;">
+    Permission is granted to copy, distribute and/or modify this document
+    under the terms of the GNU Free Documentation License, Version 1.2
+    or any later version published by the Free Software Foundation;
+    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    A copy of the license is included in the section entitled &ldquo;GNU
+    Free Documentation License&rdquo;.
+			</para>		
+		</legalnotice>		
+
+&REVHISTORY;
+	</bookinfo>	
+
+&INTRODUCTION;
+&UIML;
+&FDL12;
+</book>
+
