@@ -1,3 +1,25 @@
+2004-08-03 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Big check in of connectivity code
+	* Uiml/Rendering/SWF/:
+	* Uiml/Rendering/CompactSWF/:
+	* Uiml/vocabularies/cswf-1.0.uiml:  
+	* Uiml/vocabularies/swf-1.1.uiml: Changed these files to add a property
+	to List and Tree for adding a single element
+	* Uiml/Peers/Vocabulary.cs
+	* Uiml/UimlDocument.cs:
+	* Uiml/Part.cs:
+	* Uiml/Executing/Rule.cs:
+	* Uiml/Executing/Call.cs:
+	* Uiml/Executing/Action.cs: added support for Glade-like connectivity in
+	these classes
+	* Uiml/Executing/Binding/UimlEventArgs.cs: first check in, this class is
+	used to transfer arguments from the UIML document to the application
+	* Uiml/Executing/Binding/UimlEventHandlerAttribute.cs: first check in, this
+	class is used for marking which methods are to be connected with the UIML
+	document. It contains optional arguments: an event class and a number of
+	part identifiers. The Part instances corresponding with the identifiers
+	will be transferred in the UimlEventArgs argument.
+
 2004-07-28 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Executing/EventHandlerAttribute.cs: added a simple EventHandler
 	attribute for binding the application logic with the UIML document.
