@@ -274,7 +274,7 @@ namespace Uiml.Rendering.SWF
 		{
 			TreeNode result = new TreeNode((string)c.Value);
 			
-			if(c.NoChildren)
+			if(!c.HasChildren)
 				return result;
 						
 			foreach(Constant child in c.Children)

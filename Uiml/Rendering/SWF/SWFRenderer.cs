@@ -39,9 +39,6 @@ namespace Uiml.Rendering.SWF
 	{
 		private SWFRenderedInstance m_topWindow;
 
-		/* TOASK: is this correct??? 
-		 * Should I invoke the property first?
-		 */
 		private string m_addProperty = "Controls";
 		private string m_addMethod = "Add";
 
@@ -58,6 +55,8 @@ namespace Uiml.Rendering.SWF
 						
 			GuiAssembly = Assembly.LoadFrom(assemblyName);			
 			*/
+
+			// TODO: use suggestion on microsoft.public.dotnet.framework newsgroup instead of LoadWithPartialName!
 			GuiAssembly = Assembly.LoadWithPartialName(SWF_ASSEMBLY);
 			ExternalLibraries.Instance.Add(SWF_ASSEMBLY, GuiAssembly);
 		}
@@ -240,33 +239,8 @@ namespace Uiml.Rendering.SWF
 		///</todo>
 		protected override System.Object LoadAdHocProperties(ref System.Object uiObject, Part part, Style s)
 		{
+			// TODO -> use this method to automatically set properties for specific classes (such as multiline for Text) 
 			return uiObject;
-			/*
-			 // TODO -> use SWF trees and lists
-			if(part.Class == "Tree")
-			{
-				Property p = s.SearchProperty(part.Identifier, "title");
-				string title;
-				if(p!=null)
-					title = (string)p.Value;
-				else	
-					title="";
-				((Gtk.TreeView)uiObject).AppendColumn(title, new CellRendererText(), "text", 0);
-				
-			}
-			else if(part.Class == "List")
-			{
-				Property p = s.SearchProperty(part.Identifier, "title");
-				string title;
-				if(p!=null)
-					title = (string)p.Value;
-				else	
-					title="";
-				((Gtk.TreeView)uiObject).AppendColumn(title, new CellRendererText(), "text", 0);
-				((Gtk.TreeView)uiObject).HeadersVisible = true;
-			}
-			return uiObject;
-			*/
 		}
 	
 		public const int SPACE = 3;
