@@ -1,3 +1,13 @@
+2005-01-12 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/ReplaceTemplateResolver.cs:
+	* Uiml/Style.cs:
+	* Uiml/Template.cs: quick hack to support templates (currently only
+	for style elements and only with the replace resolver)
+	* examples/gtk-sharp/helloworld_template.uiml: example which 
+	demonstrates these changes
+	* examples/gtk-sharp/helloworld_template_data.uiml: the uiml file
+	which contains the template element for the previous example
+	
 2004-09-17 Kris Luyten <kris.luyten@luc.ac.be>
 	* Uiml/FrontEnd/*.cs: rewrote FrontEnd system for uiml.net
 	* Uiml/Rendering/Renderer.cs: moved "ResolveProperty" method from
