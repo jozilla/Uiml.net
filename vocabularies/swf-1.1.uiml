@@ -87,6 +87,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	</d-class>		
 
 	<d-class id="Button" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.Button">
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
@@ -116,11 +117,18 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		</d-property>
 		<!-- events -->
 		<d-property id="clicked" maps-type="event" maps-to="Click">
-			<d-param type="System.Windows.Forms.Button.OnClick"/>
+			<d-param type="System.Windows.Forms.Control.OnClick"/>
+		</d-property>
+		<d-property id="entered" maps-type="event" maps-to="Entered">
+			<d-param type="System.Windows.Forms.Control.OnEnter"/>
+		</d-property>
+		<d-property id="left" maps-type="event" maps-to="Leave">
+			<d-param type="System.Windows.Forms.Control.OnLeave"/>
 		</d-property>
 	</d-class>
 	
 	<d-class id="Label" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.Label">
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="text" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
@@ -151,7 +159,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	</d-class>
 
 	<d-class id="Entry" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TextBox">
-		<d-property id="text" maps-type="getMethod" maps-to="Text"/>
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="text" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
@@ -171,6 +179,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param type="System.Boolean"/>						
 		</d-property>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="readonly" maps-type="setMethod" maps-to="ReadOnly">
 			<d-param type="System.Boolean"/>						
 		</d-property>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
@@ -182,7 +193,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	</d-class>
 
 	<d-class id="Text" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TextBox">
-		<d-property id="text" maps-type="getMethod" maps-to="Text"/>
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="text" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
@@ -202,6 +213,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param type="System.Boolean"/>						
 		</d-property>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="readonly" maps-type="setMethod" maps-to="ReadOnly">
 			<d-param type="System.Boolean"/>						
 		</d-property>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
@@ -220,6 +234,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	</d-class>
 	
 	<d-class id="CheckButton" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.CheckBox">
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
@@ -249,10 +264,21 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		</d-property>
 		<d-property id="checked" maps-type="setMethod" maps-to="Checked">
 			<d-param type="System.Boolean"/>
+		</d-property>
+		<!-- events -->
+		<d-property id="clicked" maps-type="event" maps-to="Click">
+			<d-param type="System.Windows.Forms.Control.OnClick"/>
+		</d-property>
+		<d-property id="entered" maps-type="event" maps-to="Entered">
+			<d-param type="System.Windows.Forms.Control.OnEnter"/>
+		</d-property>
+		<d-property id="left" maps-type="event" maps-to="Leave">
+			<d-param type="System.Windows.Forms.Control.OnLeave"/>
 		</d-property>
 	</d-class>
 
 	<d-class id="RadioButton" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.RadioButton">
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
@@ -283,9 +309,20 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="checked" maps-type="setMethod" maps-to="Checked">
 			<d-param type="System.Boolean"/>
 		</d-property>
+		<!-- events -->
+		<d-property id="clicked" maps-type="event" maps-to="Click">
+			<d-param type="System.Windows.Forms.Control.OnClick"/>
+		</d-property>
+		<d-property id="entered" maps-type="event" maps-to="Entered">
+			<d-param type="System.Windows.Forms.Control.OnEnter"/>
+		</d-property>
+		<d-property id="left" maps-type="event" maps-to="Leave">
+			<d-param type="System.Windows.Forms.Control.OnLeave"/>
+		</d-property>
 	</d-class>
 	
 	<d-class id="ToggleButton" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.CheckBox">
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
@@ -317,10 +354,21 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="appearance" maps-type="setMethod" maps-to="Appearance">
 			<d-param type="System.Windows.Forms.Appearance"/>
 		</d-property>
+		<!-- events -->
+		<d-property id="clicked" maps-type="event" maps-to="Click">
+			<d-param type="System.Windows.Forms.Control.OnClick"/>
+		</d-property>
+		<d-property id="entered" maps-type="event" maps-to="Entered">
+			<d-param type="System.Windows.Forms.Control.OnEnter"/>
+		</d-property>
+		<d-property id="left" maps-type="event" maps-to="Leave">
+			<d-param type="System.Windows.Forms.Control.OnLeave"/>
+		</d-property>
 	</d-class>
 
 	<d-class id="ProgressBar" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.ProgressBar">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
+		<d-property id="text" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
 		<d-property id="position" maps-type="setMethod" maps-to="Location">
@@ -428,6 +476,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
 			<d-param type="System.Int"/>
 		</d-property>
+		<d-property id="entry" return-type="System.String" maps-type="getMethod" maps-to="SelectedItem"/>
+		<!-- events -->
+		<d-property id="select" maps-type="event" maps-to="SelectionChangeCommitted">
+			<d-param type="System.EventHandler"/>
+		</d-property>
 	</d-class>
 
 	<d-class id="ListBox" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.ListBox">
@@ -464,8 +517,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
 			<d-param type="System.Int"/>
 		</d-property>
+		<d-property id="entry" return-type="System.Windows.Forms.ListBox.SelectedObjectCollection" maps-type="getMethod" maps-to="SelectedItems"/>
 		<d-property id="selectionMode" maps-type="setMethod" maps-to="SelectionMode">
 			<d-param type="System.Windows.Forms.SelectionMode"/>
+		</d-property>
+		<!-- events -->
+		<d-property id="select" maps-type="event" maps-to="SelectedValueChanged">
+			<d-param type="System.EventHandler"/>
 		</d-property>
 	</d-class>
 	
@@ -511,6 +569,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		</d-property>
 		<d-property id="showTodayCircle" maps-type="setMethod" maps-to="ShowTodayCircle">
 			<d-param type="System.Boolean"/>
+		</d-property>
+		<d-property id="selectionStart" return-type="System.DateTime" maps-type="getMethod" maps-to="SelectionStart"/>
+		<d-property id="selectionRange" return-type="System.Windows.Forms.SelectionRange" maps-type="getMethod" maps-to="SelectionRange"/>
+		<d-property id="selectionEnd" return-type="System.DataTime" maps-type="getMethod" maps-to="SelectionEnd"/>
+		<!-- events -->
+		<d-property id="daySelected" maps-type="event" maps-to="DateSelected">
+			<d-param type="System.Windows.Forms.DateRangeEventHandler"/>
 		</d-property>
 	</d-class>
 
@@ -608,6 +673,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
 			<d-param type="System.Int"/>
 		</d-property>
+		<d-property id="entry" return-type="System.Windows.Forms.ListView.SelectedListViewItemCollection" maps-type="getMethod" maps-to="SelectedItems"/>
 		<d-property id="multiSelect" maps-type="setMethod" maps-to="MultiSelect">
 			<d-param type="System.Boolean"/>
 		</d-property>
@@ -619,6 +685,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		</d-property>
 		<d-property id="title" maps-type="setMethod" maps-to="Columns.Add">
 			<d-param type="System.Windows.Forms.ColumnHeader"/>
+		</d-property>
+		<!-- events -->
+		<d-property id="select" maps-type="event" maps-to="SelectedIndexChanged">
+			<d-param type="System.EventHandler"/>
 		</d-property>
 	</d-class>
 
@@ -656,6 +726,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
 			<d-param type="System.Int"/>
 		</d-property>
+		<d-property id="selection" return-type="System.Windows.Forms.ListView.SelectedListViewItemCollection" maps-type="getMethod" maps-to="SelectedItems"/>
 		<d-property id="multiSelect" maps-type="setMethod" maps-to="MultiSelect">
 			<d-param type="System.Boolean"/>
 		</d-property>
@@ -763,7 +834,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 	</d-class>	
 
 	<!-- event classes -->
-	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Button.OnClick"/>
+	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnClick"/>
+	<d-class id="ButtonLeft" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnLeave"/>
+	<d-class id="ButtonEntered" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnEnter"/>
+	<!-- TODO: make this event actually work! -->
+	<d-class id="DaySelected" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.DateRangeEventHandler"/>
+	<!-- /TODO -->
+	<d-class id="EntrySelect" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
  </presentation>
  <logic>
    <!-- 
