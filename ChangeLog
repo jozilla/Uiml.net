@@ -1,3 +1,12 @@
+2004-07-19 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
+	* Uiml/Peers/: initial check in of the peers element classes. These
+	define a one-to-one mapping to the UIML structure. They will be used by a
+	datastructure which will eventually replace the XPath expressions we
+	currently depend on for parsing the vocabulary. This is necessary for a port
+	to .NET Compact since this version of the framework does not support XPath.
+	* Uiml/Process.cs: updated enums to improve consistency
+	* Uiml/UimlAttributes.cs: updated enums to improve consistency 
+
 2004-07-16 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Rendering/SWF/SWFRenderer.cs: added dynamic loading of
 	System.Drawing.dll assembly
