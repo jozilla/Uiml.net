@@ -35,9 +35,6 @@ namespace Uiml.Executing.Binding
 		private string m_event;
 		private ArrayList m_args = null;			
 
-		public UimlEventHandlerAttribute()
-		{}
-
 		public UimlEventHandlerAttribute(string eventName)
 		{
 			m_event = eventName;
