@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="container" class="Container">			
+			<part id="h" class="HorizontalScroll"/>			
+			<part id="v" class="VerticalScroll"/>			
+		</part>
+		</structure>
+		<style>
+			<property part-name="container" name="size">300,300</property>
+			<property part-name="h" name="position">20,100</property>
+			<property part-name="h" name="width">130</property>
+			<property part-name="v" name="position">20,20</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
