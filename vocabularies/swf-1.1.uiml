@@ -84,7 +84,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-	</d-class>				 
+	</d-class>		
 
 	<d-class id="Button" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.Button">
 		<d-property id="label" maps-type="setMethod" maps-to="Text">
@@ -174,11 +174,42 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+	</d-class>
+
+	<d-class id="Text" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TextBox">
+		<d-property id="label" maps-type="setMethod" maps-to="Text">
+			<d-param type="System.String"/>
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="Location">
+			<d-param type="System.Drawing.Point"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="Size">
+			<d-param type="System.Drawing.Size"/>		
+		</d-property>
+		<d-property id="width" maps-type="setMethod" maps-to="Width">
+			<d-param type="System.Int"/>		
+		</d-property>
+		<d-property id="height" maps-type="setMethod" maps-to="Height">
+			<d-param type="System.Int"/>		
+		</d-property>
+		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
+			<d-param type="System.Drawing.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+			<d-param type="System.Drawing.Color"/>
+		</d-property>
+		<!-- multiline should be set automatically for a Text class -->
 		<d-property id="multiline" maps-type="setMethod" maps-to="Multiline">
 			<d-param type="System.Boolean"/>
 		</d-property>
 	</d-class>
-
+	
 	<d-class id="CheckButton" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.CheckBox">
 		<d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
@@ -273,6 +304,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+		<!-- appearance should be set automatically for a ToggleButton class -->
 		<d-property id="appearance" maps-type="setMethod" maps-to="Appearance">
 			<d-param type="System.Windows.Forms.CheckBox.Appearance"/>
 		</d-property>
@@ -364,7 +396,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int"/>	
 		</d-property>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
 			<d-param type="System.Int"/>		
@@ -384,7 +416,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 		<d-property id="content" maps-type="setMethod" maps-to="Items.AddRange">
 			<d-param type="System.String[]"/>
 		</d-property>
-		<d-property id="selectedindex" maps-type="setMethod" maps-to="SelectedIndex">
+		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
 			<d-param type="System.Int"/>
 		</d-property>
 	</d-class>
