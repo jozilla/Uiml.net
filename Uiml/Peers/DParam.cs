@@ -1,5 +1,5 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -25,8 +25,10 @@
 */
 
 using System;
+using System.Xml;
+using System.Collections;
 
-namespace Uiml.net.Peers
+namespace Uiml.Peers
 {
 	/// <summary>
 	/// This class represents a &lt;d-param&gt; element in the vocabulary, specified by the following DTD:
@@ -35,21 +37,46 @@ namespace Uiml.net.Peers
 	///           id NMTOKEN #IMPLIED
 	///           type CDATA #IMPLIED&gt;
 	/// </summary>
-	public class DParam : UimlAttributes
+	//public class DParam : IUimlElement
+	public class DParam : Param 
 	{
-		protected string m_identifier;
-		protected string m_type;
+		protected ArrayList m_children = null;
 
-		public string Identifier
+		public DParam()
+		{}
+
+		public DParam(XmlNode n)
 		{
-			get { return m_identifier;}
-			set { m_identifier = value; }
+			Process(n);
 		}
 
-		public string Type
+		public void Process(XmlNode n)
 		{
-			get { return m_type; }
-			set { m_type = value; }
+			base.Process(n);
 		}
+
+		public bool HasChildren
+		{
+			get { return m_children != null; }
+		}
+
+		public void AddChild(object o)
+		{
+			if(m_children == null)
+				m_children = new ArrayList();
+			m_children.Add(o);
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return m_children.GetEnumerator();
+		}
+
+		public ArrayList Children
+		{
+			get { return m_children; }
+		}
+
+		public const string IAM				= "d-param";
 	}
 }

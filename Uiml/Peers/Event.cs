@@ -1,5 +1,5 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -43,7 +43,7 @@ namespace Uiml.Peers
 	///           part-name NMTOKEN #IMPLIED
 	///           part-class NMTOKEN #IMPLIED&gt;
 	/// </summary>
-	public class Event : UimlAttributes, IExecutable, IUimlElement
+	public class Event : UimlAttributes, IUimlElement
 	{
 		private string m_executeType;
 		private System.Object m_ExecuteObject;
@@ -68,7 +68,7 @@ namespace Uiml.Peers
 		{
 			if(n.Name == EVENT)
 			{
-		   	XmlAttributeCollection attr = n.Attributes;
+		   		XmlAttributeCollection attr = n.Attributes;
 				if(attr.GetNamedItem(NAME) != null)
 				 Name = attr.GetNamedItem(NAME).Value;
 				if(attr.GetNamedItem(CLASS) != null)
@@ -125,12 +125,13 @@ namespace Uiml.Peers
 			get { return null; }
 		}
 
-		public const string EVENT = "event";
-		public const string NAME  = "name";
-		public const string CLASS = "class";
-		public const string PARTNAME  = "part-name";
-		public const string PARTCLASS = "part-class";
-
+		public const string EVENT			= "event";
+		public const string NAME			= "name";
+		public const string CLASS			= "class";
+		public const string PARTNAME		= "part-name";
+		public const string PARTCLASS		= "part-class";
+		
+		public const string IAM				= "event";
 	}
 
 }

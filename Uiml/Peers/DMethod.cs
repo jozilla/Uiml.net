@@ -1,5 +1,5 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -25,8 +25,10 @@
 */
 
 using System;
+using System.Xml;
+using System.Collections;
 
-namespace Uiml.net.Peers
+namespace Uiml.Peers
 {
 	/// <summary>
 	/// This class represents a &lt;d-method&gt; element in the vocabulary, specified by the following DTD:
@@ -39,10 +41,97 @@ namespace Uiml.net.Peers
 	///           maps-to CDATA #REQUIRED
 	///           return-type CDATA #IMPLIED&gt;
 	/// </summary>
-	public class DMethod : UimlAttributes
+	public class DMethod : UimlAttributes, IUimlElement
 	{
+		protected ArrayList m_children = null;
+
 		protected string m_mapsTo;
 		protected string m_returnType;
+
+		public DMethod()
+		{}
+
+		public DMethod(XmlNode n)
+		{
+			Process(n);
+		}
+
+		public void Process(XmlNode n)
+		{
+			if(n.Name != IAM)
+				return;
+
+			base.ReadAttributes(n);
+			XmlAttributeCollection attr = n.Attributes;
+			if(attr.GetNamedItem(MAPS_TO) != null)
+				MapsTo = attr.GetNamedItem(MAPS_TO).Value;
+
+			if(attr.GetNamedItem(RETURN_TYPE) != null)
+				ReturnType = attr.GetNamedItem(RETURN_TYPE).Value;
+			
+			ProcessChildren(n.ChildNodes);
+		}
+
+		protected void ProcessChildren(XmlNodeList l)
+		{
+			IEnumerator enumChildren = l.GetEnumerator();
+
+			while(enumChildren.MoveNext())
+			{
+				XmlNode c = (XmlNode) enumChildren.Current;
+				switch(c.Name)
+				{
+					case DParam.IAM:
+						AddChild(new DParam(c));
+						break;
+					case Script.IAM:
+						AddChild(new Script(c));
+						break;
+				}
+			}
+		}
+
+		public bool HasChildren
+		{
+			get { return m_children != null; }
+		}
+
+		public void AddChild(object o)
+		{
+			if(m_children == null)
+				m_children = new ArrayList();
+			m_children.Add(o);
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return m_children.GetEnumerator();
+		}
+
+		public ArrayList Search(Type t)
+		{
+			ArrayList l = new ArrayList();
+
+			if(HasChildren)
+			{
+				IEnumerator e = GetEnumerator();
+
+				while(e.MoveNext())
+				{
+					if(e.Current.GetType().Equals(t))
+					{
+						l.Add(e.Current);
+					}
+				}
+			}
+
+			return l; 						
+		}
+
+		public ArrayList Children
+		{
+			get { return m_children; }
+		}
 
 		public string MapsTo
 		{
@@ -55,5 +144,10 @@ namespace Uiml.net.Peers
 			get { return m_returnType;	}
 			set { m_returnType = value;	}
 		}
+
+		public const string MAPS_TO         = "maps-to";
+		public const string RETURN_TYPE		= "return-type";
+
+		public const string IAM				= "d-method";
 	}
 }

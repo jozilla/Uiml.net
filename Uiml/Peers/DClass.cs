@@ -1,5 +1,5 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -25,6 +25,8 @@
 */
 
 using System;
+using System.Xml;
+using System.Collections;
 
 namespace Uiml.Peers
 {
@@ -40,13 +42,112 @@ namespace Uiml.Peers
 	///	          maps-type CDATA #REQUIRED
 	///	          used-in-tag (event|listener|part) #REQUIRED&gt;
 	/// </summary>
-	public class DClass : UimlAttributes
+	public class DClass : UimlAttributes, IUimlElement
 	{
+		protected ArrayList m_children = null;
+
 		protected string m_mapsTo;
 		protected string m_mapsType;
 		protected string m_usedInTag;
 
 		public enum USED_IN_TAG_VALS { Event, Listener, Part };
+		public const string EVENT = "event";
+		public const string LISTENER = "listener";
+		public const string PART = "part";
+
+		public DClass()
+		{}
+
+		public DClass(XmlNode n)
+		{
+			Process(n);
+		}
+
+		public void Process(XmlNode n)
+		{
+			if(n.Name != IAM)
+				return;
+
+			base.ReadAttributes(n);
+			XmlAttributeCollection attr = n.Attributes;
+			if(attr.GetNamedItem(MAPS_TO) != null)
+				MapsTo = attr.GetNamedItem(MAPS_TO).Value;
+
+			if(attr.GetNamedItem(MAPS_TYPE) != null)
+				MapsType = attr.GetNamedItem(MAPS_TYPE).Value;
+
+			if(attr.GetNamedItem(USED_IN_TAG) != null)
+				UsedInTag = attr.GetNamedItem(USED_IN_TAG).Value;
+			
+			ProcessChildren(n.ChildNodes);
+		}
+
+		protected void ProcessChildren(XmlNodeList l)
+		{
+			IEnumerator enumChildren = l.GetEnumerator();
+
+			while(enumChildren.MoveNext())
+			{
+				XmlNode c = (XmlNode) enumChildren.Current;
+				switch(c.Name)
+				{
+					case DMethod.IAM:
+						AddChild(new DMethod(c));
+						break;
+					case DProperty.IAM:
+						AddChild(new DProperty(c));
+						break;
+					case Event.IAM:
+						AddChild(new Event(c));
+						break;
+						// TODO: implemenent listener
+					case "listener": 
+						break;
+				}
+			}
+		}
+
+		public bool HasChildren
+		{
+			get { return m_children != null; }
+		}
+
+		public void AddChild(object o)
+		{
+			if(m_children == null)
+				m_children = new ArrayList();
+			m_children.Add(o);
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return m_children.GetEnumerator();
+		}
+
+		public ArrayList Search(Type t)
+		{
+			ArrayList l = new ArrayList();
+
+			if(HasChildren)
+			{
+				IEnumerator e = GetEnumerator();
+
+				while(e.MoveNext())
+				{
+					if(e.Current.GetType().Equals(t))
+					{
+						l.Add(e.Current);
+					}
+				}
+			}
+
+			return l; 						
+		}
+
+		public ArrayList Children
+		{
+			get	{ return m_children; }
+		}		
 
 		public string MapsTo
 		{
@@ -65,5 +166,11 @@ namespace Uiml.Peers
 			get { return m_usedInTag; }
 			set { m_usedInTag = value; }
 		}
+
+		public const string MAPS_TO         = "maps-to";
+		public const string MAPS_TYPE		= "maps-type";
+		public const string USED_IN_TAG		= "used-in-tag";
+		
+		public const string IAM				= "d-class";
 	}
 }

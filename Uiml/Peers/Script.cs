@@ -1,5 +1,5 @@
 /*
-  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
+  	 Uiml.Net: a Uiml.Net renderer (http://lumumba.luc.ac.be/kris/research/uiml.net/)
    
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
@@ -32,7 +32,7 @@ TODO:
 	- add support for result capturing, so results from scripts can be used inside the user interface
 */
 
-namespace Uiml.net.Peers
+namespace Uiml.Peers
 {
 	using Uiml;
 	using Uiml.Executing;
@@ -52,8 +52,9 @@ namespace Uiml.net.Peers
 	///             id NMTOKEN #IMPLIED
 	///             type CDATA #IMPLIED&gt;
 	/// </summary>
-	public class Script :  IExecutable, IUimlElement
+	public class Script :  IUimlElement
 	{
+		private string m_identifier;
 		private String m_scriptSource;
 		private String m_type;
 		private bool m_preCompiled = false;
@@ -89,6 +90,10 @@ namespace Uiml.net.Peers
 				return;
 
 			XmlAttributeCollection attr = n.Attributes;
+			
+			if(attr.GetNamedItem(ID) != null)
+				Identifier = attr.GetNamedItem(ID).Value;
+
 			if(attr.GetNamedItem(TYPE) != null)
 				Type = attr.GetNamedItem(TYPE).Value;
 			else
@@ -181,6 +186,12 @@ namespace Uiml.net.Peers
 			get { return null; }
 		}
 
+		public string Identifier
+		{
+			get { return m_identifier; }
+			set { m_identifier = value; }
+		}
+
 		public String Source
 		{
 			get { return m_scriptSource;  }
@@ -199,9 +210,10 @@ namespace Uiml.net.Peers
 		}
 
 		
-		public const string IAM  = "script";
-		public const string TYPE  = "type";
+		public const string ID		= "id";
+		public const string TYPE	= "type";
 
+		public const string IAM		= "script";
 	}
 	
 }
