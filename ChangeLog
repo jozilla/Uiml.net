@@ -1,0 +1,136 @@
+2004-01-29 Kris Luyten <kris.luyten@luc.ac.be>
+	* Embedded scripting is possible now. E.g. one can specify in
+	  the behavior of the interface:
+	  	<call>
+			<script type="Visual Basic">
+				imports System
+				imports System.Collections
+				Public Module ReadTextFile
+					Public Sub Main ()
+						Console.WriteLine ("Visual Basic says: Hello World!")
+					End Sub
+				End Module
+			</script>
+		</call>
+	   This is a first step towards supporting the script in the peer section.
+		The scripts can be written in C#, Visual Basic (and in JScript when Mono
+		supports it). The code will be compiled on-the-fly and stored in memory!
+		This kind of behavior is not included in the UIML specification!!!
+	* Added some classes: Reference, Content. Support for the reference is
+	almost implemented
+	* Changed the toplevel Interface: it now reflects <!ELEMENT interface (structure|style|content|behavior)*>
+	instead of <!ELEMENT interface (structure|style|behavior)> 
+	
+
+
+2004-01-22 Kris Luyten <kris.luyten@luc.ac.be>
+	* Added preliminary support for List and Tree
+	* Uiml/gtk-sharp-1.0.uiml: Added Tree and List mappings
+	* Uiml/Renderering/Renderer.cs: Refactored LoadAdHocProperties for handling
+	backend specific property setters
+	* Uiml/Rendering/GTKsharp/GtkTypeDecoder.cs: Type conversions for
+	Gtk.TreeStore and Gtk.ListStore implemented
+	* Uiml/Rendering/GTKsharp/GtkRenderedInstance.cs: updated so that the
+	custom widget uses the new syntax for type registration 
+
+2004-01-02 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/Rendering/Renderer.cs: Refactored GtkRenderer.cs and WxRenderer.cs:
+	Isolated the general functionality (widget-set independent) into
+	Renderer.cs
+	* Uiml/Rendering/Renderer.cs: added some comments for documentation
+	generation
+	* Uiml/wx-net-1.0.uiml: removed wrong mapping
+
+2003-12-24 Kris Luyten <kris.luyten@luc.ac.be>
+	* Extended Wx.NET backend support
+	* Uiml/Rendering/WXnet/WxRenderer: Simple layout constructions added:
+	(Horizontal and Vertical) BoxSizer. Added CreateLayoutWithParams to support
+	this
+	* Uiml/wx-net-1.0.uiml: extending the vocabulary
+	* Uiml/Style.cs: GetNamedProperties: Fixed order independence of parameters
+
+
+2003-12-18 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/Rendering/WXnet/WxRenderer: CreateWithParams is default
+	widget construction method
+	* Uiml/Rendering/WXnet/WxRenderedInstace: Container is created
+	in WxRenderedInstance constructor
+	* wx.Button works, other widgets to come
+
+2003-12-17 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/Rendering: Added Factory for creating appropriate backend
+	(BackendFactory.cs). 
+	* Uiml/Rendering/GTKsharp/: Initial support for event loggers (not working
+	yet)
+	* Uiml/Rendering/WXnet/: Wx.Net backend getting closer to worjun code
+	* Various Small fixes, better error output, new examples
+	* Initial Support for Vertical and Horizontal Range Indicators
+
+2003-11-17 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/UimlTool.cs: replaces the class Uiml2GtkSharp. It reflects Gtk is
+	just a backend instead of the only possible widget set.
+	* Uiml/ExternalLibraries.cs: Singleton object for managing all loaded
+	assemblies. 
+	* Uiml/Rendering/GTKsharp/GtkRenderer.cs: The GTK# backend renderer now
+	uses the ExternalLibraries class for adding gtk specific assemblies 
+	* Uiml/IUimlElement.cs: replaces and extends IUmlProcessor
+	* Uiml/Logic.cs: duplicates code of vocabulary to allow custom logic
+	sections
+	* Uiml/Executing/Call.cs: cleanups and can use other (custom defined) logic sections 
+	besides the standard vocabulary mappings
+	* examples/calculator.uiml: updated to show of loading assemblies from the
+	command line and to show how mappings from a logic section onto the native
+	functions provided in a dll work.
+	* Many other things have been done. The code is sprinkled with
+	"AttachLogic" methods (will be redesigned to have a more generic approach
+	later on). Better error messages are provided (but still needs some work).
+	
+	
+
+2003-11-09 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/Rendering/GTKsharp/GtkTypeDecoder.cs: Support for converting
+	ArrayList into GLib.List has been added
+	* Uiml/Constant.cs: Implemented support for constant values (and lists)
+	inside properties
+	* Uiml/gtk-sharp-1.0.uiml: added support for Combo widget
+	* Various bugfixes and sometimes better error messages are provided now
+
+2003-11-02 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/Rendering/GtkRenderer: Property values can now be queried
+	* Uiml/Executing/Action: properties and calls are supported now
+	* Uiml/Executing/Param: a property can also be a param
+	* Uiml/Property: Added distinction between property "getters" and "setters"
+	* Most of the above mentioned changes work for string and only if supported
+	by C# Properties on the concrete widgets. More testing is necessary
+	* Uiml/Part: SearchPart supports queries for specific parts
+
+
+2003-10-27 Kris Luyten <kris.luyten@luc.ac.be>
+	* Simple condition-action rules are supported nw
+	* Uiml/Renderering/GTKsharp/GtkEvenLinker.cs: new class for building the behavior subtree
+	* Uiml/Renderering/GTKsharp/GtkEventLink.cs: Adaptor class for calling Condition.Execute without 
+	the Gtk arguments. This class can also be extended to generate more
+	information, e.g. event statistics.
+	* examples/change-the-button* :  example file for simple event handling
+	* Uiml/gtk-sharp-1.0.uiml: added an entry to get the Button click event
+	supported
+
+
+2003-10-19 Kris Luyten <kris.luyten@luc.ac.be>
+	* call element implementation now supports static methods, properties and
+	fields
+	* Besides class types, the d-component specification in the vocabulary now
+	also support structures.
+	* Some more code for the action element has been written, but is far from
+	functional.
+
+2003-10-09 Kris Luyten <kris.luyten@luc.ac.be>
+	* Initial support for call element
+	* logic element is supported by Vocabulary 
+	* Properties can be "lazy" now: their value can be set by call elements
+	* Param elements can be nested 
+	* Various bugfixes
+
+2003-09-26 Kris Luyten <kris.luyten@luc.ac.be>
+	* Initial release
+	* Still lots and lots and lots things to do

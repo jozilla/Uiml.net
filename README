@@ -1,0 +1,14 @@
+You need mono and Gtk# (preferably from CVS).
+You need Wx.Net (preferably from CVS)
+
+HOW TO BUILD THE CODE:
+"make" in Uiml directory.
+
+HOW TO RUN:
+uiml.net.exe -uiml <myuimlfile>
+
+uiml.net.exe -help for a full explanation
+
+
+
+You can find uiml examples on http://lumumba.luc.ac.be/kris/projects/uiml.net/examples/

@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+    User Interface Markup Language (UIML)
+    =====================================
+
+    Developed by:
+    
+        Harmonia, Inc.
+
+    Usage:
+    
+        <?xml version="1.0"?>
+        <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0a Draft//EN"
+        "http://uiml.org/dtds/UIML3_0a.dtd">
+        NOTE: This URL has not yet been activated.
+
+        <uiml>  
+          <head> ...      </head>
+          <template> ...  </template>
+          <peers> ...     </peers>
+          <interface> ... </interface>
+        </uiml>
+
+    Description:
+
+        This DTD corresponds to the UIML 3.0a specification.
+
+    Change History:
+        
+        06 Feb 2002 - J Helms
+                    - Initial Draft and added <repeat> and <iterator>
+        02 July 2002 - K Rodriguez
+                     - Correct syntax errors in param, repeat, and iterator
+    
+
+-->
+
+<!-- ==================== Content Models ======================= -->
+
+<!--
+    'uiml' is the root element of a UIML document.
+-->
+
+<!ELEMENT uiml (head?,(template|interface|peers)*) >
+
+<!--
+    The 'head' element is meant to contain metadata about the UIML
+    document.  You can specify metadata using the meta tag,
+    this is similar to the head/meta from HTML.
+-->
+
+<!ELEMENT head (meta)*>
+<!ELEMENT meta EMPTY>
+<!ATTLIST meta
+          name    NMTOKEN #REQUIRED
+          content CDATA   #REQUIRED>
+
+<!--
+    The 'peers' element contains information that defines
+    how a UIML interface component is mapped to the target platform's
+    rendering technology and to the backend logic.
+-->
+
+<!ELEMENT peers (presentation|logic)*>
+<!ATTLIST peers
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+<!--
+    The 'interface' element describes a user interface in terms of
+    presentation widgets, component structure and behavior specifications.
+-->
+
+<!ELEMENT interface (structure|style|content|behavior)*>
+<!ATTLIST interface
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+<!--
+    The 'template' element enables reuse of UIML elements.
+    When an element appears inside a template element it can
+    sourced by another element with the same tag.
+-->
+
+<!ELEMENT template (behavior|constant|content|d-class|d-component|interface
+                   |logic|part|peers|presentation|property|restructure|rule
+                   |script|structure|style)>
+<!ATTLIST template
+          id NMTOKEN #IMPLIED>
+
+<!-- Peer related elements -->
+
+<!--
+    The 'presentation' element specifies the mapping between 
+    abstract interface parts and platform dependent widgets.
+-->
+
+<!ELEMENT presentation (d-class*)>
+<!ATTLIST presentation
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          base   CDATA                      #REQUIRED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+<!--
+    The 'logic' element specifies the connection between the interface
+    and the backend application, including support for scripting.
+-->
+
+<!ELEMENT logic (d-component*)>
+<!ATTLIST logic
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+<!--
+    The 'd-component' element maps the name used in a <call> element to
+    application logic external to the UIML document (e.g., a class in an
+    object oriented language or a function in a scripting langauge).
+-->
+
+<!ELEMENT d-component (d-method)*>
+<!ATTLIST d-component
+          id       NMTOKEN                    #REQUIRED
+          source   CDATA                      #IMPLIED
+          how      (union|cascade|replace)    "replace"
+          export   (hidden|optional|required) "optional"
+          maps-to  CDATA                      #IMPLIED
+          location CDATA                      #IMPLIED>
+
+<!--
+    Maps class names that can be used for parts and events, as 
+    well as property and event data names, to UI toolkit.
+-->
+
+<!ELEMENT d-class (d-method*, d-property*, event*, listener*)>
+<!ATTLIST d-class
+          id          NMTOKEN                    #REQUIRED
+          source      CDATA                      #IMPLIED
+          how         (union|cascade|replace)    "replace"
+          export      (hidden|optional|required) "optional"
+          used-in-tag (event|listener|part)      #REQUIRED
+          maps-type   (attribute|tag|class)      #REQUIRED
+          maps-to     CDATA                      #REQUIRED>
+
+<!--
+   Maps a property name to methods in UI toolkit that get and 
+   set property’s value.
+-->
+
+<!ELEMENT d-property (d-method*, d-param*)>
+<!ATTLIST d-property
+          id            NMTOKEN                                 #REQUIRED
+          maps-type     (attribute|getMethod|setMethod|method|constructor)  #REQUIRED
+          maps-to       CDATA                                   #REQUIRED
+          return-type   CDATA                                   #IMPLIED>
+
+<!--
+   Maps a method to a callable method or function in the API of 
+   the application logic.
+-->
+
+<!ELEMENT d-method (d-param*, script?)>
+<!ATTLIST d-method
+          id              NMTOKEN                    #REQUIRED
+          source          CDATA                      #IMPLIED
+          how             (union|cascade|replace)    "replace"
+          export          (hidden|optional|required) "optional"
+          maps-to         CDATA                      #REQUIRED
+          return-type     CDATA                      #IMPLIED>
+
+<!--
+    Defines a single formal parameter to a <d-method>.
+-->
+
+<!ELEMENT d-param (#PCDATA)>
+<!ATTLIST d-param
+          id   NMTOKEN #IMPLIED
+          type CDATA   #IMPLIED>
+
+
+<!--
+    The 'script' element contains executable script code. The type 
+    specifies the scripting language (see HTML4.0).
+-->
+
+<!ELEMENT script (#PCDATA)>
+<!ATTLIST script
+          id     NMTOKEN                    #IMPLIED
+          type   NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+
+<!-- Interface related elements -->
+
+<!--
+    The 'structure' element describes the initial organization of the
+    parts that comprise the user interface.
+-->
+
+<!ELEMENT structure (part*)>
+<!ATTLIST structure
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+<!--
+    Specifies a single abstract part of the user interface.
+-->
+
+<!ELEMENT part (style?, content?, behavior?, part*, repeat*)>
+<!ATTLIST part
+          id         NMTOKEN                    #IMPLIED
+          class      NMTOKEN                    #IMPLIED
+          source     CDATA                      #IMPLIED
+          where      (first|last|before|after)  "last"
+          where-part NMTOKEN                    #IMPLIED
+          how        (union|cascade|replace)    "replace"
+          export     (hidden|optional|required) "optional">
+
+<!--
+    A 'repeat' element encapsulates a sub-tree of the overall interface
+    virtual tree to be repeated 0 or more times. Each repeat MUST
+    have one 'iterator' child.
+-->
+
+<!ELEMENT repeat (iterator,part*)>
+
+
+<!--
+    An 'iterator' defines how many times a sub-tree should be repeated 
+    in an interface and serves as a indicator of the current iteration.
+-->
+
+<!ELEMENT iterator (#PCDATA|constant|property|call)*>
+<!ATTLIST iterator
+          id     NMTOKEN                    #REQUIRED>
+    
+
+<!--
+    A 'style' element is composed of one or more 'property' elements,
+    each of which specifies how a particular aspect of an interface
+    component's presentation is to be presented.
+-->
+
+<!ELEMENT style (property*)>
+<!ATTLIST style
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+<!--
+    A 'property' element is typically used to set a specified
+    property for some interface component (or alternatively,
+    a class of interface components), using the element's
+    character data content as the value.  If the 'operation'
+    attribute is given as "get", the element is equivalent to
+    a property-get operation, the value of which may be "returned"
+    as the content for an enclosing 'property' element.
+-->
+
+<!ELEMENT property (#PCDATA|constant|property|reference|call|op|event|iterator)*>
+<!ATTLIST property
+          name        NMTOKEN                    #IMPLIED
+          source      CDATA                      #IMPLIED
+          how         (union|cascade|replace)    "replace"
+          export      (hidden|optional|required) "optional"
+          part-name   NMTOKEN                    #IMPLIED
+          part-class  NMTOKEN                    #IMPLIED
+          event-name  NMTOKEN                    #IMPLIED
+          event-class NMTOKEN                    #IMPLIED
+          call-name   NMTOKEN                    #IMPLIED
+          call-class  NMTOKEN                    #IMPLIED>
+
+
+<!--
+    A 'reference' may be thought of as a property-get operation,
+    where the "property" to be read is a 'constant' element defined
+    in the UIML document's 'content' section.
+-->
+
+<!ELEMENT reference EMPTY>
+<!ATTLIST reference
+          constant-name  NMTOKEN #IMPLIED
+          url-name       NMTOKEN #IMPLIED>
+
+<!--
+    The 'content' element is composed of one or more 'constant'
+    elements, each of which specifies some fixed value.
+-->
+
+<!ELEMENT content (constant*)>
+<!ATTLIST content
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+<!--
+    'constant' elements may be hierarchically structured.
+-->
+
+<!ELEMENT constant (constant*)>
+<!ATTLIST constant
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional"
+          model  CDATA                      #IMPLIED
+          value  CDATA                      #IMPLIED>
+
+<!--
+    The 'behavior' element gives one or more "rule"s that
+    specifies what 'action' is to be taken whenever an associated
+    'condition' becomes TRUE.
+-->
+
+<!ELEMENT behavior (rule*)>
+<!ATTLIST behavior
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+
+<!ELEMENT rule (condition,action)?>
+<!ATTLIST rule
+          id     NMTOKEN                    #IMPLIED
+          source CDATA                      #IMPLIED
+          how    (union|cascade|replace)    "replace"
+          export (hidden|optional|required) "optional">
+
+<!--
+    At the moment, "rule"s may be associated with two types of
+    conditions: (1) whenever some expression is equal to some other
+    expression; and (2) whenever some event is triggered and caught.
+-->
+
+<!ELEMENT condition (equal|event|op)>
+
+<!ELEMENT equal (event,(constant|property|reference|op))>
+
+<!ELEMENT op (constant|property|reference|call|op|event)*>
+<!ATTLIST op
+          name   CDATA                      #REQUIRED>
+
+<!ELEMENT action (((property|call|restructure)*,event?)|(when-true?,when-false?,by-default?))>
+
+<!ELEMENT when-true ((property|call)*,restructure?,op?,equal?,event?)>
+
+<!ELEMENT when-false ((property|call)*,restructure?,op?,equal?,event?)>
+
+<!ELEMENT by-default ((property|call)*,restructure?,op?,equal?,event?)>
+
+<!ELEMENT restructure (template)?>
+<!ATTLIST restructure
+          at-part NMTOKEN                       #IMPLIED
+          how    (union|cascade|replace|delete) "replace"
+          where  (first|last|before|after)      "last"
+          where-part NMTOKEN                    #IMPLIED
+          source  CDATA                         #IMPLIED>
+
+<!ELEMENT call (param*)>
+<!ATTLIST call
+          name  NMTOKEN #IMPLIED
+          class NMTOKEN #IMPLIED>
+
+<!--
+    'event' denotes one of three things:
+    (1) When a child of <condition> or <op>, denotes that when the named
+        event is fired, the condition should be evaluated.
+    (2) When a child of <action>, denotes that the named event should
+        be fired.
+    (3) Inside <d-class>, denotes that the named event can occur for
+        the part class named by the <d-class>.
+-->
+
+<!ELEMENT event EMPTY>
+<!ATTLIST event
+          name       NMTOKEN #IMPLIED
+          class      NMTOKEN #IMPLIED
+          part-name  NMTOKEN #IMPLIED
+          part-class NMTOKEN #IMPLIED>
+
+<!--
+    'param' denotes a single actual parameter to a call-able routine.
+-->
+
+<!ELEMENT param (#PCDATA|property|reference|call|op|event|constant|iterator)*>
+<!ATTLIST param
+          name NMTOKEN #IMPLIED>
+
+<!--
+    'listener' denotes that a name defined with d-class
+    used-in-tag="listener" should be attached as a listener to the
+    d-class which contains this <listener> element.
+-->
+
+<!ELEMENT listener EMPTY>
+<!ATTLIST listener
+          class    NMTOKEN #IMPLIED
+          attacher CDATA   #IMPLIED> 
