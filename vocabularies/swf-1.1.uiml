@@ -420,5 +420,51 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.luc.ac.be/kris/projects/uiml
 			<d-param type="System.Int"/>
 		</d-property>
 	</d-class>
+
+	<d-class id="Calendar"  used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.Calendar">
+		<d-property id="label" maps-type="setMethod" maps-to="Text">
+			<d-param type="System.String"/>
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="Location">
+			<d-param type="System.Drawing.Point"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="Size">
+			<d-param type="System.Drawing.Size"/>		
+		</d-property>
+		<d-property id="width" maps-type="setMethod" maps-to="Width">
+			<d-param type="System.Int"/>	
+		</d-property>
+		<d-property id="height" maps-type="setMethod" maps-to="Height">
+			<d-param type="System.Int"/>		
+		</d-property>
+		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
+			<d-param type="System.Boolean"/>						
+		</d-property>
+		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
+			<d-param type="System.Drawing.Color"/>
+		</d-property>
+		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+			<d-param type="System.Drawing.Color"/>
+		</d-property>
+		<d-property id="maxDate" maps-type="setMethod" maps-to="MaxDate">
+			<d-param type="System.DateTime"/>
+		</d-property>
+		<d-property id="minDate" maps-type="setMethod" maps-to="MinDate">
+			<d-param type="System.DateTime"/>
+		</d-property>
+		<d-property id="showWeekNumbers" maps-type="setMethod" maps-to="ShowWeekNumbers">
+			<d-param type="System.Boolean"/>
+		</d-property>
+		<d-property id="showToday" maps-type="setMethod" maps-to="ShowToday">
+			<d-param type="System.Boolean"/>
+		</d-property>
+		<d-property id="showTodayCircle" maps-type="setMethod" maps-to="ShowTodayCircle">
+			<d-param type="System.Boolean"/>
+		</d-property>
+	</d-class>
+	
  </presentation>
 </uiml>
