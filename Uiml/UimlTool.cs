@@ -196,11 +196,16 @@ namespace Uiml{
 				Console.WriteLine("Rendering UIML document...");
 				Render();
 			}
-				catch(System.IO.FileNotFoundException sif)
-				{
-					Console.WriteLine("Could not read file {0}",FileName);
-					Environment.Exit(-1);
-				}
+			catch(System.IO.FileNotFoundException sif)
+			{
+				Console.WriteLine("Could not read file {0}",FileName);
+				#if !COMPACT
+				Environment.Exit(-1);
+				#else
+				//TODO
+				;
+				#endif
+			}
 		}
 
 		public UimlDocument Document
@@ -230,7 +235,12 @@ namespace Uiml{
 			if(m_renderer == null)
 			{
 				Console.WriteLine("No Vocabulary specified, please update the <peers> section of {0}", FileName);
+				#if !COMPACT
 				Environment.Exit(-1);
+				#else
+				//TODO
+				;
+				#endif
 			}
 			Console.WriteLine("Building ui instance");
 			IRenderedInstance instance = m_renderer.Render(Document);
