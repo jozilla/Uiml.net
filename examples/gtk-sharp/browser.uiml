@@ -9,13 +9,13 @@
 			</part>
 		</structure>
 		<style>
-			<property part-name="browser"  name="website">
-				http://lumumba.luc.ac.be/~kris/projects/uiml.net/
+			<property part-name="browser" name="website">
+				http://research.edm.luc.ac.be/~kris/projects/uiml.net/
 			</property>
 		</style>
 	</interface>
 	<peers>
-		<presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+		<presentation base="/home/kris/projects/uiml.net/vocabularies/gtk-sharp-1.0.uiml"/>
 	</peers>
 </uiml>
 
