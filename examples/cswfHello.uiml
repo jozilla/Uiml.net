@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+		<part id="c_body" class="Container">			
+			<part id="b_hello" class="Button"/>
+		</part>
+		</structure>
+		<style>
+			<property part-name="c_body" name="size">300,300</property>
+			<property part-name="b_hello" name="position">50,50</property>
+			<property part-name="b_hello" name="label">Hello</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="b_hello" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<call name="Console.println">
+						<param>Uiml says hello!</param>
+					</call>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		<presentation base="\My Documents\Personal\cswf-1.0.uiml"/>
+	</peers>
+</uiml>
