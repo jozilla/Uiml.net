@@ -111,7 +111,7 @@ namespace Uiml.Rendering.GTKsharp
 				}
 				Widget w = (Widget)thePart.UiObject;
 
-				string concreteEventName = m_renderer.Voc.MapsOn(e.Class);
+				string concreteEventName = m_renderer.Voc.MapsOnCls(e.Class);
 				/* TODO: eventhandling is done with an ugly hack: while the uiml vocabulary
 				 * describes all sorts of Event delegates, only EventHandler is used internally!
 				 * The Types declared in the vocabulary ar used to facilitate searching the correct mappings!
