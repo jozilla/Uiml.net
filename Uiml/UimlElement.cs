@@ -30,6 +30,15 @@ namespace Uiml{
 		public abstract void Process(XmlNode node);
 
 		public abstract ArrayList Children { get; }
+
+		public void ApplyTemplate()
+		{
+
+		}
+
+		protected void PostProcess(string source, string export)
+		{
+		}
 	}
 }
 

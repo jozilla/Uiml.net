@@ -1,7 +1,7 @@
 /*
     Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
 
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
@@ -67,8 +67,7 @@ namespace Uiml{
 		}
 
 		private void LoadTemplate(string identifier, string path)
-		{
-			/*	
+		{			
 			if(TemplateRepository.Instance.Query(m_identifier)==null)
 			{
 				XmlDocument doc = new XmlDocument();
@@ -79,12 +78,11 @@ namespace Uiml{
 			}
 			else
 				throw new TemplateAlreadyProcessedException(identifier);
-			*/
 		}
 
 		public void Process(XmlNode n)
 		{
-			if(n.Name != TEMPLATE)
+			if(n.Name != IAM)
 				return;
 
 			//need a Factory here to replace the 
@@ -180,7 +178,7 @@ namespace Uiml{
 		}
 
 
-		public const String TEMPLATE = "template";
+		public const String IAM = "template";
 
 	}
 }

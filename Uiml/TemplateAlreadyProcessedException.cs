@@ -1,7 +1,7 @@
 /*
 	 Uiml.Net: a .Net UIML renderer (http://lumumba.luc.ac.be/kris/research/uiml.net)
     
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
@@ -46,7 +46,7 @@ namespace Uiml{
 		{		
 			String resultStr = "Template id \""+ Identifier +"\" already processed";
 			if(m_location!=null)
-				resultStr  += "\n          location=\""+ m_location +"\"";
+				resultStr  += "\n\tlocation=\""+ m_location +"\"";
 			return resultStr;
 		}
 

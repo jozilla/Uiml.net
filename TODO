@@ -1,22 +1,20 @@
-*Lots*and*lots*and*lots*
 
 - Make examples and test test test
-- Write backends for WxWindows, Qt#, SWT and Windows.Forms
 - Write unittests using the nunit package
 - Switch to Nant files instead of Makefiles or premake
-- Port to Microsoft Compact .Net Framework
 
 Bugs:
 =====
 - The properties used in widget constructors can not be specified in the <part>
 section of the widget
-- Some combined properties are not handled correctly, e.g.: 
-<property part-name="blocksize" name="increments">100,500</property>
+- Fix presentation source: selecting a fragment by identifier is not possible
+yet: <peers> 
+		<presentation base="Java_1.3_Harmonia_1.0" source="http://uiml.org/toolkits/Java_1.3_Harmonia_1.0.uiml#vocab"/> 
+		</peers>
 
 Standard compliance:
 ====================
 This section lists the tags that are not yet (fully) supported:
-- meta
 - template
 - restructure
 - condition (single events are supported)
@@ -32,7 +30,6 @@ This section lists the tags that are not yet (fully) supported:
 TODO for Widget support:
 ========================
 	Gtk#:
-		-Check whether all widgets can be dynamically loaded
 		-GtkMozEmbed
 		-GStreamer would be great if its API becomes more stable
 		-Add and test properties
@@ -42,8 +39,6 @@ TODO for Widget support:
 		- Only BoxSizer is supported for layout management 
 	Qt#:
 		everything
-	Windows.Forms:
-		everything
 
 Interaction part:
 =================
@@ -52,16 +47,6 @@ Interaction part:
 
 Experimental topics:
 ====================
-- Write a Peer-generator: a program that loads the libraries
-for a widget set and uses the reflection mechanism to generate
-the vocabulary (*not the logic part*) for the widget set.
-In theory it is possible to write such a vocabulary generator
-and it would be very cool!
-
-- Add an AutoConnect equivalent in uiml.net. 
-See http://lumumba.luc.ac.be/kris/blogger/2003_11_02_archive.html#106772924487273858 for a short
-explanation
-
 - Add support for WSDL, XML-RPC and SOAP in the call element
 
 - Emit code for behavioral conditions?

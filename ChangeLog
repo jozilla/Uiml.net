@@ -1,6 +1,13 @@
+2004-08-25 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/FrontEnd/CompactGUI.cs: A GUI frontend for the SWF backend	on compact .Net.
+	* Uiml/FrontEnd/compactgui.uiml: user interface description for the GUI frontend
+	* Uiml/FrontEnd/UimlTool.cs: moved the command line tool here
+	* Uiml/ExternalLibraries.cs: fixed duplicate key crash
+
 2004-08-25 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Makefile: updated references for compiling GTK# rendering backend
 
+>>>>>>> 1.31
 2004-08-22 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* examples/gtk-sharp/image.uiml: fixed typo in vocabulary location
 
