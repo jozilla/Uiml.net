@@ -90,8 +90,8 @@ namespace Uiml.Rendering.SWF
 				Control c = Render(uiStruct.Top, uiStyle);
 				//Render has filled the part-tree with the concrete object references
 				//to the individual widgets, now attach the behavior			
-				/*GtkEventLinker gll = new GtkEventLinker(this);
-				gll.Link(uiStruct, uiBehavior);*/
+				SWFEventLinker sel = new SWFEventLinker(this);
+				sel.Link(uiStruct, uiBehavior);
 				m_topWindow.Add(c);
 				return m_topWindow;
 			}

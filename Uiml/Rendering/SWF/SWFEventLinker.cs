@@ -18,16 +18,19 @@
 	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+	
+	Author: 
+		Jo Vermeulen
+		jo.vermeulen@student.luc.ac.be
 */
 
-namespace Uiml.Rendering.GTKsharp
+namespace Uiml.Rendering.SWF
 {
 	using System;
 	using System.Collections;
 	using System.Reflection;
 
-	using Gtk;
-	using GtkSharp;
+	using System.Windows.Forms;
 
 	using Uiml;
 	using Uiml.Executing;
@@ -37,14 +40,14 @@ namespace Uiml.Rendering.GTKsharp
 	///<summary>
 	///Links the events from the concrete widget set with the behavior specified in a UIML document
 	///</summary>
-	public class GtkEventLinker
+	public class SWFEventLinker
 	{
 		private Structure m_uiStruct;
 		private Behavior  m_uiBehavior;
 		private IRenderer m_renderer;
 		
 
-		public GtkEventLinker(IRenderer renderer)
+		public SWFEventLinker(IRenderer renderer)
 		{
 			m_renderer = renderer;
 		}
@@ -80,7 +83,7 @@ namespace Uiml.Rendering.GTKsharp
 
 		virtual protected void link(Rule r, Part p)
 		{
-	   	link(r,p,new GtkEventLink(r.Condition, m_renderer));
+	   		link(r, p, new SWFEventLink(r.Condition, m_renderer));
 		}
 
 		///<summary>
@@ -94,7 +97,7 @@ namespace Uiml.Rendering.GTKsharp
 		///<param name="gel">Links the renderer with the condition so appropriate queries can be executed by the condition.
 		///It also allows the action to use the renderer afterwards to change properties in the user interface at runtime</param>
 
-		protected void link(Rule r, Part p, GtkEventLink gel)
+		protected void link(Rule r, Part p, SWFEventLink sel)
 		{
 			IEnumerator eventsEnum = r.Condition.GetEvents().GetEnumerator();			
 			while(eventsEnum.MoveNext())
@@ -109,28 +112,16 @@ namespace Uiml.Rendering.GTKsharp
 						Console.WriteLine("Error in behavior specification: {0} does not exist for event {0}", e.PartName, e.Class);
 					return;
 				}
-				Widget w = (Widget)thePart.UiObject;
+				Control w = (Control)thePart.UiObject;
 
 				string concreteEventName = m_renderer.Voc.MapsOn(e.Class);
-				/* TODO: eventhandling is done with an ugly hack: while the uiml vocabulary
-				 * describes all sorts of Event delegates, only EventHandler is used internally!
-				 * The Types declared in the vocabulary ar used to facilitate searching the correct mappings!
-				//get the event out of the vocabulary!
-				Console.WriteLine("Event links with: {0}", concreteEventName);				
-				Type delegateType = null;//load the concreteEventName delegate dynamically
-				ArrayList loadedAssemblies = m_renderer.LoadedAssemblies;
-				IEnumerator enumAssemblies = loadedAssemblies.GetEnumerator();
-				
-				while((enumAssemblies.MoveNext()) && (delegateType==null))
-				{
-					Assembly a = (Assembly)enumAssemblies.Current;
-					delegateType = a.GetType(concreteEventName, false, true);
-				}
-				*/
+				/* TODO: eventhandling is done with an ugly hack: 
+				 * see the comments in the GTK# event handling classes for details.
+				 */
 				
 					try
 					{
-						Delegate handler = Delegate.CreateDelegate(typeof(EventHandler), gel, EXECUTE_METHOD);
+						Delegate handler = Delegate.CreateDelegate(typeof(EventHandler), sel, EXECUTE_METHOD);
 						string eventId = m_renderer.Voc.GetEventFor(thePart.Class,concreteEventName);
 
 						//Sometimes eventId is a composed event:
