@@ -32,12 +32,6 @@ namespace Uiml.Rendering.SWF
 	using System.Reflection;
 
 	using System.Windows.Forms;
-
-	/*
-	 * TOASK: why is this necessary? We are using System! 
-	 */
-	using Type = System.Type; 
-		
 	using Uiml;
 	using Uiml.Rendering;
 
@@ -50,7 +44,7 @@ namespace Uiml.Rendering.SWF
 
 		public override System.Object[] GetArgs(Property p, Type[] types)
 		{
-			
+		
 			System.Object[] args = new System.Object[types.Length];
 			
 			int i = 0;
@@ -73,7 +67,7 @@ namespace Uiml.Rendering.SWF
 		///</summary>
 		public override System.Object[] GetMultipleArgs(Property[] p, Type[] types)
 		{
-			
+		
 			System.Object[] args= new System.Object[types.Length];
 			
 			int i = 0;
@@ -113,7 +107,7 @@ namespace Uiml.Rendering.SWF
 				return oValue.ToString();
 
 			string[] coords = null;
-
+			// TODO: use reflection to create SWF types!
 			switch(t.FullName)
 			{
 				case "System.Int32":
@@ -136,7 +130,27 @@ namespace Uiml.Rendering.SWF
 				case "System.String":
 					return (System.String)value;
 				case "System.String[]":
-					return DecodeStringArray(oValue);
+					return DecodeStringArray(oValue);				
+				case "System.DateTime":
+					coords = value.Split(new Char[] {'/'});
+					int month = int.Parse(coords[0]);
+					int day = int.Parse(coords[1]);
+					int year = int.Parse(coords[2]);
+					return new DateTime(year, month, day);
+				case "System.Windows.Forms.Appearance":
+					if(value == "Button")
+						return Appearance.Button;
+					else
+						return Appearance.Normal;
+				case "System.Windows.Forms.ScrollBars":
+					if(value == "Both")
+						return ScrollBars.Both;
+					else if(value == "Horizontal")
+						return ScrollBars.Horizontal;
+					else if(value == "Vertical")
+						return ScrollBars.Vertical;
+					else
+						return ScrollBars.None;
 				default:
 					return value;
 			}			
