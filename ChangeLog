@@ -5,7 +5,8 @@
 	* examples/: has examples for all swf widgets now and the big blog example
 	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: added decoders for some SWF enums such
 	as ScrollBars, Appearance, SelectionMode, View, Orientation and TickStyle. Also added decoders for
-	System.DateTime and SWF ListViewItem[] and 	TreeNode[] arrays
+	System.DateTime and SWF ListViewItem[] and 	TreeNode[] arrays. Refactored
+	and cleaned up the code.
 	* Uiml/Constant.cs: added two properties: ChildCount and NoChildren to
 	provide information about a constant's list of children. This was useful for
 	implementing the TreeNode[] decoder
