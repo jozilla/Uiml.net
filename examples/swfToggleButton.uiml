@@ -13,7 +13,7 @@
 			<property part-name="toggle" name="appearance">Button</property>
 			<property part-name="toggle" name="label">Button is up, button goes down</property>
 			<property part-name="toggle" name="width">180</property>
-			<property part-name="container" name="position">20,20</property>
+			<property part-name="toggle" name="position">20,20</property>
 		</style>
 	</interface>
 	<peers>
