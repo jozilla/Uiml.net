@@ -31,6 +31,7 @@
 			<property part-name="tabs" name="size">250,150</property>
 			<property part-name="tabs" name="position">15,15</property>
 			<property part-name="combo1" name="position">50,50</property>			
+			<property part-name="combo1" name="width">150</property>			
 			<property part-name="thelabel" name="position">10,10</property>
 			<property part-name="thelabel" name="width">200</property>
 			<property part-name="spinal" name="position">50,50</property>
