@@ -201,10 +201,15 @@ namespace Uiml.Executing
 					((IExecutable)script).Execute();
 				}				
 				//only return the return value of the last script
-				if(script2 != null)
+				try
+				{
 					return ((Script)script2).ReturnValue;
-				else
-					return null;  // TODO: throw an exception perhaps?
+				}
+				catch(NullReferenceException nre)
+				{
+					Console.WriteLine("No script found while trying to Execute.");
+					Console.WriteLine(nre);
+				}
 			}
 			
 			Type type = null;				
