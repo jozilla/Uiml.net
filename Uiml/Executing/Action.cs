@@ -104,6 +104,12 @@ namespace Uiml.Executing
 			{
 				if(c is Uiml.Executing.Call)
 					((Call)c).Connect(o);
+				if(c is Uiml.Property)
+				{
+					Property p = (Property)c;
+					if(p.Lazy)
+						p.Connect(o);
+				}
 			}
 		}
 

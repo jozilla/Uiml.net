@@ -200,6 +200,18 @@ namespace Uiml.Executing
 			return fi.GetValue(null);
 		}
 
+		public Object ExecuteProperty(string concreteMethodName, Type objectType, object obj)
+		{
+			PropertyInfo pi = objectType.GetProperty(concreteMethodName);
+			return pi.GetValue(obj, null);
+		}
+
+		public Object ExecuteField(string concreteMethodName, Type objectType, object obj)
+		{
+			FieldInfo fi = objectType.GetField(concreteMethodName);
+			return fi.GetValue(obj);
+		}
+
 		///<summary>
 		/// This Execute function needs serious rewriting and debugging :-(, allthough... it seems to work
 		/// It loads a method and its params from this call and executes it at runtime
@@ -275,7 +287,13 @@ namespace Uiml.Executing
 						if(obj.GetType().FullName == concreteObjectName)
 						{
 							type = obj.GetType();
-							result = ExecuteMethod(concreteMethodName, type, obj);
+							try { return ExecuteMethod(concreteMethodName, type, obj); } 
+							catch(NullReferenceException)//method failed, try property
+							{
+									try { return ExecuteProperty(concreteMethodName, type,obj); }
+								  //property failed, try field
+							  catch(NullReferenceException)	{ return ExecuteField(concreteMethodName, type, obj); 	}
+							}
 						}						
 					}
 					

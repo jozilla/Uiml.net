@@ -72,9 +72,9 @@ namespace Uiml{
 			{
 				XmlDocument doc = new XmlDocument();
 				doc.Load(path);
-				//get the node with identifier "identifier"
-				XmlNodeList nl = doc.SelectNodes("//template[@id='" +  identifier + "']");
-				Process(nl[0]);
+				//get the node with identifier "identifier" <- Doesn't work in compact .Net!
+				//XmlNodeList nl = doc.SelectNodes("//template[@id='" +  identifier + "']");
+				//Process(nl[0]);
 			}
 			else
 				throw new TemplateAlreadyProcessedException(identifier);

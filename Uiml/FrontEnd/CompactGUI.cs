@@ -54,12 +54,11 @@ namespace Uiml.FrontEnd{
 				try
 				{
 					//uimlDoc = new UimlDocument(ofd.FileName);
-					XmlDocument doc = new XmlDocument();
-					doc.Load("\\Program Files\\uimldotnetcf\\compactgui.uiml");
+					//XmlDocument doc = new XmlDocument();
+					//doc.Load("\\Program Files\\uimldotnetcf\\compactgui.uiml");
 					//XmlTextReader reader = new XmlTextReader("\\Program Files\\uimldotnetcf\\compactgui.uiml");
-					//doc.Load(@"\My Documents\compactgui.uiml");
-					//doc.Load(reader);
-					uimlDoc = new UimlDocument(doc);
+					//doc.Load(UIMLFILE);
+					uimlDoc = new UimlDocument("\\Program Files\\uimldotnetcf\\compactgui.uiml");
 					//uimlDoc = new UimlDocument(UIMLFILE);
 					renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);
 					instance = renderer.Render(uimlDoc);
@@ -84,7 +83,7 @@ namespace Uiml.FrontEnd{
 		public void OpenUimlFile()
 		{
 			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.Filter = "UIML files (*.uiml)|*.txt|All files (*.*)|*.*" ;
+			ofd.Filter = "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" ;
 			if(ofd.ShowDialog() == DialogResult.OK)
 				uiFileName = ofd.FileName;
 		}

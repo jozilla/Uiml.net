@@ -3,6 +3,8 @@
 	* Uiml/FrontEnd/compactgui.uiml: user interface description for the GUI frontend
 	* Uiml/FrontEnd/UimlTool.cs: moved the command line tool here
 	* Uiml/ExternalLibraries.cs: fixed duplicate key crash
+	* Uiml/Executing/Call.cs: ExecuteField and ExecuteProperty work also with object
+	instance now
 
 2004-08-25 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Makefile: updated references for compiling GTK# rendering backend

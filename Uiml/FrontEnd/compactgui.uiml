@@ -16,8 +16,8 @@
 	    <property part-name="uimlfileOpen" name="position">10,10</property>
 	    <property part-name="uimlfileOpen" name="size">150,23</property>
 	    <property part-name="uimlfileName" name="position">10,34</property>
-	    <property part-name="uimlfileName" name="size">150,23</property>
-	    <property part-name="render" name="position">10,58</property>
+	    <property part-name="uimlfileName" name="size">350,43</property>
+	    <property part-name="render" name="position">10,78</property>
 	    <property part-name="render" name="size">150,23</property>
 	    <property part-name="render" name="label">Engage Magic!</property>
 	</style>

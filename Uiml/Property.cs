@@ -180,6 +180,12 @@ namespace Uiml{
 			return iPropSetter.GetValue(p, this);
 		}
 
+		public void Connect(object o)
+		{
+			if(m_subprop is Uiml.Executing.Call)
+				((Uiml.Executing.Call)m_subprop).Connect(o);
+		}
+
 		///<summary>
 		/// Resolves the sub properties to get the value for this property
 		///</summary>
