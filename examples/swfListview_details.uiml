@@ -15,7 +15,7 @@
 			<property part-name="bandsList" name="view">Details</property>
 			<property part-name="bandsList" name="title">Band Name</property>
 			<property part-name="bandsList" name="content">
-		  		<constant model="list">
+	  		<constant model="list">
 					<constant value="dEUS"/>
 					<constant value="Novastar"/>
 					<constant value="Hooverphonic"/>

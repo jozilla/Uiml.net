@@ -10,7 +10,7 @@
 		</structure>
 		<style>
 			<property part-name="Container1" name="size">300,300</property>
-			<property part-name="Loading" name="label">Loading .NET assemblies</property>
+			<property part-name="Loading" name="text">Loading .NET assemblies</property>
 			<property part-name="Loading" name="position">50,5</property>
 			<property part-name="Loading" name="width">200</property>
 			<property part-name="Progress" name="position">50,50</property>

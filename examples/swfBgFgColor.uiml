@@ -15,11 +15,11 @@
 			<property part-name="Container1" name="background">248,238,199</property>
 			<property part-name="Container1" name="foreground">255,0,0</property>
 			<property part-name="Button1" name="label">Press Me</property>
-			<property part-name="Label1" name="label">It's alive, alive!</property>			
+			<property part-name="Label1" name="text">It's alive, alive!</property>			
 			<property part-name="Label1" name="position">50,50</property>
 			<property part-name="Button2" name="label">Kick Me</property>
 			<property part-name="Button2" name="position">150,150</property>
-			<property part-name="Label2" name="label">Zed is dead.</property>			
+			<property part-name="Label2" name="text">Zed is dead.</property>			
 			<property part-name="Label2" name="position">100,100</property>			
 		</style>
 	</interface>

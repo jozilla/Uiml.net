@@ -13,7 +13,7 @@
 			<property part-name="bandsList" name="position">20,20</property>
 			<property part-name="bandsList" name="size">200,200</property>
 			<property part-name="bandsList" name="content">
-		  		<constant model="tree">
+		  	<constant model="tree">
 					<constant value="Alternative">
 						<constant value="dEUS"/>
 						<constant value="Novastar"/>

@@ -11,7 +11,7 @@
 		<style>
 			<property part-name="Container1" name="size">300,300</property>
 			<property part-name="Container1" name="background">255,255,255</property>
-			<property part-name="Rocks" name="label">Mono rocks!</property>
+			<property part-name="Rocks" name="text">Mono rocks!</property>
 			<property part-name="Rocks" name="position">100,5</property>
 			<property part-name="Plaatje" name="position">50,50</property>
 			<property part-name="Plaatje" name="size">184,79</property>

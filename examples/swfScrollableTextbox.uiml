@@ -4,17 +4,17 @@
 	<interface>
 		<structure>
 		<part id="con" class="Container">			
-			<part id="text" class="Text"/>			
+			<part id="output" class="Text"/>			
 		</part>
 		</structure>
 		<style>
 			<property part-name="con" name="size">400,400</property>
 			<!-- multiline should be set automatically for a Text class -->
-			<property part-name="text" name="multiline">true</property>
-			<property part-name="text" name="position">20,20</property>
-			<property part-name="text" name="label">Fill me in on the very, very, very, very long, extremely boring details. And do it again, and again, and again and again. Pheww, this is really boring. But we'll just continue to whine about the advantages of supporting scrollbars. Scrollbars can skip big chunks of boring text!</property>
-			<property part-name="text" name="scrollbars">Both</property>
-			<property part-name="text" name="size">200,85</property>
+			<property part-name="output" name="multiline">true</property>
+			<property part-name="output" name="position">20,20</property>
+			<property part-name="output" name="text">Fill me in on the very, very, very, very long, extremely boring details. And do it again, and again, and again and again. Pheww, this is really boring. But we'll just continue to whine about the advantages of supporting scrollbars. Scrollbars can skip big chunks of boring text!</property>
+			<property part-name="output" name="scrollbars">Both</property>
+			<property part-name="output" name="size">200,85</property>
 		</style>
 	</interface>
 	<peers>

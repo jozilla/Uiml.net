@@ -4,13 +4,13 @@
 	<interface>
 		<structure>
 		<part id="Frame1" class="Frame">			
-			<part id="Combootje" class="Combo"/>
+			<part id="Com" class="Combo"/>
 		</part>
 		</structure>
 		<style>
 			<property part-name="Frame1" name="label">Belgian Bands</property>
-			<property part-name="Combootje" name="position">50, 50</property>
-			<property part-name="Combootje" name="content">
+			<property part-name="Com" name="position">50, 50</property>
+			<property part-name="Com" name="content">
 		  		<constant model="list">
 					<constant value="dEUS"/>
 					<constant value="Nemo"/>
@@ -19,6 +19,7 @@
 					<constant value="Star Industry"/>
 				</constant>
 		  </property>
+			<property part-name="Com" name="selectedIndex">0</property>
 		</style>
 	</interface>
 	<peers>
