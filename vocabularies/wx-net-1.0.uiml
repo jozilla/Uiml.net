@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<!--
+	 Uiml.net: a .Net Uiml renderer (http://lumumba.luc.ac.be/kris/research/uiml2gtk)
+    
+	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
+								Limburgs Universitair Centrum
+
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of	the License, or (at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<uiml>
+ <presentation base="wx-net-1.0" id="WX">
+	<d-class id="Button" used-in-tag="part" maps-type="class" maps-to="wx.Button">
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.Button">
+			<d-param id="identifier" type="System.Int32"/>
+			<d-param id="label"      type="System.String"/>
+	<!--		<d-param id="position"   type="System.Drawing.Point"/> -->
+		</d-property>
+		<d-property id="identifier" maps-type="setMethod" maps-to="Identifier">
+			<d-param type="System.Int32"/>
+		</d-property>
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="System.String"/>
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="Position">
+			<d-param type="System.Drawing.Point"/>
+		</d-property>
+	</d-class>
+	<d-class id="Entry" used-in-tag="part" maps-type="class" maps-to="wx.TextCtrl">
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.TextCtrl">
+			<d-param id="identifier" type="System.Int32"/>
+			<d-param id="label"      type="System.String"/>
+		</d-property>
+		<d-property id="identifier" maps-type="setMethod" maps-to="Identifier">
+			<d-param type="System.Int32"/>
+		</d-property>
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="System.String"/>
+		</d-property>	
+	</d-class>
+	<d-class id="BoxSizer" used-in-tag="part" maps-type="class" maps-to="wx.BoxSizer">
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.BoxSizer">
+			<d-param id="orientation" type="System.Int32"/>
+		</d-property>
+		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
+			<d-param type="System.Int32"/>
+		</d-property>
+	</d-class>
+	<d-class id="HBox" used-in-tag="part" maps-type="class" maps-to="wx.BoxSizer">
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.BoxSizer">
+			<d-param id="orientation" type="System.Int32"/>
+		</d-property>
+		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
+			<d-param type="System.Int32"/>
+		</d-property>
+	</d-class>
+	<d-class id="VBox" used-in-tag="part" maps-type="class" maps-to="wx.BoxSizer">
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.BoxSizer">
+			<d-param id="orientation" type="System.Int32"/>
+		</d-property>
+		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
+			<d-param type="System.Int32"/>
+		</d-property>
+	</d-class>
+	
+	<d-class id="Panel" used-in-tag="part" maps-type="class" maps-to="wx.Panel">	
+	</d-class>
+	<d-class id="CheckButton" used-in-tag="part" maps-type="class" maps-to="wx.CheckBox">
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.CheckBox">
+			<d-param id="identifier" type="System.Int32"/>
+			<d-param id="label"      type="System.String"/>
+		</d-property>
+		<d-property id="identifier" maps-type="setMethod" maps-to="Identifier">
+			<d-param type="System.Int32"/>
+		</d-property>
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="System.String"/>
+		</d-property>	
+	</d-class>
+	<d-class id="RadioButton" used-in-tag="part" maps-type="class" maps-to="wx.RadioButton">
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.RadioButton">
+			<d-param id="identifier" type="System.Int32"/>
+			<d-param id="label"      type="System.String"/>
+		</d-property>
+		<d-property id="identifier" maps-type="setMethod" maps-to="Identifier">
+			<d-param type="System.Int32"/>
+		</d-property>
+		<d-property id="label" maps-type="setMethod" maps-to="Label">
+			<d-param type="System.String"/>
+		</d-property>	
+	</d-class>
+
+	<d-class id="Calendar" used-in-tag="part" maps-type="class" maps-to="wx.CalendarCtrl"> 
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.CalendarCtrl">
+			<d-param id="identifier" type="System.Int32"/>
+		</d-property>
+		<d-property id="identifier" maps-type="setMethod" maps-to="Identifier">
+			<d-param type="System.Int32"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="" used-in-tag="part" maps-type="class" maps-to="wx.FontDialog"> 
+		<d-property id="constructor" maps-type="constructor" maps-to="wx.CalendarCtrl">
+			<d-param id="identifier" type="System.Int32"/>
+		</d-property>
+		<d-property id="identifier" maps-type="setMethod" maps-to="Identifier">
+			<d-param type="System.Int32"/>
+		</d-property>
+	</d-class>
+
+
+	<d-class id="ColorSelection" used-in-tag="part" maps-type="class" maps-to="wx.ColourDialog"> 
+		<d-property id="identifier" maps-type="setMethod" maps-to="Identifier">
+			<d-param type="System.Int32"/>
+		</d-property>
+	</d-class>
+ </presentation>
+</uiml>
