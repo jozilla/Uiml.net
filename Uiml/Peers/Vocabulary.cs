@@ -216,12 +216,28 @@ namespace Uiml.Peers
 
 		protected void AddDClass(string abstractName, DClass cls)
 		{	
-			m_dictDCls.Add(abstractName, cls);
+			try
+			{
+				m_dictDCls.Add(abstractName, cls);
+			} 
+			catch(ArgumentException ae) 
+			{
+				Console.WriteLine("Duplicate class entry: <{0}>", abstractName);
+				Console.WriteLine("Please check the <d-class> elements in the <presentation> structure!");
+			} 
 		}
 
 		protected void AddDComponent(string abstractName, DComponent cmp)
 		{
-			m_dictDCmp.Add(abstractName, cmp);
+			try
+			{
+				m_dictDCmp.Add(abstractName, cmp);
+			}
+			catch(ArgumentException ae)
+			{
+				Console.WriteLine("Duplicate component entry: <{0}>", abstractName);
+				Console.WriteLine("Please check the <d-component> elements in the <logic> structure!");
+			}
 		}
 
 		protected DClass FindDClass(string abstractName)
