@@ -11,6 +11,12 @@
 	* Uiml/Executing/: some small changes to Call.cs to improve exception handling
 	* Uiml/Rendering/: updated the Renderer and IRenderer classes to use the new
 	vocabulary. Changed all method calls on the vocabulary to the correct ones.
+	* First check in of new Compact SWF rendering backend:
+	* Uiml/Rendering/CompactSWF/: rendering backend classes
+	* vocabularies/cswf-1.0.uiml: CompactSWF vocabulary
+	* examples/cswfHello.uiml: CompactSWF version of swfHello.uiml
+	* examples/cswfCalculator.uiml: CompactSWF version of the calculator
+	example
 
 2004-07-19 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Uiml/Peers/: initial check in of the peers element classes. These
