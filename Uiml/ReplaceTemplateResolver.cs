@@ -20,6 +20,9 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+using System;
+using System.Collections;
+
 namespace Uiml{
 
 
@@ -36,6 +39,15 @@ namespace Uiml{
 		{
 			//to do: replace all existing children of placeholder with the elemens
 			//from template t
+
+			// quick hack...
+			// 
+			// it was not possible to delete children because style
+			// elements did not initialize the Children property. The general class
+			// structure must be improved in order to make this method implementation
+			// general!
+
+			((Style)placeholder).Change((Style)t.Top);
 			return placeholder;
 		}
 	}

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<uiml>
+	<template id="hello_style">
+		<style>
+			<property part-name="Frame" name="label">uiml.net says</property>
+			<property part-name="l" name="label">Hello World!</property>
+		</style>
+	</template>
+</uiml>

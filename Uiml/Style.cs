@@ -43,6 +43,17 @@ namespace Uiml{
 			Process(n);
 		}
 
+		/// <summary>
+		/// Useful for applying a template in the same instance
+		/// as the one that should be changed.
+		/// </summary>
+		public void Change(Style other)
+		{
+			m_properties = other.m_properties;
+			m_identifier = other.m_identifier;
+			m_source = other.m_source;
+		}
+		
 		public string Identifier
 		{
 			get { return m_identifier; }
@@ -59,9 +70,30 @@ namespace Uiml{
 		{
 			if(n.Name != STYLE)
 				return;
+
+			// process attributes
+			foreach (XmlAttribute a in n.Attributes)
+			{
+				if (a.Name == "source")
+				{
+					Source = a.Value;
+					break;
+				}
+			}
+
 			XmlNodeList xnl = n.ChildNodes;
 			for(int i=0; i<xnl.Count; i++)
 				m_properties.Add(new Property(xnl[i]));
+			
+			if (Source != null)
+				ApplyTemplate();
+		}
+
+		public void ApplyTemplate()
+		{
+			Template t = new Template(new Uri(Source));
+			ITemplateResolver rtr = Template.GetResolver("replace");
+			rtr.Resolve(t, this);
 		}
 
 		public IEnumerator GetNamedProperties(string identifier)
@@ -148,6 +180,7 @@ namespace Uiml{
 			get { return null; }
 		}
 
-		public const string STYLE = "style";
+		public const string STYLE = "style"; // deprecated
+		public const string IAM = "style";
 	}
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="Frame">
+				<part class="Button" id="l"/>
+			</part>
+		</structure>
+		<style source="file:///home/jo/Projects/uiml.net/examples/gtk-sharp/helloworld_template_data.uiml#hello_style" />
+	</interface>
+	<peers>
+		<presentation base="file:///home/jo/Projects/uiml.net/vocabularies/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>

@@ -57,8 +57,11 @@ namespace Uiml{
 		public Template(Uri turi)
 		{
 			m_identifier = turi.Fragment;
+			if (m_identifier != "" && m_identifier[0] == '#')
+				m_identifier = m_identifier.Substring(1); // cut off '#'
+				
 			//split the identifier and the actual uri
-			LoadTemplate(turi.Fragment, turi.GetLeftPart(UriPartial.Path));
+			LoadTemplate(m_identifier, turi.GetLeftPart(UriPartial.Path));
 		}
 
 		public Template(XmlNode n) : this()
@@ -76,7 +79,7 @@ namespace Uiml{
 				//and process it accordingly
 				XmlNode n = SearchTemplate(doc, tidentifier);
 				if(n==null)
-					Console.WriteLine("Template {1} could not be found in {2}",tidentifier, path);
+					Console.WriteLine("Template {0} could not be found in {1}",tidentifier, path);
 				else
 					Process(n);
 			}
@@ -163,6 +166,9 @@ namespace Uiml{
 					break;
 				case Structure.IAM:
 					m_top = new Structure(xnl[0]);
+					break;
+				case Style.IAM:
+					m_top = new Style(xnl[0]);
 					break;
 				default:
 					Console.WriteLine("Templates can not contain \"{0}\" ", xnl[0].Name);
