@@ -95,7 +95,7 @@ namespace Uiml{
 		///<summary>
 		///For now, only a single vocabulary peer will be taken into account
 		///</summary>
-		public String VocabularyID
+		public String Vocabulary
 		{
 			get 
 			{
@@ -105,20 +105,6 @@ namespace Uiml{
 					return ((Peer)enumPeers.Current).GetVocabulary().Identifier;
 				}
 				return "";
-			}
-		}
-
-		public Peers.Vocabulary Vocabulary
-		{
-			get 
-			{ 
-				IEnumerator enumPeers = Peers;
-				while(enumPeers.MoveNext())
-				{
-					return ((Peer)enumPeers.Current).GetVocabulary();
-				}
-
-				return null;
 			}
 		}
 
