@@ -95,7 +95,7 @@ namespace Uiml{
 		///<summary>
 		///For now, only a single vocabulary peer will be taken into account
 		///</summary>
-		public String Vocabulary
+		public String VocabularyID
 		{
 			get 
 			{
@@ -108,10 +108,24 @@ namespace Uiml{
 			}
 		}
 
+		public Peers.Vocabulary Vocabulary
+		{
+			get 
+			{ 
+				IEnumerator enumPeers = Peers;
+				while(enumPeers.MoveNext())
+				{
+					return ((Peer)enumPeers.Current).GetVocabulary();
+				}
+
+				return null;
+			}
+		}
+
 		public void Connect(Object o)
 		{
 			//TODO: support multiple structures
-			((Structure)UInterface.UStructure[0]).Top.Connect(o);
+			((Structure)UInterface.UStructure[0]).Top.Connect(o, this);
 		}
 
 		public void Connect(Object o, String identifier)
@@ -119,7 +133,7 @@ namespace Uiml{
 			//TODO: support multiple structures
 			Part p = ((Structure)UInterface.UStructure[0]).SearchPart(identifier);
 			if(p!=null)
-				p.Connect(o);
+				p.Connect(o, this);
 		}
 
 		/**
