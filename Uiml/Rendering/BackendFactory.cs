@@ -48,7 +48,6 @@ namespace Uiml.Rendering
 		///<summary>
 		/// Creates a renderer for a given vocabulary name
 		///</summary>
-		///TODO: replace by more generic code!
 		public IRenderer CreateRenderer(String name)
 		{
 
@@ -112,8 +111,8 @@ namespace Uiml.Rendering
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine(e);
-					//do nothing here: an exception means the backend renderer is not available
+					// do nothing here: an exception means the backend renderer specified 
+					// in assemblies[i] is not available
 				}
 			}
 			return null;

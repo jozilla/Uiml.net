@@ -46,7 +46,15 @@ namespace Uiml.Rendering.SWF
 	
 		public void ShowIt()
 		{
-			Application.Run(this);			
+			try
+			{
+				Application.Run(this);
+			}
+			catch(System.Exception e)
+			{
+				//Application thread is already running...
+				this.ShowDialog(null);
+			}
 		}
 		
 		public void Add(Control c) 

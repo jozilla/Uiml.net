@@ -1,7 +1,7 @@
 /*
     Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
 
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
@@ -108,6 +108,7 @@ namespace Uiml.FrontEnd{
 			}
 				catch(Exception e)
 				{
+				Console.WriteLine(e);
 				}
 		}
 	}

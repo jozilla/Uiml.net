@@ -1,7 +1,7 @@
 /*
     Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
 
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
+	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
 	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
 								Limburgs Universitair Centrum
 
@@ -40,7 +40,8 @@ namespace Uiml.FrontEnd{
 	
 	///<summary>
 	/// Main application class; serves as a comand-line front-end for
-	/// the uiml.net library
+	/// the uiml.net library. A graphical frontend for uiml.net will be automatically
+	/// chosen.
 	///</summary>
 	public class UimlTool : UimlFrontEnd
 	{
