@@ -45,7 +45,11 @@ namespace Uiml.Rendering.SWF
 		public SWFRenderer()
 		{ 
 			Decoder = new SWFTypeDecoder();
+
+			// TODO: use suggestion on microsoft.public.dotnet.framework newsgroup instead of LoadWithPartialName!
+
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
+			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, Assembly.LoadWithPartialName(DRAWING_ASSEMBLY));
 			/*
 			string sysRoot = Environment.GetEnvironmentVariable("systemroot");
 			string version = System.Environment.Version.ToString();
@@ -56,7 +60,6 @@ namespace Uiml.Rendering.SWF
 			GuiAssembly = Assembly.LoadFrom(assemblyName);			
 			*/
 
-			// TODO: use suggestion on microsoft.public.dotnet.framework newsgroup instead of LoadWithPartialName!
 			GuiAssembly = Assembly.LoadWithPartialName(SWF_ASSEMBLY);
 			ExternalLibraries.Instance.Add(SWF_ASSEMBLY, GuiAssembly);
 		}
@@ -244,8 +247,9 @@ namespace Uiml.Rendering.SWF
 		}
 	
 		public const int SPACE = 3;
-		public const string SYSTEM_ASSEMBLY = "mscorlib"; 
-		public const string SWF_ASSEMBLY    = "System.Windows.Forms";
+		public const string SYSTEM_ASSEMBLY		= "mscorlib"; 
+		public const string SWF_ASSEMBLY		= "System.Windows.Forms";
+		public const string DRAWING_ASSEMBLY	= "System.Drawing";
 		
 		public const int MAX_ASSSEMBLIES = 2;
 
