@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="container" class="Container">			
+			<part id="toggle" class="ToggleButton"/>			
+		</part>
+		</structure>
+		<style>
+			<property part-name="container" name="size">300,300</property>
+			<!-- appearance should be set automatically for a ToggleButton class -->
+			<property part-name="toggle" name="appearance">Button</property>
+			<property part-name="toggle" name="label">Button is up, button goes down</property>
+			<property part-name="toggle" name="width">180</property>
+			<property part-name="container" name="position">20,20</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
