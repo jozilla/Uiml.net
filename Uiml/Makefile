@@ -6,7 +6,7 @@ DEBUG=-debug+ -warn:2
 #LIBS=-gtk -L/usr/local/lib/
 
 Uiml2GtkSharp.exe :
-	mcs ${DEBUG} ${LIBS} -o uiml.net.exe *.cs Rendering/*.cs Rendering/GTKsharp/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
+	mcs ${DEBUG} ${LIBS} -o uiml.net.exe *.cs Rendering/*.cs Rendering/GTKsharp/*.cs Executing/*.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs
 #	cscc -o uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
 
 

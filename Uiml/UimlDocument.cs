@@ -32,13 +32,33 @@ namespace Uiml{
 		private ArrayList m_peers;
 		private Head m_head;
 
+		public UimlDocument(String fName)
+		{
+			try
+			{
+				XmlDocument doc = new XmlDocument();
+				doc.Load(fName);
+				Load(doc);
+			}
+				catch(Exception e)
+				{
+					Console.WriteLine("Error loading {0} ({1})", fName, e);
+				}
+		}
+
 		public UimlDocument(XmlNode uimlTopNode){
+			Load(uimlTopNode);
+		}
+
+		private void Load(XmlNode uimlTopNode)
+		{
 			m_peers = new ArrayList();
 			Process(uimlTopNode);
 			m_interface.AttachPeers(m_peers);
 		}
 
-		public void Process(XmlNode n){
+		public void Process(XmlNode n)
+		{
 			if(n.Name == Head.IAM)
 			//if(n.Name == ""interface")
 			//{ }

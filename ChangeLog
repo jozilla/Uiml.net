@@ -1,3 +1,6 @@
+2004-08-04 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/UimlDocument.cs: added UimlDocument(fileName) constructor
+
 2004-08-03 Jo Vermeulen <jo.vermeulen@student.luc.ac.be>
 	* Big check in of connectivity code
 	* Uiml/Rendering/SWF/:
