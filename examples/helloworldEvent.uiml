@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<uiml>
+	<interface>
+		<structure>
+			<part class="Frame" id="Frame">
+				<part class="Button" id="l"/>
+			</part>
+		</structure>
+		<style>
+			<property part-name="Frame" name="label">uiml.net says:</property>
+			<property part-name="l" name="label">Hello World!</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="l" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<call name="Console.println">
+						<param>
+							<call name="String.concatenate">
+								<param><property part-name="Frame" name="label"/></param>
+								<param><property part-name="l" name="label"/></param>
+							</call>
+						</param>
+					</call>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
+	</peers>
+</uiml>
+
