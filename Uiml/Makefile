@@ -1,6 +1,7 @@
 CLASSPATH=.:../../..
 OPTIONS=-g
-LIBS=-L /usr/local/lib/mono/gtk-sharp/ /r:gtk-sharp.dll /r:gdk-sharp.dll /r:glib-sharp.dll /r:pango-sharp.dll 
+#LIBS=-L /usr/local/lib/mono/gtk-sharp/ /r:gtk-sharp.dll /r:gdk-sharp.dll /r:glib-sharp.dll /r:pango-sharp.dll 
+LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
 
 Uiml2GtkSharp.exe : Part.cs Peer.cs Presentation.cs IUimlElement.cs Interface.cs Structure.cs Behavior.cs\
