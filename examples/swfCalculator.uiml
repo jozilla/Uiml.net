@@ -1,0 +1,450 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 3.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>	
+			<part class="Container" id="body">
+		 		<part class="Entry" id="output"/>
+				<part class="Button" id="ac">
+					<property name="background">red</property>
+				</part>
+				<part class="Button" id="b1"/>
+				<part class="Button" id="b2"/>
+				<part class="Button" id="b3"/>
+				<part class="Button" id="b4"/>
+				<part class="Button" id="b5"/>
+				<part class="Button" id="b6"/>
+				<part class="Button" id="b7"/>
+				<part class="Button" id="b8"/>
+				<part class="Button" id="b9"/>
+				<part class="Button" id="b0"/>
+				<part class="Button" id="bpoint"/>
+				<part class="Button" id="bplusminus"/>
+				<part class="Button" id="bmin"/>
+				<part class="Button" id="bplus"/>
+				<part class="Button" id="bmul"/>
+				<part class="Button" id="bdiv"/>
+				<part class="Button" id="bsol"/>
+				<part class="Button" id="sin"/>						
+				<part class="Button" id="cos"/>
+				<part class="Button" id="tan"/>
+				<part class="Button" id="pi"/>
+				<part class="Button" id="e"/>
+			</part>
+		</structure>
+		<style>
+			<!-- Absolute positioning -->
+			<property part-name="body" name="position">8,16</property>
+			
+			<property part-name="output" name="position">27,16</property>
+			<property part-name="b0" name="position">27,152</property>
+			<property part-name="b1" name="position">27,56</property>
+			<property part-name="b2" name="position">67,56</property>
+			<property part-name="b3" name="position">107,56</property>
+			<property part-name="b4" name="position">27,88</property>
+			<property part-name="b5" name="position">67,88</property>
+			<property part-name="b6" name="position">107,88</property>
+			<property part-name="b7" name="position">27,120</property>
+			<property part-name="b8" name="position">67,120</property>
+			<property part-name="b9" name="position">107,120</property>
+			<property part-name="bpoint" name="position">67,152</property>
+			<property part-name="bplusminus" name="position">107,152</property>
+			<property part-name="bplus" name="position">155,83</property>
+			<property part-name="bmin" name="position">155,59</property>
+			<property part-name="bmul" name="position">155,107</property>
+			<property part-name="bdiv" name="position">155,131</property>
+			<property part-name="bsol" name="position">155,155</property>
+			<property part-name="ac" name="position">216,16</property>
+			<property part-name="sin" name="position">219,59</property>
+			<property part-name="cos" name="position">219,83</property>
+			<property part-name="tan" name="position">219,107</property>
+			<property part-name="pi" name="position">219,131</property>
+			<property part-name="e" name="position">219,155</property>
+			<!-- /Absolute positioning -->
+			
+			<!-- Absolute scaling -->
+			<property part-name="body" name="size">304,200</property>
+			
+			<property part-name="output" name="size">176,20</property>
+			<property part-name="b0" name="size">32,23</property>
+			<property part-name="b1" name="size">32,23</property>
+			<property part-name="b2" name="size">32,23</property>
+			<property part-name="b3" name="size">32,23</property>
+			<property part-name="b4" name="size">32,23</property>
+			<property part-name="b5" name="size">32,23</property>
+			<property part-name="b6" name="size">32,23</property>
+			<property part-name="b7" name="size">32,23</property>
+			<property part-name="b8" name="size">32,23</property>
+			<property part-name="b9" name="size">32,23</property>
+			<property part-name="bpoint" name="size">32,23</property>
+			<property part-name="bplusminus" name="size">32,23</property>
+			<property part-name="bplus" name="size">48,18</property>
+			<property part-name="bmin" name="size">48,18</property>
+			<property part-name="bmul" name="size">48,18</property>
+			<property part-name="bdiv" name="size">48,18</property>
+			<property part-name="bsol" name="size">48,18</property>
+			<property part-name="ac" name="size">56,23</property>
+			<property part-name="sin" name="size">48,18</property>
+			<property part-name="cos" name="size">48,18</property>
+			<property part-name="tan" name="size">48,18</property>
+			<property part-name="pi" name="size">48,18</property>
+			<property part-name="e" name="size">48,18</property>
+			<!-- /Absolute scaling -->
+
+			<property part-name="b0" name="label">0</property>
+			<property part-name="b1" name="label">1</property>
+			<property part-name="b2" name="label">2</property>
+			<property part-name="b3" name="label">3</property>
+			<property part-name="b4" name="label">4</property>
+			<property part-name="b5" name="label">5</property>
+			<property part-name="b6" name="label">6</property>
+			<property part-name="b7" name="label">7</property>
+			<property part-name="b8" name="label">8</property>
+			<property part-name="b9" name="label">9</property>
+			<property part-name="bpoint" name="label">.</property>
+			<property part-name="bplusminus" name="label">+/-</property>
+			<property part-name="bplus" name="label">+</property>
+			<property part-name="bmin" name="label">-</property>
+			<property part-name="bmul" name="label">*</property>
+			<property part-name="bdiv" name="label">/</property>
+			<property part-name="bsol" name="label">=</property>
+			<property part-name="ac" name="label">AC</property>
+			<property part-name="sin" name="label">Sin</property>
+			<property part-name="cos" name="label">Cos</property>
+			<property part-name="tan" name="label">Tan</property>
+			<property part-name="pi" name="label">Pi</property>
+			<property part-name="e" name="label">e</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="b0" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b0" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b1" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b1" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b2" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b2" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b3" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b3" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b4" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b4" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b5" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b5" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b6" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b6" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b7" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b7" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b8" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b8" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="b9" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="b9" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="bpoint" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="String.concatenate">
+							<param><property part-name="output" name="text"/></param>
+							<param><property part-name="bpoint" name="label"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+				<rule>
+				<condition>
+					<event part-name="bplusminus" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="CalcFunc.switch">
+							<param name="number"><property part-name="output" name="text"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+
+			<rule>
+				<condition>
+					<event part-name="ac" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text"></property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="sin" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="Math.sin">
+							<param><property part-name="output" name="text"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="cos" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="Math.cos">
+							<param><property part-name="output" name="text"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="tan" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="Math.tan">
+							<param><property part-name="output" name="text"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="pi" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="Math.pi"/>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="e" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="output" name="text">
+						<call name="Math.e"/>
+					</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="bplus" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<call name="CalcFunc.recordNumber">
+						<param name="newval">
+							<property part-name="output" name="text"/>
+						</param>
+					</call>
+					<call name="CalcFunc.recordOperation">
+						<param name="newop">
+							<property part-name="bplus" name="label"/>
+						</param>
+					</call>
+					<property part-name="output" name="text"> </property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="bmin" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<call name="CalcFunc.recordNumber">
+						<param name="newval">
+							<property part-name="output" name="text"/>
+						</param>
+					</call>
+					<call name="CalcFunc.recordOperation">
+						<param name="newop">
+							<property part-name="bmin" name="label"/>
+						</param>
+					</call>
+					<property part-name="output" name="text"> </property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="bmul" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<call name="CalcFunc.recordNumber">
+						<param name="newval">
+							<property part-name="output" name="text"/>
+						</param>
+					</call>
+					<call name="CalcFunc.recordOperation">
+						<param name="newop">
+							<property part-name="bmul" name="label"/>
+						</param>
+					</call>
+					<property part-name="output" name="text"> </property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="bdiv" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<call name="CalcFunc.recordNumber">
+						<param name="newval">
+							<property part-name="output" name="text"/>
+						</param>
+					</call>
+					<call name="CalcFunc.recordOperation">
+						<param name="newop">
+							<property part-name="bdiv" name="label"/>
+						</param>
+					</call>
+					<property part-name="output" name="text"> </property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<event part-name="bsol" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<call name="CalcFunc.recordNumber">
+						<param name="newval">
+							<property part-name="output" name="text"/>
+						</param>
+					</call>
+					<property part-name="output" name="text">
+						<call name="CalcFunc.calculateResult"/>
+					</property>
+				</action>
+			</rule>
+		</behavior>
+		-->
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+		<logic id="calculator">
+			 <d-component id="CalcFunc" maps-to="CalcFunc">
+   		     <d-method id="recordNumber" return-type="string" maps-to="RecordNumber">
+			          <d-param id="newVal" type="System.String"/>
+		        </d-method>
+      		  <d-method id="recordOperation" maps-to="RecordOperation">
+		          <d-param id="newOp" type="System.String"/>
+      		  </d-method>
+				  <d-method id="recordSign" return-type="string" maps-to="RecordSign">
+		          <d-param id="sign" type="System.String"/>
+					</d-method>
+		        <d-method id="calculateResult" return-type="string" maps-to="CalculateResult"/>
+				  <d-method id="switch" return-type="string" maps-to="SwitchSign">
+		          <d-param id="number" type="System.String"/>					
+				  </d-method>
+	     </d-component>
+		</logic>
+	</peers>
+</uiml>
+
