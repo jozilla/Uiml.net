@@ -1,6 +1,6 @@
 CLASSPATH=.:../../..
 OPTIONS=-g
-GTKLIBS= -L /usr/local/lib/mono/gtk-sharp/ /r:gtk-sharp.dll /r:gdk-sharp.dll /r:glib-sharp.dll /r:pango-sharp.dll 
+GTKLIBS= -pkg:gtk-sharp 
 WXLIBS=/r:wx.NET.dll /r:System.Drawing
 #LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
