@@ -89,6 +89,11 @@ namespace Uiml.Executing
 		{
 			m_action.Connect(o);
 		}
+
+		public void Disconnect(object o)
+		{
+			m_action.Disconnect(o);
+		}
 			
 		public System.Object Execute()
 		{

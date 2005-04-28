@@ -145,6 +145,19 @@ namespace Uiml.Executing
 				
 			m_connObjects.Add(o);
 		}
+
+		///<summary>
+		///Used by the Rule to indicate the possibility to use object o to
+		///execute this call is removed
+		///</summary>
+		public void Disconnect(object o)
+		{
+			if(Connected)
+			{
+				m_connObjects.Remove(o);
+			}
+		}
+
 		
 		public object ExecuteMethod(string concreteMethodName, Type objectType)
 		{

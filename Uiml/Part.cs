@@ -131,8 +131,6 @@ namespace Uiml {
 		private void ProcessSubTree(XmlNode n)
 		{
 			XmlAttributeCollection attr = n.Attributes;
-			if(attr.GetNamedItem(ID) != null)
-				Identifier = attr.GetNamedItem(ID).Value;
 			if(attr.GetNamedItem(CLASS)!=null)
 				Class = attr.GetNamedItem(CLASS).Value;
 			if(n.HasChildNodes)
@@ -294,8 +292,8 @@ namespace Uiml {
 				UimlEventHandlerAttribute eHandler = GetEventHandler(mi);
 				if(eHandler != null)
 				{
-					Console.WriteLine("Found UimlEventHandler [{0}]", mi.Name);			
-					Console.WriteLine("\tConnecting to \"{0}\" of type <{1}> ", Identifier, Class);
+					//Console.WriteLine("Found UimlEventHandler [{0}]", mi.Name);			
+					//Console.WriteLine("\tConnecting to \"{0}\" of type <{1}> ", Identifier, Class);
 					
 					initEventArgs(eHandler);
 					
@@ -381,6 +379,32 @@ namespace Uiml {
 			//each part should connect separately (and allow the 
 			//redundancy). Otherwise <restructure> could change the event notification
 			//behavior and we don't want that to happen!
+		}
+
+		///<summary>
+		///Disconnects object o from this part. 
+		///</summary>
+		public void Disconnect(Object o, UimlDocument doc)
+		{
+			Console.WriteLine("TODO Part.Disconnect not fully implemented");
+			//difficult choice here: disconnecting involves first recreating the
+			//same handler and then -= them from the Signal		
+			
+			#if !COMPACT
+			  ; //TODO TODO TODO
+			#else
+			IEnumerator enumerator = m_connections.GetEnumerator();
+			while(enumerator.MoveNext())
+			{
+				if(((Connection)enumerator.Current)).Object == o)
+					m_connections.Remove(enumerator.Current);
+			}
+			#endif
+							
+			//invoke the same method on the children of this part, with the same object
+			IEnumerator enumerator = Children.GetEnumerator();
+			while(enumerator.MoveNext())
+				((Part)(enumerator.Current)).Disconnect(o, doc);	
 		}
 		
 		protected UimlEventHandlerAttribute GetEventHandler(MethodInfo mi)

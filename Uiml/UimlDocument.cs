@@ -160,7 +160,22 @@ namespace Uiml{
 					((Executing.Rule)er.Current).Connect(o);
 				}
 			}			
-		}		
+		}
+
+		public void Disconnect(Object o)
+		{
+			((Structure)UInterface.UStructure[0]).Top.Disconnect(o, this);
+			ExternalObjects.Instance.Remove(o);
+			if(UInterface.UBehavior != null)
+			{				
+				IEnumerator er = ((Behavior)UInterface.UBehavior[0]).Rules;
+				while(er.MoveNext())
+				{
+					((Executing.Rule)er.Current).Disconnect(o);
+				}
+			}			
+
+		}
 
 		public void Connect(Object o, String identifier)
 		{
@@ -169,6 +184,7 @@ namespace Uiml{
 			if(p!=null)
 				p.Connect(o, this);
 		}
+	
 
 		/**
 		 * Search the part of the interface that matches identifier.

@@ -113,6 +113,22 @@ namespace Uiml.Executing
 			}
 		}
 
+		public void Disconnect(object o)
+		{
+			foreach(object c in m_subActions)
+			{
+				if(c is Uiml.Executing.Call)
+					((Call)c).Disconnect(o);
+				if(c is Uiml.Property)
+				{
+					Property p = (Property)c;
+					if(p.Lazy)
+						p.Disconnect(o);
+				}
+			}
+
+		}
+
 		public ArrayList Children
 		{
 			get { return null; }

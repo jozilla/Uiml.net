@@ -17,8 +17,7 @@
 		</style>
 	</interface>
 	<peers>
-		<!--<presentation base="file:///home/kris/projects/uiml.net/Uiml/gtk-sharp-1.0.uiml" /> -->
-		<presentation base="http://lumumba.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+		<presentation base="file:///home/kris/projects/uiml.net/vocabularies/gtk-sharp-1.0.uiml" /> 
 	</peers>
 </uiml>
 

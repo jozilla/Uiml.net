@@ -1,5 +1,12 @@
+2005-04-29 Kris Luyten <kris.luyten@luc.ac.be>
+	* Uiml/UimlDocument.cs, Uiml/Part.cs, Uiml/Property.cs,
+	Uiml/Executing/Call.cs, Uiml/Executing/Action.cs: new Disconnect method to
+	disconnect an external object that was previously connected with the
+	Connect method
+	* Uiml/Part.cs: Removed redundant attr.GetNamedItem(ID) from ProcessSubtree
+
 2005-03-31 Kris Luyten <kris.luyten@luc.ac.be>
-	* Uiml/Interface: added additional controls to avoid an Exception when
+	* Uiml/Interface.cs: added additional controls to avoid an Exception when
 	Connect is used with a document that contains no behavior
 	* Uiml/FrontEnd/CommandLine.cs,GtkGUI.cs, SwfGUI.cs: removed Main() method: UimlTool contains
 	the main method, there is no need for a main method here

@@ -180,10 +180,20 @@ namespace Uiml{
 			return iPropSetter.GetValue(p, this);
 		}
 
+		///<summary>
+		///A property can connect to external objects if it is set by a call:
+		/// &lt;property&gt;&lt;call&gt;...&lt;/call&gt;&lt;/property&gt;
+		///</summary>
 		public void Connect(object o)
 		{
 			if(m_subprop is Uiml.Executing.Call)
 				((Uiml.Executing.Call)m_subprop).Connect(o);
+		}
+
+		public void Disconnect(object o)
+		{
+			if(m_subprop is Uiml.Executing.Call)
+				((Uiml.Executing.Call)m_subprop).Disconnect(o);
 		}
 
 		///<summary>
