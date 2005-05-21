@@ -1,3 +1,7 @@
+2005-05-21 Jo Vermeulen <jo@lumumba.luc.ac.be>
+	* Uiml/Makefile: Changed -o FILE to -out:FILE due to compatibility warning 
+	issued by Mono version 1.1.
+
 2005-04-29 Kris Luyten <kris.luyten@luc.ac.be>
 	* Uiml/UimlDocument.cs, Uiml/Part.cs, Uiml/Property.cs,
 	Uiml/Executing/Call.cs, Uiml/Executing/Action.cs: new Disconnect method to
