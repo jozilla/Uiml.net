@@ -22,37 +22,37 @@ all: lib exe
 	@echo " done"
 
 #exe :
-#	mcs ${DEBUG} -o uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
-#	cscc -o uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
+#	mcs ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
+#	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
 exe:
 	@echo "building executable" 
-	mcs ${DEBUG} -pkg:gtk-sharp -keyfile:uiml.net.snk -o uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
+	mcs ${DEBUG} -pkg:gtk-sharp -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 
 cli-exe:
 	@echo "building executable" 
-	mcs ${DEBUG} -keyfile:uiml.net.snk -o uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
+	mcs ${DEBUG} -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.CommandLine
 	@echo "done"
 
 lib :
 	@echo "building library"
-	mcs ${DEBUG} -keyfile:uiml.net.snk -o uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
+	mcs ${DEBUG} -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs
 	@echo "done"
 
 gtk:
-	mcs ${DEBUG} ${GTKLIBS} -keyfile:Rendering/GTKsharp/uiml-gtk-sharp.snk /r:uiml.net.dll -o uiml-gtk-sharp.dll -target:library Rendering/GTKsharp/*.cs
+	mcs ${DEBUG} ${GTKLIBS} -keyfile:Rendering/GTKsharp/uiml-gtk-sharp.snk /r:uiml.net.dll -out:uiml-gtk-sharp.dll -target:library Rendering/GTKsharp/*.cs
 
 wx:
-	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -o uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
+	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -out:uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
 
 swf:
-	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -o uiml-swf.dll -target:library Rendering/SWF/*.cs
+	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs
 
 cswf:
-	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -o uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
+	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
 
 
 
