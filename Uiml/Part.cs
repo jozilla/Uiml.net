@@ -1,9 +1,9 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://reseaech.edm.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://research.edm.uhasselt.be/kris/research/uiml.net)
 
-	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
-								Limburgs Universitair Centrum
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@luc.ac.be)
+	                     Expertise Centre for Digital Media (http://www.edm.uhasselt.be)
+						 Hasselt University
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License
@@ -231,7 +231,7 @@ namespace Uiml {
 			if(checkIdentifier == Identifier)
 				return this;
 			else if(m_children.Count == 0)
-					return null;
+				return null;
 			else
 			{
 				IEnumerator enumParts = GetSubParts();

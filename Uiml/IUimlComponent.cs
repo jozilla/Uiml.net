@@ -1,8 +1,8 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://research.edm.uhasselt.be/kris/research/uiml.net)
+   Uiml.Net: a .Net UIML renderer (http://research.edm.uhasselt.be/kris/research/uiml.net)
 
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@uhasselt.be)
-	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@uhasselt.be)
+	                     Expertise Centre for Digital Media (http://edm.uhasselt.be)
 						 Hasselt University
 
 	This program is free software; you can redistribute it and/or
@@ -21,14 +21,15 @@
 */
 
 
-namespace Uiml{
+namespace Uiml
+{
 
 	using System.Collections;
-	using System.Xml;
-
-	public interface IUimlElement
-	{
-		ArrayList Children { get ; } 
-		void Process(XmlNode n);
-	}
+	
+	public interface IUimlComponent{
+		Hashtable CompChildren { get ; }
+		void Add(string pattern, IUimlComponent component);
+		void Remove(IUimlComponent component);
+		UimlComposite Composite { get ; }		
+	} 
 }

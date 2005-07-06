@@ -36,7 +36,7 @@ namespace Uiml{
 	///                name NMTOKEN #REQUIRED 
 	///                content CDATA #REQUIRED&gt;
 	///</summary>
-	public class Head : IUimlElement{
+	public class Head : IUimlElement, ICloneable{
 		private Hashtable metaChildren;
 
 		public Head()
@@ -82,6 +82,19 @@ namespace Uiml{
 		public ArrayList Children
 		{
 			get { return null; }
+		}
+		
+		public Object Clone()
+		{
+			Head iamclone = new Head();
+			iamclone.MetaChildren = MetaChildren;
+			return iamclone;			
+		}
+		
+		public Hashtable MetaChildren
+		{
+			get { return metaChildren; }
+			set { metaChildren= value; } 
 		}
 
 		public const String IAM     = "head";

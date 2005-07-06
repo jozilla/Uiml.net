@@ -1,3 +1,14 @@
+2005-07-06 Kris Luyten <kris.luyten@uhasselt.be>
+	* Uiml/IUimlComponent.cs, Uiml/UimlComposite.cs,
+	Uiml/UimlContainerDocument.cs: new classes to support merging of different
+	UIML files in another UIML file. Merging decisions are taken according to
+	the part name: a part serves as a placeholder
+	* Uiml/Param.cs, Uiml/UimlDocument.cs, Uiml/Structure.cs, Uiml/Style.cs,
+	Uiml/Head.cs, Uiml/Interface.cs: implemented Clone methods (work in
+	progress)
+	* Uiml/UimlDocument.cs: new interface IUimlComponent since UimlDocument is a
+	leave in the UimlComposite pattern
+
 2005-05-21 Jo Vermeulen <jo@lumumba.luc.ac.be>
 	* Uiml/Makefile: Changed -o FILE to -out:FILE due to compatibility warning 
 	issued by Mono version 1.1.

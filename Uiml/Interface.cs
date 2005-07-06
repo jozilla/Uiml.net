@@ -39,7 +39,7 @@ namespace Uiml{
 	///             how (union|cascade|replace) "replace" 
 	///             export (hidden|optional|required) "optional"&gt;
 	///</summary>
-	public class Interface : UimlAttributes, IUimlElement{
+	public class Interface : UimlAttributes, IUimlElement, ICloneable{
 
 		//private Structure m_structure;
 		private ArrayList m_structure = new ArrayList();
@@ -50,11 +50,20 @@ namespace Uiml{
 		//private Content m_cont;ent
 		private ArrayList m_content = new ArrayList();
 
-		public Interface(XmlNode nTopStructure){
+		public Interface(XmlNode nTopStructure)
+		{
 			Process(nTopStructure);
 		}
+		
+		///<summary>
+		///private constructor for clone operation
+		///</summary>
+		private Interface()
+		{
+		}
 
-		public void Process(XmlNode n){
+		public void Process(XmlNode n)
+		{
 			if(n.Name == IAM){
 				ReadAttributes(n);
 				if(n.HasChildNodes){
@@ -129,6 +138,7 @@ namespace Uiml{
 			}
 			set { m_content.Add(value); }
 		}
+		
 
 
 		public void AttachPeers(ArrayList peers)
@@ -158,6 +168,21 @@ namespace Uiml{
 				al.Add(UContent);
 				return al; 
 			} 
+		}
+		
+		//IClonaeble implementation:
+		public object Clone()
+		{
+			Interface iamclone  = new Interface();
+			if(UBehavior != null)
+				iamclone.UBehavior  = (ArrayList)UBehavior.Clone();
+			if(UContent != null)
+				iamclone.UContent   = (ArrayList)UContent.Clone();
+			if(UStructure != null)
+				iamclone.UStructure = (ArrayList)UStructure.Clone();
+			if(UStyle != null)
+				iamclone.UStyle     = (ArrayList)UStyle.Clone();
+			return iamclone;
 		}
 
 

@@ -1,9 +1,9 @@
 /*
-	 uiml.net: a Uiml .NET renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
+	 uiml.net: a Uiml .NET renderer (http://research.edm.uhasselt.be/kris/research/uiml.net)
     
 	 Copyright (C) 2005  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
-								Limburgs Universitair Centrum
+	                     Expertise Centre for Digital Media (http://www.edm.uhasselt.be)
+						Hasselt University
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License
@@ -27,7 +27,7 @@ namespace Uiml{
 	using System.Xml;
 	using System.Collections;
 
-	public class UimlDocument : IUimlElement {
+	public class UimlDocument : IUimlElement, IUimlComponent, ICloneable {
 		private Interface m_interface;
 		private ArrayList m_peers;
 		private Head m_head;
@@ -49,8 +49,16 @@ namespace Uiml{
 				}
 		}
 
-		public UimlDocument(XmlNode uimlTopNode){
+		public UimlDocument(XmlNode uimlTopNode)
+		{
 			Load(uimlTopNode);
+		}
+		
+		///<summary>
+		///private parameterless constructor for cloning
+		///</summary>
+		private UimlDocument()
+		{
 		}
 
 		private void Load(XmlNode uimlTopNode)
@@ -180,6 +188,8 @@ namespace Uiml{
 		public void Connect(Object o, String identifier)
 		{
 			//TODO: support multiple structures
+			Console.WriteLine(UInterface.UStructure);
+			Console.WriteLine(UInterface.UStructure[0]);
 			Part p = ((Structure)UInterface.UStructure[0]).SearchPart(identifier);
 			if(p!=null)
 				p.Connect(o, this);
@@ -189,10 +199,13 @@ namespace Uiml{
 		/**
 		 * Search the part of the interface that matches identifier.
 		 **/
-		public Part SearchPart(String identifier)
+		public Part SearchPart(String searchfor)
 		{
-			//TODO: support multiple structures
-			return ((Structure)UInterface.UStructure[0]).SearchPart(identifier);
+			//TODO: support multiple structures					
+			Structure t = (Structure)UInterface.UStructure[0];			
+			Part p = (Part)t.SearchPart(searchfor);
+			return p;
+			//return ((Structure)UInterface.UStructure[0]).SearchPart(searchfor);
 		}
 
 		public ArrayList Children
@@ -206,6 +219,32 @@ namespace Uiml{
 				return al; 
 			}
 		}
+		
+		//ICloneable methods:
+		public object Clone()
+		{
+			UimlDocument iamclone = new UimlDocument();
+			if (UHead == null)
+				iamclone.UHead = null;
+			else 
+				iamclone.UHead = (Head)UHead.Clone();
+			iamclone.UInterface  = (Interface)UInterface.Clone(); 
+			return iamclone;
+		}
+		
+		// IUimlComponent methods:
+		//public ArrayList Children { get ; } //This method already exist to return a "complete" UIML document in an ArrayList
+		public void Add(string pattern, IUimlComponent component) { /* do nothing */ }
+		public void Remove(IUimlComponent component) { /* do nothing */ }		
+		public UimlComposite Composite 
+		{ 
+			get { return null; } 
+		}		
+		public Hashtable CompChildren
+		{
+			get {return null; }
+		} 
+		
 
 		public const string PEER      = "peers";
 		public const string UIML      = "uiml";

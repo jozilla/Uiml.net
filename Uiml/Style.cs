@@ -28,7 +28,7 @@ namespace Uiml{
 	using System.Xml;
 	using System.Collections;
 
-	public class Style : IUimlElement{
+	public class Style : IUimlElement, ICloneable{
 
 		private ArrayList m_properties;
 		private string m_identifier;
@@ -177,7 +177,18 @@ namespace Uiml{
 
 		public ArrayList Children
 		{
-			get { return null; }
+			get { return m_properties; }
+			set { m_properties = value; }
+		}
+		
+		//ICloneable interface implementation:
+		public object Clone()
+		{
+			Style iamclone = new Style();
+			iamclone.Identifier = (string)Identifier.Clone();
+			iamclone.Source     = (string)Source.Clone();
+			iamclone.Children   = (ArrayList)Children.Clone();
+			return iamclone;
 		}
 
 		public const string STYLE = "style"; // deprecated
