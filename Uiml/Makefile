@@ -57,4 +57,4 @@ cswf:
 
 
 clean:
-	rm *.exe *.dll *.mdb
+	rm -f *.exe *.dll *.mdb
