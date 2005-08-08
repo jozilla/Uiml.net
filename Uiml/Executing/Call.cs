@@ -104,7 +104,7 @@ namespace Uiml.Executing
 
 		} 
 
-		private Type[] createInOutParamTypes(Uiml.Param[] parameters, out Hashtable outputPlaceholder)
+		private Type[] CreateInOutParamTypes(Uiml.Param[] parameters, out Hashtable outputPlaceholder)
 		{
 			outputPlaceholder = null;
 			Type[] tparamTypes =  new Type[parameters.Length]; 
@@ -165,7 +165,7 @@ namespace Uiml.Executing
 			return ExecuteMethod(concreteMethodName, objectType, null);
 		}
 
-		public Object ExecuteMethod(string concreteMethodName, Type objectType, object obj/*, Logic l*/)
+		public object ExecuteMethod(string concreteMethodName, Type objectType, object obj/*, Logic l*/)
 		{
 			Uiml.Param[] parameters;
 			Hashtable outputPlaceholder = null;
@@ -178,7 +178,7 @@ namespace Uiml.Executing
 			//convert the params to types
 			Type[] tparamTypes = null;
 			try{
-				tparamTypes = createInOutParamTypes(parameters, out outputPlaceholder);
+				tparamTypes = CreateInOutParamTypes(parameters, out outputPlaceholder);
 			}catch(ArgumentOutOfRangeException) { return null; }
 			
 			MethodInfo m = objectType.GetMethod(concreteMethodName, tparamTypes);
@@ -214,25 +214,25 @@ namespace Uiml.Executing
 			return result;
 		}		
 
-		public Object ExecuteProperty(string concreteMethodName, Type objectType)
+		public object ExecuteProperty(string concreteMethodName, Type objectType)
 		{
 			PropertyInfo pi = objectType.GetProperty(concreteMethodName);
 			return pi.GetValue(null, null);
 		}
 
-		public Object ExecuteField(string concreteMethodName, Type objectType)
+		public object ExecuteField(string concreteMethodName, Type objectType)
 		{
 			FieldInfo fi = objectType.GetField(concreteMethodName);
 			return fi.GetValue(null);
 		}
 
-		public Object ExecuteProperty(string concreteMethodName, Type objectType, object obj)
+		public object ExecuteProperty(string concreteMethodName, Type objectType, object obj)
 		{
 			PropertyInfo pi = objectType.GetProperty(concreteMethodName);
 			return pi.GetValue(obj, null);
 		}
 
-		public Object ExecuteField(string concreteMethodName, Type objectType, object obj)
+		public object ExecuteField(string concreteMethodName, Type objectType, object obj)
 		{
 			FieldInfo fi = objectType.GetField(concreteMethodName);
 			return fi.GetValue(obj);
@@ -241,7 +241,7 @@ namespace Uiml.Executing
 		///<summary>
 		/// It loads a method and its params from this call and executes it at runtime
 		///</summary>
-		public Object Execute()
+		public object Execute()
 		{
 
 			if(Name == null || Name == "" || Name == ".")
@@ -371,7 +371,7 @@ namespace Uiml.Executing
 				}
 		}
 
-		public Object Execute(IRenderer renderer)
+		public object Execute(IRenderer renderer)
 		{
 			Renderer = renderer;
 			return Execute();
