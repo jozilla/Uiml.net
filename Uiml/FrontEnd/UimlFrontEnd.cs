@@ -113,6 +113,7 @@ namespace Uiml.FrontEnd{
 			}
 				catch(Exception e)
 				{
+					Console.WriteLine(e);
 					Console.WriteLine(e.StackTrace);				
 					Console.WriteLine("Could not create GUI for {0} with uiml.net", UimlFileName);
 				}
