@@ -1,3 +1,26 @@
+2005-08-11 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Executing/Call.cs:
+	* Uiml/Executing/Callers/Caller.cs:
+	* Uiml/Executing/Callers/CallerFactory.cs:
+	* Uiml/Executing/Callers/LocalCaller.cs:
+	* Uiml/Executing/Callers/XmlRpcCaller.cs: Call instances now use a
+	Caller helper class to actually execute them. Call thus only
+	represents the syntaxis of the <call> tag. There are two supported
+	callers at the moment: LocalCaller (which is just a call like it used
+	to be) and XmlRpcCaller, which uses the XML-RPC protocol to do execute
+	a remote procedure call. XML-RPC support is provided by the XmlRpcCS
+	library [http://sourceforge.net/projects/xmlrpccs/]. When available,
+	a separate assembly uiml-xml-rpc.dll is compiled, containing the
+	XmlRpcCaller class.
+	* Uiml/Peers/Vocabulary.cs:
+	* Uiml/Peers/DComponent.cs:
+	* Uiml/Peers/Location.cs: Location class is used to parse location
+	attribute URLs such as "xmlrpc://betty.userland.com". Vocabulary
+	and DComponent now have support for querying this.
+	* examples/gtk-sharp/xmlRpcCall.cs: example using XML-RPC (a fat
+	web client for UserLand's Betty server (-:)
+	* Uiml/Makefile: added build of dynamic XML-RPC library.
+
 2005-07-06 Kris Luyten <kris.luyten@uhasselt.be>
 	* Uiml/IUimlComponent.cs, Uiml/UimlComposite.cs,
 	Uiml/UimlContainerDocument.cs: new classes to support merging of different
