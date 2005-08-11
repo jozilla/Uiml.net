@@ -335,6 +335,16 @@ namespace Uiml.Peers
 				throw new MappingNotFoundException(identifier);
 		}
 
+		public Location GetLocationCmp(string abstractName)
+		{
+			DComponent cmp = FindDComponent(abstractName);
+
+			if (cmp != null)
+				return cmp.Location;
+			else
+				throw new MappingNotFoundException(abstractName);
+		}
+
 		protected DProperty FindDProperty(ArrayList l, string identifier)
 		{
 			IEnumerator e = l.GetEnumerator();

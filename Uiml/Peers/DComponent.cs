@@ -46,7 +46,7 @@ namespace Uiml.Peers
 		protected ArrayList m_children = null;
 
 		protected string m_mapsTo;
-		protected string m_location;		
+		protected Location m_location;		
 
 		public DComponent()
 		{}
@@ -67,7 +67,7 @@ namespace Uiml.Peers
 				MapsTo = attr.GetNamedItem(MAPS_TO).Value;
 
 			if(attr.GetNamedItem(LOCATION) != null)
-				Location = attr.GetNamedItem(LOCATION).Value;
+				Location = new Location(attr.GetNamedItem(LOCATION).Value);
 			
 			ProcessChildren(n.ChildNodes);
 		}
@@ -136,7 +136,7 @@ namespace Uiml.Peers
 			set { m_mapsTo = value;	}
 		}
 
-		public string Location
+		public Location Location
 		{
 			get	{ return m_location; }
 			set	{ m_location = value; }

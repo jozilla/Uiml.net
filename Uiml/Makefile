@@ -3,6 +3,7 @@ OPTIONS=-g
 GTKLIBS= -pkg:gtk-sharp 
 WXLIBS=/r:wx.NET.dll /r:System.Drawing
 SWFLIBS=/r:System.Windows.Forms.dll /r:System.Drawing
+XMLRPCLIBS=-r:XmlRpcCS.dll
 #LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
 #LIBS=-gtk -L/usr/local/lib/
@@ -20,26 +21,31 @@ all: lib exe
 	@echo " building compact swf backend"
 	@make cswf || true
 	@echo " done"
+	@echo " building xml-rpc support"
+	@make xml-rpc || true
+	@echo " done"
 
 #exe :
 #	mcs ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
 #	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
 exe:
 	@echo "building executable" 
-	mcs ${DEBUG} -pkg:gtk-sharp -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
+	mcs ${DEBUG} -pkg:gtk-sharp -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs\
+ 	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 
 cli-exe:
 	@echo "building executable" 
-	mcs ${DEBUG} -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
+	mcs ${DEBUG} -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs\
+	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.CommandLine
 	@echo "done"
 
 lib :
 	@echo "building library"
-	mcs ${DEBUG} -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs Utils/*.cs\
-	Peers/*.cs Executing/Binding/*.cs
+	mcs ${DEBUG} -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs\
+	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs
 	@echo "done"
 
 gtk:
@@ -54,7 +60,8 @@ swf:
 cswf:
 	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
 
-
+xml-rpc:
+	mcs ${DEBUG} ${XMLRPCLIBS} -r:uiml.net.dll -out:uiml-xml-rpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
 
 clean:
 	rm -f *.exe *.dll *.mdb
