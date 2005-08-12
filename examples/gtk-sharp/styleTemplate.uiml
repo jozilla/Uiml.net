@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<uiml>
+	<template id="result">
+		<style>
+			<property part-name="l_stateName" name="text">State name:</property>
+			<property part-name="stateName" name="editable">false</property>
+			<property part-name="stateName" name="text">Click the button to find out</property>
+		</style>
+	</template>
+	<interface>
+		<structure>
+			<part class="Frame" id="frame">
+				<part class="HBox">
+					<part class="VBox">
+						<part class="HBox">
+							<part class="Label" id="l_stateCode"/>
+							<part class="Entry" id="stateCode"/>
+						</part>
+						<part class="Button" id="go"/>
+					</part>
+					<part class="HBox">
+						<part class="Label" id="l_stateName" />
+						<part class="Entry" id="stateName" />
+					</part>
+				</part>
+				
+			</part>
+		</structure>
+		<style source="#result" how="union">
+			<property part-name="frame" name="label">State lookup</property>
+			<property part-name="l_stateCode" name="text">State code:</property>
+			<property part-name="stateCode" name="text">41</property>
+			<property part-name="go" name="label">Go!</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="go" class="ButtonPressed"/>
+				</condition>
+				<action>
+					<property part-name="stateName" name="text">
+						<call name="Betty.GetStateName">
+							<param><property part-name="stateCode" name="text"/></param>
+						</call>
+					</property>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
+		<logic>
+			<d-component id="Betty" location="xmlrpc://betty.userland.com/RPC2">
+				<d-method id="GetStateName" returns-value="System.String" maps-to="examples.getStateName">
+					<d-param id="code" type="System.Int32"/>
+				</d-method>
+			</d-component>
+		</logic>
+	</peers>
+</uiml>
+
