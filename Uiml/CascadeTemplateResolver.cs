@@ -20,20 +20,42 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+using System;
+
 namespace Uiml{
 
 
-	///<summary>
-	///</summary>
-	public class CascadeTemplateResolver : ITemplateResolver{
+	/// <summary>
+	/// This class resolves a template using the ``cascade'' method
+	/// </summary>
+	public class CascadeTemplateResolver : ITemplateResolver {
 
 		public CascadeTemplateResolver()
-		{
-		}
-		
+		{}
+
 		public virtual IUimlElement Resolve(Template t, IUimlElement placeholder)
 		{
-			return null; //TODO
+			// add all unique children of the template's top element to placeholder's children
+			Console.Write("Trying to unite element '{0}' with template '{1}'... ", ((UimlAttributes) placeholder).Identifier, t.Identifier);
+
+			try
+			{
+				// check if types are compatible
+				if (t.Top.GetType().Equals(placeholder.GetType()))
+				{
+					// TODO: only add unique children !!!
+					placeholder.Children.AddRange(t.Top.Children);
+					Console.WriteLine("OK!");
+				}
+				else
+					Console.WriteLine("Failed! -> incompatible types, no action taken");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Failed!");
+			}
+		
+			return placeholder; // always return placeholder, regardless of modifications
 		}
 	}
 }

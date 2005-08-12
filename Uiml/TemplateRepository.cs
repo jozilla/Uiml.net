@@ -56,15 +56,17 @@ namespace Uiml{
 			}catch(ArgumentNullException ane){
 				Console.WriteLine("Template with no identifier!");
 			}catch(ArgumentException ae){
-				Console.WriteLine("Template {0} is already in templates repository", t.Identifier);
+				Console.WriteLine("Ignoring duplicate entry of template '{0}' in template repository", t.Identifier);
 			}		
 		}
 
 
 		public Template Query(string id)
 		{
-//			if(id.StartsWith('#')==-1)
-				return (Template)templates[id];
+			if (id.StartsWith("#") == false)
+				return (Template) templates[id];
+			else
+				return (Template) templates[id.Substring(1)];
 		}
 		
 		

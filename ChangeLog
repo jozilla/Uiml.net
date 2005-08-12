@@ -1,3 +1,18 @@
+2005-08-12 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/ReplaceTemplateResolver.cs:
+	* Uiml/UnionTemplateResolver.cs:
+	* Uiml/CascadeTemplateResolver.cs: Implemented Resolve() method. Still
+	some extra checking to do for union and cascade: need to check for
+	duplicates. In order to make this independent, should implement it in
+	higher class (UimlAttributes?). Replace works perfectly though.
+	* examples/gtk-sharp/replaceTemplate.uiml:
+	* examples/gtk-sharp/unionTemplate.uiml:
+	* examples/gtk-sharp/cascadeTemplate.uiml: corresponding examples.
+	Would be nice to get cascadeTemplate.uiml correctly working (no
+	duplicate elements).
+	* examples/gtk-sharp/styleTemplate.uiml: example where a <style>
+	element is sourced.
+
 2005-08-11 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Executing/Call.cs:
 	* Uiml/Executing/Callers/Caller.cs:

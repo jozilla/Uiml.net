@@ -20,20 +20,41 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+using System;
+
 namespace Uiml{
-
-
-	///<summary>
-	///</summary>
-	public class UnionTemplateResolver : ITemplateResolver{
+	/// <summary>
+	/// This class resolves a template using the ``union'' method.
+	/// </summary>
+	public class UnionTemplateResolver : ITemplateResolver {
 
 		public UnionTemplateResolver()
-		{
-		}
+		{}
 		
 		public virtual IUimlElement Resolve(Template t, IUimlElement placeholder)
 		{
-			return null; //TODO
+			// add all children of the template's top element to placeholder's children 
+			Console.Write("Trying to unite element '{0}' with template '{1}'... ", ((UimlAttributes) placeholder).Identifier, t.Identifier);
+
+			try
+			{
+				// check if types are compatible
+				if (t.Top.GetType().Equals(placeholder.GetType()))
+				{
+					// TODO: check for children with the same identifier, and resolve name conflicts!
+					// add elements from template's top element
+					placeholder.Children.AddRange(t.Top.Children);	
+					Console.WriteLine("OK!");
+				}
+				else
+					Console.WriteLine("Failed! -> incompatible types, no action taken");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Failed!");
+			}
+
+			return placeholder; // always return placeholder, whether it's modified or not
 		}
 	}
 }

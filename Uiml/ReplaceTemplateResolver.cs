@@ -24,31 +24,44 @@ using System;
 using System.Collections;
 
 namespace Uiml{
-
-
-	///<summary>
-	///</summary>
-	public class ReplaceTemplateResolver : ITemplateResolver{
+	/// <summary>
+	/// This class resolves a template using the ``replace'' method.
+	/// </summary>
+	public class ReplaceTemplateResolver : ITemplateResolver {
 
 		public ReplaceTemplateResolver()
-		{
-		}
+		{}
 
 		
 		public virtual IUimlElement Resolve(Template t, IUimlElement placeholder)
 		{
-			//to do: replace all existing children of placeholder with the elemens
-			//from template t
+			// replace all existing children of placeholder with the children of
+			// template t
 
-			// quick hack...
-			// 
-			// it was not possible to delete children because style
-			// elements did not initialize the Children property. The general class
-			// structure must be improved in order to make this method implementation
-			// general!
+			Console.Write("Trying to replace element '{0}' with template '{1}' ... ", 
+					((UimlAttributes) placeholder).Identifier, t.Identifier);
 
-			((Style)placeholder).Change((Style)t.Top);
-			return placeholder;
+			try
+			{
+				// check if types are compatible
+				if (t.Top.GetType().Equals(placeholder.GetType()))
+				{
+					// clear children of placeholder
+					placeholder.Children.Clear();
+
+					// add elements from template's top element
+					placeholder.Children.AddRange(t.Top.Children);
+					Console.WriteLine("OK!");
+				}
+				else
+					Console.WriteLine("Failed! -> incompatible types, no action taken");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Failed!");
+			}
+
+			return placeholder; // always return placeholder, whether it's modified or not
 		}
 	}
 }

@@ -121,8 +121,13 @@ namespace Uiml{
 			if(n.Name != IAM)
 				return;
 
-			//need a Factory here to replace the 
-			//overloaded case here with a polymorf create method
+			// process identifier
+			XmlAttributeCollection attr = n.Attributes;
+			if(attr.GetNamedItem(ID) != null)
+				 Identifier = attr.GetNamedItem(ID).Value;
+			
+			// need a Factory here to replace the 
+			// overloaded case here with a polymorf create method
 			XmlNodeList xnl = n.ChildNodes;
 			switch(xnl[0].Name)
 			{
@@ -217,8 +222,8 @@ namespace Uiml{
 		}
 
 
-		public const String IAM = "template";
-		public const String ID = "id";
+		public const string IAM = "template";
+		public const string ID = "id";
 
 	}
 }

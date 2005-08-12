@@ -70,20 +70,20 @@ namespace Uiml.Executing.Callers
 		{
 			Caller result = null;
 
-			Console.Write("Looking for {0} library...", lib);
+			Console.Write("Looking for {0} library... ", lib);
 			try
 			{
 				Assembly a = Assembly.LoadFrom(lib);
-				Console.WriteLine(" OK!");
+				Console.WriteLine("OK!");
 
-				Console.Write("Loading caller {0}...", caller);
+				Console.Write("Loading caller {0}... ", caller);
 				Type t = a.GetType(caller);
 				result = (Caller) Activator.CreateInstance(t, parameters);
-				Console.WriteLine(" OK!");
+				Console.WriteLine("OK!");
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine(" Failed!");
+				Console.WriteLine("Failed!");
 				Console.WriteLine("Trying to continue...");
 			}
 

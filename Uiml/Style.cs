@@ -28,11 +28,9 @@ namespace Uiml{
 	using System.Xml;
 	using System.Collections;
 
-	public class Style : IUimlElement, ICloneable{
+	public class Style : UimlAttributes, IUimlElement, ICloneable {
 
 		private ArrayList m_properties;
-		private string m_identifier;
-		private string m_source;
 
 		public Style(){
 			m_properties = new ArrayList();
@@ -43,57 +41,23 @@ namespace Uiml{
 			Process(n);
 		}
 
-		/// <summary>
-		/// Useful for applying a template in the same instance
-		/// as the one that should be changed.
-		/// </summary>
-		public void Change(Style other)
-		{
-			m_properties = other.m_properties;
-			m_identifier = other.m_identifier;
-			m_source = other.m_source;
-		}
-		
-		public string Identifier
-		{
-			get { return m_identifier; }
-			set { m_identifier = value; }
-		}
-
-		public string Source
-		{
-			get { return m_source; }
-			set {	m_source = value;	}
-		}
-
 		public void Process(XmlNode n)
 		{
 			if(n.Name != STYLE)
 				return;
 
-			// process attributes
-			foreach (XmlAttribute a in n.Attributes)
-			{
-				if (a.Name == "source")
-				{
-					Source = a.Value;
-					break;
-				}
-			}
-
+			ReadAttributes(n);
+			
 			XmlNodeList xnl = n.ChildNodes;
 			for(int i=0; i<xnl.Count; i++)
 				m_properties.Add(new Property(xnl[i]));
 			
-			if (Source != null)
-				ApplyTemplate();
-		}
-
-		public void ApplyTemplate()
-		{
-			Template t = new Template(new Uri(Source));
-			ITemplateResolver rtr = Template.GetResolver("replace");
-			rtr.Resolve(t, this);
+			if(SourceAvailable)
+			{
+				ITemplateResolver templateResolver = Template.GetResolver(How);
+				Template t = TemplateRepository.Instance.Query(Source);				
+				templateResolver.Resolve(t,this);
+			}
 		}
 
 		public IEnumerator GetNamedProperties(string identifier)

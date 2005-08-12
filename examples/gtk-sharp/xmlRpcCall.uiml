@@ -45,7 +45,6 @@
 		</behavior>
 	</interface>
 	<peers>
-		<!-- <presentation base="file:///home/jo/Documenten/Projecten/uiml.net/vocabularies/gtk-sharp-1.0.uiml" /> -->
 		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
 		<logic>
 			<d-component id="Betty" location="xmlrpc://betty.userland.com/RPC2">

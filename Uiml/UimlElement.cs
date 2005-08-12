@@ -33,7 +33,6 @@ namespace Uiml{
 
 		public void ApplyTemplate()
 		{
-
 		}
 
 		protected void PostProcess(string source, string export)
