@@ -1,3 +1,8 @@
+2005-10-26 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: ListView items can now also contain
+	values for multiple columns. These values are separated by a ';'.
+	* examples/swf/swfListview_multiple-details.uiml: corresponding example
+
 2005-08-12 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/ReplaceTemplateResolver.cs:
 	* Uiml/UnionTemplateResolver.cs:

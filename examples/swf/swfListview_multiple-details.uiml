@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="frame" class="Frame">			
+			<part id="bandsList" class="List"/>
+		</part>
+		</structure>
+		<style>
+			<property part-name="frame" name="label">Belgian Bands</property>
+			<property part-name="frame" name="size">240,250</property>
+			<property part-name="bandsList" name="position">20,20</property>
+			<property part-name="bandsList" name="size">200,200</property>
+			<property part-name="bandsList" name="view">Details</property>
+			<property part-name="bandsList" name="title">Band Name</property>
+			<property part-name="bandsList" name="title">Artist</property>
+			<property part-name="bandsList" name="content">
+	  		<constant model="list">
+					<constant value="dEUS;Tom Barman"/>
+					<constant value="Novastar;Joost Zweegers"/>
+					<constant value="Hooverphonic;Geike Arnaert"/>
+					<constant value="Arid;Jasper Steverlinck"/>
+				</constant>
+		  </property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="http://research.edm.uhasselt.be/kris/projects/uiml.net/swf-1.1.uiml"/>
+	</peers>
+</uiml>
