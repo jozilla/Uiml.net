@@ -1,10 +1,10 @@
 /*
-  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
+  	 Uiml.Net: a Uiml.Net renderer (http://research.uhasselt.be/kris/research/uiml.net/)
    
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
-								Limburgs Universitair Centrum
-
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@uhasselt.be)
+	 Expertise Centre for Digital Media (http://www.uhasselt.be)
+   Hasselt University
+	 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License
 	as published by the Free Software Foundation; either version 2.1

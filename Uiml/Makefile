@@ -1,9 +1,11 @@
 CLASSPATH=.:../../..
 OPTIONS=-g
-GTKLIBS= -pkg:gtk-sharp 
+GTKLIBS= -pkg:gtk-sharp-2.0 
 WXLIBS=/r:wx.NET.dll /r:System.Drawing
 SWFLIBS=/r:System.Windows.Forms.dll /r:System.Drawing
-XMLRPCLIBS=-r:XmlRpcCS.dll
+XMLRPCLIBS=/r:XmlRpcCS.dll
+#INLINESCRIPTLIBS=/r:Nemerle.Compiler /r:Boo.Lang.CodeDom
+INLINESCRIPTLIBS=-pkg:nemerle -pkg:boo
 #LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
 #LIBS=-gtk -L/usr/local/lib/
@@ -30,7 +32,7 @@ all: lib exe
 #	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
 exe:
 	@echo "building executable" 
-	mcs ${DEBUG} -pkg:gtk-sharp -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs\
+	mcs ${DEBUG} ${INLINESCRIPTLIBS} ${GTKLIBS} -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs\
  	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
@@ -44,7 +46,7 @@ cli-exe:
 
 lib :
 	@echo "building library"
-	mcs ${DEBUG} -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs\
+	mcs ${DEBUG} ${INLINESCRIPTLIBS} -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs\
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs
 	@echo "done"
 

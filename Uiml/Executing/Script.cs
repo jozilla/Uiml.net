@@ -91,6 +91,12 @@ namespace Uiml.Executing
 		{
 		}
 
+		///<summary>
+		///Loads a CodeProvider for the language used for inline scripting
+		///</summary>
+		///<todo>
+		///Load CodeProviders dynamically...
+		///</todo>
 		protected void PreCompile()
 		{
 			#if !COMPACT
@@ -98,23 +104,31 @@ namespace Uiml.Executing
 			switch(Type)
          {
             case "CSharp":
-				case "C#":
-				case "csharp":
-				case "C Sharp":
-				case "C sharp":
+						case "C#":
+						case "csharp":
+						case "C Sharp":
+						case "C sharp":
               theProvider = new Microsoft.CSharp.CSharpCodeProvider();
               break;
-         //   case "JScript":
-         //     theProvider = new Microsoft.JScript.JScriptCodeProvider();
-         //     break;
+//         	 case "JScript":
+//              theProvider = new Microsoft.JScript.JScriptCodeProvider();
+//              break;
             case "Visual Basic":
-				case "VB":
-				case "VB.Net":
-				case "vb":
-				case "vb.net":
-				case "VB.NET":
+						case "VB":
+						case "VB.Net":
+						case "vb":
+						case "vb.net":
+						case "VB.NET":
               theProvider = new Microsoft.VisualBasic.VBCodeProvider();
               break;
+						case "Nemerle":
+						case "nemerle":
+							theProvider = new Nemerle.Compiler.NemerleCodeProvider();
+							break;
+						case "Boo":
+						case "boo":
+							theProvider = new Boo.Lang.CodeDom.BooCodeProvider();
+							break;
             default:
               theProvider = new Microsoft.CSharp.CSharpCodeProvider();
               break;
@@ -123,15 +137,17 @@ namespace Uiml.Executing
 			CompilerParameters compParams = new CompilerParameters();
 			IEnumerator enumLibs = ExternalLibraries.Instance.LoadedAssemblies;
 			while(enumLibs.MoveNext())
+			{
+							Console.WriteLine("[Inline Script precompile linking]: " + enumLibs.Current);
 				compParams.ReferencedAssemblies.Add(((Assembly)enumLibs.Current).GetName().Name);
+			}
 			compParams.GenerateExecutable = true;
 			compParams.GenerateInMemory = true;
 			CompilerResults crs = theCompiler.CompileAssemblyFromSource(compParams,Source);
 			if(crs.Errors.HasErrors)
 				for(int i=0; i< crs.Errors.Count; i++)
-					Console.WriteLine(crs.Errors[i]);
+					Console.WriteLine("[Inline script precompile error]:" + crs.Errors[i]);
 		   m_compiledAssemly = crs.CompiledAssembly;
-			//if fails: wrap source in main method + class -> recompile
 			#endif			
 		}
 

@@ -1,9 +1,9 @@
 /*
-  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
+  	 Uiml.Net: a Uiml .Net renderer (http://research.edm.uhasselt.be/kris/research/uiml.net/)
    
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
-								Limburgs Universitair Centrum
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@uhasselt.be)
+	 Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
+	 Hasselt University
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License
@@ -29,7 +29,7 @@ namespace Uiml.Executing
 	using System.Collections;
 	using System.Reflection;
 
-	using Uiml.Rendering; // this is BAD, should make a separate Type Resolving subpackage?
+	using Uiml.Rendering;
 	using Uiml.Peers; // needed for determining which type of caller is needed 
 	using Uiml.Executing.Callers;
 	
@@ -173,6 +173,7 @@ namespace Uiml.Executing
 		{
 			get { return m_outputParams; }
 		}
+
 		
 		public IRenderer Renderer
 		{

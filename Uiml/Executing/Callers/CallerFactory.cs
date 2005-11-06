@@ -1,9 +1,9 @@
 /*
-  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
+  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.uhasselt.be/kris/research/uiml.net/)
    
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
-								Limburgs Universitair Centrum
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@uhasselt.be)
+   Expertise Centre for Digital Media (http://www.edm.uhasselt.be)
+	 Hasselt University
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License
@@ -44,46 +44,53 @@ namespace Uiml.Executing.Callers
 		/// </summary>
 		public Caller CreateCaller()
 		{
-			// get location from vocabulary
-			Location l = Call.Renderer.Voc.GetLocationCmp(Call.ObjectName);
 
-			if (l == null) // no location specified
-				return new LocalCaller(Call); // local by default
-			else
-			{	
-				switch(l.Type)
-				{
-					case Location.Protocol.XmlRpc:
-						return LoadCaller(XML_RPC_LIB, XML_RPC_CALLER, new object[] { Call, l.Value });
-					//case Location.Protocol.Soap:
-						// TODO
-						//return null;
-					case Location.Protocol.Local:
-						return new LocalCaller(Call);
-					default:
-						return null;
+			// get location from vocabulary
+			try{
+				Location l = Call.Renderer.Voc.GetLocationCmp(Call.ObjectName);			
+				if (l == null) // no location specified
+					return new LocalCaller(Call); // local by default
+				else
+				{	
+					switch(l.Type)
+					{
+						case Location.Protocol.XmlRpc:
+							return LoadCaller(XML_RPC_LIB, XML_RPC_CALLER, new object[] { Call, l.Value });
+						//case Location.Protocol.Soap:
+							// TODO
+							//return null;
+						case Location.Protocol.Local:
+							return new LocalCaller(Call);
+						default:
+							return null;
+					}
 				}
 			}
+				catch(MappingNotFoundException nfe)									
+				{
+							//could be an inline script
+							return  new LocalCaller(Call);
+				}
 		}
 		
 		private Caller LoadCaller(string lib, string caller, object[] parameters)
 		{
 			Caller result = null;
 
-			Console.Write("Looking for {0} library... ", lib);
+			//Console.Write("Looking for {0} library... ", lib);
 			try
 			{
 				Assembly a = Assembly.LoadFrom(lib);
 				Console.WriteLine("OK!");
 
-				Console.Write("Loading caller {0}... ", caller);
+				//Console.Write("Loading caller {0}... ", caller);
 				Type t = a.GetType(caller);
 				result = (Caller) Activator.CreateInstance(t, parameters);
 				Console.WriteLine("OK!");
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine("Failed!");
+				Console.WriteLine("Unable to execute requested functionality...");
 				Console.WriteLine("Trying to continue...");
 			}
 

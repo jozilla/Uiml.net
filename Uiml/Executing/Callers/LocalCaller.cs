@@ -1,10 +1,10 @@
 /*
-  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.luc.ac.be/kris/research/uiml.net/)
+  	 Uiml.Net: a Uiml.Net renderer (http://research.edm.uhasselt.be/kris/research/uiml.net/)
    
-	 Copyright (C) 2003  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
-								Limburgs Universitair Centrum
-
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@uhasselt.be)
+	 Expertise Centre for Digital Media (http://www.edm.luc.ac.be)
+   Hasselt University
+	 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License
 	as published by the Free Software Foundation; either version 2.1
@@ -19,7 +19,9 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-	Author: Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	Authors: 
+	Kris Luyten
+	Jo Vermeulen <jo.vermeulen@uhasselt.be>
 */
 
 namespace Uiml.Executing.Callers
@@ -31,11 +33,11 @@ namespace Uiml.Executing.Callers
 	using System.Collections;
 	using System.Reflection;
 
-	using Uiml.Rendering; //this is BAD, should make a separate Type Resolving subpackage?
+	using Uiml.Rendering; 
 	
 	/// <summary>
-	/// This class represents a local caller. It is the opposite of a remote caller, 
-	/// such as XmlRpcCaller.
+	/// This class represents a caller that invokes functionality available on the same
+	/// computer as the renderer.
 	/// </summary>
 	public class LocalCaller : Caller
 	{
