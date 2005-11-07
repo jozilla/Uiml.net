@@ -1,4 +1,8 @@
 2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Makefile: Updated Makefile to also copy gtkgui.uiml and 
+	compactgui.uiml to the Uiml/ directory when uiml.net.exe is build.
+	* Uiml/FrontEnd/SwfGUI.cs: Changed library from uimldotnet.dll to 
+	uiml.net.dll.
 	* Uiml/Executing/Script.cs: fixed bug with loading of assemblies needed for
 	a script.
 

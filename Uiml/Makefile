@@ -36,12 +36,9 @@ exe:
  	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
-
-cli-exe:
-	@echo "building executable" 
-	mcs ${DEBUG} -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs Executing/*.cs\
-	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
-	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.CommandLine
+	@echo "copying uiml files for frontend"
+	cp FrontEnd/gtkgui.uiml .
+	cp FrontEnd/compactgui.uiml .
 	@echo "done"
 
 lib :
@@ -66,4 +63,4 @@ xml-rpc:
 	mcs ${DEBUG} ${XMLRPCLIBS} -r:uiml.net.dll -out:uiml-xml-rpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
 
 clean:
-	rm -f *.exe *.dll *.mdb
+	rm -f *.exe *.dll *.mdb compactgui.uiml gtkgui.uiml
