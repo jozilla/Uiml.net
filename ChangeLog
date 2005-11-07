@@ -1,3 +1,7 @@
+2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Executing/Script.cs: fixed bug with loading of assemblies needed for
+	a script.
+
 2005-11-06 Kris Luyten <kris.luyten@uhasselt.be>
 	* Uiml/Executing/Callers/CallerFactory.cs: avoid crash for inline scripted
 	calls 

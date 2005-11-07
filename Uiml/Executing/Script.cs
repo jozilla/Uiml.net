@@ -102,44 +102,45 @@ namespace Uiml.Executing
 			#if !COMPACT
 			CodeDomProvider theProvider;
 			switch(Type)
-         {
-            case "CSharp":
-						case "C#":
-						case "csharp":
-						case "C Sharp":
-						case "C sharp":
-              theProvider = new Microsoft.CSharp.CSharpCodeProvider();
-              break;
+			{
+				case "CSharp":
+				case "C#":
+				case "csharp":
+				case "C Sharp":
+				case "C sharp":
+					theProvider = new Microsoft.CSharp.CSharpCodeProvider();
+					break;
 //         	 case "JScript":
 //              theProvider = new Microsoft.JScript.JScriptCodeProvider();
 //              break;
-            case "Visual Basic":
-						case "VB":
-						case "VB.Net":
-						case "vb":
-						case "vb.net":
-						case "VB.NET":
-              theProvider = new Microsoft.VisualBasic.VBCodeProvider();
-              break;
-						case "Nemerle":
-						case "nemerle":
-							theProvider = new Nemerle.Compiler.NemerleCodeProvider();
-							break;
-						case "Boo":
-						case "boo":
-							theProvider = new Boo.Lang.CodeDom.BooCodeProvider();
-							break;
-            default:
-              theProvider = new Microsoft.CSharp.CSharpCodeProvider();
-              break;
-         }
+        	    case "Visual Basic":
+				case "VB":
+				case "VB.Net":
+				case "vb":
+				case "vb.net":
+				case "VB.NET":
+					theProvider = new Microsoft.VisualBasic.VBCodeProvider();
+					break;
+				case "Nemerle":
+				case "nemerle":
+					theProvider = new Nemerle.Compiler.NemerleCodeProvider();
+					break;
+				case "Boo":
+				case "boo":
+					theProvider = new Boo.Lang.CodeDom.BooCodeProvider();
+					break;
+				default:
+					theProvider = new Microsoft.CSharp.CSharpCodeProvider();
+					break;
+			}
+			
 			ICodeCompiler theCompiler = theProvider.CreateCompiler();
 			CompilerParameters compParams = new CompilerParameters();
 			IEnumerator enumLibs = ExternalLibraries.Instance.LoadedAssemblies;
 			while(enumLibs.MoveNext())
 			{
-							Console.WriteLine("[Inline Script precompile linking]: " + enumLibs.Current);
-				compParams.ReferencedAssemblies.Add(((Assembly)enumLibs.Current).GetName().Name);
+				Console.WriteLine("[Inline Script precompile linking]: " + enumLibs.Current);
+				compParams.ReferencedAssemblies.Add(((Assembly)enumLibs.Current).Location);
 			}
 			compParams.GenerateExecutable = true;
 			compParams.GenerateInMemory = true;
