@@ -1,4 +1,4 @@
-By Jo Vermeulen on http://lumumba.luc.ac.be/~jo/weblog/2004/08/connecting-uiml-with-object-instances.html
+By Jo Vermeulen on http://lumumba.uhasselt.be/~jo/weblog/2004/08/connecting-uiml-with-object-instances.html
 
 Basic connectivity
 

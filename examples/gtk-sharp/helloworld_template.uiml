@@ -9,6 +9,6 @@
 		<style source="file:///home/jo/Projects/uiml.net/examples/gtk-sharp/helloworld_template_data.uiml#hello_style" />
 	</interface>
 	<peers>
-		<presentation base="file:///home/jo/Projects/uiml.net/vocabularies/gtk-sharp-1.0.uiml" />
+		<presentation base="http://research.edm.uhasselt.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
 	</peers>
 </uiml>

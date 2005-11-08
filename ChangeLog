@@ -1,4 +1,9 @@
 2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Many fixes regarding the university name change, remains of the original GPL
+	license and references to local files in the examples. Contributed by
+	Panagiotis Issaris <takis.issaris@uhasselt.be>.
+
+2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Makefile: Updated Makefile to also copy gtkgui.uiml and 
 	compactgui.uiml to the Uiml/ directory when uiml.net.exe is build.
 	* Uiml/FrontEnd/SwfGUI.cs: Changed library from uimldotnet.dll to 
@@ -64,7 +69,7 @@
 	* Uiml/UimlDocument.cs: new interface IUimlComponent since UimlDocument is a
 	leave in the UimlComposite pattern
 
-2005-05-21 Jo Vermeulen <jo@lumumba.luc.ac.be>
+2005-05-21 Jo Vermeulen <jo@lumumba.uhasselt.be>
 	* Uiml/Makefile: Changed -o FILE to -out:FILE due to compatibility warning 
 	issued by Mono version 1.1.
 

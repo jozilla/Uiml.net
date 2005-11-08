@@ -12,31 +12,31 @@
 <!ENTITY FDL12 SYSTEM "fdl-1.2.xml">
 <!ENTITY o "<![CDATA[<]]>">
 <!ENTITY w3c "http://www.w3.org">
-<!ENTITY EDM "&o;ulink url=&quot;http://edm.luc.ac.be&quot;>Expertisecentrum voor Digitale Media&o;/ulink>">
-<!ENTITY LUC "&o;ulink url=&quot;http://www.luc.ac.be&quot;>Limburgs Universitair Centrum&o;/ulink>">
+<!ENTITY EDM "&o;ulink url=&quot;http://edm.uhasselt.be&quot;>Expertisecentrum voor Digitale Media&o;/ulink>">
+<!ENTITY LUC "&o;ulink url=&quot;http://www.luc.ac.be&quot;>Hasselt University&o;/ulink>">
 ]>
 <book lang="en" id="index">
 <!--
 Copyright (c)  2004
-author: Kris Luyten <kris.luyten@luc.ac.be>.
-	    Limburgs Universitair Centrum
+author: Kris Luyten <kris.luyten@uhasselt.be>.
+	    Hasselt University
 		Expertisecentrum Digitale Media
 
 -->
 
 	<bookinfo>		
 		<title>Grokking Uiml.net</title>
-		<address>http://research.edm.luc.ac.be/kris/projects/uiml.net</address>
+		<address>http://research.edm.uhasselt.be/kris/projects/uiml.net</address>
 		<authorgroup>
 			<author>
 				<firstname>Kris</firstname>
 				<surname>Luyten</surname>
 				<affiliation>
-					<orgname><ulink url="http://www.luc.ac.be">Limburgs Universitair Centrum</ulink></orgname>
-					<orgdiv><ulink url="http://www.edm.luc.ac.be">Expertisecentrum Digitale Media</ulink></orgdiv>
+					<orgname><ulink url="http://www.luc.ac.be">Hasselt University</ulink></orgname>
+					<orgdiv><ulink url="http://www.edm.uhasselt.be">Expertisecentrum Digitale Media</ulink></orgdiv>
 					<address>
 						<email>
-							kris.luyten@luc.ac.be
+							kris.luyten@uhasselt.be
 						</email>
 					</address>
 				</affiliation>

@@ -10,7 +10,7 @@
 		</structure>
 		<style>
 			<property part-name="browser" name="website">
-				http://research.edm.luc.ac.be/~kris/projects/uiml.net/
+				http://research.edm.uhasselt.be/~kris/projects/uiml.net/
 			</property>
 		</style>
 	</interface>

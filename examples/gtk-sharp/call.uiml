@@ -36,7 +36,7 @@
 		</style>
 	</interface>
 	<peers>
-		<presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+		<presentation base="http://research.edm.uhasselt.be/~kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
 	</peers>
 </uiml>
 

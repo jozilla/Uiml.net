@@ -26,6 +26,6 @@
 		</behavior>
 	</interface>
 	<peers>
-		<presentation base="http://research.edm.luc.ac.be/kris/projects/uiml.net/swf-1.1.uiml"/>
+		<presentation base="http://research.edm.uhasselt.be/kris/projects/uiml.net/swf-1.1.uiml"/>
 	</peers>
 </uiml>

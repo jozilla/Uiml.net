@@ -110,7 +110,7 @@
 		</style>
 	</interface>
 	 <peers>
-		 <!--		 <presentation base="http://research.edm.luc.ac.be/~kris/projects/uiml.net/wx-net-1.0.uiml"/> -->
+		 <!--		 <presentation base="http://research.edm.uhasselt.be/~kris/projects/uiml.net/wx-net-1.0.uiml"/> -->
 		 <presentation base="file:///home/kris/projects/uiml.net/vocabularies/wx-net-1.0.uiml"/>
   	 </peers>
 </uiml>

@@ -44,7 +44,7 @@
 	</behavior>
 </interface>
 <peers>
-	<presentation base="http://research.edm.luc.ac.be/kris/projects/uiml.net/swf-1.1.uiml"/> 
+	<presentation base="http://research.edm.uhasselt.be/kris/projects/uiml.net/swf-1.1.uiml"/> 
 	<!-- <presentation base="\My Documents\cswf-1.0.uiml"/> -->
 	<logic id="CompactGUI">
 		<d-component id="GUI" maps-to="Uiml.FrontEnd.SwfGUI">

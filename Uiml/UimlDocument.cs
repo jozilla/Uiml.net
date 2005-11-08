@@ -1,7 +1,7 @@
 /*
 	 uiml.net: a Uiml .NET renderer (http://research.edm.uhasselt.be/kris/research/uiml.net)
     
-	 Copyright (C) 2005  Kris Luyten (kris.luyten@luc.ac.be)
+	 Copyright (C) 2005  Kris Luyten (kris.luyten@uhasselt.be)
 	                     Expertise Centre for Digital Media (http://www.edm.uhasselt.be)
 						Hasselt University
 
@@ -13,7 +13,7 @@
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+	GNU Lesser General Public License for more details.
 
 	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software

@@ -1,9 +1,9 @@
 /*
-    Uiml.Net: a .Net UIML renderer (http://research.edm.luc.ac.be/kris/research/uiml.net)
+    Uiml.Net: a .Net UIML renderer (http://research.edm.uhasselt.be/kris/research/uiml.net)
 
-	 Copyright (C) 2004  Kris Luyten (kris.luyten@luc.ac.be)
-	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
-								Limburgs Universitair Centrum
+	 Copyright (C) 2004  Kris Luyten (kris.luyten@uhasselt.be)
+	                     Expertise Centre for Digital Media (http://edm.uhasselt.be)
+								Hasselt University
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License
@@ -13,7 +13,7 @@
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+	GNU Lesser General Public License for more details.
 
 	You should have received a copy of the GNU Lesser General Public License
 	along with this program; if not, write to the Free Software
@@ -118,9 +118,9 @@ namespace Uiml.FrontEnd{
 			Console.WriteLine("                                                                              	  ");
 			Console.WriteLine("         Uiml.Net: a free Uiml 3.0 renderer for .Net                           	  ");
 			Console.WriteLine("                                                                             	  ");
-			Console.WriteLine("Copyright: Expertise Centre for Digital Media -- Limburgs Universitair Centrum	  ");
-			Console.WriteLine("contact: kris.luyten@luc.ac.be                                                	  ");
-			Console.WriteLine("web: http://research.edm.luc.ac.be/kris/projects/uiml.net                         ");
+			Console.WriteLine("Copyright: Expertise Centre for Digital Media -- Hasselt University	  ");
+			Console.WriteLine("contact: kris.luyten@uhasselt.be                                                	  ");
+			Console.WriteLine("web: http://research.edm.uhasselt.be/kris/projects/uiml.net                         ");
 			Console.WriteLine("                                                                          	     ");
 			Console.WriteLine("Please email the bugs you find using this tool to us                     	        ");
 			Console.WriteLine("                                                                         	        ");
