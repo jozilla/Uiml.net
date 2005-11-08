@@ -69,7 +69,7 @@
 	</target>
 
 	<target name="compile" description="Compile project" depends="init">
-		<csc target="${target.type}" output="${dir.output}\${project.output}" debug="${debug}" define="${define}" doc="${doc}" optioncompare="${vbc.optionCompare}" optionexplicit="${vbc.optionExplicit}" optionstrict="${vbc.optionStrict}" removeintchecks="${removeIntChecks}" rootnamespace="${rootNamespace}">
+		<csc target="${target.type}" output="${dir.output}\${project.output}" debug="${debug}" define="${define}" doc="${doc}">
 			<arg value="${unsafe}" />
 
 			<sources>
