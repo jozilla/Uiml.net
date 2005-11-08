@@ -69,7 +69,7 @@ namespace Uiml.Rendering.SWF
 			try
 			{	
 				m_topWindow = new SWFRenderedInstance();		
-				m_topWindow.Title = "Uiml container"; //TODO fix this! Set the appropriate title
+				m_topWindow.Title = uimlDoc.Title;
 				Structure uiStruct   = (Structure)uimlDoc.UInterface.UStructure[0];
 				Style     uiStyle    = (Style)uimlDoc.UInterface.UStyle[0];
 				Behavior  uiBehavior = null;

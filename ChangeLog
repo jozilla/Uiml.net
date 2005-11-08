@@ -1,4 +1,15 @@
 2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/UimlDocument: Fixed Title property.
+	* Uiml/Head.cs: Added support for the title meta tag.
+	* Uiml/Rendering/GTKsharp/GtkRenderer.cs:
+	* Uiml/Rendering/SWF/SWFRenderer.cs: Render correct title.
+	* examples/gtk-sharp/gtkTitle.uiml:
+	* examples/swf/swfTitle.uiml: GTK# and SWF examples that use the title meta
+	tag.
+	* Uiml/FrontEnd/gtkgui.uiml
+	* examples/swf/swfMultipleWidgets.uiml: removed references to local files.
+
+2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Rendering/CompactSWF/CompactSWFTypeDecoder.cs: Added support for
 	multiple column ListView items, just as in the SWF backend.
 

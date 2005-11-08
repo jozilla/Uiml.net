@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<head>
+		<meta name="title" content="A simple UIML label"/>
+	</head>
+	<interface>
+		<structure>
+			<part id="simpleLabel" class="Label" />			
+		</structure>
+		<style>
+			<property part-name="simpleLabel" name="text">This window's title is not [Uiml Container]</property>			
+		</style>
+	</interface>
+	<peers>
+		<presentation base="http://research.edm.uhasselt.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml"/>
+	</peers>
+</uiml>

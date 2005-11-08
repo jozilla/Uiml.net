@@ -43,10 +43,10 @@ namespace Uiml{
 				doc.Load(fName);
 				Load(doc);
 			}
-				catch(Exception e)
-				{					
-					Console.WriteLine("Error loading {0} ({1})", fName, e);
-				}
+			catch(Exception e)
+			{					
+				Console.WriteLine("Error loading {0} ({1})", fName, e);
+			}
 		}
 
 		public UimlDocument(XmlNode uimlTopNode)
@@ -97,20 +97,20 @@ namespace Uiml{
 			get { return m_head;}
 			set { m_head = value; }
 		}
-/*
+
 		public String Title
 		{
 			get 
 			{
-				if(UHead!=null)
+				if(UHead != null)
 				{
+					return UHead.Title;
 				}
 				else
 					return "Uiml container";
-					
 			}
 		}
-*/
+
 		public IEnumerator Peers
 		{
 			get { return m_peers.GetEnumerator(); }

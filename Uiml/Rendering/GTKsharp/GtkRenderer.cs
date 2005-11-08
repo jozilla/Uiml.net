@@ -69,8 +69,7 @@ namespace Uiml.Rendering.GTKsharp
 			{
 				Application.Init();
 				m_topWindow = new GtkRenderedInstance();
-				m_topWindow.Title = "Uiml container"; 
-				//m_topWindow.Title = uimlDoc.Title; //TODO fix this! Set the appropriate title
+				m_topWindow.Title = uimlDoc.Title;
 				Structure uiStruct   = (Structure)uimlDoc.UInterface.UStructure[0];
 				Style     uiStyle    = (Style)uimlDoc.UInterface.UStyle[0];
 				Behavior  uiBehavior = null;

@@ -38,6 +38,7 @@ namespace Uiml{
 	///</summary>
 	public class Head : IUimlElement, ICloneable{
 		private Hashtable metaChildren;
+		private string m_title;
 
 		public Head()
 		{
@@ -64,6 +65,9 @@ namespace Uiml{
 						metaChildren.Add(attr.GetNamedItem(NAME).Value, attr.GetNamedItem(CONTENT).Value);
 					}
 			}
+
+			if (MetaChildren.ContainsKey(TITLE))
+				m_title = (string) MetaChildren[TITLE];
 		}
 
 		public override String ToString()
@@ -97,9 +101,14 @@ namespace Uiml{
 			set { metaChildren= value; } 
 		}
 
+		public string Title
+		{
+			get { return m_title; }
+		}
 		public const String IAM     = "head";
 		public const String META    = "meta"; 
 		public const String NAME    = "name";
 		public const String CONTENT = "content";
+		public const string TITLE		= "title";
 	}
 }
