@@ -1,4 +1,8 @@
 2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Rendering/CompactSWF/CompactSWFTypeDecoder.cs: Added support for
+	multiple column ListView items, just as in the SWF backend.
+
+2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Many fixes regarding the university name change, remains of the original GPL
 	license and references to local files in the examples. Contributed by
 	Panagiotis Issaris <takis.issaris@uhasselt.be>.

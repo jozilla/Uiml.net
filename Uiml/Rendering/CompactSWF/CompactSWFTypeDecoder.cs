@@ -157,7 +157,7 @@ namespace Uiml.Rendering.CompactSWF
 					result.Text = (string)p.Value;
 					return result;
 				case "System.Windows.Forms.ListViewItem":
-					return new System.Windows.Forms.ListViewItem((string)p.Value);
+					return DecodeListViewItem(p);
 				case "System.Windows.Forms.ListViewItem[]":
 					return DecodeListViewItemArray(p);
 				case "System.Windows.Forms.TreeNode":
@@ -283,17 +283,37 @@ namespace Uiml.Rendering.CompactSWF
 				return Orientation.Horizontal;
 		}
 
+		private System.Object DecodeListViewItem(Property p)
+		{
+			return DecodeListViewItem((string) p.Value);
+		}
+
+		private System.Object DecodeListViewItem(string s)
+		{
+			string[] vals = s.Split(new Char[] {';'});
+			ListViewItem top = new ListViewItem(s);
+			
+			if (vals.Length > 0)
+			{
+				top = new ListViewItem(vals[0]);
+				for (int i = 1; i < vals.Length; i++)
+				{
+					top.SubItems.Add(vals[i]);
+				}
+			}
+			
+			return top;
+		}
+    
 		private System.Object DecodeListViewItemArray(Property p)
 		{
-			TreeView x = new TreeView();
-			
 			string[] a = DecodeStringArray(p.Value);
 			ListViewItem[] b = new ListViewItem[a.Length];
 			for(int i = 0; i < a.Length; i++)
 			{
-				b[i] = new ListViewItem(a[i]);
+				b[i] = (ListViewItem) DecodeListViewItem(a[i]);
 			}
-
+			
 			return b;
 		}
 
