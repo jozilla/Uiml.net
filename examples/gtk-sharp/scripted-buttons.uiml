@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd">
 <uiml>
-
   <interface>
 
-    <structure>
-      <part   id="Top"    class="Frame">
+		<structure>
+      <part id="Top" class="Frame">
 				<part class="VBox">
 					<part class="HBox">
 						<part class="Label"><style><property name="text">input</property></style></part>
@@ -17,56 +16,89 @@
 		        <part id="VBButton" class="Button"><style><property name="label">Visual Basic</property></style></part>
    		      <part id="CSButton" class="Button"><style><property name="label">C#</property></style></part>
 						<part id="JSButton" class="Button"><style><property name="label">JavaScript</property></style></part>
-					  <part id="NemerleButton" class="Button"><style><property name="label">Boo</property></style></part>
-						<part id="BooButton" class="Button"><style><property name="label">Nemerle</property></style></part>
+					  <part id="BooButton" class="Button"><style><property name="label">Boo</property></style></part>
+						<part id="NemerleButton" class="Button"><style><property name="label">Nemerle</property></style></part>
 					</part>
 				</part>
       </part>
     </structure>
 
     <style>
-        <property part-name="Top"    name="label">UIML Scripting Example</property>
+        <property part-name="Top" name="label">UIML Scripting Example</property>
     </style>
 
     <behavior>
       <rule>
-        <condition>
+				<condition>
           <event class="ButtonPressed" part-name="VBButton"/>			 
         </condition>
         <action>
 		  	 <call>
-			   <script type="Visual Basic">
-					imports System
-					imports System.Collections
-					Public Module ReadTextFile     
-						Public Sub Main ()      
-							Console.WriteLine ("Visual Basic says: Hello World!")	
-						End Sub 
-					End Module
-				</script>
-			 </call>
+			  	<script type="Visual Basic">
+						imports System
+						imports System.Collections
+						Public Module ReadTextFile     
+							Public Sub Main ()      
+								Console.WriteLine ("Visual Basic says: Hello World!")	
+							End Sub 
+						End Module
+					</script>
+				 </call>
         </action>
       </rule>
       <rule>
-        <condition>
-          <event class="ButtonPressed" part-name="CSButton"/>			 
-        </condition>
+				<condition>
+					<event class="ButtonPressed" part-name="CSButton"/>			 
+				</condition>
         <action>
-		  	 <call>
-			 	<script type="CSharp">
-					using System;
-					public class Test
-					{
-						public static void Main()
-						{
-							Console.WriteLine("C# says: \"Hello World!\"");	
-						}
-					}
-				</script> 
-			 </call>
+					<call>
+						<script type="CSharp">
+							using System;
+							public class Test
+							{
+								public static void Main()
+								{
+									Console.WriteLine("C# says: \"Hello World!\"");	
+								}
+							}
+						</script> 
+					</call>
         </action>
       </rule>
-
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="JSButton"/>
+				</condition>
+				<action>
+					<call>
+						<script type="JScript">
+							System.out.println("JScript says: \"Hello world!\"");
+						</script>
+					</call>
+				</action>
+			</rule>
+      <rule>
+				<condition>
+					<event class="ButtonPressed" part-name="BooButton"/>			 
+				</condition>
+        <action>
+					<call>
+						<script type="Boo">print "Boo says: \"Hello World!\""</script> 
+					</call>
+        </action>
+      </rule>
+			<rule>
+				<condition>
+					<event class="ButtonPressed" part-name="NemerleButton"/>
+				</condition>
+				<action>
+					<call>
+						<script type="Nemerle">
+							System.Console.WriteLine ("Nemerle says: \"Hello world!\"");
+						</script>
+					</call>
+				</action>
+			</rule>
     </behavior>
   </interface>
   <peers>

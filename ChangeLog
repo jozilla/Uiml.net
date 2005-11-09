@@ -1,4 +1,9 @@
-2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+2005-11-09 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Executing/Script.cs: Scripting with Nemerle and Boo now works.
+	* examples/gtk-sharp/scripted-buttons.uiml: Added Nemerle, Boo and JScript
+	scripts to this example. JScript is currently not yet supported on Mono though.
+
+2005-11-08 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/UimlDocument: Fixed Title property.
 	* Uiml/Head.cs: Added support for the title meta tag.
 	* Uiml/Rendering/GTKsharp/GtkRenderer.cs:

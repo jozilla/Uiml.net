@@ -48,7 +48,7 @@ namespace Uiml.Executing
 		private String m_scriptSource;
 		private String m_type;
 		private bool m_preCompiled = false;
-		private Assembly m_compiledAssemly;
+		private Assembly m_compiledAssembly;
 		private Object m_retValue = null;
 
 		public Script()
@@ -100,7 +100,7 @@ namespace Uiml.Executing
 		protected void PreCompile()
 		{
 			#if !COMPACT
-			CodeDomProvider theProvider;
+			CodeDomProvider theProvider = null;
 			switch(Type)
 			{
 				case "CSharp":
@@ -110,10 +110,13 @@ namespace Uiml.Executing
 				case "C sharp":
 					theProvider = new Microsoft.CSharp.CSharpCodeProvider();
 					break;
-//         	 case "JScript":
-//              theProvider = new Microsoft.JScript.JScriptCodeProvider();
-//              break;
-        	    case "Visual Basic":
+				case "JScript":
+					// FIXME
+					Console.WriteLine("JScript does not yet work with Mono.");
+					return;
+					//theProvider = new Microsoft.JScript.JScriptCodeProvider();
+					//break;
+        case "Visual Basic":
 				case "VB":
 				case "VB.Net":
 				case "vb":
@@ -148,7 +151,7 @@ namespace Uiml.Executing
 			if(crs.Errors.HasErrors)
 				for(int i=0; i< crs.Errors.Count; i++)
 					Console.WriteLine("[Inline script precompile error]:" + crs.Errors[i]);
-		   m_compiledAssemly = crs.CompiledAssembly;
+		   m_compiledAssembly = crs.CompiledAssembly;
 			#endif			
 		}
 
@@ -168,15 +171,35 @@ namespace Uiml.Executing
 		{
 			if(!m_preCompiled)
 				PreCompile();
-		   //add code to execute m_compiledAssemly here	
-			Type[] types = m_compiledAssemly.GetTypes();
-			BindingFlags flags = ( BindingFlags.Public | BindingFlags.Static ); 
+		  
+			// FIXME: remove this test when JScript works
+			if (m_compiledAssembly == null)
+				return null;
+			
+			// let's execute m_compiledAssembly here	
+			Type[] types = m_compiledAssembly.GetTypes();
+
+			// Boo and Nemerle have non-public Main methods
+			BindingFlags flags = ( BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic ); 
+
 			foreach(Type t in types)
-         {
-            MethodInfo[] mi = t.GetMethods(flags);
+      {
+        MethodInfo[] mi = t.GetMethods(flags);
 				foreach(MethodInfo m in mi)
+				{
 					if(m.Name == "Main")
-						m_retValue = m.Invoke(null, null);
+					{
+						try
+						{
+							m_retValue = m.Invoke(null, null);
+						}
+						catch (TargetParameterCountException)
+						{
+							// parameter to main method is string[] instead of void
+							m_retValue = m.Invoke(null, new object[] { new string[] {} });
+						}
+					}
+				}
 			}
 			return null;
 		}
@@ -211,7 +234,5 @@ namespace Uiml.Executing
 		
 		public const string IAM  = "script";
 		public const string TYPE  = "type";
-
 	}
-	
 }
