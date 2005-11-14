@@ -25,6 +25,7 @@ namespace Uiml {
 
 	using System;
 	using System.Xml;
+	using System.Text;
 	using System.Reflection;
 	using System.Collections; 
 	
@@ -465,6 +466,24 @@ namespace Uiml {
 				else
 					Console.WriteLine("Could not add Part [{0}] to the UimlEventArgs; part not found", a.Params[i]);
 			}
+		}
+
+		public override string ToString()
+		{
+			return ToStringTree(string.Empty, "  ", "-");
+		}
+
+		protected string ToStringTree(string prefix, string orgPrefix, string orgLevel)
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.AppendFormat("{0}\n", prefix + orgLevel + Identifier);
+
+			foreach (Part ch in Children)
+			{
+				sb.Append(ch.ToStringTree(prefix + orgPrefix, orgPrefix, orgLevel));
+			}
+
+			return sb.ToString();
 		}
 
 		public const string IAM = "part";

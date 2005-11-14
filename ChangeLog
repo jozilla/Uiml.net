@@ -1,4 +1,5 @@
 2005-11-14 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Part.cs: Added a ToString method which prints out the part tree.
 	* Merged improvements to callers and BackendFactory from layout management
 	code.
 	* Preparing merge of layout management code by adding a PreRender method to
@@ -23,13 +24,9 @@
 2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Rendering/CompactSWF/CompactSWFTypeDecoder.cs: Added support for
 	multiple column ListView items, just as in the SWF backend.
-
-2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Many fixes regarding the university name change, remains of the original GPL
 	license and references to local files in the examples. Contributed by
 	Panagiotis Issaris <takis.issaris@uhasselt.be>.
-
-2005-11-07 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Makefile: Updated Makefile to also copy gtkgui.uiml and 
 	compactgui.uiml to the Uiml/ directory when uiml.net.exe is build.
 	* Uiml/FrontEnd/SwfGUI.cs: Changed library from uimldotnet.dll to 
