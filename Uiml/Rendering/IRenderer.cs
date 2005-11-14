@@ -30,6 +30,7 @@ namespace Uiml.Rendering
 
 	public interface IRenderer
 	{
+		IRenderedInstance PreRender(UimlDocument uimlDoc);
 		IRenderedInstance Render(UimlDocument uimlDoc);
 		Vocabulary        Voc              { get; }
 		ITypeDecoder      Decoder          { get; }

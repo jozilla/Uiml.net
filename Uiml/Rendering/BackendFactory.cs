@@ -28,15 +28,19 @@ namespace Uiml.Rendering
 
 	public class BackendFactory
 	{
-		public String[] assemblies = { "uiml-gtk-sharp.dll",
-												 "uiml-wx-net.dll",
-												 "uiml-swf.dll",
-												 "uiml-compact-swf.dll" };
+		public String[] assemblies =	{ 
+																		"uiml-gtk-sharp.dll",
+																		"uiml-wx-net.dll",
+																		"uiml-swf.dll",
+																		"uiml-compact-swf.dll" 
+																	};
 
-		public String[] renderers = { "Uiml.Rendering.GTKsharp.GtkRenderer",
-			                           "Uiml.Rendering.WXnet.WxRenderer",
-			                           "Uiml.Rendering.SWF.SWFRenderer",
-			                           "Uiml.Rendering.CompactSWF.CompactSWFRenderer"};
+		public String[] renderers = 	{ 
+																		"Uiml.Rendering.GTKsharp.GtkRenderer",
+																		"Uiml.Rendering.WXnet.WxRenderer",
+																		"Uiml.Rendering.SWF.SWFRenderer",
+																		"Uiml.Rendering.CompactSWF.CompactSWFRenderer"
+																	};
 
 		public const string NAME = "NAME";
 
@@ -92,7 +96,7 @@ namespace Uiml.Rendering
 			
 			//IRenderer renderer = null;
 			Console.WriteLine("Looking for {0} renderer", name);
-			for(int i=0; i< renderers.Length; i++)
+			for (int i=0; i< renderers.Length; i++)
 			{
 				try
 				{

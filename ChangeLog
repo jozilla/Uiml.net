@@ -1,3 +1,9 @@
+2005-11-14 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Merged improvements to callers and BackendFactory from layout management
+	code.
+	* Preparing merge of layout management code by adding a PreRender method to
+	the renderer in addition to its Render method.
+
 2005-11-09 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Executing/Script.cs: Scripting with Nemerle and Boo now works.
 	* examples/gtk-sharp/scripted-buttons.uiml: Added Nemerle, Boo and JScript

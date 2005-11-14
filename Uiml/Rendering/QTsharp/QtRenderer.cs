@@ -35,8 +35,7 @@ namespace Uiml.Rendering.QTsharp
 		{
 		}
 
-
-		public RenderedInstance render(UimlDocument uimlDoc)			
+		public RenderedInstance PreRender(UimlDocument uimlDoc)			
 		{
 			m_topWindow = new QtRenderedInstance();
 		}

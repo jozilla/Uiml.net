@@ -64,7 +64,7 @@ namespace Uiml.Rendering.CompactSWF
 		}
 
 		
-		public override IRenderedInstance Render(UimlDocument uimlDoc)
+		public override IRenderedInstance PreRender(UimlDocument uimlDoc)
 		{
 			try
 			{	

@@ -29,7 +29,7 @@ namespace Uiml.Executing
 	using System.Collections;
 	using System.Reflection;
 
-	using Uiml.Rendering;
+	using Uiml.Rendering; 
 	using Uiml.Peers; // needed for determining which type of caller is needed 
 	using Uiml.Executing.Callers;
 	
@@ -173,7 +173,6 @@ namespace Uiml.Executing
 		{
 			get { return m_outputParams; }
 		}
-
 		
 		public IRenderer Renderer
 		{

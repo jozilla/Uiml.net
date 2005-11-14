@@ -45,7 +45,8 @@ namespace Uiml.Rendering
 		protected bool m_stopOnError = true;
 
 		
-		abstract public IRenderedInstance Render(UimlDocument uimlDoc);
+		abstract public IRenderedInstance PreRender(UimlDocument uimlDoc);
+		virtual public IRenderedInstance Render(UimlDocument uimlDoc) { return PreRender(uimlDoc); }
 		abstract public IPropertySetter   PropertySetter   { get; }	
 		abstract protected System.Object LoadAdHocProperties(ref System.Object uiObject, Part part, Style s);
 

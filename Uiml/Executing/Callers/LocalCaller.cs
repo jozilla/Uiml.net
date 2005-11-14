@@ -93,9 +93,9 @@ namespace Uiml.Executing.Callers
 
 			//convert the params to types
 			Type[] tparamTypes = null;
-			try{
+			try {
 				tparamTypes = CreateInOutParamTypes(parameters, out outputPlaceholder);
-			}catch(ArgumentOutOfRangeException) { return null; }
+			} catch(ArgumentOutOfRangeException) { return null; }
 			
 			MethodInfo m = objectType.GetMethod(concreteMethodName, tparamTypes);
 			System.Object[] args = new System.Object[tparamTypes.Length];
@@ -111,12 +111,12 @@ namespace Uiml.Executing.Callers
 			{
 				result = m.Invoke(obj, args);
 			}
-				catch(System.Reflection.TargetInvocationException tie)
-				{
-					Console.WriteLine(tie);
-					Console.WriteLine("Error while executing \"{0}\" from \"{1}\"; please check this method", m, obj.GetType());
-					throw tie;
-				}
+			catch(System.Reflection.TargetInvocationException tie)
+			{
+				Console.WriteLine(tie);
+				Console.WriteLine("Error while executing \"{0}\" from \"{1}\"; please check this method", m, obj.GetType());
+				throw tie;
+			}
 
 			//get the updated parameters out of args
 			for(int i=0; i<parameters.Length; i++)

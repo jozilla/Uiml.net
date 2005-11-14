@@ -59,7 +59,7 @@ namespace Uiml.Rendering.WXnet
 			get { return this; }
 		}
 		
-		public override IRenderedInstance Render(UimlDocument uimlDoc)
+		public override IRenderedInstance PreRender(UimlDocument uimlDoc)
 		{
 			try
 			{

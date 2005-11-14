@@ -66,11 +66,11 @@ namespace Uiml.Executing.Callers
 					}
 				}
 			}
-				catch(MappingNotFoundException nfe)									
-				{
-							//could be an inline script
-							return  new LocalCaller(Call);
-				}
+			catch(MappingNotFoundException nfe)									
+			{
+						//could be an inline script
+						return  new LocalCaller(Call);
+			}
 		}
 		
 		private Caller LoadCaller(string lib, string caller, object[] parameters)
