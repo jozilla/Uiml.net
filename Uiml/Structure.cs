@@ -43,10 +43,12 @@ namespace Uiml{
 	public class Structure : UimlAttributes, IUimlElement{
 		private Part m_top;
 		
-		public Structure(){
+		public Structure() 
+		{
 		}
 
-		public Structure(XmlNode n){
+		public Structure(XmlNode n)
+		{
 			Process(n);
 		}
 
@@ -56,7 +58,8 @@ namespace Uiml{
 		///<remarks>
 		///precondition: n has children
 		///</remarks>
-		public void Process(XmlNode n){
+		public void Process(XmlNode n)
+		{
 			if(n.Name !=  IAM)
 				return;
 			
@@ -95,14 +98,16 @@ namespace Uiml{
 			return Top.SearchPart(partName);
 		}
 
-
 		public ArrayList Children
 		{
 			get { return null; }
 		}
 
+		public string PartTree() 
+		{
+			return Top.ToString();
+		}
 
 		public const string IAM = "structure";
-
 	}
 }

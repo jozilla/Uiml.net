@@ -130,6 +130,11 @@ namespace Uiml{
 			return props;
 		}
 
+		public void RemoveProperty(Property p)
+		{
+			m_properties.Remove(p);
+		}
+
 		///<description>
 		/// Given a set of types and parameter names, this method searches for the best matching
 		/// property in the style definition

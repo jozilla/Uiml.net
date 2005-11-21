@@ -68,6 +68,12 @@ namespace Uiml{
 			m_nr = counter++;
 		}
 
+		public Property(string partName, string name, string val) : this()
+		{
+			m_part_name = partName;
+			m_name = name;
+			m_value = val;
+		}
 
 		public Property(XmlNode n) : this()
 		{
@@ -230,7 +236,6 @@ namespace Uiml{
 
 		}
 
-
 		public override String ToString()
 		{
 			return "[Property]:" + Name + " for " + PartName  + "="  + Value;
@@ -240,7 +245,6 @@ namespace Uiml{
 		{
 			get { return null; }
 		}
-
 
 		public const string IAM         = "property";
 		public const string NAME        = "name";

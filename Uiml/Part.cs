@@ -182,17 +182,17 @@ namespace Uiml {
 		{
 			m_children.Remove(p);
 		}
-
-	  public void AddProperty(Property p)
-	  {
+		
+		public void AddProperty(Property p)
+		{
 			p.PartName = Identifier;
-	    m_properties.Add(p);
-	  }
+			m_properties.Add(p);
+		}
 
-	  public void RemoveProperty(Property p)
-	  {
-	    m_properties.Remove(p);
-	  }
+		public void RemoveProperty(Property p)
+		{
+			m_properties.Remove(p);
+		}
 
 		public Part Parent
 		{
@@ -492,9 +492,14 @@ namespace Uiml {
 			StringBuilder sb = new StringBuilder();
 			sb.AppendFormat("{0}\n", prefix + orgLevel + Identifier);
 
-			foreach (Part ch in Children)
+			foreach (object ch in Children)
 			{
-				sb.Append(ch.ToStringTree(prefix + orgPrefix, orgPrefix, orgLevel));
+				// only for parts, not for inline style elements
+				if (ch is Part)
+				{
+					Part p = (Part) ch;
+					sb.Append(p.ToStringTree(prefix + orgPrefix, orgPrefix, orgLevel));
+				}
 			}
 
 			return sb.ToString();

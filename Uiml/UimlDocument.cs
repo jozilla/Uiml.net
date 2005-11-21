@@ -191,7 +191,7 @@ namespace Uiml{
 			Console.WriteLine(UInterface.UStructure);
 			Console.WriteLine(UInterface.UStructure[0]);
 			Part p = ((Structure)UInterface.UStructure[0]).SearchPart(identifier);
-			if(p!=null)
+			if (p != null)
 				p.Connect(o, this);
 		}
 	
@@ -218,6 +218,11 @@ namespace Uiml{
 				al.Add(m_peers);
 				return al; 
 			}
+		}
+
+		public string PartTree() 
+		{
+			return ((Structure) UInterface.UStructure[0]).PartTree();
 		}
 		
 		//ICloneable methods:

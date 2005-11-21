@@ -1,5 +1,12 @@
 2005-11-21 Jo Vermeulen <jo.vermeulen@uhasselt.be>
-	* Uiml/Part.cs: Added RemoveChild, AddProperty and RemoveProperty methods.
+	* Uiml/Part.cs: Added RemoveChild, AddProperty and RemoveProperty
+	methods. Updated ToString method.
+	* Uiml/Property.cs: Added constructor with part name, name and value
+	as arguments.
+	* Uiml/Structure.cs: Added PartTree method.
+	* Uiml/Style.cs: Added RemoveProperty method.
+	* Uiml/UimlDocument.cs: Added PartTree method (which calls the
+	PartTree method of the document's structure).
 
 2005-11-14 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Part.cs: Added a ToString method which prints out the part tree.
