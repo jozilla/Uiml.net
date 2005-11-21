@@ -152,8 +152,7 @@ namespace Uiml {
 							break;
 						case IAM:
 							Part p = new Part(xnl[i]);
-							p.Parent = this;
-							m_children.Add(p);
+							AddChild(p);
 							break;
 					}
 				}
@@ -175,10 +174,25 @@ namespace Uiml {
 
 		public void AddChild(Part p)
 		{
-			if(m_children == null)
-				m_children = new ArrayList();
+			p.Parent = this;
 			m_children.Add(p);
 		}
+		
+		public void RemoveChild(Part p)
+		{
+			m_children.Remove(p);
+		}
+
+	  public void AddProperty(Property p)
+	  {
+			p.PartName = Identifier;
+	    m_properties.Add(p);
+	  }
+
+	  public void RemoveProperty(Property p)
+	  {
+	    m_properties.Remove(p);
+	  }
 
 		public Part Parent
 		{

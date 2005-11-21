@@ -1,3 +1,6 @@
+2005-11-21 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Part.cs: Added RemoveChild, AddProperty and RemoveProperty methods.
+
 2005-11-14 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Part.cs: Added a ToString method which prints out the part tree.
 	* Merged improvements to callers and BackendFactory from layout management
