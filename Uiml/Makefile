@@ -9,6 +9,7 @@ INLINESCRIPTLIBS=-pkg:nemerle -pkg:boo
 #LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
 #LIBS=-gtk -L/usr/local/lib/
+SOLVERLIBS = -r:Cassowary.dll -r:Cassowary.Parsing.dll
 
 all: lib exe
 	@echo " building gtk backend"
@@ -30,10 +31,11 @@ all: lib exe
 #exe :
 #	mcs ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
 #	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
-exe:
+
+exe:	solver
 	@echo "building executable" 
-	mcs ${DEBUG} ${INLINESCRIPTLIBS} ${GTKLIBS} -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs\
- 	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
+	mcs ${DEBUG} ${INLINESCRIPTLIBS} ${GTKLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs\
+	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
 	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 	@echo "copying uiml files for frontend"
@@ -41,10 +43,16 @@ exe:
 	cp FrontEnd/compactgui.uiml .
 	@echo "done"
 
-lib :
+lib:	solver
 	@echo "building library"
-	mcs ${DEBUG} ${INLINESCRIPTLIBS} -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs\
+	mcs ${DEBUG} ${INLINESCRIPTLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs\
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs
+	@echo "done"
+
+solver:
+	@echo "building constraint solver"
+	make -C ../Cassowary/ parselib lib
+	mv ../Cassowary/Cassowary*dll .
 	@echo "done"
 
 gtk:
@@ -64,3 +72,4 @@ xml-rpc:
 
 clean:
 	rm -f *.exe *.dll *.mdb compactgui.uiml gtkgui.uiml
+	make -C ../Cassowary/ clean

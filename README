@@ -1,7 +1,8 @@
-Uiml.net is a Uiml renderer for the .Net framework. 
-It has support for the Gtk#, system.Windows.Forms and Wx.NET widget sets.
-It is still under heavy development, so building the code can be challinging
-but it should work... 
+Uiml.net is a Uiml renderer for the .Net framework.  
+
+It has support for the Gtk#, system.Windows.Forms and Wx.NET widget
+sets.  It is still under heavy development, so building the code can
+be challinging but it should work...
 
 
 HOW TO BUILD THE CODE:
@@ -9,14 +10,20 @@ On Linux with mono: "make" in Uiml directory.
 On MS Windows: mail me for the MS Developer Studio project files
 
 HOW TO RUN:
-uiml.net.ext will start a simple file open dialog
+uiml.net.exe will start a simple file open dialog
 
 uiml.net.exe -uiml <myuimlfile> will render the file "myuimlfile".
 
-uiml.net.exe -uiml <myuimlfile> -libs <mylib1.dll;mylib2.dll;...> to link the user interface
-with mylib1,mylib2,...
+uiml.net.exe -uiml <myuimlfile> -libs <mylib1.dll;mylib2.dll;...> to
+link the user interface with mylib1,mylib2,...
 
 uiml.net.exe -help for a full explanation
 
 
-You can find uiml examples on http://research.edm.uhasselt.be/kris/projects/uiml.net/examples/
+You can find uiml examples on
+http://research.edm.uhasselt.be/kris/projects/uiml.net/examples/
+
+
+For more information about the Cassowary.net constraint solver, see
+the Cassowary.net.README file.
+

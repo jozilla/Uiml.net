@@ -1,3 +1,9 @@
+2005-11-22 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Cassowary/: checked in Cassowary.net constraint solver.
+	* Uiml/Makefile: added solver target for Cassowary.net.
+	* Cassowary.net.README: the Cassowary.net-specific README file.
+	* Cassowary.net.AUTHORS: the Cassowary.net-specific AUTHORS file.
+
 2005-11-21 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Part.cs: Added RemoveChild, AddProperty and RemoveProperty
 	methods. Updated ToString method.
