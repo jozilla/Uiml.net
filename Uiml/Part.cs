@@ -30,6 +30,7 @@ namespace Uiml {
 	using System.Collections; 
 	
 	using Uiml.Executing.Binding;
+	using Uiml.LayoutManagement;
 	
 	///<summary>
 	/// Part, p.34 of UIML 3.0 spec
@@ -79,8 +80,10 @@ namespace Uiml {
 
 		private ArrayList m_children;
 		private ArrayList m_properties;
+		private ArrayList m_layout;
+		private Hashtable m_componentsByDepth;
 		private string    m_class;
-		private Part		parent = null;
+		private Part      parent = null;
 
 		///<summary>
 		/// The (final) concrete interface object representing this part
@@ -101,6 +104,8 @@ namespace Uiml {
 		{
 			m_children   = new ArrayList();
 			m_properties = new ArrayList();
+			m_layout = new ArrayList();
+			m_componentsByDepth = new Hashtable();
 		}
 
 		public Part(string identifier) : this()
@@ -150,6 +155,9 @@ namespace Uiml {
 						case CONTENT:
 							m_children.Add(new Content(xnl[i]));
 							break;
+						case LAYOUT:
+							m_layout.Add(new Layout(xnl[i], this));
+							break;
 						case IAM:
 							Part p = new Part(xnl[i]);
 							AddChild(p);
@@ -193,6 +201,12 @@ namespace Uiml {
 		{
 			m_properties.Remove(p);
 		}
+
+		public void AddLayout(Layout l)
+		{
+			m_layout.Add(l);
+		}
+
 
 		public Part Parent
 		{
@@ -274,7 +288,40 @@ namespace Uiml {
 			// not found
 			return null;
 		}
+		
+		public void GetLayouts(ref ArrayList layouts)
+		{
+			if (HasLayout)
+				layouts.AddRange(this.ULayout);
 
+			// do recursively for children
+			foreach (Part p in Children)
+			{
+				p.GetLayouts(ref layouts);
+			}
+		}
+
+		public ArrayList ULayout
+		{
+			get 
+			{
+				if (m_layout.Count == 0)
+					return null;
+				else
+					return m_layout;
+			}
+		}
+
+		public Hashtable ComponentsByDepth
+		{
+			get { return m_componentsByDepth; }
+		}
+		
+		public bool HasLayout
+		{
+			get { return ULayout != null; }
+		}
+		
 		#if COMPACT
 		public bool Connected
 		{
@@ -405,10 +452,12 @@ namespace Uiml {
 			//difficult choice here: disconnecting involves first recreating the
 			//same handler and then -= them from the Signal		
 			
+			IEnumerator enumerator;
+			
 			#if !COMPACT
 			  ; //TODO TODO TODO
 			#else
-			IEnumerator enumerator = m_connections.GetEnumerator();
+			enumerator = m_connections.GetEnumerator();
 			while(enumerator.MoveNext())
 			{
 				if(((Connection)enumerator.Current)).Object == o)
@@ -417,7 +466,7 @@ namespace Uiml {
 			#endif
 							
 			//invoke the same method on the children of this part, with the same object
-			IEnumerator enumerator = Children.GetEnumerator();
+			enumerator = Children.GetEnumerator();
 			while(enumerator.MoveNext())
 				((Part)(enumerator.Current)).Disconnect(o, doc);	
 		}
@@ -505,12 +554,13 @@ namespace Uiml {
 			return sb.ToString();
 		}
 
-		public const string IAM = "part";
-		public const string PART = "part";
-		public const string CLASS = "class";
-		public const string STYLE = "style";
-		public const string CONTENT = "content";
+		public const string IAM       = "part";
+		public const string PART      = "part";
+		public const string CLASS     = "class";
+		public const string STYLE     = "style";
+		public const string CONTENT   = "content";
 		public const string BEHAVIOUR = "behaviour";
+		public const string LAYOUT    = "layout";
 	}
 
 }

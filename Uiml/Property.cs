@@ -148,7 +148,7 @@ namespace Uiml{
 			set {	m_name = value; }
 		}
 
-		public System.Object Value
+		public virtual System.Object Value
 		{
 			get {	return m_value;  }
 			set {	m_value = value; }
@@ -181,7 +181,7 @@ namespace Uiml{
 		///<summary>
 		///Gets the <b>current</b> value of this property
 		///</summary>
-		public System.Object GetCurrentValue(IPropertySetter iPropSetter, Part p)
+		public virtual System.Object GetCurrentValue(IPropertySetter iPropSetter, Part p)
 		{
 			return iPropSetter.GetValue(p, this);
 		}
@@ -246,6 +246,10 @@ namespace Uiml{
 			get { return null; }
 		}
 
+		public virtual bool IsVirtual
+		{
+			get { return false; }
+		}
 		public const string IAM         = "property";
 		public const string NAME        = "name";
 		public const string PART_NAME   = "part-name";

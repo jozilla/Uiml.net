@@ -31,6 +31,8 @@ namespace Uiml{
 	using System.IO;
 	using System.Collections;
 
+	using Uiml.LayoutManagement;
+
 	///<summary>
 	///Represents the interface element:
 	///   &lt;!ELEMENT interface (structure|style|content|behavior)*&gt;
@@ -47,8 +49,9 @@ namespace Uiml{
 		private ArrayList m_style = new ArrayList();
 		//private Behavior  m_behavior;
 		private ArrayList m_behavior = new ArrayList();
-		//private Content m_cont;ent
+		//private Content m_content
 		private ArrayList m_content = new ArrayList();
+		private ArrayList m_layout = new ArrayList();
 
 		public Interface(XmlNode nTopStructure)
 		{
@@ -85,6 +88,19 @@ namespace Uiml{
 							case BEHAVIOR:
 								//UBehavior = new Behavior(xnl[i], UStructure.Top);
 								m_behavior.Add(new Behavior(xnl[i], ((Structure)UStructure[0]).Top));
+								break;
+							case LAYOUT:
+								Layout l = new Layout(xnl[i], (Structure)UStructure[0]);
+								m_layout.Add(l);
+								try
+								{
+									// add layout to part itself
+									((Structure)UStructure[0]).Top.SearchPart(l.PartName).AddLayout(l);
+								}
+								catch (NullReferenceException nre)
+								{
+								  Console.WriteLine("Specified part [{0}] for layout does not exist", l.PartName);
+								}
 								break;
 						}
 					}
@@ -138,8 +154,23 @@ namespace Uiml{
 			}
 			set { m_content.Add(value); }
 		}
-		
 
+		public ArrayList ULayout
+		{
+			get
+			{
+				if (m_layout.Count == 0)
+ 					return null;
+ 				else
+					return m_layout; 
+ 			}
+ 			set { m_layout.Add(value); }
+		}
+
+		public bool HasLayout
+		{
+			get { return ULayout != null; }
+		}
 
 		public void AttachPeers(ArrayList peers)
 		{
@@ -166,6 +197,7 @@ namespace Uiml{
 				al.Add(UStyle);
 				al.Add(UBehavior);
 				al.Add(UContent);
+				al.Add(ULayout);
 				return al; 
 			} 
 		}
@@ -191,7 +223,7 @@ namespace Uiml{
 		public const string CONTENT   = "content";
 		public const string BEHAVIOR  = "behavior";
 		//public const string INTERFACE = "interface";
-		public const string IAM = "interface";
-	
+		public const string IAM       = "interface";
+		public const string LAYOUT    = "layout";
 	}
 }

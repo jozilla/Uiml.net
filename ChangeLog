@@ -1,5 +1,9 @@
 2005-11-22 Jo Vermeulen <jo.vermeulen@uhasselt.be>
-	* Cassowary/: checked in Cassowary.net constraint solver.
+	* Uiml/Interface.cs:
+	* Uiml/Property.cs:
+	* Uiml/Part.cs: Updates to support layout management
+	* Uiml/LayoutManagement/*: checked in layout management classes.
+	* Cassowary/*: checked in Cassowary.net constraint solver.
 	* Uiml/Makefile: added solver target for Cassowary.net.
 	* Cassowary.net.README: the Cassowary.net-specific README file.
 	* Cassowary.net.AUTHORS: the Cassowary.net-specific AUTHORS file.

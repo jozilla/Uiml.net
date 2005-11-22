@@ -36,7 +36,7 @@ exe:	solver
 	@echo "building executable" 
 	mcs ${DEBUG} ${INLINESCRIPTLIBS} ${GTKLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs\
 	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
-	Peers/*.cs Executing/Binding/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
+	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 	@echo "copying uiml files for frontend"
 	cp FrontEnd/gtkgui.uiml .
@@ -46,13 +46,14 @@ exe:	solver
 lib:	solver
 	@echo "building library"
 	mcs ${DEBUG} ${INLINESCRIPTLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs\
-	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs
+	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs\
+	LayoutManagement/*.cs
 	@echo "done"
 
 solver:
 	@echo "building constraint solver"
 	make -C ../Cassowary/ parselib lib
-	mv ../Cassowary/Cassowary*dll .
+	cp ../Cassowary/Cassowary*dll .
 	@echo "done"
 
 gtk:
@@ -62,7 +63,7 @@ wx:
 	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -out:uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
 
 swf:
-	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs
+	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
 
 cswf:
 	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
