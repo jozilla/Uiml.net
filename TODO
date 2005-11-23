@@ -1,21 +1,25 @@
-
 - Make examples and test test test
 - Write unittests using the nunit package
 - Switch to Nant files instead of Makefiles
 
 Bugs:
 =====
-- The properties used in widget constructors can not be specified in the <part>
-section of the widget
-- Fix presentation source: selecting a fragment by identifier is not possible
-yet: <peers> 
-		<presentation base="Java_1.3_Harmonia_1.0" source="http://uiml.org/toolkits/Java_1.3_Harmonia_1.0.uiml#vocab"/> 
-		</peers>
+- The properties used in widget constructors can not be specified in
+  the <part> section of the widget
+
+- Fix presentation source: selecting a fragment by identifier is not
+  possible yet: 
+
+  <peers> 
+    <presentation base="Java_1.3_Harmonia_1.0"
+                  source="http://uiml.org/toolkits/Java_1.3_Harmonia_1.0.uiml#vocab"/>
+  </peers>
 
 Standard compliance:
 ====================
+
 This section lists the tags that are not yet (fully) supported:
-- template
+- template (union and cascade need more work)
 - restructure
 - condition (single events are supported)
 - equal
@@ -29,24 +33,27 @@ This section lists the tags that are not yet (fully) supported:
 
 TODO for Widget support:
 ========================
-	Gtk#:
-		-GtkMozEmbed
-		-GStreamer would be great if its API becomes more stable
-		-Add and test properties
-		-Add and test events
-	WxWindows:
-	   - Only some widgets are supported (e.g. Button, TextCtrl,...)
-		- Only BoxSizer is supported for layout management 
-	Qt#:
-		everything
+
+- Gtk#:
+  - GtkMozEmbed
+  - GStreamer would be great if its API becomes more stable
+  - Add and test properties
+  - Add and test events
+- WxWindows:
+  - Only some widgets are supported (e.g. Button, TextCtrl,...)
+  - Only BoxSizer is supported for layout management 
+- Qt#:
+  - Everything
 
 Interaction part:
 =================
+
 - Add support for .Net Remoting in the call element
 - Add Support for WSDL UI creation
 
 Experimental topics:
 ====================
+
 - Add support for WSDL, XML-RPC and SOAP in the call element
 - Generic Layout management module
 - Emit code for behavioral conditions?
