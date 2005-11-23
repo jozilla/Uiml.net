@@ -1,4 +1,11 @@
 2005-11-22 Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/FrontEnd/UimlFrontEnd.cs:
+	* Uiml/Rendering/BackendFactory.cs:
+	* Uiml/Rendering/NoRendererAvailableException.cs: Improved error
+	handling when no suitable renderer can be found.
+	* Uiml/Rendering/Renderer.cs:
+	* Uiml/Rendering/SWF/SWFRenderer.cs:
+	* Uiml/UimlDocument.cs:
 	* Uiml/Interface.cs:
 	* Uiml/Property.cs:
 	* Uiml/Part.cs: Updates to support layout management

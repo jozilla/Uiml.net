@@ -21,16 +21,21 @@
 */
 
 
-namespace Uiml{
+namespace Uiml {
 
 	using System;
 	using System.Xml;
 	using System.Collections;
 
+	using Uiml.LayoutManagement;
+	
 	public class UimlDocument : IUimlElement, IUimlComponent, ICloneable {
 		private Interface m_interface;
 		private ArrayList m_peers;
 		private Head m_head;
+
+		private bool m_hasLayout;
+		private ConstraintSystem m_solver = null;
 
 		///<summary>
 		///Reads a UIML document in memory specified in fName
@@ -89,12 +94,12 @@ namespace Uiml{
 		public Interface UInterface 
 		{
 			get { return m_interface; }
-			set {	m_interface = value;	}
+			set {	m_interface = value; }
 		}
 
 		public Head UHead
 		{
-			get { return m_head;}
+			get { return m_head; }
 			set { m_head = value; }
 		}
 
@@ -208,6 +213,44 @@ namespace Uiml{
 			//return ((Structure)UInterface.UStructure[0]).SearchPart(searchfor);
 		}
 
+		public void SolveLayoutProperties(Uiml.Rendering.IRenderer r)
+		{
+			try 
+			{
+				LayoutPropertyRepository.Instance.InitializeProperties(this, r);
+				ArrayList layouts = new ArrayList();
+
+				// process layouts
+				Part top = ((Structure) UInterface.UStructure[0]).Top;
+
+				top.GetLayouts(ref layouts);
+
+				foreach (Layout l in layouts)
+					l.SolveLayoutProperties();
+
+				m_hasLayout = layouts.Count > 0;
+
+				if (HasLayout)
+				{
+					// create constraint system
+					m_solver = new ConstraintSystem(layouts);
+					m_solver.Solve();				
+				}
+			}
+			catch(IndexOutOfRangeException ioore)
+			{
+				Console.WriteLine("No layout specified, continuing anyway....");
+			}
+		}
+
+		public void ResolveLayoutProperties(Uiml.Rendering.IRenderer r)
+		{
+			if (HasSolver)
+			{
+				Solver.Resolve();
+			}
+		}
+		
 		public ArrayList Children
 		{
 			get 
@@ -250,6 +293,20 @@ namespace Uiml{
 			get {return null; }
 		} 
 		
+		public ConstraintSystem Solver
+		{
+			get { return m_solver; }
+		}
+
+		public bool HasSolver
+		{
+			get { return Solver != null; }
+		}
+
+		public bool HasLayout
+		{
+			get { return m_hasLayout; }
+		}
 
 		public const string PEER      = "peers";
 		public const string UIML      = "uiml";

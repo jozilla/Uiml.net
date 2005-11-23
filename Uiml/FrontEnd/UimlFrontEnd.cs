@@ -106,17 +106,22 @@ namespace Uiml.FrontEnd{
 			try
 			{
 				UimlDoc = new UimlDocument(UimlFileName);	
-				Console.WriteLine("render [" + uimlDoc.Vocabulary + "]-[" + UimlFileName);
+				Console.WriteLine("render [" + uimlDoc.Vocabulary + "]-[" + UimlFileName + "]");
 				IRenderer renderer =  backendFactory.CreateRenderer(uimlDoc.Vocabulary);	
 				IRenderedInstance instance = renderer.Render(uimlDoc);
 				instance.ShowIt();	
 			}
-				catch(Exception e)
-				{
-					Console.WriteLine(e);
-					Console.WriteLine(e.StackTrace);				
-					Console.WriteLine("Could not create GUI for {0} with uiml.net", UimlFileName);
-				}
+			catch (NoRendererAvailableException rue)
+			{
+				Console.WriteLine("No suitable renderer found:");
+				Console.WriteLine("  Please check if the rendering backend corresponding to the vocabulary is available");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				Console.WriteLine(e.StackTrace);				
+				Console.WriteLine("Could not create GUI for {0} with uiml.net", UimlFileName);
+			}
 		}
 	}
 }

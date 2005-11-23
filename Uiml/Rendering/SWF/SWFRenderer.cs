@@ -34,6 +34,7 @@ namespace Uiml.Rendering.SWF
 
 	using Uiml;
 	using Uiml.Rendering;	
+	using Uiml.LayoutManagement;
 
 	public class SWFRenderer : Renderer, IPropertySetter
 	{
@@ -101,6 +102,38 @@ namespace Uiml.Rendering.SWF
 				throw e;
 			}
 		}
+		
+		public override IRenderedInstance Render(UimlDocument uimlDoc)
+		{
+			IRenderedInstance instance = PreRender(uimlDoc);
+			uimlDoc.SolveLayoutProperties(this);
+			
+			// render again
+			instance = PreRender(uimlDoc);
+			
+			// of course only if there's a layout specified, it's possible to reorder
+			if (uimlDoc.HasLayout) 
+			{
+				// now do reordering
+				Structure uiStruct   = (Structure)uimlDoc.UInterface.UStructure[0];
+				Console.Write("Trying to reorder the interface... ");
+				SWFReorderer reorderer = new SWFReorderer(uiStruct.Top);
+				reorderer.Execute();
+				Console.WriteLine("Done!");
+
+				// we need to render any possible added widgets
+				instance = PreRender(uimlDoc);
+				
+				// then the constraints must be solved
+				uimlDoc.SolveLayoutProperties(this);
+
+				// and we must render once again to apply these
+				instance = PreRender(uimlDoc);
+			}
+			
+			return instance;
+		}
+
 
 		///<summary>
 		/// This is the ``core'' rendering method. It will recursively descend into the Part hierarchy
@@ -148,11 +181,11 @@ namespace Uiml.Rendering.SWF
 					return (Control) ApplyProperties((Control)swfObject, uiPart, uiStyle);
 				}
 				catch(Exception e)
-					{
-						Console.WriteLine("Waaaaahhhgggrrr!:{0}",e);
-						Console.WriteLine(swfObject.GetType().ToString());
-						return null;
-					}
+				{
+					Console.WriteLine("Waaaaahhhgggrrr!:{0}",e);
+					Console.WriteLine(swfObject.GetType().ToString());
+					return null;
+				}
 			}
 		}
 

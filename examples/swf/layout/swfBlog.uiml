@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<uiml>
+	<interface>
+		<structure>
+			<part id="fr" class="Frame">
+				<part id="all" class="Container">
+					<part id="left" class="Container">
+						<part id="l_recent" class="Label"><style><property name="text">Recent Posts</property></style></part>
+						<part id="articles" class="List"/>
+					</part>
+					<part id="right" class="Container">
+						<part id="topRight" class="Container">
+							<part id="l_title" class="Label"><style><property name="text">Entry Title</property></style></part>
+							<part id="title" class="Entry"/>
+							<part id="l_body" class="Label"><style><property name="text">Entry Body</property></style></part>
+							<part id="blogentry" class="Text"/>
+						</part>
+						<part id="bottomRight" class="Container">
+							<part id="update" class="Button"/>
+							<part id="newpost" class="Button"/>
+							<part id="quit" class="Button"/>
+						</part>
+					</part>	
+				</part>
+			</part>
+		</structure>
+		<layout part-name="fr">
+			<!-- border -->
+			<constraint><rule>fr.top = 10</rule></constraint>
+			<constraint><rule>fr.left = 10</rule></constraint>
+			<!-- /border -->
+			<!-- internal padding -->
+			<constraint><rule>all.top = 10</rule></constraint>
+			<constraint><rule>all.left = 10</rule></constraint>
+			<constraint><rule>all.right = fr.width - 10</rule></constraint>
+			<constraint><rule>all.bottom = fr.height - 10</rule></constraint>
+			<!-- /internal padding -->
+		</layout>
+		<layout part-name="all">
+			<constraint><rule>left.height = right.height</rule></constraint>	
+			<constraint><rule>left.right + 20 [= right.left</rule></constraint>	
+		</layout>
+		<layout part-name="left">
+			<constraint><rule>l_recent.bottom + 5 [= articles.top</rule></constraint> 
+			<constraint><rule>articles.width = l_recent.width</rule></constraint>
+		</layout>
+		<layout part-name="right">
+			<constraint><rule>topRight.bottom + 5 [= bottomRight.top</rule></constraint>
+		</layout>
+		<layout part-name="topRight">
+			<!-- alignment -->
+			<constraint><rule>l_title.left = topRight.left</rule></constraint>
+			<constraint><rule>title.left = l_title.left</rule></constraint>
+			<constraint><rule>l_body.left = title.left</rule></constraint>
+			<constraint><rule>blogentry.left = l_body.left</rule></constraint>
+			<!-- /alignment -->
+			<constraint><rule>l_title.bottom + 5 [= title.top</rule></constraint>
+			<constraint><rule>l_title.width = title.width</rule></constraint>
+			<constraint><rule>title.bottom + 5 [= l_body.top</rule></constraint>
+			<constraint><rule>l_body.width = blogentry.width</rule></constraint>
+			<constraint><rule>l_body.bottom + 5 [= blogentry.top</rule></constraint>
+		</layout> 
+		<layout part-name="bottomRight">
+			<constraint><rule>update.right + 5 [= newpost.left</rule></constraint>
+			<constraint><rule>newpost.right + 5 [= quit.left</rule></constraint>
+		</layout> 
+		<style>
+			<property part-name="blogentry" name="scrollbars">Both</property>
+			<!-- this property should be set automatically -->
+			<property part-name="blogentry" name="multiline">true</property>
+		
+			<property part-name="update" name="label">Update</property>
+			<property part-name="newpost" name="label">New Post</property>
+			<property part-name="quit" name="label">Quit</property>
+			<property part-name="articles" name="content">
+		  	  <constant model="list">
+				  <constant value="Blog title 1"/>
+				  <constant value="Entry 2"/>
+				  <constant value="Another Title"/>
+			  </constant>
+		  </property>
+			<property part-name="articles" name="scrollable">true</property>
+			<property part-name="articles" name="view">Details</property>
+			<property part-name="articles" name="title">Title</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="../vocabularies/swf-1.1.uiml"/> 
+	</peers>
+</uiml>
+

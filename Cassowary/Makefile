@@ -31,10 +31,19 @@ layout_test: lib
 
 parselib: lib
 	@echo "building constraint parsing library"
-	${COCO_CS} -frames ${COCO_CS_FRAMEDIR} ${SRC_DIR}/Parsing/constraint_grammar.atg
 	mcs -warn:${WARN_LEVEL} -target:library -out:Cassowary.Parsing.dll -r:Cassowary.dll ${SRC_DIR}/Parsing/*.cs
 	@echo "done"
 
+#parselib: lib
+#	@echo "building constraint parsing library"
+#	${COCO_CS} -frames ${COCO_CS_FRAMEDIR} ${SRC_DIR}/Parsing/constraint_grammar.atg
+#	mcs -warn:${WARN_LEVEL} -target:library -out:Cassowary.Parsing.dll -r:Cassowary.dll ${SRC_DIR}/Parsing/*.cs
+#	@echo "done"
+
+
 clean:
 	rm -f *.dll *.exe 
-	rm -f ${SRC_DIR}/Parsing/Scanner.cs ${SRC_DIR}/Parsing/Scanner.cs.old ${SRC_DIR}/Parsing/Parser.cs ${SRC_DIR}/Parsing/Parser.cs.old
+
+#clean:
+#	rm -f *.dll *.exe 
+#	rm -f ${SRC_DIR}/Parsing/Scanner.cs ${SRC_DIR}/Parsing/Scanner.cs.old ${SRC_DIR}/Parsing/Parser.cs ${SRC_DIR}/Parsing/Parser.cs.old

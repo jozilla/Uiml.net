@@ -222,70 +222,76 @@ namespace Uiml.Rendering
 		///<param name="tclassType"></param>
 		private System.Object ApplyProperty(ref System.Object uiObject, Property p, Part part, Type tclassType)
 		{
-				string setter = Voc.GetPropertySetter(p.Name, part.Class);
+			if (p.IsVirtual)
+			{
+				// don't do anything, just return the widget
+				return uiObject;
+			}
+			
+			string setter = Voc.GetPropertySetter(p.Name, part.Class);
 
-				//try to use Properties first,
-				//if that fails, look for the appropriate setters in the available methods
-				try
+			//try to use Properties first,
+			//if that fails, look for the appropriate setters in the available methods
+			try
+			{
+				Type classType = tclassType;
+				System.Object targetObject = uiObject;
+				PropertyInfo pInfo = null;
+				int j = setter.IndexOf('.');
+				while(j!=-1)
 				{
-					Type classType = tclassType;
-					System.Object targetObject = uiObject;
-					PropertyInfo pInfo = null;
-					int j = setter.IndexOf('.');
-					while(j!=-1)
-					{
-						String parentType = setter.Substring(0,j);
-						setter=setter.Substring(j+1,setter.Length-j-1);
-						pInfo = classType.GetProperty(parentType);
-						classType = pInfo.PropertyType;
-						targetObject = pInfo.GetValue(targetObject, null);
-						j = setter.IndexOf('.');
-					}
+					String parentType = setter.Substring(0,j);
+					setter=setter.Substring(j+1,setter.Length-j-1);
+					pInfo = classType.GetProperty(parentType);
+					classType = pInfo.PropertyType;
+					targetObject = pInfo.GetValue(targetObject, null);
+					j = setter.IndexOf('.');
+				}
 
-					#if COMPACT
+				#if COMPACT
 					MemberInfo[] arrayMemberInfo = SearchMembers(classType, setter);
-					#else
+				#else
 					///thanks to Rafael "Monoman" Teixeira for this code
 					//pInfo = classType.GetProperty(setter);
 					MemberInfo[] arrayMemberInfo = classType.FindMembers(MemberTypes.Method  | MemberTypes.Property,
-							                                               BindingFlags.Public | BindingFlags.Instance,
-																						  Type.FilterName, setter);
-					#endif
-					
-					if (arrayMemberInfo == null || arrayMemberInfo.Length == 0) 
-					{
-						 // throw some error here, about not having the appropriate member
-						Console.WriteLine("Warning: could not load setter \"{0}\" for {1} (type {2}), please check your vocabulary", setter, part.Identifier, tclassType.FullName); 
-						return uiObject;
-					}
+					                                                     BindingFlags.Public | BindingFlags.Instance,
+											     Type.FilterName, setter);
+				#endif
+				
+				if (arrayMemberInfo == null || arrayMemberInfo.Length == 0) 
+				{
+					 // throw some error here, about not having the appropriate member
+					Console.WriteLine("Warning: could not load setter \"{0}\" for {1} (type {2}), please check your vocabulary", setter, part.Identifier, tclassType.FullName); 
+					return uiObject;
+				}
 
-					//if lazy, resolve property value first
-					if(p.Lazy)
-						p.Resolve(this);
+				//if lazy, resolve property value first
+				if(p.Lazy)
+					p.Resolve(this);
 
-					//
-					if (arrayMemberInfo[0] is PropertyInfo)
-						SetProperty(targetObject, p, (PropertyInfo)arrayMemberInfo[0]);
-					else
-						InvokeMethod(targetObject, part, p, (MethodInfo)arrayMemberInfo[0]);
-					}
-					/*
-					catch(TypeLoadException tle)
-					{
-						return ApplyAdHocProperty(ref uiObject, part, p);
-					} 
-					*/
-					catch(NullReferenceException nre)
-					{
-						Console.WriteLine("Warning: could not load setter \"{0}\" for {1} (type {2}), please check your vocabulary", setter, part.Identifier, tclassType.FullName);
-					}
-					catch(Exception e)
-					{
-						Console.WriteLine("Setting property [{0}] with value [{1}] failed for [{2}]", setter, p.Value, part.Identifier);
-						Console.WriteLine(e);
-						Console.WriteLine("Trying to continue...");
-					}
-				return uiObject;
+				//
+				if (arrayMemberInfo[0] is PropertyInfo)
+					SetProperty(targetObject, p, (PropertyInfo)arrayMemberInfo[0]);
+				else
+					InvokeMethod(targetObject, part, p, (MethodInfo)arrayMemberInfo[0]);
+			}
+			/*
+			catch(TypeLoadException tle)
+			{
+				return ApplyAdHocProperty(ref uiObject, part, p);
+			} 
+			*/
+			catch(NullReferenceException nre)
+			{
+				Console.WriteLine("Warning: could not load setter \"{0}\" for {1} (type {2}), please check your vocabulary", setter, part.Identifier, tclassType.FullName);
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine("Setting property [{0}] with value [{1}] failed for [{2}]", setter, p.Value, part.Identifier);
+				Console.WriteLine(e);
+				Console.WriteLine("Trying to continue...");
+			}
+			return uiObject;
 		}
 
 		///<summary>

@@ -28,26 +28,25 @@ namespace Uiml.Rendering
 
 	public class BackendFactory
 	{
-		public String[] assemblies =	{ 
-																		"uiml-gtk-sharp.dll",
-																		"uiml-wx-net.dll",
-																		"uiml-swf.dll",
-																		"uiml-compact-swf.dll" 
-																	};
+		public String[] assemblies = { 
+                                              "uiml-gtk-sharp.dll",
+                                              "uiml-wx-net.dll",
+                                              "uiml-swf.dll",
+                                              "uiml-compact-swf.dll" 
+                                             };
 
-		public String[] renderers = 	{ 
-																		"Uiml.Rendering.GTKsharp.GtkRenderer",
-																		"Uiml.Rendering.WXnet.WxRenderer",
-																		"Uiml.Rendering.SWF.SWFRenderer",
-																		"Uiml.Rendering.CompactSWF.CompactSWFRenderer"
-																	};
+		public String[] renderers = { 
+                                             "Uiml.Rendering.GTKsharp.GtkRenderer",
+                                             "Uiml.Rendering.WXnet.WxRenderer",
+                                             "Uiml.Rendering.SWF.SWFRenderer",
+                                             "Uiml.Rendering.CompactSWF.CompactSWFRenderer"
+                                            };
 
 		public const string NAME = "NAME";
 
 		public BackendFactory()
 		{
 		}
-
 
 		///<summary>
 		/// Creates a renderer for a given vocabulary name
@@ -115,13 +114,14 @@ namespace Uiml.Rendering
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine(e);
 					// do nothing here: an exception means the backend renderer specified 
 					// in assemblies[i] is not available
+					// Console.WriteLine(e);
 				}
 			}
-			return null;
 
+			// if we ever get here, this means no suitable renderer was found!
+			throw new NoRendererAvailableException();
 		}
 
 	}

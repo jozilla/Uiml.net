@@ -62,8 +62,8 @@ gtk:
 wx:
 	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -out:uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
 
-swf:
-	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
+swf:	solver
+	mcs ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
 
 cswf:
 	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
