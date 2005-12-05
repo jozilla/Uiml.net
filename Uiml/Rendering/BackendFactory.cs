@@ -29,10 +29,10 @@ namespace Uiml.Rendering
 	public class BackendFactory
 	{
 		public String[] assemblies = { 
-                                              "uiml-gtk-sharp.dll",
-                                              "uiml-wx-net.dll",
-                                              "uiml-swf.dll",
-                                              "uiml-compact-swf.dll" 
+                                              "uiml-gtk-sharp",
+                                              "uiml-wx-net",
+                                              "uiml-swf",
+                                              "uiml-compact-swf" 
                                              };
 
 		public String[] renderers = { 
@@ -99,7 +99,7 @@ namespace Uiml.Rendering
 			{
 				try
 				{
-					Assembly a = Assembly.LoadFrom(assemblies[i]);
+					Assembly a = Assembly.LoadWithPartialName(assemblies[i]);
 					Type t = a.GetType(renderers[i]);
 					FieldInfo m = t.GetField(NAME);
 					String dynname = (String)m.GetValue(t);

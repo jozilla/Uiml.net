@@ -80,7 +80,7 @@ namespace Uiml.Executing.Callers
 			//Console.Write("Looking for {0} library... ", lib);
 			try
 			{
-				Assembly a = Assembly.LoadFrom(lib);
+				Assembly a = Assembly.LoadWithPartialName(lib);
 				Console.WriteLine("OK!");
 
 				//Console.Write("Loading caller {0}... ", caller);
@@ -103,7 +103,7 @@ namespace Uiml.Executing.Callers
 			set { m_call = value; }
 		}
 
-		public const string XML_RPC_LIB = "uiml-xml-rpc.dll";
+		public const string XML_RPC_LIB = "uiml-xml-rpc";
 		public const string XML_RPC_CALLER = "Uiml.Executing.Callers.XmlRpcCaller";
 	}
 }
