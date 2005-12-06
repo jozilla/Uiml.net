@@ -92,6 +92,7 @@ clean:
 
 
 install:
+	$(INSTALL) -d ${DESTDIR}${bindir}
 	$(INSTALL) -d ${DESTDIR}${monolibdir}
 	$(INSTALL_PROGRAM) uiml.net.dll $(DESTDIR)$(monolibdir)/uiml.net.dll
 	$(INSTALL_PROGRAM) uiml-gtk-sharp.dll $(DESTDIR)$(monolibdir)/uiml-gtk-sharp.dll
