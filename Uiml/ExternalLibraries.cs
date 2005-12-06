@@ -51,7 +51,7 @@ namespace Uiml
 			//try to load assembly:
 			try
 			{
-				Assembly b = Assembly.LoadFrom(libRef);
+				Assembly b = Assembly.LoadWithPartialName(libRef);
 				base.Add(libRef, b);
 				m_dirty=true;
 			}

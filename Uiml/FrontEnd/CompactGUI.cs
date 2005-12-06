@@ -41,7 +41,7 @@ namespace Uiml.FrontEnd{
 	{
 		//static public string UIMLFILE = @"compactgui.uiml";
 		static public string UIMLFILE = @"\\Program Files\\uimldotnetcf\\compactgui.uiml";
-		static public string UIMLLIB=@"uimldotnetcf.dll";
+		static public string UIMLLIB=@"uimldotnetcf";
 		public const string SWF_ASSEMBLY		= "System.Windows.Forms";
 
 		public CompactGUI() : base(UIMLFILE, UIMLLIB)

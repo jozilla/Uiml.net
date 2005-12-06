@@ -41,7 +41,7 @@ namespace Uiml.FrontEnd{
 	public class GtkGUI : UimlFrontEnd
 	{
 		static public string UIMLFILE = @"gtkgui.uiml";
-		static public string UIMLLIB=@"uiml.net.dll";
+		static public string UIMLLIB=@"uiml.net";
 		public const string GTK_ASSEMBLY    = "gtk-sharp";
 
 

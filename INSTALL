@@ -1,2 +1,2 @@
 Put uiml.net.exe, uiml.net.dll and uiml-<widgetset>.dll in the same
-directory.
+directory or install the DLLs using the gacutil tool.
