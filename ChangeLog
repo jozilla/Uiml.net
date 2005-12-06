@@ -1,3 +1,22 @@
+2005-12-06 16:00  takis
+
+	* Uiml/Rendering/: CompactSWF/uiml-compactswf.snk,
+	  SWF/uiml-swf.snk, WXnet/uiml-wx-net.snk: Added snk files
+	* debian/: changelog, control, copyright, docs, rules:
+	  Debianisation! :)
+	* Makefile: Added toplevel Makefile with basic targets.
+	* Uiml/Makefile: - Extended Makefile with install target - Made
+	  Makefile more GNU Standards compliant
+	* INSTALL, Uiml/ExternalLibraries.cs, Uiml/FrontEnd/CompactGUI.cs,
+	  Uiml/FrontEnd/GtkGUI.cs, Uiml/FrontEnd/SwfGUI.cs: Removed more
+	  references to local DLLs (LoadFrom -> LoadWithPartialName).
+
+2005-12-05 17:15  takis
+
+	* Uiml/: Executing/Callers/CallerFactory.cs,
+	  Rendering/BackendFactory.cs: Change to enable loading libraries
+	  from the GAC.
+
 2005-11-23 Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* TODO: Updated and reformatted.
 
