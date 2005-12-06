@@ -10,6 +10,8 @@
 	* INSTALL, Uiml/ExternalLibraries.cs, Uiml/FrontEnd/CompactGUI.cs,
 	  Uiml/FrontEnd/GtkGUI.cs, Uiml/FrontEnd/SwfGUI.cs: Removed more
 	  references to local DLLs (LoadFrom -> LoadWithPartialName).
+	* Uiml/Makefile, Uiml/uiml-xml-rpc.snk, debian/control: Added
+	  building of XML-RPC and WX.Net targets.
 
 2005-12-05 17:15  takis
 
