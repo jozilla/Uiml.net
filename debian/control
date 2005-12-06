@@ -1,0 +1,16 @@
+Source: uimlnet
+Section: libs
+Priority: optional
+Maintainer: Panagiotis Issaris <takis@issaris.org>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.1
+
+Package: uimlnet
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, cassowarynet
+Description: A Uiml renderer for .Net
+ Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
+ using different widget sets and different platforms. uiml.net supports Gtk#,
+ System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
+ small part of Wx.Net.
+
