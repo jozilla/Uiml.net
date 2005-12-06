@@ -16,9 +16,9 @@ monolibdir=${libdir}/mono/1.0/
 CLASSPATH=.:../../..
 OPTIONS=-g
 GTKLIBS= -pkg:gtk-sharp-2.0 
-WXLIBS=/r:wx.NET.dll /r:System.Drawing
+WXLIBS=-lib:${monolibdir} /r:wx.NET.dll /r:System.Drawing
 SWFLIBS=/r:System.Windows.Forms.dll /r:System.Drawing
-XMLRPCLIBS=/r:XmlRpcCS.dll
+XMLRPCLIBS=-lib:${monolibdir} /r:XmlRpcCS.dll
 #INLINESCRIPTLIBS=/r:Nemerle.Compiler /r:Boo.Lang.CodeDom
 INLINESCRIPTLIBS=-pkg:nemerle -pkg:boo
 #LIBS=-pkg:gtk-sharp
@@ -84,7 +84,7 @@ cswf:
 	mcs ${DEBUG} ${SWFLIBS} -keyfile:Rendering/CompactSWF/uiml-compactswf.snk /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
 
 xml-rpc:
-	mcs ${DEBUG} ${XMLRPCLIBS} -r:uiml.net.dll -out:uiml-xml-rpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
+	mcs ${DEBUG} ${XMLRPCLIBS} -keyfile:uiml-xml-rpc.snk -r:uiml.net.dll -out:uiml-xml-rpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
 
 clean:
 	rm -f *.exe *.dll *.mdb compactgui.uiml gtkgui.uiml
@@ -97,10 +97,14 @@ install:
 	$(INSTALL_PROGRAM) uiml-gtk-sharp.dll $(DESTDIR)$(monolibdir)/uiml-gtk-sharp.dll
 	$(INSTALL_PROGRAM) uiml-swf.dll $(DESTDIR)$(monolibdir)/uiml-swf.dll
 	$(INSTALL_PROGRAM) uiml-compact-swf.dll $(DESTDIR)$(monolibdir)/uiml-compact-swf.dll
+	$(INSTALL_PROGRAM) uiml-wx-net.dll $(DESTDIR)$(monolibdir)/uiml-wx-net.dll
+	$(INSTALL_PROGRAM) uiml-xml-rpc.dll $(DESTDIR)$(monolibdir)/uiml-xml-rpc.dll
 	$(GACUTIL) /i uiml.net.dll /f $(GACUTIL_FLAGS) || exit 1;
 	$(GACUTIL) /i uiml-gtk-sharp.dll /f $(GACUTIL_FLAGS) || exit 1;
 	$(GACUTIL) /i uiml-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
 	$(GACUTIL) /i uiml-compact-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml-wx-net.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml-xml-rpc.dll /f $(GACUTIL_FLAGS) || exit 1;
 	$(INSTALL_PROGRAM) uiml.net.exe $(DESTDIR)$(bindir)/uiml.net.exe
 
 
