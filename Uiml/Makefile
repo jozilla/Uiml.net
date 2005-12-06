@@ -1,3 +1,18 @@
+PACKAGE=uimlnet
+
+GACUTIL=gacutil
+GACUTIL_FLAGS=/package $(PACKAGE) /gacdir $(DESTDIR)$(prefix)/lib
+
+INSTALL=install
+INSTALL_PROGRAM=$(INSTALL)
+INSTALL_DATA=$(INSTALL) -m 644
+
+prefix=/usr
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+libdir=$(exec_prefix)/lib
+monolibdir=${libdir}/mono/1.0/
+
 CLASSPATH=.:../../..
 OPTIONS=-g
 GTKLIBS= -pkg:gtk-sharp-2.0 
@@ -9,7 +24,7 @@ INLINESCRIPTLIBS=-pkg:nemerle -pkg:boo
 #LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
 #LIBS=-gtk -L/usr/local/lib/
-SOLVERLIBS = -r:Cassowary.dll -r:Cassowary.Parsing.dll
+SOLVERLIBS = -lib:${monolibdir} -r:Cassowary.dll -r:Cassowary.Parsing.dll
 
 all: lib exe
 	@echo " building gtk backend"
@@ -32,7 +47,7 @@ all: lib exe
 #	mcs ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
 #	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
 
-exe:	solver
+exe:	
 	@echo "building executable" 
 	mcs ${DEBUG} ${INLINESCRIPTLIBS} ${GTKLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs\
 	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
@@ -43,7 +58,7 @@ exe:	solver
 	cp FrontEnd/compactgui.uiml .
 	@echo "done"
 
-lib:	solver
+lib:	
 	@echo "building library"
 	mcs ${DEBUG} ${INLINESCRIPTLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs\
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs\
@@ -62,11 +77,11 @@ gtk:
 wx:
 	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -out:uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
 
-swf:	solver
-	mcs ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
+swf:	
+	mcs ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) -keyfile:Rendering/SWF/uiml-swf.snk /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
 
 cswf:
-	mcs ${DEBUG} ${SWFLIBS} /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
+	mcs ${DEBUG} ${SWFLIBS} -keyfile:Rendering/CompactSWF/uiml-compactswf.snk /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
 
 xml-rpc:
 	mcs ${DEBUG} ${XMLRPCLIBS} -r:uiml.net.dll -out:uiml-xml-rpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
@@ -74,3 +89,19 @@ xml-rpc:
 clean:
 	rm -f *.exe *.dll *.mdb compactgui.uiml gtkgui.uiml
 	make -C ../Cassowary/ clean
+
+
+install:
+	$(INSTALL) -d ${DESTDIR}${monolibdir}
+	$(INSTALL_PROGRAM) uiml.net.dll $(DESTDIR)$(monolibdir)/uiml.net.dll
+	$(INSTALL_PROGRAM) uiml-gtk-sharp.dll $(DESTDIR)$(monolibdir)/uiml-gtk-sharp.dll
+	$(INSTALL_PROGRAM) uiml-swf.dll $(DESTDIR)$(monolibdir)/uiml-swf.dll
+	$(INSTALL_PROGRAM) uiml-compact-swf.dll $(DESTDIR)$(monolibdir)/uiml-compact-swf.dll
+	$(GACUTIL) /i uiml.net.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml-gtk-sharp.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml-compact-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(INSTALL_PROGRAM) uiml.net.exe $(DESTDIR)$(bindir)/uiml.net.exe
+
+
+
