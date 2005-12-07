@@ -1,3 +1,23 @@
+uimlnet (20051207T145318) unstable; urgency=low
+
+  * Updated Debian package descriptions
+
+ -- Panagiotis Issaris <takis@issaris.org>  Wed,  7 Dec 2005 14:53:18 +0100
+
+uimlnet (20051207T143300) unstable; urgency=low
+
+  * Updated GTK depencies 
+
+ -- Panagiotis Issaris <takis@issaris.org>  Wed,  7 Dec 2005 14:33:25 +0100
+
+uimlnet (20051207T141747) unstable; urgency=low
+
+  * Update Debian package dependencies
+  * Split into multiple packages
+  * Fix GAC registration
+
+ -- Panagiotis Issaris <takis@issaris.org>  Wed,  7 Dec 2005 14:32:19 +0100
+
 uimlnet (20051205T191742) unstable; urgency=low
 
   * Update

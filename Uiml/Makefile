@@ -93,6 +93,7 @@ clean:
 
 install:
 	$(INSTALL) -d ${DESTDIR}${bindir}
+	$(INSTALL_PROGRAM) uiml.net.exe $(DESTDIR)$(bindir)/uiml.net.exe
 	$(INSTALL) -d ${DESTDIR}${monolibdir}
 	$(INSTALL_PROGRAM) uiml.net.dll $(DESTDIR)$(monolibdir)/uiml.net.dll
 	$(INSTALL_PROGRAM) uiml-gtk-sharp.dll $(DESTDIR)$(monolibdir)/uiml-gtk-sharp.dll
@@ -100,13 +101,24 @@ install:
 	$(INSTALL_PROGRAM) uiml-compact-swf.dll $(DESTDIR)$(monolibdir)/uiml-compact-swf.dll
 	$(INSTALL_PROGRAM) uiml-wx-net.dll $(DESTDIR)$(monolibdir)/uiml-wx-net.dll
 	$(INSTALL_PROGRAM) uiml-xml-rpc.dll $(DESTDIR)$(monolibdir)/uiml-xml-rpc.dll
+
+register: register-uiml register-gtk register-swf register-cswf register-wx register-xmlrpc
+
+register-uiml:
 	$(GACUTIL) /i uiml.net.dll /f $(GACUTIL_FLAGS) || exit 1;
+
+register-gtk:
 	$(GACUTIL) /i uiml-gtk-sharp.dll /f $(GACUTIL_FLAGS) || exit 1;
+
+register-swf:
 	$(GACUTIL) /i uiml-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
+
+register-cswf:
 	$(GACUTIL) /i uiml-compact-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
+
+register-wx:
 	$(GACUTIL) /i uiml-wx-net.dll /f $(GACUTIL_FLAGS) || exit 1;
+
+register-xmlrpc:
 	$(GACUTIL) /i uiml-xml-rpc.dll /f $(GACUTIL_FLAGS) || exit 1;
-	$(INSTALL_PROGRAM) uiml.net.exe $(DESTDIR)$(bindir)/uiml.net.exe
-
-
 

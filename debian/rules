@@ -81,9 +81,10 @@ install-arch:
 
 	# Add here commands to install the arch part of the package into 
 	# debian/tmp.
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/uimlnet
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	dh_install --fail-missing --sourcedir=debian/tmp
 
-	dh_install -s
+#	dh_install -s
 # Must not depend on anything. This is to be called by
 # binary-arch/binary-indep
 # in another 'make' thread.

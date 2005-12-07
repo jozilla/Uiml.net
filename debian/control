@@ -7,10 +7,75 @@ Standards-Version: 3.6.1
 
 Package: uimlnet
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, cassowarynet, wxnet0, xmlrpccs1
+Depends: ${shlibs:Depends}, ${misc:Depends}, cassowarynet
 Description: A Uiml renderer for .Net
  Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
  using different widget sets and different platforms. uiml.net supports Gtk#,
  System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
  small part of Wx.Net.
+
+Package: uimlnet-wxnet
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, uimlnet, wxnet0
+Description: A Uiml renderer for .Net
+ Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
+ using different widget sets and different platforms. uiml.net supports Gtk#,
+ System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
+ small part of Wx.Net.
+ .
+ This package contains the Wx.Net renderer.
+
+Package: uimlnet-swf
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, uimlnet, libgdiplus
+Description: A Uiml renderer for .Net
+ Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
+ using different widget sets and different platforms. uiml.net supports Gtk#,
+ System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
+ small part of Wx.Net.
+ .
+ This package contains the System.Windows.Forms renderer.
+
+Package: uimlnet-compact-swf
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, uimlnet, libgdiplus
+Description: A Uiml renderer for .Net
+ Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
+ using different widget sets and different platforms. uiml.net supports Gtk#,
+ System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
+ small part of Wx.Net.
+ .
+ This package contains the System.Windows.Forms on Compact .Net renderer.
+
+Package: uimlnet-gtk-sharp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, uimlnet, libgtk-cil
+Description: A Uiml renderer for .Net
+ Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
+ using different widget sets and different platforms. uiml.net supports Gtk#,
+ System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
+ small part of Wx.Net.
+ .
+ This package contains the GTK# renderer.
+
+Package: uimlnet-xml-rpc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, uimlnet, xmlrpccs1
+Description: A Uiml renderer for .Net
+ Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
+ using different widget sets and different platforms. uiml.net supports Gtk#,
+ System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
+ small part of Wx.Net.
+
+Package: uimlnet-all
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, uimlnet, uimlnet-xml-rpc, uimlnet-swf, uimlnet-compact-swf, uimlnet-gtk-sharp, uimlnet-wxnet
+Description: A Uiml renderer for .Net
+ Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
+ using different widget sets and different platforms. uiml.net supports Gtk#,
+ System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
+ small part of Wx.Net.
+ .
+ This is a metapackage containing dependencies for all UIML.Net packages.
+
 
