@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <uiml>
+	<head>
+		<meta name="title" content="Betty UserLand"/>
+	</head>
 	<interface>
 		<structure>
 			<part class="Frame" id="frame">

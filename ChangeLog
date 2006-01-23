@@ -1,3 +1,8 @@
+2006-01-23 14:50  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Executing/Callers/CallerFactory.cs: Improved console output
+	when dynamically loading XML-RPC libraries.
+	* examples/gtk-sharp/xmlRpcCall.cs: set an appropriate title.
+
 2005-12-06 16:00  takis
 
 	* Uiml/Rendering/: CompactSWF/uiml-compactswf.snk,

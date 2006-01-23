@@ -81,16 +81,18 @@ namespace Uiml.Executing.Callers
 			try
 			{
 				Assembly a = Assembly.LoadWithPartialName(lib);
+				Console.Write("Dynamically loading XML-RPC library... ");
 				Console.WriteLine("OK!");
 
 				//Console.Write("Loading caller {0}... ", caller);
+				Console.Write("Dynamically loading XML-RPC caller... ");
 				Type t = a.GetType(caller);
 				result = (Caller) Activator.CreateInstance(t, parameters);
 				Console.WriteLine("OK!");
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine("Unable to execute requested functionality...");
+				Console.WriteLine("FAILED!");
 				Console.WriteLine("Trying to continue...");
 			}
 
