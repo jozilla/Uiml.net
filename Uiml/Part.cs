@@ -460,7 +460,7 @@ namespace Uiml {
 			enumerator = m_connections.GetEnumerator();
 			while(enumerator.MoveNext())
 			{
-				if(((Connection)enumerator.Current)).Object == o)
+				if (((Connection)enumerator.Current).Object == o)
 					m_connections.Remove(enumerator.Current);
 			}
 			#endif
