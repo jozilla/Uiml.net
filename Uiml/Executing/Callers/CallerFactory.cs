@@ -87,6 +87,7 @@ namespace Uiml.Executing.Callers
 				//Console.Write("Loading caller {0}... ", caller);
 				Console.Write("Dynamically loading XML-RPC caller... ");
 				Type t = a.GetType(caller);
+				// FIXME: this doesn't work on Compact .NET, cannot pas argument to a constructor
 				result = (Caller) Activator.CreateInstance(t, parameters);
 				Console.WriteLine("OK!");
 			}

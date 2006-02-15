@@ -1,3 +1,8 @@
+2006-02-15 15:45  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Executing/Callers/CallerFactory.cs: Added a FIXME, there is a
+	piece of code that doesn't work on Compact .NET. Again, thanks to
+	Volker Janzen for the report.
+
 2006-02-15 15:22  Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Part.cs: Updated a piece of Compact .NET code that didn't
 	compile anymore. Thanks to Volker Janzen for reporting this.
