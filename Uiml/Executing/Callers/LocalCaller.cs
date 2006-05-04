@@ -94,14 +94,14 @@ namespace Uiml.Executing.Callers
 			//convert the params to types
 			Type[] tparamTypes = null;
 			try 
-            {
+			{
 				tparamTypes = CreateInOutParamTypes(parameters, out outputPlaceholder);
-            }
-            catch (ArgumentOutOfRangeException) 
-            {
-                outputParams = outputPlaceholder; // otherwise we get a compile error from Visual Studio
-                return null; 
-            }
+	    		}
+			catch (ArgumentOutOfRangeException) 
+	    		{
+				outputParams = outputPlaceholder; // otherwise we get a compile error from Visual Studio
+				return null; 
+			}
 			
 			MethodInfo m = objectType.GetMethod(concreteMethodName, tparamTypes);
 			System.Object[] args = new System.Object[tparamTypes.Length];
