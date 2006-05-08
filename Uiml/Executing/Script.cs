@@ -116,7 +116,7 @@ namespace Uiml.Executing
 					return;
 					//theProvider = new Microsoft.JScript.JScriptCodeProvider();
 					//break;
-        case "Visual Basic":
+			        case "Visual Basic":
 				case "VB":
 				case "VB.Net":
 				case "vb":
@@ -126,11 +126,17 @@ namespace Uiml.Executing
 					break;
 				case "Nemerle":
 				case "nemerle":
-					theProvider = new Nemerle.Compiler.NemerleCodeProvider();
+					theProvider = DynamicallyLoadLanguage("Nemerle", NEMERLE_LIBS, NEMERLE_CODE_PROVIDER, NEMERLE_CODE_PROVIDER_LIB_INDEX);
+					if (theProvider == null)
+						return; // an error has occured, just quit ...
+					
 					break;
 				case "Boo":
 				case "boo":
-					theProvider = new Boo.Lang.CodeDom.BooCodeProvider();
+					theProvider = DynamicallyLoadLanguage("Boo", BOO_LIBS, BOO_CODE_PROVIDER, BOO_CODE_PROVIDER_LIB_INDEX);
+					if (theProvider == null)
+						return; // an error has occured, just quit ...
+					
 					break;
 				default:
 					theProvider = new Microsoft.CSharp.CSharpCodeProvider();
@@ -151,8 +157,48 @@ namespace Uiml.Executing
 			if(crs.Errors.HasErrors)
 				for(int i=0; i< crs.Errors.Count; i++)
 					Console.WriteLine("[Inline script precompile error]:" + crs.Errors[i]);
-		   m_compiledAssembly = crs.CompiledAssembly;
+		   	m_compiledAssembly = crs.CompiledAssembly;
 			#endif			
+		}
+
+		private CodeDomProvider DynamicallyLoadLanguage(string lang, string[] libNames, string codeProvider, int codeProviderLibIndex)
+		{		
+			ArrayList assemblies = new ArrayList();
+			
+			try
+			{
+				// dynamically load language libraries
+				foreach (string libName in libNames)
+				{
+					// FIXME: we should use Assembly.Load, but this is not flexible
+					// since we have to know exactly which version to use. However, using
+					// LoadWithPartialName could lead to problems with mixing 1.0 and 2.0 
+					// assemblies (as is the case with Nemerle).
+					Console.Write("[Loading {0} library]: {1} ... ", lang, libName);
+					Assembly lib = Assembly.LoadWithPartialName(libName);
+			
+					if (lib != null)
+					{
+						assemblies.Add(lib);
+						Console.WriteLine("OK!");
+					       	Console.WriteLine("\t--> {0}", lib.FullName);
+					}
+					else
+					{
+						Console.WriteLine("Failed :-(");
+						throw new FileNotFoundException("Couldn't load assembly {0}", libName);
+					}
+				}
+				
+				Assembly codeProviderlib = (Assembly) assemblies[codeProviderLibIndex];
+				Type t = codeProviderlib.GetType(codeProvider);
+				return (CodeDomProvider) Activator.CreateInstance(t);
+			}
+			catch (Exception err)
+			{
+				Console.WriteLine("Error while loading Boo libraries: {0}", err);
+				return null;
+			}
 		}
 
 
@@ -183,8 +229,8 @@ namespace Uiml.Executing
 			BindingFlags flags = ( BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic ); 
 
 			foreach(Type t in types)
-      {
-        MethodInfo[] mi = t.GetMethods(flags);
+			{
+				MethodInfo[] mi = t.GetMethods(flags);
 				foreach(MethodInfo m in mi)
 				{
 					if(m.Name == "Main")
@@ -234,5 +280,24 @@ namespace Uiml.Executing
 		
 		public const string IAM  = "script";
 		public const string TYPE  = "type";
+		
+		public const string NEMERLE_CODE_PROVIDER = "Nemerle.Compiler.NemerleCodeProvider";
+		public const int NEMERLE_CODE_PROVIDER_LIB_INDEX = 1; // the second lib 
+		public static string[] NEMERLE_LIBS = {
+							"Nemerle",
+							"Nemerle.Compiler",
+							"Nemerle.Macros",
+				                      };
+		
+		public const string BOO_CODE_PROVIDER = "Boo.Lang.CodeDom.BooCodeProvider";
+		public const int BOO_CODE_PROVIDER_LIB_INDEX = 1; // the second lib
+		public static string[] BOO_LIBS = { 
+						    "Boo.Lang", 
+						    "Boo.Lang.CodeDom", 
+						    "Boo.Lang.Compiler", 
+						    "Boo.Lang.Interpreter",
+						    "Boo.Lang.Parser", 
+						    "Boo.Lang.Useful" 
+						 };
 	}
 }

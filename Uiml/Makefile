@@ -20,7 +20,7 @@ WXLIBS=-lib:${monolibdir} /r:wx.NET.dll /r:System.Drawing
 SWFLIBS=/r:System.Windows.Forms.dll /r:System.Drawing
 XMLRPCLIBS=-lib:${monolibdir} /r:XmlRpcCS.dll
 #INLINESCRIPTLIBS=/r:Nemerle.Compiler /r:Boo.Lang.CodeDom
-INLINESCRIPTLIBS=-pkg:nemerle -pkg:boo
+#INLINESCRIPTLIBS=#-pkg:nemerle -pkg:boo
 #LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
 #LIBS=-gtk -L/usr/local/lib/
@@ -49,8 +49,8 @@ all: lib exe
 
 exe:	
 	@echo "building executable" 
-	mcs ${DEBUG} ${INLINESCRIPTLIBS} ${GTKLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs\
-	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs\
+	mcs ${DEBUG} ${GTKLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs \
+	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs \
 	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 	@echo "copying uiml files for frontend"
@@ -60,8 +60,8 @@ exe:
 
 lib:	
 	@echo "building library"
-	mcs ${DEBUG} ${INLINESCRIPTLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs\
-	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs\
+	mcs ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
+	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs \
 	LayoutManagement/*.cs
 	@echo "done"
 

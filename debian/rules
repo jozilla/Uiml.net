@@ -14,6 +14,8 @@
 #export DH_VERBOSE=1
 
 # This has to be exported to make some magic below work.
+# 
+# FIXME: doesn't build on Dapper anymore.
 export DH_OPTIONS
 
 

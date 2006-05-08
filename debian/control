@@ -1,3 +1,6 @@
+# In fact we want uimlnet to depend on at least one of the backends
+# -> make a metapackage renderer that depends on one of them, and let uimlnet depend on uimlnet-renderer?
+
 Source: uimlnet
 Section: libs
 Priority: optional
@@ -8,6 +11,8 @@ Standards-Version: 3.6.1
 Package: uimlnet
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, cassowarynet
+Recommends: uimlnet-wxnet|uimlnet-swf|uimlnet-gtk-sharp, uimlnet-xml-rpc
+Suggests: boo, nemerle
 Description: A Uiml renderer for .Net
  Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
  using different widget sets and different platforms. uiml.net supports Gtk#,
@@ -35,17 +40,6 @@ Description: A Uiml renderer for .Net
  small part of Wx.Net.
  .
  This package contains the System.Windows.Forms renderer.
-
-Package: uimlnet-compact-swf
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, uimlnet, libgdiplus
-Description: A Uiml renderer for .Net
- Uiml.Net is a free UIML renderer written in C#. It can render a UIML document
- using different widget sets and different platforms. uiml.net supports Gtk#,
- System.Windows.Forms, System.Windows.Forms on the Compact .Net Framework, and a
- small part of Wx.Net.
- .
- This package contains the System.Windows.Forms on Compact .Net renderer.
 
 Package: uimlnet-gtk-sharp
 Architecture: any
