@@ -1,4 +1,10 @@
 2006-05-08 10:41  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Part.cs:
+	* Uiml/Executing/Binding/UimlEventHandlerAttribute.cs:
+	* Uiml/LayoutManagement/LayoutPropertyRepository.cs: Improved
+	code comments and console output to be more understandable.
+
+2006-05-08 10:41  Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/Makefile: Removed dependencies on Boo and Nemerle, now loading
 	them dynamically.
 	* Uiml/Executing/Script.cs: Dynamically load Boo and Nemerle.

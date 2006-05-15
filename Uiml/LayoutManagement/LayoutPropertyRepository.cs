@@ -98,7 +98,7 @@ namespace Uiml.LayoutManagement
 				prop = part.GetProperty(lp.Name);
 				if (prop != null)
 					part.RemoveProperty(prop);
-
+				//
 				// check for properties in style section
 				foreach (Style s in styles)
 				{
@@ -107,6 +107,7 @@ namespace Uiml.LayoutManagement
 						s.RemoveProperty(prop);
 				}
 
+				// add the layout property
 				part.AddProperty(lp);
 			}
 		}

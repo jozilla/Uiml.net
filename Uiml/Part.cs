@@ -354,8 +354,8 @@ namespace Uiml {
 				UimlEventHandlerAttribute eHandler = GetEventHandler(mi);
 				if(eHandler != null)
 				{
-					//Console.WriteLine("Found UimlEventHandler [{0}]", mi.Name);			
-					//Console.WriteLine("\tConnecting to \"{0}\" of type <{1}> ", Identifier, Class);
+					Console.WriteLine("Found UimlEventHandler [{0}]", mi.Name);			
+					Console.WriteLine("\tConnecting to \"{0}\" of type <{1}> ", Identifier, Class);
 					
 					initEventArgs(eHandler);
 					
@@ -411,12 +411,12 @@ namespace Uiml {
 					}
 					catch(MappingNotFoundException e)
 					{
-						Console.WriteLine("Could not accomplish connection with application logic: {0}", e);
+						Console.WriteLine("\tCould not accomplish connection for part {0} of class {1}: the specified event was not found", Identifier, Class);
 					}
 					catch(NullReferenceException nre)
 					{
 						Console.WriteLine(nre);
-						Console.WriteLine("Make sure to connect the objects after calling Render!");
+						Console.WriteLine("\tCould not accomplish connection: make sure to connect the objects _after_ calling Render!");
 					}
 				}
 			}

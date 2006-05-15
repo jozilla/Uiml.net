@@ -52,7 +52,7 @@ namespace Uiml.Executing.Binding
 		 * when I used the params object[] argument. When I changed it
 		 * to params string[], everything worked fine. 
 		 *
-		 * Later it occured that params string[] was much more intuitive. 
+		 * Later it occured to me that params string[] was much more intuitive. 
 		 * After all, part identifiers _are_ strings!
 		 */
 		
