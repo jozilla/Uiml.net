@@ -41,7 +41,7 @@ namespace Uiml.Utils
 		{
 			
 			m_task       = comment;
-			m_importance = m_importance;
+			m_importance = importance;
 		}
 
 		public TodoAttribute(string comment) : this(comment, NORMAL)
