@@ -39,7 +39,6 @@ namespace Uiml.Utils
 		
 		public TodoAttribute(string comment, int importance)
 		{
-			
 			m_task       = comment;
 			m_importance = importance;
 		}
