@@ -28,10 +28,12 @@ namespace Uiml.FrontEnd
 	using System;
 	using System.Collections;
 	using System.Reflection;
+	using System.Xml;
+	
+	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
 	using Uiml.Executing;
 	using Uiml.Executing.Binding;
-	using System.Xml;
 
 	/// <summary>
 	/// GUI front-end to select an UIML file for SWF
@@ -39,7 +41,7 @@ namespace Uiml.FrontEnd
 	public class SwfGUI : UimlFrontEnd
 	{
 		static public string UIMLFILE = @"compactgui.uiml";
-		static public string UIMLLIB=@"uiml.net";
+		static public string UIMLLIB = @"uiml.net";
 		public const string SWF_ASSEMBLY = "System.Windows.Forms";
 
 		public SwfGUI() : base(UIMLFILE, UIMLLIB)
@@ -54,7 +56,7 @@ namespace Uiml.FrontEnd
 		public override void OpenUimlFile()
 		{
 			//dynamically load the code to create "OpenFileDialog"
-			Assembly guiAssembly = Assembly.LoadWithPartialName(SWF_ASSEMBLY);
+			Assembly guiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
 			if(guiAssembly == null) //should never happen!
 				Console.WriteLine("Can not find SWF Assembly");
 

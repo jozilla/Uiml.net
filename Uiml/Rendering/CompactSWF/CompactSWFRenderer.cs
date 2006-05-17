@@ -33,6 +33,7 @@ namespace Uiml.Rendering.CompactSWF
 	using System.Windows.Forms;
 
 	using Uiml;
+	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;	
 
 	public class CompactSWFRenderer : Renderer, IPropertySetter
@@ -46,10 +47,10 @@ namespace Uiml.Rendering.CompactSWF
 		{ 
 			Decoder = new CompactSWFTypeDecoder();
 
-			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
-			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, Assembly.Load(DRAWING_ASSEMBLY));
+			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
+			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(DRAWING_ASSEMBLY));
 
-			GuiAssembly = Assembly.Load(SWF_ASSEMBLY);
+			GuiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
 			ExternalLibraries.Instance.Add(SWF_ASSEMBLY, GuiAssembly);
 		}
 

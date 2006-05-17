@@ -22,6 +22,8 @@
 
 namespace Uiml.Rendering
 {
+	using Uiml.Utils.Reflection;
+	
 	using System;
 	using System.Reflection;
 	using System.Collections;
@@ -99,7 +101,7 @@ namespace Uiml.Rendering
 			{
 				try
 				{
-					Assembly a = Assembly.LoadWithPartialName(assemblies[i]);
+					Assembly a = AssemblyLoader.LoadAny(assemblies[i]);
 					Type t = a.GetType(renderers[i]);
 					FieldInfo m = t.GetField(NAME);
 					String dynname = (String)m.GetValue(t);

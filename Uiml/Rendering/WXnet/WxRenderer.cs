@@ -28,6 +28,7 @@ namespace Uiml.Rendering.WXnet
 	using wx;
 
 	using Uiml;
+	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
 	
 
@@ -40,10 +41,10 @@ namespace Uiml.Rendering.WXnet
 		{
 			Console.WriteLine("creating WxRenderer");
 			Decoder = new WxTypeDecoder();
-			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
-			GuiAssembly = Assembly.Load(WX_ASSEMBLY);
+			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
+			GuiAssembly = AssemblyLoader.LoadFromGacOrAppDir(WX_ASSEMBLY);
 			ExternalLibraries.Instance.Add(WX_ASSEMBLY, GuiAssembly);
-			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, Assembly.Load(DRAWING_ASSEMBLY));
+			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(DRAWING_ASSEMBLY));
 			//Gtk.Application.Init();
 			//wx.App.Initialize();
 			Console.WriteLine("WxRenderer created");

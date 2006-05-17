@@ -1,3 +1,27 @@
+2006-05-17 15:40  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	
+	* Uiml/Utils/Reflection:
+	* Uiml/Utils/Reflection/AssemblyLoader.cs:
+	* Uiml/Utils/Reflection/AssemblyNotFoundException.cs: Added auxiliary
+	classes to handle the dynamic loading of assemblies. This way it isn't
+	spread out over the entire codebase, and should be easy to change in
+	the future.
+	* Uiml/Makefile: Adjusted Makefile to take into account the newly
+	created Uiml.Utils.Reflection namespace.
+	* Uiml/ExternalLibraries.cs:
+	* Uiml/Executing/Script.cs:
+	* Uiml/Executing/Callers/CallerFactory.cs:
+	* Uiml/FrontEnd/CompactGUI.cs:
+	* Uiml/FrontEnd/GtkGUI.cs:
+	* Uiml/FrontEnd/SwfGUI.cs:
+	* Uiml/Rendering/BackendFactory.cs:
+	* Uiml/Rendering/CompactSWF/CompactSWFRenderer.cs:
+	* Uiml/Rendering/GTKsharp/GtkRenderer.cs:
+	* Uiml/Rendering/SWF/SWFRenderer.cs:
+	* Uiml/Rendering/WXnet/WxRenderer.cs: adjusted these classes to use
+	the new AssemblyLoader instead of loading the assemblies themselves.
+	
+
 2006-05-17 11:06  Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	
 	* Uiml/FrontEnd/gtkgui.uiml: Fixed a bug in a property that was used

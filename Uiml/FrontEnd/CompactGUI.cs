@@ -29,10 +29,12 @@ namespace Uiml.FrontEnd{
 	using System;
 	using System.Collections;
 	using System.Reflection;
+	using System.Xml;
+	
+	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
 	using Uiml.Executing;
 	using Uiml.Executing.Binding;
-	using System.Xml;
 
 	/// <summary>
 	/// GUI front-end to select an UIML file for the Pocket PC
@@ -41,8 +43,8 @@ namespace Uiml.FrontEnd{
 	{
 		//static public string UIMLFILE = @"compactgui.uiml";
 		static public string UIMLFILE = @"\\Program Files\\uimldotnetcf\\compactgui.uiml";
-		static public string UIMLLIB=@"uimldotnetcf";
-		public const string SWF_ASSEMBLY		= "System.Windows.Forms";
+		static public string UIMLLIB = @"uimldotnetcf";
+		public const string SWF_ASSEMBLY = "System.Windows.Forms";
 
 		public CompactGUI() : base(UIMLFILE, UIMLLIB)
 		{
@@ -61,7 +63,7 @@ namespace Uiml.FrontEnd{
 		public override void OpenUimlFile()
 		{
 			//dynamically load the code to create "OpenFileDialog"
-			Assembly guiAssembly = Assembly.Load(SWF_ASSEMBLY);
+			Assembly guiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
 			//OpenFileDialog ofd = new OpenFileDialog();
 			Type ofClassType = guiAssembly.GetType("System.Windows.Forms.OpenFileDialog");
 			Object fs = Activator.CreateInstance(ofClassType, null);

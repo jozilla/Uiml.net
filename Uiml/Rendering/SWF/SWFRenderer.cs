@@ -33,6 +33,7 @@ namespace Uiml.Rendering.SWF
 	using System.Windows.Forms;
 
 	using Uiml;
+	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;	
 	using Uiml.LayoutManagement;
 
@@ -47,10 +48,10 @@ namespace Uiml.Rendering.SWF
 		{ 
 			Decoder = new SWFTypeDecoder();
 
-			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
-			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, Assembly.LoadWithPartialName(DRAWING_ASSEMBLY));
+			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
+			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(DRAWING_ASSEMBLY));
 
-			GuiAssembly = Assembly.LoadWithPartialName(SWF_ASSEMBLY);
+			GuiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
 			ExternalLibraries.Instance.Add(SWF_ASSEMBLY, GuiAssembly);
 		}
 

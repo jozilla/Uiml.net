@@ -31,6 +31,7 @@ TODO:
 namespace Uiml.Executing
 {
 	using Uiml;
+	using Uiml.Utils.Reflection;
 	
 	using System;
 	using System.Xml;
@@ -170,12 +171,8 @@ namespace Uiml.Executing
 				// dynamically load language libraries
 				foreach (string libName in libNames)
 				{
-					// FIXME: we should use Assembly.Load, but this is not flexible
-					// since we have to know exactly which version to use. However, using
-					// LoadWithPartialName could lead to problems with mixing 1.0 and 2.0 
-					// assemblies (as is the case with Nemerle).
 					Console.Write("[Loading {0} library]: {1} ... ", lang, libName);
-					Assembly lib = Assembly.LoadWithPartialName(libName);
+					Assembly lib = AssemblyLoader.LoadAny(libName);
 			
 					if (lib != null)
 					{

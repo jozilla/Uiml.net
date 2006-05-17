@@ -24,7 +24,7 @@ XMLRPCLIBS=-lib:${monolibdir} /r:XmlRpcCS.dll
 #LIBS=-pkg:gtk-sharp
 DEBUG=-debug+ -warn:2
 #LIBS=-gtk -L/usr/local/lib/
-SOLVERLIBS = -lib:${monolibdir} -r:Cassowary.dll -r:Cassowary.Parsing.dll
+SOLVERLIBS = -lib:${monolibdir} -r:Cassowary -r:Cassowary.Parsing
 
 all: lib exe
 	@echo " building gtk backend"
@@ -45,13 +45,14 @@ all: lib exe
 
 #exe :
 #	mcs ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
-#	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs Peers/*.cs
+#	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs \
+#	Utils/Reflection/*.cs Peers/*.cs
 
 exe:	
 	@echo "building executable" 
 	mcs ${DEBUG} ${GTKLIBS} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs \
 	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs \
-	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
+	Utils/Reflection/*.cs Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 	@echo "copying uiml files for frontend"
 	cp FrontEnd/gtkgui.uiml .
@@ -61,8 +62,8 @@ exe:
 lib:	
 	@echo "building library"
 	mcs ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
-	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Peers/*.cs Executing/Binding/*.cs \
-	LayoutManagement/*.cs
+	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
+	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
 	@echo "done"
 
 solver:

@@ -26,6 +26,7 @@ using System;
 using System.Collections;
 using System.Reflection;
 using Uiml;
+using Uiml.Utils.Reflection;
 using Uiml.Peers;
 
 namespace Uiml.Executing.Callers
@@ -80,7 +81,7 @@ namespace Uiml.Executing.Callers
 			//Console.Write("Looking for {0} library... ", lib);
 			try
 			{
-				Assembly a = Assembly.LoadWithPartialName(lib);
+				Assembly a = AssemblyLoader.LoadAny(lib);
 				Console.Write("Dynamically loading XML-RPC library... ");
 				Console.WriteLine("OK!");
 

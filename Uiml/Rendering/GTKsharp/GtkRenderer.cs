@@ -30,6 +30,7 @@ namespace Uiml.Rendering.GTKsharp
 	using GtkSharp;
 
 	using Uiml;
+	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
 
 	using Style = Uiml.Style;
@@ -44,12 +45,12 @@ namespace Uiml.Rendering.GTKsharp
 		public GtkRenderer()
 		{
 			Decoder = new GtkTypeDecoder();
-			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, Assembly.Load(SYSTEM_ASSEMBLY));
-			GuiAssembly = Assembly.Load(GTK_ASSEMBLY);
+			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
+			GuiAssembly = AssemblyLoader.LoadFromGacOrAppDir(GTK_ASSEMBLY);
 			ExternalLibraries.Instance.Add(GTK_ASSEMBLY, GuiAssembly);
-			//ExternalLibraries.Instance.Add(GDK_ASSEMBLY, Assembly.Load(GDK_ASSEMBLY));
-			//ExternalLibraries.Instance.Add(PANGO_ASSEMBLY, Assembly.Load(PANGO_ASSEMBLY));
-			ExternalLibraries.Instance.Add(GLIB_ASSEMBLY, Assembly.Load(GLIB_ASSEMBLY));
+			//ExternalLibraries.Instance.Add(GDK_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(GDK_ASSEMBLY));
+			//ExternalLibraries.Instance.Add(PANGO_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(PANGO_ASSEMBLY));
+			ExternalLibraries.Instance.Add(GLIB_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(GLIB_ASSEMBLY));
 		}
 
 		public IRenderedInstance TopWindow

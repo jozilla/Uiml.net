@@ -27,6 +27,8 @@ namespace Uiml
 	using System.Collections;
 	using System.Reflection;
 
+	using Uiml.Utils.Reflection;
+
 	///<summary>
 	/// Serves as a repository of assemblies that can be used by the backend and
 	/// by the uiml document (behavior, logic, "embedded" scripts
@@ -51,7 +53,7 @@ namespace Uiml
 			//try to load assembly:
 			try
 			{
-				Assembly b = Assembly.LoadWithPartialName(libRef);
+				Assembly b = AssemblyLoader.LoadFromGacOrAppDir(libRef);
 				base.Add(libRef, b);
 				m_dirty=true;
 			}

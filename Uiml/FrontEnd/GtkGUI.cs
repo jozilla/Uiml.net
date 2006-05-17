@@ -29,11 +29,12 @@ namespace Uiml.FrontEnd{
 	using System;
 	using System.Collections;
 	using System.Reflection;
+	using System.Xml;
+
+	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
 	using Uiml.Executing;
 	using Uiml.Executing.Binding;
-	using System.Xml;
-
 
 	/// <summary>
 	/// GUI front-end to select an UIML file with Gtk
@@ -41,8 +42,8 @@ namespace Uiml.FrontEnd{
 	public class GtkGUI : UimlFrontEnd
 	{
 		static public string UIMLFILE = @"gtkgui.uiml";
-		static public string UIMLLIB=@"uiml.net";
-		public const string GTK_ASSEMBLY    = "gtk-sharp";
+		static public string UIMLLIB = @"uiml.net";
+		public const string GTK_ASSEMBLY = "gtk-sharp";
 
 
 		public GtkGUI() : base(UIMLFILE, UIMLLIB)
@@ -57,7 +58,7 @@ namespace Uiml.FrontEnd{
 		public override void OpenUimlFile()
 		{
 			//dynamically load the code to create "FileSelection"
-			Assembly guiAssembly = Assembly.Load(GTK_ASSEMBLY);
+			Assembly guiAssembly = AssemblyLoader.LoadFromGacOrAppDir(GTK_ASSEMBLY);
 			if(guiAssembly == null)
 				Console.WriteLine("Can not find GTK# Assembly");
 			
