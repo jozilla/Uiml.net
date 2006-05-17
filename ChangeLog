@@ -1,14 +1,22 @@
+2006-05-17 11:06  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	
+	* Uiml/FrontEnd/gtkgui.uiml: Fixed a bug in a property that was used
+	on the libraries list (append vs add)
+
 2006-05-16 15:47  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	
 	* examples/swf/layout/swfCopy_boxes.uiml: Added an example that
 	illustrates how HBox and VBox containers can be used.
 
 2006-05-15 14:20  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	
 	* Uiml/Part.cs:
 	* Uiml/Executing/Binding/UimlEventHandlerAttribute.cs:
 	* Uiml/LayoutManagement/LayoutPropertyRepository.cs: Improved
 	code comments and console output to be more understandable.
 
 2006-05-08 10:41  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	
 	* Uiml/Makefile: Removed dependencies on Boo and Nemerle, now loading
 	them dynamically.
 	* Uiml/Executing/Script.cs: Dynamically load Boo and Nemerle.
@@ -17,15 +25,18 @@
 	Assembly.LoadWithPartialName.
 
 2006-02-15 15:45  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	
 	* Uiml/Executing/Callers/CallerFactory.cs: Added a FIXME, there is a
 	piece of code that doesn't work on Compact .NET. Again, thanks to
 	Volker Janzen for the report.
 
 2006-02-15 15:22  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	
 	* Uiml/Part.cs: Updated a piece of Compact .NET code that didn't
 	compile anymore. Thanks to Volker Janzen for reporting this.
 
 2006-01-23 14:50  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	
 	* Uiml/Executing/Callers/CallerFactory.cs: Improved console output
 	when dynamically loading XML-RPC libraries.
 	* examples/gtk-sharp/xmlRpcCall.cs: set an appropriate title.

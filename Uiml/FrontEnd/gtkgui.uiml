@@ -44,7 +44,7 @@
 			<event part-name="addLib" class="ButtonPressed"/>
 		</condition>
 		<action>
-			<property part-name="libList" name="append">
+			<property part-name="libList" name="add">
 				<call name="GUI.AddLib"/>
 			</property>
 		</action>

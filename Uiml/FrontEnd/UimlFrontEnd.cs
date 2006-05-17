@@ -68,15 +68,15 @@ namespace Uiml.FrontEnd{
 				feUimlDoc.Connect(this);
 				instance.ShowIt();
 			}
-				catch(Exception e)
-				{
-					//no interace available, use command-line options!
-					throw new NoGuiAvailableException();
-				}
+			catch(Exception e)
+			{
+				//no interace available, use command-line options!
+				throw new NoGuiAvailableException();
+			}
 		}
 
 
-	   public UimlDocument UimlDoc
+	   	public UimlDocument UimlDoc
 		{
 			get { return uimlDoc; }
 			set { uimlDoc = value;}
