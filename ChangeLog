@@ -1,3 +1,10 @@
+2006-05-17 13:13  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+
+	* Uiml/Utils/Reflection/AssemblyLoader.cs:
+	* Uiml/Executing/Script.cs:
+	* Uiml/Executing/Callers/CallerFactory.cs: Fixed a few Compact .NET
+	compatibility issues
+
 2006-05-17 15:40  Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	
 	* Uiml/Utils/Reflection:

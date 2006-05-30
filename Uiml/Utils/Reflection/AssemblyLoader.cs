@@ -123,11 +123,16 @@ namespace Uiml.Utils.Reflection
 
 			try
 			{
+				#if COMPACT
+				Assembly a = Assembly.Load(q.Query);
+				#else
 				// FIXME: we should use Assembly.Load, but this is not flexible
 				// since we have to know exactly which version to use. However, using
 				// LoadWithPartialName could lead to problems with mixing 1.0 and 2.0 
 				// assemblies (as is the case with Nemerle for example).
 				Assembly a = Assembly.LoadWithPartialName(q.Query);
+				#endif
+				
 				if (a == null)
 					throw new AssemblyNotFoundException(q.Query);
 

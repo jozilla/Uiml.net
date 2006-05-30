@@ -55,8 +55,10 @@ namespace Uiml.Executing.Callers
 				{	
 					switch(l.Type)
 					{
+						#if !COMPACT
 						case Location.Protocol.XmlRpc:
 							return LoadCaller(XML_RPC_LIB, XML_RPC_CALLER, new object[] { Call, l.Value });
+						#endif
 						//case Location.Protocol.Soap:
 							// TODO
 							//return null;
@@ -74,6 +76,7 @@ namespace Uiml.Executing.Callers
 			}
 		}
 		
+		#if !COMPACT
 		private Caller LoadCaller(string lib, string caller, object[] parameters)
 		{
 			Caller result = null;
@@ -100,6 +103,7 @@ namespace Uiml.Executing.Callers
 
 			return result;
 		}
+		#endif
 
 		public Call Call
 		{

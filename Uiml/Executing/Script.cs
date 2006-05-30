@@ -162,6 +162,7 @@ namespace Uiml.Executing
 			#endif			
 		}
 
+		#if !COMPACT
 		private CodeDomProvider DynamicallyLoadLanguage(string lang, string[] libNames, string codeProvider, int codeProviderLibIndex)
 		{		
 			ArrayList assemblies = new ArrayList();
@@ -197,7 +198,7 @@ namespace Uiml.Executing
 				return null;
 			}
 		}
-
+		#endif
 
 		public Object Execute(String name, Object[] parameters)
 		{
