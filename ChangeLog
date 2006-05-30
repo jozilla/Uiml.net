@@ -1,4 +1,8 @@
-2006-05-17 13:13  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+2006-05-30 14:08  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/AssemblyInfo.cs: Removed specification of key file
+	* Uiml/Part.cs: Fixed a Compact.NET incompatibility
+
+2006-05-30 13:13  Jo Vermeulen <jo.vermeulen@uhasselt.be>
 
 	* Uiml/Utils/Reflection/AssemblyLoader.cs:
 	* Uiml/Executing/Script.cs:

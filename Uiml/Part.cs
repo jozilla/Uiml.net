@@ -27,7 +27,8 @@ namespace Uiml {
 	using System.Xml;
 	using System.Text;
 	using System.Reflection;
-	using System.Collections; 
+	using System.Collections;
+	using System.Globalization;
 	
 	using Uiml.Executing.Binding;
 	using Uiml.LayoutManagement;
@@ -538,8 +539,10 @@ namespace Uiml {
 
 		protected string ToStringTree(string prefix, string orgPrefix, string orgLevel)
 		{
+
 			StringBuilder sb = new StringBuilder();
-			sb.AppendFormat("{0}\n", prefix + orgLevel + Identifier);
+			sb.Append(prefix + orgLevel + Identifier);
+			sb.Append("\n");
 
 			foreach (object ch in Children)
 			{

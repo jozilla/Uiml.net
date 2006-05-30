@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 //TODO make sure the library is completely CLS compliant!
 //[assembly:CLSCompliant(false)]
 
-[assembly: System.Reflection.AssemblyKeyFile ("uiml.net.snk")]
+//[assembly: System.Reflection.AssemblyKeyFile ("uiml.net.snk")]
 
 
 [assembly:AssemblyTitle("Uiml.net")]
