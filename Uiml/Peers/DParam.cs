@@ -40,12 +40,14 @@ namespace Uiml.Peers
 	//public class DParam : IUimlElement
 	public class DParam : Param 
 	{
-		protected ArrayList m_children = null;
+		protected ArrayList m_children;
 
 		public DParam()
-		{}
+		{
+            m_children = new ArrayList();
+        }
 
-		public DParam(XmlNode n)
+		public DParam(XmlNode n) : this()
 		{
 			Process(n);
 		}
@@ -57,13 +59,11 @@ namespace Uiml.Peers
 
 		public bool HasChildren
 		{
-			get { return m_children != null; }
+			get { return m_children.Count > 0; }
 		}
 
 		public void AddChild(object o)
 		{
-			if(m_children == null)
-				m_children = new ArrayList();
 			m_children.Add(o);
 		}
 

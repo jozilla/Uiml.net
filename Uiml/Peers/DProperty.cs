@@ -41,7 +41,7 @@ namespace Uiml.Peers
 	/// </summary>
 	public class DProperty : IUimlElement
 	{
-		protected ArrayList m_children = null;
+		protected ArrayList m_children;
 
 		protected string m_identifier;
 		protected string m_mapsType;
@@ -55,9 +55,11 @@ namespace Uiml.Peers
 		public const string METHOD = "method";
 
 		public DProperty()
-		{}
+		{
+            m_children = new ArrayList();
+        }
 
-		public DProperty(XmlNode n)
+		public DProperty(XmlNode n) : this()
 		{
 			Process(n);
 		}
@@ -105,13 +107,11 @@ namespace Uiml.Peers
 
 		public bool HasChildren
 		{
-			get { return m_children != null; }
+			get { return m_children.Count > 0; }
 		}
 
 		public void AddChild(object o)
 		{
-			if(m_children == null)
-				m_children = new ArrayList();
 			m_children.Add(o);
 		}
 
@@ -124,18 +124,15 @@ namespace Uiml.Peers
 		{
 			ArrayList l = new ArrayList();
 
-			if(HasChildren)
-			{
-				IEnumerator e = GetEnumerator();
+            IEnumerator e = GetEnumerator();
 
-				while(e.MoveNext())
-				{
-					if(e.Current.GetType().Equals(t))
-					{
-						l.Add(e.Current);
-					}
-				}
-			}
+            while(e.MoveNext())
+            {
+                if(e.Current.GetType().Equals(t))
+                {
+                    l.Add(e.Current);
+                }
+            }
 
 			return l; 						
 		}

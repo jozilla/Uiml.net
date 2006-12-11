@@ -121,6 +121,11 @@ namespace Uiml {
 			get { return m_peers.GetEnumerator(); }
 		}
 
+        public ArrayList ListOfPeers
+        {
+            get { return m_peers; }
+        }
+
 		public void AddPeer(Peer newPeer)
 		{
 			m_peers.Add(newPeer);

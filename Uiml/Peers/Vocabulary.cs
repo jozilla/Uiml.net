@@ -468,11 +468,20 @@ namespace Uiml.Peers
 				throw new MappingNotFoundException(methodName);
 		}
 
+        public Hashtable DClasses
+        {
+            get { return m_dictDCls; }
+        }
+
+        public Hashtable DComponents
+        {
+            get { return m_dictDCmp; }
+        }
+
 		public string VocabularyName
 		{
 			get { return m_vocName; }
 		}
-
 		
 		public const string VOCABULARY_BASE  = "http://uiml.org/toolkits/";
 		public const string VOCABULARY_BASE2 = "http://research.edm.uhasselt.be/kris/projects/uiml.net/";
