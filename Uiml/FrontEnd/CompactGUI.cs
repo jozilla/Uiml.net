@@ -73,7 +73,7 @@ namespace Uiml.FrontEnd{
 		
 	
 			//if(ofd.ShowDialog() == DialogResult.OK)
-			MethodInfo runner = ofClassType.GetMethod("ShowDialog", null );
+			MethodInfo runner = ofClassType.GetMethod("ShowDialog");
 			Object o = runner.Invoke(fs, null);
 			Object ok = (guiAssembly.GetType("System.Windows.Forms..DialogResult")).GetProperty("OK").GetValue(null, null);
 			

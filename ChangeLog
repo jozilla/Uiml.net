@@ -1,3 +1,9 @@
+2006-12-14 16:20  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/FrontEnd/CompactGui.cs: Updated invocation of "ShowDialog"
+	method to prevent crash on PocketPC.
+	* Uiml/FrontEnd/compactgui.uiml: Added correct logic component for
+	PocketPC version in comments.
+
 2006-12-11 10:25  Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/UimlDocument.cs: Added method ListOfPeers to return the entire
 	ArrayList.
