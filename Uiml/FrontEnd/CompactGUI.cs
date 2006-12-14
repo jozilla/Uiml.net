@@ -75,10 +75,13 @@ namespace Uiml.FrontEnd{
 			//if(ofd.ShowDialog() == DialogResult.OK)
 			MethodInfo runner = ofClassType.GetMethod("ShowDialog");
 			Object o = runner.Invoke(fs, null);
-			Object ok = (guiAssembly.GetType("System.Windows.Forms..DialogResult")).GetProperty("OK").GetValue(null, null);
+
+			Type tdr = guiAssembly.GetType("System.Windows.Forms.DialogResult");
+			FieldInfo fInfo = tdr.GetField("OK");
+			Object ok = fInfo.GetValue(o);
 			
 			//	UimlFileName = ofd.FileName;
-			if(ok == o)
+			if(ok.Equals(o))
 			{
 				PropertyInfo fname = ofClassType.GetProperty("FileName");
 				UimlFileName = (string)fname.GetValue(fs, null);

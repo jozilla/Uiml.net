@@ -38,7 +38,7 @@ namespace Uiml.Rendering.CompactSWF
 	{
 		public CompactSWFRenderedInstance()
 		{
-       this.Menu = new System.Windows.Forms.MainMenu();
+            this.Menu = new System.Windows.Forms.MainMenu();
 		}
 
 		public CompactSWFRenderedInstance(string title)
@@ -48,7 +48,15 @@ namespace Uiml.Rendering.CompactSWF
 	
 		public void ShowIt()
 		{
-			Application.Run(this);			
+			try
+			{
+				Application.Run(this);
+			}
+			catch(System.Exception e)
+			{
+				//Application thread is already running...
+				this.ShowDialog();
+			}
 		}
 		
 		public void Add(Control c) 
