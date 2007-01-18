@@ -1,3 +1,7 @@
+2007-01-18 13:41  Jo Vermeulen <jo.vermeulen@uhasselt.be>
+	* Uiml/Rendering/SWF/SWFTypeDecoder.cs: Added decoding of
+	TabAlignment.
+
 2006-12-14 18:23  Jo Vermeulen <jo.vermeulen@uhasselt.be>
 	* Uiml/FrontEnd/CompactGui.cs: Updated invocation of "ShowDialog"
 	method to prevent crash on PocketPC.

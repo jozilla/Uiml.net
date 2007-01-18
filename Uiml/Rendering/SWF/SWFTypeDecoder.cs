@@ -145,6 +145,8 @@ namespace Uiml.Rendering.SWF
 					return DecodeOrientation(value);
 				case "System.Windows.Forms.TickStyle":
 					return DecodeTickStyle(value);
+                case "System.Windows.Forms.TabAlignment":
+                    return DecodeTabAlignment(value);
 				default:
 					return value;
 			}			
@@ -244,6 +246,26 @@ namespace Uiml.Rendering.SWF
 			else
 				return TickStyle.TopLeft;
 		}
+
+        private System.Object DecodeTabAlignment(string value)
+        {
+            switch (value.ToLower())
+            {
+                case "left":
+                    return System.Windows.Forms.TabAlignment.Left;
+                    break;
+                case "right":
+                    return System.Windows.Forms.TabAlignment.Right;
+                    break;
+                case "bottom":
+                    return System.Windows.Forms.TabAlignment.Bottom;
+                    break;
+                case "top":
+                default:
+                    return System.Windows.Forms.TabAlignment.Top;
+                    break;
+            }
+        }
 
 		private System.Object DecodeListViewItem(Property p)
 		{
