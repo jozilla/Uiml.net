@@ -253,17 +253,13 @@ namespace Uiml.Rendering.SWF
             {
                 case "left":
                     return System.Windows.Forms.TabAlignment.Left;
-                    break;
                 case "right":
                     return System.Windows.Forms.TabAlignment.Right;
-                    break;
                 case "bottom":
                     return System.Windows.Forms.TabAlignment.Bottom;
-                    break;
                 case "top":
                 default:
                     return System.Windows.Forms.TabAlignment.Top;
-                    break;
             }
         }
 
