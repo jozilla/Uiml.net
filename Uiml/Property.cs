@@ -211,7 +211,9 @@ namespace Uiml{
 			{
 				//the property has to be executed:
 				if(m_subprop is Uiml.Executing.IExecutable)
-					Value = ((IExecutable)m_subprop).Execute(renderer).ToString();
+                    // don't convert to a string, because we might need
+                    // complex types coming from the app logic!
+					Value = ((IExecutable)m_subprop).Execute(renderer);//.ToString();
 				//the property is a constant and has to be converted into the correct data structure:
 				else if(m_subprop is Uiml.Constant)//TODO: check the following line for consistent execution
 					Value = ((Constant)m_subprop); 
