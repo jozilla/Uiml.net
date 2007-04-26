@@ -147,6 +147,8 @@ namespace Uiml.Rendering.SWF
 					return DecodeTickStyle(value);
                 case "System.Windows.Forms.TabAlignment":
                     return DecodeTabAlignment(value);
+                case "System.Drawing.Font":
+                    return DecodeFont(value);
 				default:
 					return value;
 			}			
@@ -159,9 +161,9 @@ namespace Uiml.Rendering.SWF
 				case "System.String[]":
 					return DecodeStringArray(p.Value);
 				case "System.Windows.Forms.ColumnHeader":
-					ColumnHeader result = new ColumnHeader();
-					result.Text = (string)p.Value;
-					return result;
+                    return DecodeColumnHeader(p.Value);
+                case "System.Windows.Forms.ColumnHeader[]":
+                    return DecodeColumnHeaderArray(p);
 				case "System.Windows.Forms.ListViewItem":
 					return DecodeListViewItem(p);
 				case "System.Windows.Forms.ListViewItem[]":
@@ -175,6 +177,62 @@ namespace Uiml.Rendering.SWF
 			}			
 		}
 
+		private System.Object DecodeFont(string value)
+		{
+			string name = "Microsoft Sans Serif";
+			float size = 8.25F;
+			FontStyle style = FontStyle.Regular;
+			GraphicsUnit unit = GraphicsUnit.Point;
+
+			string[] font = value.Split(new Char[] {','});
+
+			for(int i = 0; i < font.Length; i++)
+			{
+				string [] values = font[i].Split(new Char[] {'='});
+			
+				if( values[0].Trim().ToLower() == "name")
+					name = values[1];
+				else if (values[0].Trim().ToLower() == "size" )
+					size = (float) Double.Parse(values[1]);
+				else if(values[0].Trim().ToLower() == "style")
+				{
+					string [] styles = values[1].Split(new char[] {'|'});
+
+					for (int j = 0; j < styles.Length; j++)
+					{
+						if(styles[j].Trim().ToLower() == "bold")
+							style = style | FontStyle.Bold;
+						else if(styles[j].Trim().ToLower() == "italic")
+							style = style | FontStyle.Italic;
+						else if(styles[j].Trim().ToLower() == "regular")
+							style = style | FontStyle.Regular;
+						else if(styles[j].Trim().ToLower() == "strikeout")
+							style = style | FontStyle.Strikeout;
+						else if(styles[j].Trim().ToLower() == "underline")
+							style = style | FontStyle.Underline;
+					}
+				}
+				else if (values[0].Trim().ToLower() == "unit")
+				{
+					if(values[1].Trim().ToLower() == "display")
+						unit = GraphicsUnit.Display;
+					else if(values[1].Trim().ToLower() == "document")
+						unit = GraphicsUnit.Document;
+					else if(values[1].Trim().ToLower() == "inch")
+						unit = GraphicsUnit.Inch;
+					else if(values[1].Trim().ToLower() == "millimeter")
+						unit = GraphicsUnit.Millimeter;
+					else if(values[1].Trim().ToLower() == "pixel")
+						unit = GraphicsUnit.Pixel;
+					else if(values[1].Trim().ToLower() == "point")
+						unit = GraphicsUnit.Point;
+					else if(values[1].Trim().ToLower() == "world")
+						unit = GraphicsUnit.World;
+				}
+			}
+			
+			return new Font(name, size, style, unit);
+		}
 		private System.Object DecodeDateTime(string value)
 		{
 			string[] coords = value.Split(new Char[] {'/'});
@@ -327,6 +385,25 @@ namespace Uiml.Rendering.SWF
 			return result;
 		}
 
+		private System.Object DecodeColumnHeader(System.Object val)
+		{
+					ColumnHeader result = new ColumnHeader();
+					result.Text = (string) val;
+					return result;
+		}
+
+		private System.Object DecodeColumnHeaderArray(Property p)
+		{
+			string[] strHeaders = DecodeStringArray(p.Value);
+			ColumnHeader[] headers = new ColumnHeader[strHeaders.Length];
+
+			for (int i = 0; i < strHeaders.Length; i++)
+			{
+				headers[i] = (ColumnHeader) DecodeColumnHeader(strHeaders[i]); 
+			}
+
+			return headers;
+		}
 		private System.String[] DecodeStringArray(System.Object value)
 		{
 			ArrayList strArrayList = new ArrayList();
