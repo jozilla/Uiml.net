@@ -157,6 +157,11 @@ namespace Uiml.Executing
 			get { return null; }
 		}
 
+        public System.Object ConditionObject 
+        {
+            get { return m_conditionObject; }
+        }
+
 		public const string CONDITION = "condition";
 		public const string EQUAL     = "equal";
 		public const string OPERATOR  = "op";
