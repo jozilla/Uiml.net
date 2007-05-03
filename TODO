@@ -18,8 +18,10 @@ Bugs:
 Standard compliance:
 ====================
 
+We should update our implementation to conform to the upcoming UIML
+4.0 standard.
+
 This section lists the tags that are not yet (fully) supported:
-- template (union and cascade need more work)
 - restructure
 - condition (single events are supported)
 - equal
@@ -30,6 +32,11 @@ This section lists the tags that are not yet (fully) supported:
 - by-default
 - restructure
 - listener
+
+Here are the tags that are mostly supported, but need to be checked to
+assure that they confirm to the standard:
+
+- template (union and cascade need more work)
 
 TODO for Widget support:
 ========================

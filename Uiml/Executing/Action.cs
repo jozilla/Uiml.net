@@ -131,7 +131,7 @@ namespace Uiml.Executing
 
 		public ArrayList Children
 		{
-			get { return null; }
+			get { return m_subActions; }
 		}
 
 		public const string ACTION   = "action";

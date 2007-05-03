@@ -50,9 +50,8 @@ namespace Uiml.Peers
 	///             id NMTOKEN #IMPLIED
 	///             type CDATA #IMPLIED&gt;
 	/// </summary>
-	public class Script :  IUimlElement
+	public class Script : UimlAttributes, IUimlElement
 	{
-		private string m_identifier;
 		private String m_scriptSource;
 		private String m_type;
 		private bool m_preCompiled = false;
@@ -70,7 +69,7 @@ namespace Uiml.Peers
 
 		public Script(String scriptType, String scriptSource) :this()
 		{
-			Source = scriptSource;
+			ScriptSource = scriptSource;
 			Type   = scriptType;
 		}
 
@@ -87,6 +86,7 @@ namespace Uiml.Peers
 			if(n.Name != IAM)
 				return;
 
+            base.ReadAttributes(n);
 			XmlAttributeCollection attr = n.Attributes;
 			
 			if(attr.GetNamedItem(ID) != null)
@@ -96,7 +96,7 @@ namespace Uiml.Peers
 				Type = attr.GetNamedItem(TYPE).Value;
 			else
 				Console.WriteLine("Warning: " + IAM + " should have \"" + TYPE + "\" attribute!");
-			Source = n.InnerText;
+			ScriptSource = n.InnerText;
 		}
 
 		public void GetEvents(ArrayList al)
@@ -138,7 +138,7 @@ namespace Uiml.Peers
 				compParams.ReferencedAssemblies.Add(((Assembly)enumLibs.Current).GetName().Name);
 			compParams.GenerateExecutable = true;
 			compParams.GenerateInMemory = true;
-			CompilerResults crs = theCompiler.CompileAssemblyFromSource(compParams,Source);
+			CompilerResults crs = theCompiler.CompileAssemblyFromSource(compParams, ScriptSource);
 			if(crs.Errors.HasErrors)
 				for(int i=0; i< crs.Errors.Count; i++)
 					Console.WriteLine(crs.Errors[i]);
@@ -186,13 +186,7 @@ namespace Uiml.Peers
 			get { return null; }
 		}
 
-		public string Identifier
-		{
-			get { return m_identifier; }
-			set { m_identifier = value; }
-		}
-
-		public String Source
+		public String ScriptSource
 		{
 			get { return m_scriptSource;  }
 			set { m_scriptSource = value; }
@@ -210,7 +204,6 @@ namespace Uiml.Peers
 		}
 
 		
-		public const string ID		= "id";
 		public const string TYPE	= "type";
 
 		public const string IAM		= "script";
