@@ -66,7 +66,7 @@ namespace Uiml.FrontEnd{
 			Assembly guiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
 			//OpenFileDialog ofd = new OpenFileDialog();
 			Type ofClassType = guiAssembly.GetType("System.Windows.Forms.OpenFileDialog");
-			Object fs = Activator.CreateInstance(ofClassType, null);
+			Object fs = Activator.CreateInstance(ofClassType);
 			//ofd.Filter = "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" ;
 			PropertyInfo filterMe = ofClassType.GetProperty("Filter");
 			filterMe.SetValue(fs, "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" , null);
