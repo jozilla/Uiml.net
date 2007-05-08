@@ -31,6 +31,7 @@ namespace Uiml.FrontEnd{
 	///</summary>
 	public class NoGuiAvailableException : Exception
 	{
-
+        public NoGuiAvailableException(Exception inner)
+            : base("No front-end UIML file could be rendered", inner) {}
 	}
 }

@@ -70,7 +70,7 @@ namespace Uiml.FrontEnd{
 			catch(Exception e)
 			{
 				//no interface available, use command-line options!
-				throw new NoGuiAvailableException();
+				throw new NoGuiAvailableException(e);
 			}
 		}
 
