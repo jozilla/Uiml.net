@@ -28,6 +28,7 @@ namespace Uiml.FrontEnd{
 
 	using System;
 	using System.Collections;
+    using System.IO;
 	using System.Reflection;
 	using System.Xml;
 	
@@ -42,10 +43,10 @@ namespace Uiml.FrontEnd{
 	public class CompactGUI : UimlFrontEnd
 	{
 		static public string UIMLFILE = "compactgui.uiml";
-		static public string UIMLLIB = "libUiml.net-compact";
+		static public string UIMLLIB = "uiml.net-core-cf";
 		public const string SWF_ASSEMBLY = "System.Windows.Forms";
 
-        public static CompactGUI()
+        static CompactGUI()
         {
             // always load the library and UIML files from the current
             // working directory
