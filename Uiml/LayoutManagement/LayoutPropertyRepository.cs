@@ -112,7 +112,6 @@ namespace Uiml.LayoutManagement
 			}
 		}
 
-#if !COMPACT
 		public void PrintProperties()
 		{
 			SortedList sortedProps = new SortedList(m_properties);
@@ -122,7 +121,6 @@ namespace Uiml.LayoutManagement
 				Console.WriteLine(p);
 			}
 		}
-#endif
 
 		public bool Contains(LayoutProperty p)
 		{
