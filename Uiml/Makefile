@@ -13,6 +13,7 @@ bindir=${exec_prefix}/bin
 libdir=$(exec_prefix)/lib
 monolibdir=${libdir}/mono/1.0/
 
+COMPILER=gmcs
 CLASSPATH=.:../../..
 OPTIONS=-g
 GTKLIBS= -pkg:gtk-sharp-2.0 
@@ -44,13 +45,13 @@ all: lib exe
 	@echo " done"
 
 #exe :
-#	mcs ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
+#	${COMPILER} ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
 #	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs \
 #	Utils/Reflection/*.cs Peers/*.cs
 
 exe:	
 	@echo "building executable" 
-	mcs ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs \
+	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs \
 	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs \
 	Utils/Reflection/*.cs Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
@@ -61,7 +62,7 @@ exe:
 
 lib:	
 	@echo "building library"
-	mcs ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
+	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
 	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
 	@echo "done"
@@ -73,19 +74,19 @@ solver:
 	@echo "done"
 
 gtk:
-	mcs ${DEBUG} ${GTKLIBS} -keyfile:Rendering/GTKsharp/uiml-gtk-sharp.snk /r:uiml.net.dll -out:uiml-gtk-sharp.dll -target:library Rendering/GTKsharp/*.cs
+	${COMPILER} ${DEBUG} ${GTKLIBS} -keyfile:Rendering/GTKsharp/uiml-gtk-sharp.snk /r:uiml.net.dll -out:uiml-gtk-sharp.dll -target:library Rendering/GTKsharp/*.cs
 
 wx:
-	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -out:uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
+	${COMPILER} ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -out:uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
 
 swf:	
-	mcs ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) -keyfile:Rendering/SWF/uiml-swf.snk /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
+	${COMPILER} ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) -keyfile:Rendering/SWF/uiml-swf.snk /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
 
 cswf:
-	mcs ${DEBUG} ${SWFLIBS} -keyfile:Rendering/CompactSWF/uiml-compactswf.snk /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
+	${COMPILER} ${DEBUG} ${SWFLIBS} -keyfile:Rendering/CompactSWF/uiml-compactswf.snk /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
 
 xml-rpc:
-	mcs ${DEBUG} ${XMLRPCLIBS} -keyfile:uiml-xml-rpc.snk -r:uiml.net.dll -out:uiml-xml-rpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
+	${COMPILER} ${DEBUG} ${XMLRPCLIBS} -keyfile:uiml-xml-rpc.snk -r:uiml.net.dll -out:uiml-xml-rpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
 
 clean:
 	rm -f *.exe *.dll *.mdb compactgui.uiml gtkgui.uiml
