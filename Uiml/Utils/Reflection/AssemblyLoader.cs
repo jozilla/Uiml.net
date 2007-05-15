@@ -28,17 +28,8 @@ namespace Uiml.Utils.Reflection
 				}
 				else
 				{
-					// cut off assembly extension
-					string partialName = Query.Substring(0, Query.IndexOf(ASSEMBLY_EXTENSION));
-					
-					// cut off path if there is one
-					if (partialName.IndexOf(Path.DirectorySeparatorChar) != -1)
-					{
-						partialName = partialName.Substring(
-							partialName.LastIndexOf(Path.DirectorySeparatorChar), 
-							partialName.Length - 1
-						);
-					}
+					// cut off assembly extension and path
+					string partialName = Path.GetFileNameWithoutExtension(Query);
 
 					return new AssemblyQuery(partialName);
 				}
@@ -123,14 +114,35 @@ namespace Uiml.Utils.Reflection
 
 			try
 			{
+                Assembly a = null;
+
 				#if COMPACT
-				Assembly a = Assembly.Load(q.Query);
+                try
+                {
+    				a = Assembly.Load(q.Query);
+                }
+                catch (IOException)
+                {
+                    // try to load it from the current application
+                    // directory
+                    string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+                    string assemblyPath = Path.Combine(appDir, q.Query + ".dll");
+                    a = Assembly.LoadFrom(assemblyPath);
+                }
 				#else
-				// FIXME: we should use Assembly.Load, but this is not flexible
-				// since we have to know exactly which version to use. However, using
-				// LoadWithPartialName could lead to problems with mixing 1.0 and 2.0 
-				// assemblies (as is the case with Nemerle for example).
-				Assembly a = Assembly.LoadWithPartialName(q.Query);
+                // FIXME: we should use Assembly.Load, but this is not
+                // flexible since we have to know exactly which
+                // version to use. However, using LoadWithPartialName
+                // could lead to problems with mixing 1.0 and 2.0
+                // assemblies (as is the case with Nemerle for
+                // example). 
+                //
+                // The best way to fix this would be to reference the
+                // GTK# and (Compact) SWF assemblies with their fully
+                // qualified name. We could pass a fully filled in
+                // AssemblyName class to the Assembly.Load method for
+                // this.
+				a = Assembly.LoadWithPartialName(q.Query);
 				#endif
 				
 				if (a == null)

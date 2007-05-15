@@ -31,10 +31,10 @@ namespace Uiml.Rendering
 	public class BackendFactory
 	{
 		public String[] assemblies = { 
-                                              "uiml-gtk-sharp",
-                                              "uiml-wx-net",
-                                              "uiml-swf",
-                                              "uiml-compact-swf" 
+                                              "uiml.net-gtk",
+                                              "uiml.net-wx",
+                                              "uiml.net-swf",
+                                              "uiml.net-swf-cf" 
                                              };
 
 		public String[] renderers = { 

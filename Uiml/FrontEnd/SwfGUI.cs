@@ -40,8 +40,8 @@ namespace Uiml.FrontEnd
 	/// </summary>
 	public class SwfGUI : UimlFrontEnd
 	{
-		static public string UIMLFILE = @"compactgui.uiml";
-		static public string UIMLLIB = @"uiml.net";
+		static public string UIMLFILE = "compactgui.uiml";
+		static public string UIMLLIB = "uiml.net-core";
 		public const string SWF_ASSEMBLY = "System.Windows.Forms";
 
 		public SwfGUI() : base(UIMLFILE, UIMLLIB)
