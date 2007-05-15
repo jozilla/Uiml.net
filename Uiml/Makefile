@@ -36,8 +36,11 @@ all: lib exe
 	@echo " building swf backend"
 	@make swf || true
 	@echo " done"
+	@echo " building compact library"
+	@make lib-cf || true
+	@echo " done"
 	@echo " building compact swf backend"
-	@make cswf || true
+	@make swf-cf || true
 	@echo " done"
 	@echo " building xml-rpc support"
 	@make xml-rpc || true
@@ -48,20 +51,36 @@ all: lib exe
 #	cscc -out:uiml.net.exe -l System.Xml -l System.Windows.Forms *.cs Rendering/*.cs Rendering/SWF/*.cs Executing/*.cs Utils/*.cs \
 #	Utils/Reflection/*.cs Peers/*.cs
 
-exe:	
+exe: lib
 	@echo "building executable" 
-	mcs ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe *.cs Rendering/*.cs \
-	Executing/*.cs Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs \
-	Utils/Reflection/*.cs Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
+	mcs ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe -r:uiml.net-core.dll \
+	FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 	@echo "copying uiml files for frontend"
 	cp FrontEnd/gtkgui.uiml .
 	cp FrontEnd/compactgui.uiml .
 	@echo "done"
 
-lib:	
+lib: solver
 	@echo "building library"
-	mcs ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
+	mcs ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net-core.snk -out:uiml.net-core.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
+	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
+	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
+	@echo "done"
+
+exe-cf:	lib-cf
+	@echo "building executable" 
+	mcs ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:uiml.net-cf.snk -out:uiml.net-cf.exe -target:exe -r:uiml.net-core-cf.dll \
+	FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
+	@echo "done"
+	@echo "copying uiml files for frontend"
+	cp FrontEnd/gtkgui.uiml .
+	cp FrontEnd/compactgui.uiml .
+	@echo "done"
+
+lib-cf:	solver
+	@echo "building Compact .NET library"
+	mcs ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:uiml.net-core-cf.snk -out:uiml.net-core-cf.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
 	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
 	@echo "done"
@@ -72,20 +91,20 @@ solver:
 	cp ../Cassowary/Cassowary*dll .
 	@echo "done"
 
-gtk:
-	mcs ${DEBUG} ${GTKLIBS} -keyfile:Rendering/GTKsharp/uiml-gtk-sharp.snk /r:uiml.net.dll -out:uiml-gtk-sharp.dll -target:library Rendering/GTKsharp/*.cs
+gtk: 
+	mcs ${DEBUG} ${GTKLIBS} -keyfile:Rendering/GTKsharp/uiml.net-gtk.snk /r:uiml.net-core.dll -out:uiml.net-gtk.dll -target:library Rendering/GTKsharp/*.cs
 
-wx:
-	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml-wx-net.snk /r:uiml.net.dll -out:uiml-wx-net.dll -target:library Rendering/WXnet/*.cs
+wx: 
+	mcs ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml.net-wx.snk /r:uiml.net-core.dll -out:uiml.net-wx.dll -target:library Rendering/WXnet/*.cs
 
-swf:	
-	mcs ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) -keyfile:Rendering/SWF/uiml-swf.snk /r:uiml.net.dll -out:uiml-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
+swf: 
+	mcs ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) -keyfile:Rendering/SWF/uiml.net-swf.snk /r:uiml.net-core.dll -out:uiml.net-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
 
-cswf:
-	mcs ${DEBUG} ${SWFLIBS} -keyfile:Rendering/CompactSWF/uiml-compactswf.snk /r:uiml.net.dll -out:uiml-compact-swf.dll -target:library Rendering/CompactSWF/*.cs
+swf-cf: 
+	mcs ${DEBUG} ${SWFLIBS} -d:COMPACT -keyfile:Rendering/CompactSWF/uiml.net-swf-cf.snk /r:uiml.net-core-cf.dll -out:uiml.net-swf-cf.dll -target:library Rendering/CompactSWF/*.cs
 
-xml-rpc:
-	mcs ${DEBUG} ${XMLRPCLIBS} -keyfile:uiml-xml-rpc.snk -r:uiml.net.dll -out:uiml-xml-rpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
+xml-rpc: 
+	mcs ${DEBUG} ${XMLRPCLIBS} -keyfile:uiml.net-xmlrpc.snk -r:uiml.net-core.dll -out:uiml.net-xmlrpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
 
 clean:
 	rm -f *.exe *.dll *.mdb compactgui.uiml gtkgui.uiml
@@ -96,30 +115,30 @@ install:
 	$(INSTALL) -d ${DESTDIR}${bindir}
 	$(INSTALL_PROGRAM) uiml.net.exe $(DESTDIR)$(bindir)/uiml.net.exe
 	$(INSTALL) -d ${DESTDIR}${monolibdir}
-	$(INSTALL_PROGRAM) uiml.net.dll $(DESTDIR)$(monolibdir)/uiml.net.dll
-	$(INSTALL_PROGRAM) uiml-gtk-sharp.dll $(DESTDIR)$(monolibdir)/uiml-gtk-sharp.dll
-	$(INSTALL_PROGRAM) uiml-swf.dll $(DESTDIR)$(monolibdir)/uiml-swf.dll
-	$(INSTALL_PROGRAM) uiml-compact-swf.dll $(DESTDIR)$(monolibdir)/uiml-compact-swf.dll
-	$(INSTALL_PROGRAM) uiml-wx-net.dll $(DESTDIR)$(monolibdir)/uiml-wx-net.dll
-	$(INSTALL_PROGRAM) uiml-xml-rpc.dll $(DESTDIR)$(monolibdir)/uiml-xml-rpc.dll
+	$(INSTALL_PROGRAM) uiml.net-core.dll $(DESTDIR)$(monolibdir)/uiml.net-core.dll
+	$(INSTALL_PROGRAM) uiml.net-gtk.dll $(DESTDIR)$(monolibdir)/uiml.net-gtk.dll
+	$(INSTALL_PROGRAM) uiml.net-swf.dll $(DESTDIR)$(monolibdir)/uiml.net-swf.dll
+	$(INSTALL_PROGRAM) uiml.net-swf-cf.dll $(DESTDIR)$(monolibdir)/uiml.net-swf-cf.dll
+	$(INSTALL_PROGRAM) uiml.net-wx.dll $(DESTDIR)$(monolibdir)/uiml.net-wx.dll
+	$(INSTALL_PROGRAM) uiml.net-xmlrpc.dll $(DESTDIR)$(monolibdir)/uiml.net-xmlrpc.dll
 
 register: register-uiml register-gtk register-swf register-cswf register-wx register-xmlrpc
 
 register-uiml:
-	$(GACUTIL) /i uiml.net.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml.net-core.dll /f $(GACUTIL_FLAGS) || exit 1;
 
 register-gtk:
-	$(GACUTIL) /i uiml-gtk-sharp.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml.net-gtk.dll /f $(GACUTIL_FLAGS) || exit 1;
 
 register-swf:
-	$(GACUTIL) /i uiml-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml.net-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
 
 register-cswf:
-	$(GACUTIL) /i uiml-compact-swf.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml.net-swf-cf.dll /f $(GACUTIL_FLAGS) || exit 1;
 
 register-wx:
-	$(GACUTIL) /i uiml-wx-net.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml.net-wx.dll /f $(GACUTIL_FLAGS) || exit 1;
 
 register-xmlrpc:
-	$(GACUTIL) /i uiml-xml-rpc.dll /f $(GACUTIL_FLAGS) || exit 1;
+	$(GACUTIL) /i uiml.net-xmlrpc.dll /f $(GACUTIL_FLAGS) || exit 1;
 

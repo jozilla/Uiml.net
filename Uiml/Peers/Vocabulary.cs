@@ -26,6 +26,8 @@
 
 using System;
 using System.Xml;
+using System.IO;
+using System.Reflection;
 using System.Collections;
 
 namespace Uiml.Peers
@@ -60,8 +62,10 @@ namespace Uiml.Peers
 
 		protected void Load(string vocName)
 		{
-			//first try to load the string "as is". If this does not work
-			//try to load the online vocabulary provided this exists
+            //first try to load the string "as is". Then try to load
+            //it from the current application directory. If this does
+            //not work try to load the online vocabulary provided this
+            //exists
 			m_doc = new XmlDocument();
 			XmlTextReader xr = null;
 			try
@@ -70,29 +74,37 @@ namespace Uiml.Peers
 				m_doc.Load(xr);
 				Parse();
 			}
-			catch(XmlException xe)
+			catch(Exception e)
 			{
 				Console.WriteLine("Could not load {0} because of: ", vocName);
-				Console.WriteLine(xe);
+				Console.WriteLine(e);
 				Console.WriteLine("Trying other possible vocabulary locations...");
 				try
 				{
-					xr = new XmlTextReader(VOCABULARY_BASE + vocName + VOCABULARY_EXT);
-					m_doc.Load(xr);
-					Parse();
+                    // try from current working dir
+                    string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+                    string vocFile = Path.GetFileName(vocName);
+                    string voc = Path.Combine(appDir, vocFile);
+                    xr = new XmlTextReader(voc);
+                    m_doc.Load(xr);
+                    Parse();
 				}
-				catch(Exception e)
+				catch(Exception)
 				{
-					xr = new XmlTextReader(VOCABULARY_BASE2 + vocName + VOCABULARY_EXT);
-					m_doc.Load(xr);
-					Parse();				
+                    try
+                    {
+					    xr = new XmlTextReader(VOCABULARY_BASE + vocName + VOCABULARY_EXT);
+    					m_doc.Load(xr);
+    					Parse();
+                    }
+                    catch (Exception)
+                    {
+					    xr = new XmlTextReader(VOCABULARY_BASE2 + vocName + VOCABULARY_EXT);
+    					m_doc.Load(xr);
+    					Parse();				
+                    }
 				}
 			}
-			catch(Exception e)
-			{						
-				Console.WriteLine("Could not load {0}", vocName);
-				Console.WriteLine(e);
-			}				
 		}
 
 		public void MergeLogic(Logic l)
@@ -483,8 +495,8 @@ namespace Uiml.Peers
 			get { return m_vocName; }
 		}
 		
-		public const string VOCABULARY_BASE  = "http://uiml.org/toolkits/";
-		public const string VOCABULARY_BASE2 = "http://research.edm.uhasselt.be/kris/projects/uiml.net/";
+		public const string VOCABULARY_BASE = "http://research.edm.uhasselt.be/kris/projects/uiml.net/";
+		public const string VOCABULARY_BASE2  = "http://uiml.org/toolkits/";
 		public const string VOCABULARY_EXT   = "uiml";		
 	}
 }

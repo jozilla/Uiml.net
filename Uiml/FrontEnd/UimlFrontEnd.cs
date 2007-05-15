@@ -58,8 +58,7 @@ namespace Uiml.FrontEnd{
 
 		public UimlFrontEnd(string uimlDoc, string uimlLib) : this()
 		{
-			
-			try //try to load a GUI as frontend
+			try //try to load a GUI as front-end
 			{
 				UimlDocument feUimlDoc = new UimlDocument(uimlDoc);
 				renderer =  (new BackendFactory()).CreateRenderer(feUimlDoc.Vocabulary);
@@ -70,8 +69,8 @@ namespace Uiml.FrontEnd{
 			}
 			catch(Exception e)
 			{
-				//no interace available, use command-line options!
-				throw new NoGuiAvailableException();
+				//no interface available, use command-line options!
+				throw new NoGuiAvailableException(e);
 			}
 		}
 
@@ -119,7 +118,9 @@ namespace Uiml.FrontEnd{
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
+#if !COMPACT
 				Console.WriteLine(e.StackTrace);				
+#endif
 				Console.WriteLine("Could not create GUI for {0} with uiml.net", UimlFileName);
 			}
 		}
