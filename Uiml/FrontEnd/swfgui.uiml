@@ -44,9 +44,9 @@
 	</behavior>
 </interface>
 <peers>
-	<presentation base="cswf-1.0.uiml"/>
+	<presentation base="swf-1.1.uiml"/> 
 	<logic id="CompactGUI">
-        <d-component id="GUI" maps-to="Uiml.FrontEnd.CompactGUI"> 
+		<d-component id="GUI" maps-to="Uiml.FrontEnd.SwfGUI">
 			<d-method id="Open" return-type="void" maps-to="OpenUimlFile" />
 			<d-method id="Name" return-type="String" maps-to="UimlFileName" />
 			<d-method id="Show" return-tyep="void" maps-to="Render" />
