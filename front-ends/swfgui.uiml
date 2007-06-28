@@ -6,50 +6,63 @@
 			<part id="uimlfileOpen" class="Button"/>
 			<part id="uimlfileName" class="Label"/>
 			<part id="render"       class="Button"/>
+      <part id="quit"       class="Button"/>
 		</part>
 	</structure>
 	<style>
 		<property part-name="uimlfileOpen" name="label">Select UIML file...</property>
 		<property part-name="uimlfileName" name="text">No UIML file selected</property>
-		<!-- Absolute positioning and scaling -->
-		<property part-name="cont" name="size">1000,1000</property>
-	    <property part-name="uimlfileOpen" name="position">10,10</property>
-	    <property part-name="uimlfileOpen" name="size">150,23</property>
-	    <property part-name="uimlfileName" name="position">10,34</property>
-	    <property part-name="uimlfileName" name="size">350,43</property>
-	    <property part-name="render" name="position">10,78</property>
-	    <property part-name="render" name="size">150,23</property>
-	    <property part-name="render" name="label">Render Interface</property>
-	</style>
+    <property part-name="render" name="label">Render Interface</property>
+    <property part-name="quit" name="label">Quit Uiml.net</property>
+    <!-- Absolute positioning and scaling -->
+    <property part-name="cont" name="size">1000,1000</property>
+    <property part-name="uimlfileOpen" name="position">10,10</property>
+    <property part-name="uimlfileOpen" name="size">150,23</property>
+    <property part-name="uimlfileName" name="position">10,34</property>
+    <property part-name="uimlfileName" name="size">350,43</property>
+    <property part-name="render" name="position">10,78</property>
+    <property part-name="render" name="size">150,23</property>
+    <property part-name="quit" name="position">10,111</property>
+    <property part-name="quit" name="size">150,23</property>
+  </style>
 	<behavior>
-	  <rule>
-		<condition>
-			<event part-name="uimlfileOpen" class="ButtonPressed"/>
-		</condition>
-		<action>
-			<call name="GUI.Open"/>
-			<property part-name="uimlfileName" name="text">
-				<call name="GUI.Name"/>
-			</property>
-		</action>
-	   </rule>
-	   <rule>
-	    <condition>
-			<event part-name="render" class="ButtonPressed"/>
+    <rule>
+      <condition>
+        <event part-name="uimlfileOpen" class="ButtonPressed"/>
+      </condition>
+      <action>
+  			<call name="GUI.Open"/>
+			  <property part-name="uimlfileName" name="text">
+  				<call name="GUI.Name"/>
+			  </property>
+		  </action>
+    </rule>
+    <rule>
+      <condition>
+  			<event part-name="render" class="ButtonPressed"/>
 	    </condition>
 	    <action>
-			<call name="GUI.Show"/>
+	  		<call name="GUI.Show"/>
 	    </action>
-	   </rule>
+    </rule>
+    <rule>
+      <condition>
+        <event part-name="quit" class="ButtonPressed"/>
+      </condition>
+      <action>
+        <call name="GUI.Quit"/>
+      </action>
+    </rule>
 	</behavior>
 </interface>
 <peers>
 	<presentation base="swf-1.1.uiml"/> 
-	<logic id="CompactGUI">
+	<logic id="SwfGUI">
 		<d-component id="GUI" maps-to="Uiml.FrontEnd.SwfGUI">
 			<d-method id="Open" return-type="void" maps-to="OpenUimlFile" />
 			<d-method id="Name" return-type="String" maps-to="UimlFileName" />
-			<d-method id="Show" return-tyep="void" maps-to="Render" />
+			<d-method id="Show" return-type="void" maps-to="Render" />
+      <d-method id="Quit" return-type="void" maps-to="Quit" />
 		</d-component>
 	</logic>
 </peers>

@@ -35,8 +35,9 @@ namespace Uiml.Rendering.GTKsharp
 	///</summary>
 	public class GtkRenderedInstance : Window, IRenderedInstance{
 		private static GLib.GType gtype = GLib.GType.Invalid;
-
 		
+        private static int numMainloops = 0;
+
 		public GtkRenderedInstance() : base( GType)
 		{ }
 
@@ -55,18 +56,23 @@ namespace Uiml.Rendering.GTKsharp
 		///<summary>
 		/// this should be overridable by the UIML document specification
 		///</summary>
-		static void Window_Delete(object obj, DeleteEventArgs args)
+		static void Window_Delete(Widget obj, DeleteEventArgs args)
 		{
 			SignalArgs sa = (SignalArgs) args;
 			Application.Quit ();
+            
 			sa.RetVal = true;
 		}
 
-
-		public void ShowIt(){
-			ShowAll();
-			DeleteEvent  += new DeleteEventHandler(Window_Delete);
-			Application.Run();
+		public void ShowIt()
+        {
+            ShowAll();
+            //DeleteEvent  += new DeleteEventHandler(Window_Delete);
+            if (GtkRenderedInstance.numMainloops == 0)
+            {
+                GtkRenderedInstance.numMainloops++;
+                Application.Run();
+            }
 		}		
 	}
 	
