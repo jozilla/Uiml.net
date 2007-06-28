@@ -29,6 +29,7 @@ namespace Uiml.FrontEnd
 	using System.Collections;
 	using System.Reflection;
 	using System.Xml;
+    using System.IO;
 	
 	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
@@ -47,7 +48,15 @@ namespace Uiml.FrontEnd
 		public SwfGUI() : base(UIMLFILE, UIMLLIB)
 		{
 		}
-	
+
+        public override Assembly GuiAssembly
+        {
+            get
+            {
+                return ExternalLibraries.Instance.GetAssembly(SWF_ASSEMBLY);
+            }
+        }
+
 		public void AddLibrary(String lib)
 		{
 		}
@@ -55,23 +64,25 @@ namespace Uiml.FrontEnd
 		//[UimlEventHandler("ButtonPressed")]
 		public override void OpenUimlFile()
 		{
-			//dynamically load the code to create "OpenFileDialog"
-			Assembly guiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
-			if(guiAssembly == null) //should never happen!
-				Console.WriteLine("Can not find SWF Assembly");
-
 			//OpenFileDialog ofd = new OpenFileDialog();
-			Type ofClassType = guiAssembly.GetType("System.Windows.Forms.OpenFileDialog");
+			Type ofClassType = GuiAssembly.GetType("System.Windows.Forms.OpenFileDialog");
 			Object fs = Activator.CreateInstance(ofClassType, null);
+
 			//ofd.Filter = "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" ;
 			PropertyInfo filterMe = ofClassType.GetProperty("Filter");
 			filterMe.SetValue(fs, "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" , null);
-		
+
+            // set initial directory to examples dir 
+            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+            string examplesDir = Path.Combine(appDir, "examples");
+            //ofd.InitialDirectory = examplesDir;
+            PropertyInfo initDir = ofClassType.GetProperty("InitialDirectory");
+            initDir.SetValue(fs, examplesDir, null);
 	
 			//if(ofd.ShowDialog() == DialogResult.OK)
 			MethodInfo runner = ofClassType.GetMethod("ShowDialog", new Type[0]);
 			Object o = runner.Invoke(fs, null);
-			Type tdr = guiAssembly.GetType("System.Windows.Forms.DialogResult");
+			Type tdr = GuiAssembly.GetType("System.Windows.Forms.DialogResult");
 			//PropertyInfo pInfo =  tdr.GetProperty("OK");
 			FieldInfo fInfo = tdr.GetField("OK");
 			Object ok = fInfo.GetValue(o);
@@ -83,10 +94,14 @@ namespace Uiml.FrontEnd
 			}
 
 			//fs.Hide();
-
-
 		}
 
+        public override void Quit()
+        {
+            Type app = GuiAssembly.GetType("System.Windows.Forms.Application");
 
+            MethodInfo exitInfo = app.GetMethod("Exit", new Type[] { });
+            exitInfo.Invoke(null, null);
+        }
 	}
 }

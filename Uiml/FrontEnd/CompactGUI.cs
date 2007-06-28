@@ -45,24 +45,52 @@ namespace Uiml.FrontEnd{
 		static public string UIMLFILE = "compactgui.uiml";
 		static public string UIMLLIB = "uiml.net-core-cf";
 		public const string SWF_ASSEMBLY = "System.Windows.Forms";
+        public const string EXAMPLES_SUBDIR = "uiml.net-cf_examples";
 
-        static CompactGUI()
-        {
-            // always load the library and UIML files from the current
-            // working directory
-            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-            UIMLFILE = Path.Combine(appDir, UIMLFILE);
-            UIMLLIB = Path.Combine(appDir, UIMLLIB);
-        }
+        public static string examplesDir;
 
 		public CompactGUI() : base(UIMLFILE, UIMLLIB)
 		{
 		}
 
+        static CompactGUI()
+        {
+            string myDocs = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            examplesDir = Path.Combine(myDocs, EXAMPLES_SUBDIR + Path.DirectorySeparatorChar);
+
+            // copy the examples to the \My Documents folder first
+            CopyExamples();
+        }
+
 		public static void Main(string[] args)
 		{
 			new CompactGUI();
 		}
+
+        private static void CopyExamples()
+        {
+            // create target directory if not exists
+            if (!Directory.Exists(examplesDir))
+                Directory.CreateDirectory(examplesDir);
+
+            // copy all files
+            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+            string appExamplesDir = Path.Combine(Path.Combine(appDir, "examples"), "swf-cf");
+
+            foreach (string filename in Directory.GetFiles(appExamplesDir, "*"))
+            {
+                string targetFilename = Path.Combine(examplesDir, Path.GetFileName(filename));
+                File.Copy(filename, targetFilename, true);
+            }
+        }
+
+        public override Assembly GuiAssembly
+        {
+            get
+            {
+                return ExternalLibraries.Instance.GetAssembly(SWF_ASSEMBLY);
+            }
+        }
 
 		public void AddLibrary(String lib)
 		{
@@ -71,21 +99,27 @@ namespace Uiml.FrontEnd{
 		//[UimlEventHandler("ButtonPressed")]
 		public override void OpenUimlFile()
 		{
-			//dynamically load the code to create "OpenFileDialog"
-			Assembly guiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
-			//OpenFileDialog ofd = new OpenFileDialog();
-			Type ofClassType = guiAssembly.GetType("System.Windows.Forms.OpenFileDialog");
+            //OpenFileDialog ofd = new OpenFileDialog();
+            Type ofClassType = GuiAssembly.GetType("System.Windows.Forms.OpenFileDialog");
 			Object fs = Activator.CreateInstance(ofClassType);
-			//ofd.Filter = "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" ;
+			
+            //ofd.Filter = "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" ;
 			PropertyInfo filterMe = ofClassType.GetProperty("Filter");
 			filterMe.SetValue(fs, "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" , null);
-		
 	
+            // set initial directory to examples dir 
+            // ('\My Documents\{EXAMPLES_SUBDIR}\')
+            string myDocs = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string examplesDir = Path.Combine(myDocs, EXAMPLES_SUBDIR);
+            //ofd.InitialDirectory = examplesDir;
+            PropertyInfo initDir = ofClassType.GetProperty("InitialDirectory");
+            initDir.SetValue(fs, examplesDir, null);
+
 			//if(ofd.ShowDialog() == DialogResult.OK)
 			MethodInfo runner = ofClassType.GetMethod("ShowDialog");
 			Object o = runner.Invoke(fs, null);
 
-			Type tdr = guiAssembly.GetType("System.Windows.Forms.DialogResult");
+            Type tdr = GuiAssembly.GetType("System.Windows.Forms.DialogResult");
 			FieldInfo fInfo = tdr.GetField("OK");
 			Object ok = fInfo.GetValue(o);
 			
@@ -97,10 +131,14 @@ namespace Uiml.FrontEnd{
 			}
 
 			//fs.Hide();
-
-
 		}
 
+        public override void Quit()
+        {
+            Type app = GuiAssembly.GetType("System.Windows.Forms.Application");
 
+            MethodInfo exitInfo = app.GetMethod("Exit", new Type[] {} );
+            exitInfo.Invoke(null, null);
+        }
 	}
 }
