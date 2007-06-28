@@ -46,6 +46,10 @@ all: lib exe
 	@echo " building xml-rpc support"
 	@make xml-rpc || true
 	@echo " done"
+	@echo moving all files to main dir
+	mv *.exe ../
+	mv *.dll ../
+	@echo done
 
 #exe :
 #	mcs ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
@@ -56,10 +60,6 @@ exe: lib
 	@echo "building executable" 
 	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:../uiml.net.snk -out:uiml.net.exe -target:exe -r:uiml.net-core.dll \
 	../Properties/AssemblyInfo-uiml.net.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
-	@echo "done"
-	@echo "copying uiml files for frontend"
-	cp FrontEnd/gtkgui.uiml .
-	cp FrontEnd/compactgui.uiml .
 	@echo "done"
 
 lib: solver
@@ -108,7 +108,8 @@ xml-rpc:
 	${COMPILER} ${DEBUG} ${XMLRPCLIBS} -keyfile:../uiml.net-xmlrpc.snk -r:uiml.net-core.dll -out:uiml.net-xmlrpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
 
 clean:
-	rm -f *.exe *.dll *.mdb compactgui.uiml gtkgui.uiml
+	rm -f *.exe *.dll *.mdb 
+	rm -f ../*.exe ../*.dll ../*.mdb 
 	make -C ../Cassowary/ clean
 
 
