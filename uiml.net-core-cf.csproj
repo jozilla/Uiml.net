@@ -1,0 +1,166 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F1E37418-065C-4DC5-8DD7-0E0BF7ADE12B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>uiml.net-core-cf</AssemblyName>
+    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PlatformFamilyName>PocketPC</PlatformFamilyName>
+    <PlatformID>3C41C503-53EF-4c2a-8DD4-A8217CAD115E</PlatformID>
+    <OSVersion>4.20</OSVersion>
+    <DeployDirSuffix>uiml.net_core_cf</DeployDirSuffix>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FormFactorID>
+    </FormFactorID>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Uiml.net-cf\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;PocketPC;COMPACT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Uiml.net-cf\Release\</OutputPath>
+    <DefineConstants>TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo-uiml.net-core-cf.cs" />
+    <Compile Include="Uiml\Behavior.cs" />
+    <Compile Include="Uiml\CascadeTemplateResolver.cs" />
+    <Compile Include="Uiml\Constant.cs" />
+    <Compile Include="Uiml\Content.cs" />
+    <Compile Include="Uiml\Executing\Action.cs" />
+    <Compile Include="Uiml\Executing\Binding\UimlEventArgs.cs" />
+    <Compile Include="Uiml\Executing\Binding\UimlEventHandlerAttribute.cs" />
+    <Compile Include="Uiml\Executing\Call.cs" />
+    <Compile Include="Uiml\Executing\Callers\Caller.cs" />
+    <Compile Include="Uiml\Executing\Callers\CallerFactory.cs" />
+    <Compile Include="Uiml\Executing\Callers\LocalCaller.cs" />
+    <Compile Include="Uiml\Executing\Condition.cs" />
+    <Compile Include="Uiml\Executing\Equal.cs" />
+    <Compile Include="Uiml\Executing\Event.cs" />
+    <Compile Include="Uiml\Executing\EventHandlerAttribute.cs" />
+    <Compile Include="Uiml\Executing\IExecutable.cs" />
+    <Compile Include="Uiml\Executing\Op.cs" />
+    <Compile Include="Uiml\Executing\Param.cs" />
+    <Compile Include="Uiml\Executing\Rule.cs" />
+    <Compile Include="Uiml\Executing\Script.cs" />
+    <Compile Include="Uiml\Executing\ValueNotEvaluatedException.cs" />
+    <Compile Include="Uiml\ExternalLibraries.cs" />
+    <Compile Include="Uiml\ExternalObjects.cs" />
+    <Compile Include="Uiml\Head.cs" />
+    <Compile Include="Uiml\Interface.cs" />
+    <Compile Include="Uiml\ITemplateResolver.cs" />
+    <Compile Include="Uiml\IUimlComponent.cs" />
+    <Compile Include="Uiml\IUimlElement.cs" />
+    <Compile Include="Uiml\LayoutManagement\Box.cs" />
+    <Compile Include="Uiml\LayoutManagement\Constraint.cs" />
+    <Compile Include="Uiml\LayoutManagement\ConstraintAlias.cs" />
+    <Compile Include="Uiml\LayoutManagement\ConstraintSystem.cs" />
+    <Compile Include="Uiml\LayoutManagement\Layout.cs" />
+    <Compile Include="Uiml\LayoutManagement\LayoutException.cs" />
+    <Compile Include="Uiml\LayoutManagement\LayoutProperty.cs" />
+    <Compile Include="Uiml\LayoutManagement\LayoutPropertyRepository.cs" />
+    <Compile Include="Uiml\LayoutManagement\Reorderer.cs" />
+    <Compile Include="Uiml\LayoutManagement\VirtualLayoutProperty.cs" />
+    <Compile Include="Uiml\Logic.cs" />
+    <Compile Include="Uiml\MappingNotFoundException.cs" />
+    <Compile Include="Uiml\Param.cs" />
+    <Compile Include="Uiml\Part.cs" />
+    <Compile Include="Uiml\Peer.cs" />
+    <Compile Include="Uiml\Peers\CustomVocabulary.cs" />
+    <Compile Include="Uiml\Peers\DClass.cs" />
+    <Compile Include="Uiml\Peers\DComponent.cs" />
+    <Compile Include="Uiml\Peers\DMethod.cs" />
+    <Compile Include="Uiml\Peers\DParam.cs" />
+    <Compile Include="Uiml\Peers\DProperty.cs" />
+    <Compile Include="Uiml\Peers\Event.cs" />
+    <Compile Include="Uiml\Peers\Location.cs" />
+    <Compile Include="Uiml\Peers\Script.cs" />
+    <Compile Include="Uiml\Peers\Vocabulary.cs" />
+    <Compile Include="Uiml\Presentation.cs" />
+    <Compile Include="Uiml\Property.cs" />
+    <Compile Include="Uiml\Reference.cs" />
+    <Compile Include="Uiml\Rendering\BackendFactory.cs" />
+    <Compile Include="Uiml\Rendering\InvalidTypeValueException.cs" />
+    <Compile Include="Uiml\Rendering\IPropertySetter.cs" />
+    <Compile Include="Uiml\Rendering\IRenderedInstance.cs" />
+    <Compile Include="Uiml\Rendering\IRenderer.cs" />
+    <Compile Include="Uiml\Rendering\ITypeDecoder.cs" />
+    <Compile Include="Uiml\Rendering\NoRendererAvailableException.cs" />
+    <Compile Include="Uiml\Rendering\Renderer.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoder.cs" />
+    <Compile Include="Uiml\ReplaceTemplateResolver.cs" />
+    <Compile Include="Uiml\Restructure.cs" />
+    <Compile Include="Uiml\Structure.cs" />
+    <Compile Include="Uiml\Style.cs" />
+    <Compile Include="Uiml\Template.cs" />
+    <Compile Include="Uiml\TemplateAlreadyProcessedException.cs" />
+    <Compile Include="Uiml\TemplateRepository.cs" />
+    <Compile Include="Uiml\UimlAttributes.cs" />
+    <Compile Include="Uiml\UimlComposite.cs" />
+    <Compile Include="Uiml\UimlContainerDocument.cs" />
+    <Compile Include="Uiml\UimlDocument.cs" />
+    <Compile Include="Uiml\UimlElement.cs" />
+    <Compile Include="Uiml\UnionTemplateResolver.cs" />
+    <Compile Include="Uiml\Utils\Reflection\AssemblyLoader.cs" />
+    <Compile Include="Uiml\Utils\Reflection\AssemblyNotFoundException.cs" />
+    <Compile Include="Uiml\Utils\TodoAttribute.cs" />
+    <Compile Include="Uiml\VocabularyUnavailableException.cs" />
+    <Compile Include="Uiml\WrongNestingException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cassowary.net\Cassowary-cf.csproj">
+      <Project>{9CAC1FDC-CF57-466E-87F0-4FD7462EFA85}</Project>
+      <Name>Cassowary-cf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cassowary.net\Cassowary.Parsing-cf.csproj">
+      <Project>{FC41CAD3-3310-47ED-B6AA-AFE5DF07AED6}</Project>
+      <Name>Cassowary.Parsing-cf</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="uiml.net-core-cf.snk" />
+  </ItemGroup>
+  <Import Condition="'$(TargetFrameworkVersion)' == 'v1.0'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.v1.targets" />
+  <Import Condition="'$(TargetFrameworkVersion)' == 'v2.0'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
+        <HostingProcess disable="1" />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
