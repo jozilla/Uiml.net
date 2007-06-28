@@ -164,7 +164,29 @@ namespace Uiml.Utils.Reflection
 		/// <returns></returns>
 		public static Assembly LoadAny(string query)
 		{
-			return LoadAny(new AssemblyQuery(query));
+            #if COMPACT
+            // if we're on Compact .NET, add a .dll
+            // extension and load the libraries from
+            // the current working dir.
+
+            // add .dll extension 
+            // 
+            // We do this manually because Path.ChangeExtension()
+            // cripples the uiml.net-* filenames since it thinks 
+            // ".net-*" is the extension.
+            if (!query.EndsWith(".dll"))
+            {
+                query = query + ".dll";
+            }
+
+            // get the current working dir
+            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+
+            // load from working dir
+            query = Path.Combine(appDir, query);
+            #endif
+            
+            return LoadAny(new AssemblyQuery(query));
 		}
 
 		private static Assembly LoadAny(AssemblyQuery q)
