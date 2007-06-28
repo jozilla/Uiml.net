@@ -106,10 +106,14 @@ namespace Uiml
 		public Vocabulary GetVocabulary()
 		{
 			IEnumerator enumPres = m_presentations.GetEnumerator();
-			if(enumPres.MoveNext())
-				return ((Presentation)enumPres.Current).UimlVocabulary;
-			else
-				throw new VocabularyUnavailableException("There is no vocabulary loaded");
+			while(enumPres.MoveNext())
+            {
+                if ( ((Presentation)enumPres.Current).UimlVocabulary != null )
+				    return ((Presentation)enumPres.Current).UimlVocabulary;
+			    else
+				    throw new VocabularyUnavailableException("There is no vocabulary loaded");
+            }
+            throw new VocabularyUnavailableException("There is no vocabulary loaded");
 		}
 
 		///<summary>
