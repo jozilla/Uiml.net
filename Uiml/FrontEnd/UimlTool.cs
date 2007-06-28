@@ -58,7 +58,7 @@ namespace Uiml.FrontEnd{
 				#if COMPACT
 					uef = new CompactGUI();
 				#else
-					//try the Gtk# GUI first and then the Windows.Form GUI
+					//try the Gtk# GUI first and then the Windows.Forms GUI
 					try{ uef= new GtkGUI(); }
 						catch(Exception excep)
 						{ //the compact SWF GUI also works on with normal SWF
