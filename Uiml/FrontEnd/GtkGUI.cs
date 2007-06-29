@@ -30,6 +30,7 @@ namespace Uiml.FrontEnd{
 	using System.Collections;
 	using System.Reflection;
 	using System.Xml;
+    using System.IO;
 
 	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
@@ -50,6 +51,14 @@ namespace Uiml.FrontEnd{
 		{
 		}
 
+        public override Assembly GuiAssembly
+        {
+            get
+            {
+                return ExternalLibraries.Instance.GetAssembly(GTK_ASSEMBLY);
+            }
+        }
+
 		public void AddLibrary(String lib)
 		{
 		}
@@ -57,13 +66,13 @@ namespace Uiml.FrontEnd{
 		//[UimlEventHandler("ButtonPressed")]
 		public override void OpenUimlFile()
 		{
-			//dynamically load the code to create "FileSelection"
-			Assembly guiAssembly = AssemblyLoader.LoadFromGacOrAppDir(GTK_ASSEMBLY);
-			if(guiAssembly == null)
-				Console.WriteLine("Can not find GTK# Assembly");
-			
+            // set current working directory
+            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+            string examplesDir = Path.Combine(appDir, "examples");
+            Environment.CurrentDirectory = examplesDir;
+
 			//FileSelection fs = new FileSelection ("Choose a file");
-			Type ofClassType = guiAssembly.GetType("Gtk.FileSelection");
+			Type ofClassType = GuiAssembly.GetType("Gtk.FileSelection");
 			Object fs = Activator.CreateInstance(ofClassType, new System.Object[] { "Choose a file" } );			
 			Console.WriteLine("Loaded object {0}",fs);
          //fs.Run ();
@@ -81,5 +90,13 @@ namespace Uiml.FrontEnd{
 			if(UimlFileName == "")
 				UimlFileName = null;
 		}
+
+        public override void Quit()
+        {
+            Type app = GuiAssembly.GetType("Gtk.Application");
+
+            MethodInfo exitInfo = app.GetMethod("Quit", new Type[] { });
+            exitInfo.Invoke(null, null);
+        }
 	}
 }

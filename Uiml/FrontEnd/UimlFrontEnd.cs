@@ -31,6 +31,7 @@ namespace Uiml.FrontEnd{
 	using System.Xml;
 	using System.IO;
 	using System.Collections;
+    using System.Reflection;
 
 	using Uiml.Rendering;
 	using Uiml.Executing;
@@ -42,13 +43,17 @@ namespace Uiml.FrontEnd{
 	///</summary>
 	public abstract class UimlFrontEnd
 	{
-		static public String VERSION = "0.0.7-pre (31-03-2005)";
 		private String uiFileName;
-		private ArrayList aList = new ArrayList();
-		protected IRenderedInstance instance;
+        protected UimlDocument uimlDoc;
+
+        private string m_frontendFile;
+        private string m_frontendLib;
+		
+        private ArrayList aList = new ArrayList();
+
+        protected IRenderedInstance instance;
 		protected static IRenderer renderer;
-		protected UimlDocument uimlDoc;
-		private BackendFactory backendFactory;
+        private BackendFactory backendFactory;
 
 
 		public UimlFrontEnd()
@@ -56,14 +61,32 @@ namespace Uiml.FrontEnd{
 			backendFactory = new BackendFactory();
 		}
 
-		public UimlFrontEnd(string uimlDoc, string uimlLib) : this()
+		public UimlFrontEnd(string frontendFile, string frontendLib) : this()
 		{
+            SetupFrontEndFiles(frontendFile, frontendLib);
+            LoadFrontEnd();
+        }
+
+        private void SetupFrontEndFiles(string frontendFile, string frontendLib)
+        {
+            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+
+            // always load the front-end files 
+            // from the front-ends/ subdirectory
+            string frontendDir = Path.Combine(appDir, "front-ends");
+            m_frontendFile = Path.Combine(frontendDir, frontendFile);
+
+            m_frontendLib = frontendLib;
+        }
+
+        private void LoadFrontEnd()
+        {
 			try //try to load a GUI as front-end
 			{
-				UimlDocument feUimlDoc = new UimlDocument(uimlDoc);
+                UimlDocument feUimlDoc = new UimlDocument(m_frontendFile);
 				renderer =  (new BackendFactory()).CreateRenderer(feUimlDoc.Vocabulary);
 				instance = renderer.Render(feUimlDoc);
-				ExternalLibraries.Instance.Add(uimlLib);
+                ExternalLibraries.Instance.Add(m_frontendLib);
 				feUimlDoc.Connect(this);
 				instance.ShowIt();
 			}
@@ -84,7 +107,8 @@ namespace Uiml.FrontEnd{
 		
 		static public void Version()
 		{
-			Console.WriteLine("uiml.net version {0}", VERSION);
+            Version v = Assembly.GetExecutingAssembly().GetName().Version;
+			Console.WriteLine("uiml.net version {0}", v);
 		}
 
 		public static IRenderer CurrentRenderer
@@ -92,7 +116,18 @@ namespace Uiml.FrontEnd{
 			get { return renderer; }
 		}
 
+        public abstract Assembly GuiAssembly
+        {
+            // for dynamically loading the code for 
+            // System.Windows.Forms specific stuff 
+            // (e.g. OpenFileDialog).
+            //
+            // This assembly will be loaded already.
+            get;
+        }
+
 		public abstract void OpenUimlFile();
+        public abstract void Quit();
 
 		public String UimlFileName
 		{

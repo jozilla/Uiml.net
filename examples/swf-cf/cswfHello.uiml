@@ -25,6 +25,6 @@
 		</behavior>
 	</interface>
 	<peers>
-		<presentation base="\My Documents\Personal\cswf-1.0.uiml"/>
+		<presentation base="cswf-1.0.uiml"/>
 	</peers>
 </uiml>

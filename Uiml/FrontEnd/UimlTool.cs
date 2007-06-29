@@ -50,7 +50,7 @@ namespace Uiml.FrontEnd{
 		{
 			UimlFrontEnd uef = null;
 			Options opt = new Options(args, CommandLine.options);			
-			Console.WriteLine(opt);
+			//Console.WriteLine(opt);
 			if(opt.NrSwitches == 0)
 			{				
 				//if there were no switches/arguments, try to use a GUI front-end
@@ -58,7 +58,7 @@ namespace Uiml.FrontEnd{
 				#if COMPACT
 					uef = new CompactGUI();
 				#else
-					//try the Gtk# GUI first and then the Windows.Form GUI
+					//try the Gtk# GUI first and then the Windows.Forms GUI
 					try{ uef= new GtkGUI(); }
 						catch(Exception excep)
 						{ //the compact SWF GUI also works on with normal SWF

@@ -46,6 +46,10 @@ all: lib exe
 	@echo " building xml-rpc support"
 	@make xml-rpc || true
 	@echo " done"
+	@echo moving all files to main dir
+	mv *.exe ../
+	mv *.dll ../
+	@echo done
 
 #exe :
 #	mcs ${DEBUG} -out:uiml.net.exe -target:exe /r:uiml.net.dll  -main:Uiml.UimlTool UimlTool.cs 
@@ -54,24 +58,20 @@ all: lib exe
 
 exe: lib
 	@echo "building executable" 
-	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net.snk -out:uiml.net.exe -target:exe -r:uiml.net-core.dll \
-	FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
-	@echo "done"
-	@echo "copying uiml files for frontend"
-	cp FrontEnd/gtkgui.uiml .
-	cp FrontEnd/compactgui.uiml .
+	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:../uiml.net.snk -out:uiml.net.exe -target:exe -r:uiml.net-core.dll \
+	../Properties/AssemblyInfo-uiml.net.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 
 lib: solver
 	@echo "building library"
-	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:uiml.net-core.snk -out:uiml.net-core.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
+	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:../uiml.net-core.snk -out:uiml.net-core.dll -target:library ../Properties/AssemblyInfo-uiml.net-core.cs *.cs Rendering/*.cs Executing/*.cs \
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
 	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
 	@echo "done"
 
 exe-cf:	lib-cf
 	@echo "building executable" 
-	${COMPILER} ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:uiml.net-cf.snk -out:uiml.net-cf.exe -target:exe -r:uiml.net-core-cf.dll \
+	${COMPILER} ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:../uiml.net-cf.snk -out:uiml.net-cf.exe -target:exe -r:uiml.net-core-cf.dll ../Properties/AssemblyInfo-uiml.net-cf.cs \
 	FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 	@echo "copying uiml files for frontend"
@@ -81,7 +81,7 @@ exe-cf:	lib-cf
 
 lib-cf:	solver
 	@echo "building Compact .NET library"
-	${COMPILER} ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:uiml.net-core-cf.snk -out:uiml.net-core-cf.dll -target:library *.cs Rendering/*.cs Executing/*.cs \
+	${COMPILER} ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:../uiml.net-core-cf.snk -out:uiml.net-core-cf.dll -target:library ../Properties/AssemblyInfo-uiml.net-core-cf.cs *.cs Rendering/*.cs Executing/*.cs \
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
 	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
 	@echo "done"
@@ -93,22 +93,23 @@ solver:
 	@echo "done"
 
 gtk: 
-	${COMPILER} ${DEBUG} ${GTKLIBS} -keyfile:Rendering/GTKsharp/uiml.net-gtk.snk /r:uiml.net-core.dll -out:uiml.net-gtk.dll -target:library Rendering/GTKsharp/*.cs
+	${COMPILER} ${DEBUG} ${GTKLIBS} -keyfile:../uiml.net-gtk.snk /r:uiml.net-core.dll -out:uiml.net-gtk.dll -target:library ../Properties/AssemblyInfo-uiml.net-gtk.cs Rendering/GTKsharp/*.cs
 
 wx: 
-	${COMPILER} ${DEBUG} ${WXLIBS} -keyfile:Rendering/WXnet/uiml.net-wx.snk /r:uiml.net-core.dll -out:uiml.net-wx.dll -target:library Rendering/WXnet/*.cs
+	${COMPILER} ${DEBUG} ${WXLIBS} -keyfile:../uiml.net-wx.snk /r:uiml.net-core.dll -out:uiml.net-wx.dll -target:library Rendering/WXnet/*.cs
 
 swf: 
-	${COMPILER} ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) -keyfile:Rendering/SWF/uiml.net-swf.snk /r:uiml.net-core.dll -out:uiml.net-swf.dll -target:library Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
+	${COMPILER} ${DEBUG} ${SWFLIBS} $(SOLVERLIBS) -keyfile:../uiml.net-swf.snk /r:uiml.net-core.dll -out:uiml.net-swf.dll -target:library ../Properties/AssemblyInfo-uiml.net-swf.cs Rendering/SWF/*.cs LayoutManagement/SWF/*.cs
 
-swf-cf: 
-	${COMPILER} ${DEBUG} ${SWFLIBS} -d:COMPACT -keyfile:Rendering/CompactSWF/uiml.net-swf-cf.snk /r:uiml.net-core-cf.dll -out:uiml.net-swf-cf.dll -target:library Rendering/CompactSWF/*.cs
+swf-cf: lib-cf
+	${COMPILER} ${DEBUG} ${SWFLIBS} -d:COMPACT -keyfile:../uiml.net-swf-cf.snk /r:uiml.net-core-cf.dll -out:uiml.net-swf-cf.dll -target:library ../Properties/AssemblyInfo-uiml.net-swf-cf.cs Rendering/CompactSWF/*.cs
 
 xml-rpc: 
-	${COMPILER} ${DEBUG} ${XMLRPCLIBS} -keyfile:uiml.net-xmlrpc.snk -r:uiml.net-core.dll -out:uiml.net-xmlrpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
+	${COMPILER} ${DEBUG} ${XMLRPCLIBS} -keyfile:../uiml.net-xmlrpc.snk -r:uiml.net-core.dll -out:uiml.net-xmlrpc.dll -target:library Executing/Callers/XmlRpcCaller.cs
 
 clean:
-	rm -f *.exe *.dll *.mdb compactgui.uiml gtkgui.uiml
+	rm -f *.exe *.dll *.mdb 
+	rm -f ../*.exe ../*.dll ../*.mdb 
 	make -C ../Cassowary/ clean
 
 

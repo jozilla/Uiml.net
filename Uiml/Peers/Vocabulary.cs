@@ -45,6 +45,23 @@ namespace Uiml.Peers
 		protected XmlDocument m_doc;
 		protected string m_vocName;
 
+        public static string[] vocabularyLocations;
+
+        static Vocabulary() {
+            // current working directory
+            string cwd = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+
+            vocabularyLocations = new string[4];
+            // first look in vocabularies/ subdir
+            vocabularyLocations[0] = Path.Combine(cwd, "vocabularies");
+            // then in current working dir
+            vocabularyLocations[1] = cwd;
+            // then at our online vocabularies 
+            vocabularyLocations[2] = "http://research.edm.uhasselt.be/~uiml/vocabularies";
+            // and finally at Harmonia's online vocabularies (very unlikely)
+            vocabularyLocations[3] = "http://uiml.org/toolkits";
+        }
+
 		public Vocabulary()
 		{
 			m_dictDCls = new Hashtable();
@@ -62,10 +79,8 @@ namespace Uiml.Peers
 
 		protected void Load(string vocName)
 		{
-            //first try to load the string "as is". Then try to load
-            //it from the current application directory. If this does
-            //not work try to load the online vocabulary provided this
-            //exists
+            // First try to load the string "as is". If that doesn't
+            // work, try to load it from other locations.
 			m_doc = new XmlDocument();
 			XmlTextReader xr = null;
 			try
@@ -76,34 +91,32 @@ namespace Uiml.Peers
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine("Could not load {0} because of: ", vocName);
-				Console.WriteLine(e);
-				Console.WriteLine("Trying other possible vocabulary locations...");
-				try
-				{
-                    // try from current working dir
-                    string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-                    string vocFile = Path.GetFileName(vocName);
-                    string voc = Path.Combine(appDir, vocFile);
-                    xr = new XmlTextReader(voc);
-                    m_doc.Load(xr);
-                    Parse();
-				}
-				catch(Exception)
-				{
-                    try
+				Console.WriteLine("Could not load '{0}' vocabulary, trying other locations:", vocName);
+
+                string vocFile = Path.GetFileName(vocName);
+
+                foreach (string loc in vocabularyLocations)
+                {
+                    try 
                     {
-					    xr = new XmlTextReader(VOCABULARY_BASE + vocName + VOCABULARY_EXT);
-    					m_doc.Load(xr);
-    					Parse();
+                        Console.Write(" * {0} ... ", loc);
+                        string voc = Path.Combine(loc, vocFile);
+                        xr = new XmlTextReader(voc);
+                        m_doc.Load(xr);
+                        Parse();
+                        Console.WriteLine("[OK]");
+                        return;
                     }
                     catch (Exception)
                     {
-					    xr = new XmlTextReader(VOCABULARY_BASE2 + vocName + VOCABULARY_EXT);
-    					m_doc.Load(xr);
-    					Parse();				
+                        // ignore
+                        Console.WriteLine("[Failed]");
+                        continue;
                     }
-				}
+                }
+
+                // if we ever get here, no vocabulary could be loaded
+                throw new VocabularyUnavailableException(vocName);
 			}
 		}
 
@@ -494,9 +507,7 @@ namespace Uiml.Peers
 		{
 			get { return m_vocName; }
 		}
-		
-		public const string VOCABULARY_BASE = "http://research.edm.uhasselt.be/kris/projects/uiml.net/";
-		public const string VOCABULARY_BASE2  = "http://uiml.org/toolkits/";
-		public const string VOCABULARY_EXT   = "uiml";		
+
+        public const string VOCABULARY_EXT   = "uiml";		
 	}
 }

@@ -1,0 +1,68 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{064375D5-DE5C-47CA-9AC0-365928425369}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>uiml.net-swf</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Uiml.net\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Uiml.net\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo-uiml.net-swf.cs" />
+    <Compile Include="Uiml\LayoutManagement\SWF\SWFReorderer.cs" />
+    <Compile Include="Uiml\Rendering\SWF\SWFEventLink.cs" />
+    <Compile Include="Uiml\Rendering\SWF\SWFEventLinker.cs" />
+    <Compile Include="Uiml\Rendering\SWF\SWFRenderedInstance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Uiml\Rendering\SWF\SWFRenderer.cs" />
+    <Compile Include="Uiml\Rendering\SWF\SWFTypeDecoder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cassowary.net\Cassowary.csproj">
+      <Project>{F01578A3-BA19-47E6-B333-40E41158658B}</Project>
+      <Name>Cassowary</Name>
+    </ProjectReference>
+    <ProjectReference Include="uiml.net-core.csproj">
+      <Project>{1512EF85-FCC2-41CB-B8CE-67871722EB82}</Project>
+      <Name>uiml.net-core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="uiml.net-swf.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

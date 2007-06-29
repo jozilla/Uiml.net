@@ -53,7 +53,7 @@
 		</behavior>
 	</interface>
 	<peers>
-		<presentation base="../vocabularies/swf-1.1.uiml" />
+		<presentation base="swf-1.1.uiml" />
 	</peers>
 </uiml>
 
