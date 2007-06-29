@@ -51,6 +51,6 @@
 	 </behavior>
   </interface>
   <peers>
-		<presentation base="\My Documents\cswf-1.0.uiml"/>
+		<presentation base="cswf-1.0.uiml"/>
   </peers>
 </uiml>

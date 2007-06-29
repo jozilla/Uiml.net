@@ -67,8 +67,7 @@
 		</behavior>
 	</interface>
 	<peers>
-		<!--		<presentation base="http://lumumba.uhasselt.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml" /> -->
-		<presentation base="http://research.edm.uhasselt.be/kris/projects/uiml.net/gtk-sharp-1.0.uiml" />
+		<presentation base="gtk-sharp-1.0.uiml" />
 
 		<logic id="crypto-lib">
 			 <d-component id="Encoder" maps-to="RemoteLoginDLL.Encoder">

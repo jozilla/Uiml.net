@@ -15,7 +15,7 @@
 		</style>
 	</interface>
 	<peers>
-		<presentation base="/home/kris/projects/uiml.net/vocabularies/gtk-sharp-1.0.uiml"/>
+		<presentation base="gtk-sharp-1.0.uiml"/>
 	</peers>
 </uiml>
 

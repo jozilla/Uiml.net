@@ -428,7 +428,7 @@
 		-->
 	</interface>
 	<peers>
-		<presentation base="\My Documents\cswf-1.0.uiml"/>
+		<presentation base="cswf-1.0.uiml"/>
 		<logic id="calculator">
 			 <d-component id="CalcFunc" maps-to="CalcFunc">
    		     <d-method id="recordNumber" return-type="string" maps-to="RecordNumber">

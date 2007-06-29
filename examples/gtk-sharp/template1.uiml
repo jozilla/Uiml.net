@@ -2,11 +2,11 @@
 <!DOCTYPE uiml 
 	PUBLIC "-//Harmonia//DTD UIML 3.0a Draft//EN" "http://uiml.org/dtds/UIML3_0a.dtd">
 
-<!-- Dictionary.ui; the example from the uiml spec with minimal changes to make
-	  it work with uiml.net 
-	  -->
-
 <uiml>
+	<!-- 
+	Dictionary.ui; the example from the uiml spec with minimal changes to make
+	  it work with uiml.net 
+   -->
   <interface>
   	<structure>
 		<part class="Frame" id="OuterFrame">
@@ -22,6 +22,23 @@
 			</part>
 		</part>
 	</structure>
+
+
+	<template id="list">
+		<part>
+			<part class="Label" id="TermLabel" />
+			<part class="Combo"  id="TermList" />
+		</part>
+	</template>
+
+	<template id="defs">
+		<part>
+			<part class="Label" id="DefnLabel" />
+			<part class="Text"  id="DefnArea" />
+		</part>
+	 </template>
+
+	
 	<style>
 		<property part-name="OuterFrame" name="label">Simple Dictionary</property>
 		<property part-name="TermLabel" name="text">Pick a term:</property>
