@@ -57,9 +57,9 @@ namespace Uiml.Peers
             // then in current working dir
             vocabularyLocations[1] = cwd;
             // then at our online vocabularies 
-            vocabularyLocations[2] = "http://research.edm.uhasselt.be/~uiml/vocabularies/";
+            vocabularyLocations[2] = "http://research.edm.uhasselt.be/~uiml/vocabularies";
             // and finally at Harmonia's online vocabularies (very unlikely)
-            vocabularyLocations[3] = "http://uiml.org/toolkits/";
+            vocabularyLocations[3] = "http://uiml.org/toolkits";
         }
 
 		public Vocabulary()
@@ -91,8 +91,7 @@ namespace Uiml.Peers
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine("Could not load {0}", vocName);
-				Console.WriteLine("Trying other possible vocabulary locations...");
+				Console.WriteLine("Could not load '{0}' vocabulary, trying other locations:", vocName);
 
                 string vocFile = Path.GetFileName(vocName);
 
@@ -100,15 +99,18 @@ namespace Uiml.Peers
                 {
                     try 
                     {
+                        Console.Write(" * {0} ... ", loc);
                         string voc = Path.Combine(loc, vocFile);
                         xr = new XmlTextReader(voc);
                         m_doc.Load(xr);
                         Parse();
+                        Console.WriteLine("[OK]");
                         return;
                     }
                     catch (Exception)
                     {
                         // ignore
+                        Console.WriteLine("[Failed]");
                         continue;
                     }
                 }

@@ -50,7 +50,7 @@ namespace Uiml.FrontEnd{
 		{
 			UimlFrontEnd uef = null;
 			Options opt = new Options(args, CommandLine.options);			
-			Console.WriteLine(opt);
+			//Console.WriteLine(opt);
 			if(opt.NrSwitches == 0)
 			{				
 				//if there were no switches/arguments, try to use a GUI front-end
