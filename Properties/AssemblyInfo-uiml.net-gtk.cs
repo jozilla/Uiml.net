@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("uiml.net-gtk")]
-[assembly: AssemblyDescription("An open UIML renderer for the .Net Framework")]
+[assembly: AssemblyDescription("Uiml.net GTK# backend")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Expertise Centre for Digital Media, Hasselt University")]
-[assembly: AssemblyProduct("uiml.net-gtk")]
-[assembly: AssemblyCopyright("Copyright © Expertise Centre for Digital Media 2003-2007")]
+[assembly: AssemblyProduct("Uiml.net")]
+[assembly: AssemblyCopyright("Copyright © 2003-2007  Expertise Centre for Digital Media")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

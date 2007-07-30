@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Expertise Centre for Digital Media, Hasselt University")]
 [assembly: AssemblyProduct("uiml.net-swf-cf")]
-[assembly: AssemblyCopyright("Copyright © Expertise Centre for Digital Media 2003-2007")]
+[assembly: AssemblyCopyright("Copyright © 2003-2007  Expertise Centre for Digital Media")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

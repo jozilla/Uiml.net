@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EDM")]
 [assembly: AssemblyProduct("uiml.net-cf")]
-[assembly: AssemblyCopyright("Copyright © Expertise Centre for Digital Media 2003-2007")]
+[assembly: AssemblyCopyright("Copyright © 2003-2007  Expertise Centre for Digital Media")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
