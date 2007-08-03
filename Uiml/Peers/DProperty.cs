@@ -47,6 +47,7 @@ namespace Uiml.Peers
 		protected string m_mapsType;
 		protected string m_mapsTo;
 		protected string m_returnType;
+        protected Property m_defaultProp = null;
 
 		public enum MAPS_TYPE_VALS { Attribute, GetMethod, SetMethod, Method };
 		public const string ATTRIBUTE = "attribute";
@@ -99,11 +100,26 @@ namespace Uiml.Peers
 						AddChild(new DMethod(c));
 						break;
 					case DParam.IAM:
-						AddChild(new DParam(c));
+                        DParam dparam = new DParam(c);
+                        AddChild(dparam);
+                        
+                        // check if this is a default property
+                        if (dparam.HasDefaultValue) 
+                            m_defaultProp = new Property(Identifier, dparam.DefaultValue);
 						break;
 				}
 			}
 		}
+
+        public bool IsDefaultProperty 
+        {
+            get { return m_defaultProp != null; }
+        }
+
+        public Property DefaultProperty 
+        {
+            get { return m_defaultProp; } 
+        }
 
 		public bool HasChildren
 		{

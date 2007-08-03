@@ -31,9 +31,9 @@ namespace Uiml.Rendering
 	using System.Reflection;
 
 	///<summary>
-	///  This class implementens widget set independent behavior for the 
+	/// This class implements widget set independent behavior for the 
 	/// widget set specific backends. It implements the general core (widget creation,
-	//  applying proerties on widgets) of the rendering backends.
+	/// applying proerties on widgets) of the rendering backends.
 	///</summary>
 	public abstract class Renderer : IRenderer
 	{
@@ -113,6 +113,8 @@ namespace Uiml.Rendering
 			//should be provided by another "component" instead of by a function: 
 			//this way the structure can be reused more easily
 
+            AddDefaultProperties(part);
+
 			try
 			{
 				LoadAdHocProperties(ref uiObject, part, style);
@@ -134,6 +136,19 @@ namespace Uiml.Rendering
 				}
 			return uiObject;
 		}
+
+        private void AddDefaultProperties(Part part) 
+        {
+            // find the part's default properties
+            ArrayList defaultProps = new ArrayList();
+
+            DClass cls = (DClass) Voc.DClasses[part.Class];
+            foreach (DProperty prop in cls.Children) 
+            {
+                if (prop.IsDefaultProperty)
+                    part.AddProperty(prop.DefaultProperty);
+            }
+        }
 
 		private System.Object LoadPartProperties(ref System.Object uiObject, Part part)
 		{
