@@ -33,7 +33,7 @@ namespace Uiml.Rendering
 	///<summary>
 	/// This class implements widget set independent behavior for the 
 	/// widget set specific backends. It implements the general core (widget creation,
-	/// applying proerties on widgets) of the rendering backends.
+	/// applying properties on widgets) of the rendering backends.
 	///</summary>
 	public abstract class Renderer : IRenderer
 	{
