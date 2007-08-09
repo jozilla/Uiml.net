@@ -62,7 +62,7 @@ exe: lib
 	../Properties/AssemblyInfo-uiml.net.cs FrontEnd/*.cs -main:Uiml.FrontEnd.UimlTool
 	@echo "done"
 
-lib: solver
+lib: 
 	@echo "building library"
 	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:../uiml.net-core.snk -out:uiml.net-core.dll -target:library ../Properties/AssemblyInfo-uiml.net-core.cs *.cs Rendering/*.cs Executing/*.cs \
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
@@ -79,17 +79,11 @@ exe-cf:	lib-cf
 	cp FrontEnd/compactgui.uiml .
 	@echo "done"
 
-lib-cf:	solver
+lib-cf:	
 	@echo "building Compact .NET library"
 	${COMPILER} ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:../uiml.net-core-cf.snk -out:uiml.net-core-cf.dll -target:library ../Properties/AssemblyInfo-uiml.net-core-cf.cs *.cs Rendering/*.cs Executing/*.cs \
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
 	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
-	@echo "done"
-
-solver:
-	@echo "building constraint solver"
-	make -C ../Cassowary/ parselib lib
-	cp ../Cassowary/Cassowary*dll .
 	@echo "done"
 
 gtk: 
