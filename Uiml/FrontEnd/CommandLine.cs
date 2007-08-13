@@ -151,11 +151,24 @@ namespace Uiml.FrontEnd{
 			eLib.Add(libs);
 		}
 
-	   public override void OpenUimlFile()
-		{
-			//useless for command line
-		}
+        public override System.Reflection.Assembly GuiAssembly
+        {
+            get 
+            {
+                //useless for command line
+                return null; 
+            }
+        }
 
+        public override void OpenUimlFile()
+        {
+           //useless for command line
+        }
+
+        public override void Quit()
+        {
+            // useless for command line
+        }
 
 		/*
 		public UimlTool(string fName, string libs) : base(fName, libs) 

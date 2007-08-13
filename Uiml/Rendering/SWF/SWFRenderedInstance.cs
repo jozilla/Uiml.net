@@ -53,7 +53,7 @@ namespace Uiml.Rendering.SWF
 			catch(System.Exception e)
 			{
 				//Application thread is already running...
-				this.ShowDialog(null);
+				this.Show(null);
 			}
 		}
 		

@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uiml.net-core-cf", "uiml.net-core-cf.csproj", "{F1E37418-065C-4DC5-8DD7-0E0BF7ADE12B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cassowary.Parsing-cf", "..\Cassowary.net\Cassowary.Parsing-cf.csproj", "{FC41CAD3-3310-47ED-B6AA-AFE5DF07AED6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cassowary-cf", "..\Cassowary.net\Cassowary-cf.csproj", "{9CAC1FDC-CF57-466E-87F0-4FD7462EFA85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uiml.net-swf-cf", "uiml.net-swf-cf.csproj", "{A9DAC97F-C887-40AD-B511-4EC5954553EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uiml.net-cf", "uiml.net-cf.csproj", "{E8AF6F78-9948-4EB8-9D3F-1AF5B74A0E37}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1E37418-065C-4DC5-8DD7-0E0BF7ADE12B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E37418-065C-4DC5-8DD7-0E0BF7ADE12B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E37418-065C-4DC5-8DD7-0E0BF7ADE12B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E37418-065C-4DC5-8DD7-0E0BF7ADE12B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC41CAD3-3310-47ED-B6AA-AFE5DF07AED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC41CAD3-3310-47ED-B6AA-AFE5DF07AED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC41CAD3-3310-47ED-B6AA-AFE5DF07AED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC41CAD3-3310-47ED-B6AA-AFE5DF07AED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CAC1FDC-CF57-466E-87F0-4FD7462EFA85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CAC1FDC-CF57-466E-87F0-4FD7462EFA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CAC1FDC-CF57-466E-87F0-4FD7462EFA85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAC1FDC-CF57-466E-87F0-4FD7462EFA85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9DAC97F-C887-40AD-B511-4EC5954553EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9DAC97F-C887-40AD-B511-4EC5954553EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9DAC97F-C887-40AD-B511-4EC5954553EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9DAC97F-C887-40AD-B511-4EC5954553EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8AF6F78-9948-4EB8-9D3F-1AF5B74A0E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8AF6F78-9948-4EB8-9D3F-1AF5B74A0E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8AF6F78-9948-4EB8-9D3F-1AF5B74A0E37}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E8AF6F78-9948-4EB8-9D3F-1AF5B74A0E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8AF6F78-9948-4EB8-9D3F-1AF5B74A0E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8AF6F78-9948-4EB8-9D3F-1AF5B74A0E37}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

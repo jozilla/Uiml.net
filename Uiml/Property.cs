@@ -75,6 +75,9 @@ namespace Uiml{
 			m_value = val;
 		}
 
+        public Property(string name, string val): this("", name, val) 
+        { }
+
 		public Property(XmlNode n) : this()
 		{
 			Process(n);

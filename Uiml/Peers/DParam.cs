@@ -41,6 +41,7 @@ namespace Uiml.Peers
 	public class DParam : Param 
 	{
 		protected ArrayList m_children;
+        protected string m_defValue = null;
 
 		public DParam()
 		{
@@ -55,7 +56,23 @@ namespace Uiml.Peers
 		public new void Process(XmlNode n)
 		{
 			base.Process(n, IAM);
+
+            // check for default values
+            if (n.FirstChild != null) 
+            {
+                m_defValue = n.FirstChild.Value;
+            }
 		}
+
+        public bool HasDefaultValue 
+        {
+            get { return DefaultValue != null; } 
+        }
+
+        public string DefaultValue 
+        {
+            get { return m_defValue; }
+        }
 
 		public bool HasChildren
 		{

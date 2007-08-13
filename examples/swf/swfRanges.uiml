@@ -16,7 +16,6 @@
 			<property part-name="h" name="orientation">Horizontal</property>
 
 			<property part-name="v" name="position">20,20</property>
-			<property part-name="v" name="orientation">Vertical</property>
 			<!-- 
 				The height property *must* be set after the orientation otherwise it won't work.
 				This is probably due to a buggy implementation in SWF.

@@ -66,8 +66,6 @@
 		</layout> 
 		<style>
 			<property part-name="blogentry" name="scrollbars">Both</property>
-			<!-- this property should be set automatically -->
-			<property part-name="blogentry" name="multiline">true</property>
 		
 			<property part-name="update" name="label">Update</property>
 			<property part-name="newpost" name="label">New Post</property>
@@ -85,7 +83,7 @@
 		</style>
 	</interface>
 	<peers>
-		<presentation base="../vocabularies/swf-1.1.uiml"/> 
+		<presentation base="swf-1.1.uiml"/> 
 	</peers>
 </uiml>
 

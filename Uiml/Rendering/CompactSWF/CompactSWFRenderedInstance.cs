@@ -55,7 +55,7 @@ namespace Uiml.Rendering.CompactSWF
 			catch(System.Exception e)
 			{
 				//Application thread is already running...
-				this.ShowDialog();
+                this.Show();
 			}
 		}
 		

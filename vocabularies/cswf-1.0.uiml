@@ -191,9 +191,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-		<!-- multiline should be set automatically for a Text class -->
+		<!-- multiline is set automatically for a Text class -->
 		<d-property id="multiline" maps-type="setMethod" maps-to="Multiline">
-			<d-param type="System.Boolean"/>
+            <d-param type="System.Boolean">true</d-param>
 		</d-property>
 		<d-property id="scrollbars" maps-type="setMethod" maps-to="ScrollBars">
 			<d-param type="System.Windows.Forms.ScrollBars"/>
@@ -623,9 +623,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="ticks" maps-type="setMethod" maps-to="TickFrequency">
 			<d-param type="System.Int"/>
 		</d-property>
-		<!-- orientation should be set automatically for a HorizontalRange class -->
+		<!-- orientation is set automatically for a HorizontalRange class -->
 		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
-			<d-param type="System.Windows.Forms.Orientation"/>
+            <d-param type="System.Windows.Forms.Orientation">Horizontal</d-param>
 		</d-property>
 	</d-class>
 
@@ -669,9 +669,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="ticks" maps-type="setMethod" maps-to="TickFrequency">
 			<d-param type="System.Int"/>
 		</d-property>
-		<!-- orientation should be set automatically for a VerticalRange class -->
+		<!-- orientation is set automatically for a VerticalRange class -->
 		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
-			<d-param type="System.Windows.Forms.Orientation"/>
+            <d-param type="System.Windows.Forms.Orientation">Vertical</d-param>
 		</d-property>
 	</d-class>	
 

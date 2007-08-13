@@ -164,7 +164,7 @@ namespace Uiml.Utils.Reflection
 		/// <returns></returns>
 		public static Assembly LoadAny(string query)
 		{
-			return LoadAny(new AssemblyQuery(query));
+            return LoadAny(new AssemblyQuery(query));
 		}
 
 		private static Assembly LoadAny(AssemblyQuery q)
@@ -182,7 +182,7 @@ namespace Uiml.Utils.Reflection
 					return LoadFromGacOrAppDir(q);
 				}
 			}
-			catch (AssemblyNotFoundException firstTry)
+			catch (AssemblyNotFoundException)
 			{
 				try
 				{
@@ -199,7 +199,7 @@ namespace Uiml.Utils.Reflection
 						return LoadFromPath(q.ToPath());
 					}
 				}
-				catch (AssemblyNotFoundException secondTry)
+				catch (AssemblyNotFoundException)
 				{
 					throw new AssemblyNotFoundException(
 						string.Format(
