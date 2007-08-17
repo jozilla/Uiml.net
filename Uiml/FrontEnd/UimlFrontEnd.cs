@@ -33,6 +33,7 @@ namespace Uiml.FrontEnd{
 	using System.Collections;
     using System.Reflection;
 
+    using Uiml.Utils;
 	using Uiml.Rendering;
 	using Uiml.Executing;
 
@@ -69,13 +70,9 @@ namespace Uiml.FrontEnd{
 
         private void SetupFrontEndFiles(string frontendFile, string frontendLib)
         {
-            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-
-            // always load the front-end files 
-            // from the front-ends/ subdirectory
-            string frontendDir = Path.Combine(appDir, "front-ends");
-            m_frontendFile = Path.Combine(frontendDir, frontendFile);
-
+            // always load the front-end files from the front-ends/ 
+            // subdirectory.
+            m_frontendFile = Path.Combine(Uiml.Utils.Location.FrontEndDirectory, frontendFile);
             m_frontendLib = frontendLib;
         }
 

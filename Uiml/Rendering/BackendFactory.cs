@@ -117,7 +117,7 @@ namespace Uiml.Rendering
 				catch(Exception e)
 				{
 					// do nothing here: an exception means the backend renderer specified 
-					// in assemblies[i] is not available
+					// in assemblies[i] or one of its dependencies is not available
 					// Console.WriteLine(e);
 				}
 			}
