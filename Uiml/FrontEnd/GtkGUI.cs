@@ -32,6 +32,7 @@ namespace Uiml.FrontEnd{
 	using System.Xml;
     using System.IO;
 
+    using Uiml.Utils;
 	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
 	using Uiml.Executing;
@@ -66,10 +67,8 @@ namespace Uiml.FrontEnd{
 		//[UimlEventHandler("ButtonPressed")]
 		public override void OpenUimlFile()
 		{
-            // set current working directory
-            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-            string examplesDir = Path.Combine(appDir, "examples");
-            Environment.CurrentDirectory = examplesDir;
+            // set initial directory to examples dir
+            Environment.CurrentDirectory = Location.ExamplesDirectory;
 
 			//FileSelection fs = new FileSelection ("Choose a file");
 			Type ofClassType = GuiAssembly.GetType("Gtk.FileSelection");

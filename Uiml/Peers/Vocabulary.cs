@@ -30,6 +30,8 @@ using System.IO;
 using System.Reflection;
 using System.Collections;
 
+using Uiml.Utils;
+
 namespace Uiml.Peers
 {
 	/// <summary>
@@ -44,23 +46,6 @@ namespace Uiml.Peers
 		protected string m_identifier;
 		protected XmlDocument m_doc;
 		protected string m_vocName;
-
-        public static string[] vocabularyLocations;
-
-        static Vocabulary() {
-            // current working directory
-            string cwd = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-
-            vocabularyLocations = new string[4];
-            // first look in vocabularies/ subdir
-            vocabularyLocations[0] = Path.Combine(cwd, "vocabularies");
-            // then in current working dir
-            vocabularyLocations[1] = cwd;
-            // then at our online vocabularies 
-            vocabularyLocations[2] = "http://research.edm.uhasselt.be/~uiml/vocabularies";
-            // and finally at Harmonia's online vocabularies (very unlikely)
-            vocabularyLocations[3] = "http://uiml.org/toolkits";
-        }
 
 		public Vocabulary()
 		{
@@ -89,13 +74,13 @@ namespace Uiml.Peers
 				m_doc.Load(xr);
 				Parse();
 			}
-			catch(Exception e)
+			catch(Exception)
 			{
 				Console.WriteLine("Could not load '{0}' vocabulary, trying other locations:", vocName);
 
                 string vocFile = Path.GetFileName(vocName);
 
-                foreach (string loc in vocabularyLocations)
+                foreach (string loc in Uiml.Utils.Location.VocabularyLocations)
                 {
                     try 
                     {

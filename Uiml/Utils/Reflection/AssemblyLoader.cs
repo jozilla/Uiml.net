@@ -24,7 +24,7 @@ namespace Uiml.Utils.Reflection
 			{
 				if (IsPartialName)
 				{
-					return new AssemblyQuery(this);
+                    return this;
 				}
 				else
 				{
@@ -37,11 +37,19 @@ namespace Uiml.Utils.Reflection
 
 			public AssemblyQuery ToPath()
 			{
-				if (IsPath)
-					return new AssemblyQuery(this);
-				else
-					return new AssemblyQuery(Query + ASSEMBLY_EXTENSION);
+                if (IsPath)
+                    return this;
+                else
+                    return new AssemblyQuery(Query + ASSEMBLY_EXTENSION);
 			}
+
+            public AssemblyName ToAssemblyName() 
+            {
+                AssemblyName an = new AssemblyName();
+                an.Name = this.ToPartialName().Query;
+
+                return an;
+            }
 
 			public string Query
 			{
@@ -65,7 +73,7 @@ namespace Uiml.Utils.Reflection
 		/// <summary>
 		/// Loads an assembly from a specified file.
 		/// </summary>
-		/// <param name="pathToLib">the path to the library</param>
+		/// <param name="pathToLib">the path to the assembly</param>
 		/// <returns>the loaded assembly</returns>
 		public static Assembly LoadFromPath(string pathToLib)
 		{
@@ -112,56 +120,48 @@ namespace Uiml.Utils.Reflection
 					+ AssemblyQuery.ASSEMBLY_EXTENSION + ")"
 				);
 
+            Assembly a = null; 
+
 			try
 			{
-                Assembly a = null;
-
-				#if COMPACT
-                try
+                a = Assembly.Load(q.ToAssemblyName());
+                return a;
+            }
+            catch (Exception err)
+            {
+                try 
                 {
-    				a = Assembly.Load(q.Query);
-                }
-                catch (IOException)
-                {
-                    // try to load it from the current application
-                    // directory
-                    string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-                    string assemblyPath = Path.Combine(appDir, q.Query + ".dll");
+                    // try to load it from the current application directory
+                    string assemblyPath = Path.Combine(Location.ApplicationDirectory, 
+                                                       q.Query + AssemblyQuery.ASSEMBLY_EXTENSION);
                     a = Assembly.LoadFrom(assemblyPath);
+                    return a;
                 }
-				#else
-                // FIXME: we should use Assembly.Load, but this is not
-                // flexible since we have to know exactly which
-                // version to use. However, using LoadWithPartialName
-                // could lead to problems with mixing 1.0 and 2.0
-                // assemblies (as is the case with Nemerle for
-                // example). 
-                //
-                // The best way to fix this would be to reference the
-                // GTK# and (Compact) SWF assemblies with their fully
-                // qualified name. We could pass a fully filled in
-                // AssemblyName class to the Assembly.Load method for
-                // this.
-				a = Assembly.LoadWithPartialName(q.Query);
-				#endif
-				
-				if (a == null)
-					throw new AssemblyNotFoundException(q.Query);
-
-				return a;
-			}
-			catch (BadImageFormatException bife)
-			{
-				throw new AssemblyNotFoundException(q.Query, bife);
-			}
+                catch(Exception e)
+                {
+                    #if COMPACT
+                    throw new AssemblyNotFoundException(q.Query, e);
+                    #else
+                    // if all else failed, try LoadWithPartialName. This is 
+                    // necessary for GTK# on Windows since it only provides 
+                    // .NET 1.0 versions which are not found by Assembly.Load 
+                    // on .NET 2.0.
+                    a = Assembly.LoadWithPartialName(q.Query);
+                    if (a != null)
+                        return a;
+                    else
+                        throw new AssemblyNotFoundException(q.Query, e);
+                    #endif
+                }
+            }
 		}
 
 		/// <summary>
 		/// Tries to load an assembly in any possible way
 		/// </summary>
 		/// <param name="query">the query to look for (can be a partial name
-		/// a path to a file)</param>
-		/// <returns></returns>
+		/// or a path to a file)</param>
+		/// <returns>the loaded assembly</returns>
 		public static Assembly LoadAny(string query)
 		{
             return LoadAny(new AssemblyQuery(query));
@@ -187,7 +187,6 @@ namespace Uiml.Utils.Reflection
 				try
 				{
 					// try to convert it to the other format (as a last resort)
-
 					if (q.IsPath)
 					{
 						// load from path failed

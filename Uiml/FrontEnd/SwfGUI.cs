@@ -30,8 +30,9 @@ namespace Uiml.FrontEnd
 	using System.Reflection;
 	using System.Xml;
     using System.IO;
-	
-	using Uiml.Utils.Reflection;
+
+    using Uiml.Utils;
+    using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
 	using Uiml.Executing;
 	using Uiml.Executing.Binding;
@@ -73,11 +74,9 @@ namespace Uiml.FrontEnd
 			filterMe.SetValue(fs, "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" , null);
 
             // set initial directory to examples dir 
-            string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-            string examplesDir = Path.Combine(appDir, "examples");
-            //ofd.InitialDirectory = examplesDir;
+            //ofd.InitialDirectory = Location.ExamplesDirectory;
             PropertyInfo initDir = ofClassType.GetProperty("InitialDirectory");
-            initDir.SetValue(fs, examplesDir, null);
+            initDir.SetValue(fs, Location.ExamplesDirectory, null);
 	
 			//if(ofd.ShowDialog() == DialogResult.OK)
 			MethodInfo runner = ofClassType.GetMethod("ShowDialog", new Type[0]);

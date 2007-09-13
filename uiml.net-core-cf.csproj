@@ -131,6 +131,7 @@
     <Compile Include="Uiml\Utils\Reflection\AssemblyLoader.cs" />
     <Compile Include="Uiml\Utils\Reflection\AssemblyNotFoundException.cs" />
     <Compile Include="Uiml\Utils\TodoAttribute.cs" />
+    <Compile Include="Uiml\Utils\Location.cs" />
     <Compile Include="Uiml\VocabularyUnavailableException.cs" />
     <Compile Include="Uiml\WrongNestingException.cs" />
   </ItemGroup>

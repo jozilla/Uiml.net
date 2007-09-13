@@ -31,7 +31,8 @@ namespace Uiml.FrontEnd{
     using System.IO;
 	using System.Reflection;
 	using System.Xml;
-	
+
+    using Uiml.Utils;
 	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
 	using Uiml.Executing;
@@ -45,9 +46,6 @@ namespace Uiml.FrontEnd{
 		static public string UIMLFILE = "compactgui.uiml";
 		static public string UIMLLIB = "uiml.net-core-cf";
 		public const string SWF_ASSEMBLY = "System.Windows.Forms";
-        public const string EXAMPLES_SUBDIR = "uiml.net-cf_examples";
-
-        public static string examplesDir;
 
 		public CompactGUI() : base(UIMLFILE, UIMLLIB)
 		{
@@ -55,9 +53,6 @@ namespace Uiml.FrontEnd{
 
         static CompactGUI()
         {
-            string myDocs = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            examplesDir = Path.Combine(myDocs, EXAMPLES_SUBDIR + Path.DirectorySeparatorChar);
-
             // copy the examples to the \My Documents folder first
             CopyExamples();
         }
@@ -70,8 +65,8 @@ namespace Uiml.FrontEnd{
         private static void CopyExamples()
         {
             // create target directory if not exists
-            if (!Directory.Exists(examplesDir))
-                Directory.CreateDirectory(examplesDir);
+            if (!Directory.Exists(Location.ExamplesDirectory))
+                Directory.CreateDirectory(Location.ExamplesDirectory);
 
             // copy all files
             string appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
@@ -79,7 +74,7 @@ namespace Uiml.FrontEnd{
 
             foreach (string filename in Directory.GetFiles(appExamplesDir, "*"))
             {
-                string targetFilename = Path.Combine(examplesDir, Path.GetFileName(filename));
+                string targetFilename = Path.Combine(Location.ExamplesDirectory, Path.GetFileName(filename));
                 File.Copy(filename, targetFilename, true);
             }
         }
@@ -108,12 +103,9 @@ namespace Uiml.FrontEnd{
 			filterMe.SetValue(fs, "UIML files (*.uiml)|*.uiml|All files (*.*)|*.*" , null);
 	
             // set initial directory to examples dir 
-            // ('\My Documents\{EXAMPLES_SUBDIR}\')
-            string myDocs = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            string examplesDir = Path.Combine(myDocs, EXAMPLES_SUBDIR);
-            //ofd.InitialDirectory = examplesDir;
+            //ofd.InitialDirectory = Location.ExamplesDirectory;
             PropertyInfo initDir = ofClassType.GetProperty("InitialDirectory");
-            initDir.SetValue(fs, examplesDir, null);
+            initDir.SetValue(fs, Location.ExamplesDirectory, null);
 
 			//if(ofd.ShowDialog() == DialogResult.OK)
 			MethodInfo runner = ofClassType.GetMethod("ShowDialog");
