@@ -59,10 +59,12 @@ namespace Uiml.Executing
 					XmlNodeList xnl = n.ChildNodes;
 					for(int i=0; i<xnl.Count; i++)
 					{
-						if(xnl[i].Name == CALL)
+						if (xnl[i].Name == CALL)
 							m_subActions.Add(new Call(xnl[i], m_partTree));
-						else if(xnl[i].Name == PROPERTY)
+						else if (xnl[i].Name == PROPERTY)
 							m_subActions.Add(new Uiml.Property(xnl[i]));
+                        else if (xnl[i].Name == EVENT)
+                            m_subActions.Add(new Event(xnl[i]));
 					}
 				}
 			}
@@ -72,17 +74,19 @@ namespace Uiml.Executing
 		{
 			foreach(System.Object o in m_subActions)
 			{
-				if(o is Uiml.Executing.Call)
+				if (o is Uiml.Executing.Call)
 					((Call)o).Execute(m_renderer);
-				else if(o is Uiml.Property)					
+				else if (o is Uiml.Property)					
 					m_propSetter.ApplyProperty(m_partTree, (Property)o);
+                else if (o is Event)
+                    ((Event)o).Execute(m_renderer);
 			}
 			return null;
 		}
 
 		public System.Object Execute(IRenderer renderer)
 		{
-			m_renderer   = renderer;
+			m_renderer = renderer;
 			m_propSetter = renderer.PropertySetter;
 			return Execute(); 
 		}
@@ -91,9 +95,9 @@ namespace Uiml.Executing
 		{
 			foreach(System.Object o in m_subActions)
 			{
-				if(o is Uiml.Executing.Call)
+				if (o is Uiml.Executing.Call)
 					((Call)o).AttachLogic(logicDocs);
-				else if(o is Uiml.Property)
+				else if (o is Uiml.Property)
 					((Property)o).AttachLogic(logicDocs);
 			}
 		}
@@ -137,6 +141,7 @@ namespace Uiml.Executing
 		public const string ACTION   = "action";
 		public const string PROPERTY = "property";
 		public const string CALL     = "call";
+        public const string EVENT    = "event";
 
 
 	}
