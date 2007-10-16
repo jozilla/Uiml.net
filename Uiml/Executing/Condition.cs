@@ -83,7 +83,7 @@ namespace Uiml.Executing
 
 		public System.Object Execute()
 		{
-			if(CheckCondition())
+			if (CheckCondition())
 			{
 				IEnumerator enumActions = m_actions.GetEnumerator();
 				while(enumActions.MoveNext())
@@ -144,12 +144,13 @@ namespace Uiml.Executing
 
 		private void GetEvents(ref ArrayList l)
 		{
-			if(m_conditionObject is Event)
+            l.Add(m_conditionObject);
+			/*if(m_conditionObject is Event)
 				l.Add(m_conditionObject);
 			else if(m_conditionObject is Op)
 				((Op)m_conditionObject).GetEvents(l);
 			else if(m_conditionObject is Equal)
-				((Equal)m_conditionObject).GetEvents(l);
+				((Equal)m_conditionObject).GetEvents(l);*/
 		}
 
 		public ArrayList Children
