@@ -83,7 +83,8 @@ namespace Uiml.Rendering.GTKsharp
 				Widget c = Render(uiStruct.Top, uiStyle);
 				//Render has filled the part-tree with the concrete object references
 				//to the individual widgets, now attach the behavior			
-				GtkEventLinker gll = new GtkEventLinker(this);
+				//GtkEventLinker gll = new GtkEventLinker(this);
+                EventLinker gll = new EventLinker(this);
 				gll.Link(uiStruct, uiBehavior);
 				m_topWindow.Add(c);
 				return m_topWindow;

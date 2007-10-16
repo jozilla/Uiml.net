@@ -84,7 +84,8 @@ namespace Uiml.Rendering.SWF
 				Control c = Render(uiStruct.Top, uiStyle);
 				//Render has filled the part-tree with the concrete object references
 				//to the individual widgets, now attach the behavior			
-				SWFEventLinker sel = new SWFEventLinker(this);
+				//SWFEventLinker sel = new SWFEventLinker(this);
+				EventLinker sel = new EventLinker(this);
 				sel.Link(uiStruct, uiBehavior);
 				m_topWindow.Add(c);
 				return m_topWindow;
