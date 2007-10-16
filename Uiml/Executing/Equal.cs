@@ -31,23 +31,89 @@ namespace Uiml.Executing
 
 	public class Equal :  IExecutable, IUimlElement
 	{
+        private Part m_partTree;
+        private Event m_event;
+        private object m_childObject;
+        private string m_childType;
 
 		public Equal()
 		{
+            m_childObject = null;
+            m_childType = null;
 		}
 
 		public Equal(XmlNode xmlNode, Part partTop) : this()
 		{
+            m_partTree = partTop;
 			Process(xmlNode);
 		}
 
 		public void Process(XmlNode n)
 		{
-		}
+            if (n.Name != IAM)
+                return;
 
-		public void GetEvents(ArrayList al)
-		{
-		}
+            // cannot have attributes
+
+            if (n.HasChildNodes)
+            {
+                XmlNodeList xnl = n.ChildNodes;
+                if (xnl.Count != 2)
+                {
+                    // parameter mismatch
+                    throw new XmlElementMismatchException("Your input document is not in the correct format. <equal> should have only 2 elements.");
+                }
+                else
+                {
+                    for (int i = 0; i < xnl.Count; i++)
+                    {
+                        switch (xnl[i].Name)
+                        {
+                            case EVENT:
+                                m_event = new Event(xnl[0]);
+                                break;
+                            case CONSTANT:
+                                m_childType = CONSTANT;
+                                m_childObject = new Constant(xnl[0]);
+                                break;
+                            case PROPERTY:
+                                m_childType = PROPERTY;
+                                m_childObject = new Property(xnl[0]);
+                                break;
+                            case REFERENCE:
+                                m_childType = REFERENCE;
+                                m_childObject = new Reference(xnl[0]);
+                                break;
+                            case OP:
+                                m_childType = OP;
+                                m_childObject = new Op(xnl[0], m_partTree);
+                                break;
+                        }
+                    }
+
+                    // error handling
+                    // event must be <> null
+                    if (m_event == null)
+                    {
+                        throw new NotInitializedException("Your input document is not in the correct format. <equal> must have 1 <event>.");
+                    }
+                    // at least one of (constant, property, reference, op) must be init
+                    if (m_childObject == null)
+                    {
+                        throw new NotInitializedException("Your input document is not in the correct format.  Check your syntax near <equal>.");
+                    }
+                }
+            }
+        }
+
+        public void GetEvents(ArrayList al)
+        {
+            al.Add(m_event);
+            if (m_childObject is Op)
+                ((Op)m_childObject).GetEvents(al);
+            else
+                al.Add(m_childObject);
+        }
 
 		public Object Execute()
 		{
@@ -64,7 +130,12 @@ namespace Uiml.Executing
 			get { return null; }
 		}
 
-
-	}
+        public const string IAM       = "equal";
+        public const string EVENT     = "event";
+        public const string CONSTANT  = "constant";
+        public const string PROPERTY  = "property";
+        public const string REFERENCE = "reference";
+        public const string OP        = "op";
+    }
 	
 }
