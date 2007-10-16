@@ -33,9 +33,9 @@ namespace Uiml.Executing
 	
 	public class Action : IExecutable, IUimlElement
 	{
-		private Part m_partTree;
-		private ArrayList m_subActions;
-		private Event m_event = null;
+		private Part            m_partTree;
+		private ArrayList       m_subActions;
+		private Event           m_event = null;
 		private IRenderer       m_renderer;
 		private IPropertySetter m_propSetter;
 		
