@@ -38,8 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo-uiml.net-gtk.cs" />
-    <Compile Include="Uiml\Rendering\GTKsharp\GtkEventLink.cs" />
-    <Compile Include="Uiml\Rendering\GTKsharp\GtkEventLinker.cs" />
     <Compile Include="Uiml\Rendering\GTKsharp\GtkRenderedInstance.cs" />
     <Compile Include="Uiml\Rendering\GTKsharp\GtkRenderer.cs" />
     <Compile Include="Uiml\Rendering\GTKsharp\GtkTypeDecoder.cs" />
