@@ -192,6 +192,9 @@
     <Content Include="examples\gtk-sharp\xmlRpcCall.uiml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="examples\gtk-sharp\conditions\testCondition.uiml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="examples\swf\swfBgFgColor.uiml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
