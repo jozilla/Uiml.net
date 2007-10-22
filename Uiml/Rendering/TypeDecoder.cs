@@ -28,21 +28,70 @@ namespace Uiml.Rendering
 	using System.Reflection;
 
 	public abstract class TypeDecoder : ITypeDecoder
-	{
-		abstract public Object[] GetArgs(Property p, Type[] types);
-		abstract public Object   GetArg(System.Object o, Type t);
-		abstract public Object[] GetMultipleArgs(Property[] p, Type[] types);
+	{	
+		public object GetArg(object o, Type t)
+		{
+			if (t.IsPrimitive)
+			{
+				return ConvertPrimitive(t, o);
+			}
+			else
+			{
+				return ConvertComplex(t, o);
+			}
+		}
 
-		abstract protected Object ConvertComplex(Type t, System.Object oValue);
-		abstract protected Object ConvertComplex(Type t, Property p);
+		public object[] GetArgs(Property p, Type[] types)
+		{
 		
+			object[] args = new object[types.Length];
+					
+			for (int i = 0; i < types.Length; i++)
+			{   
+				if (types[i].IsPrimitive)
+					args[i] = ConvertPrimitive(types[i], p);
+				else
+					args[i] = ConvertComplex(types[i], p);
+			}
+			
+			return args;
+		}
+	
+		///<summary>
+		/// Given an array of properties and an array of types, this method will
+		/// create an array of objects by converting each property value 
+		/// (p[i].Value) into its appropriate type according to the Type array 
+		/// (types[i]).
+		///</summary>
+		public object[] GetMultipleArgs(Property[] p, Type[] types)
+		{
+			object[] args= new object[types.Length];
+			
+			for (int i = 0; i < types.Length; i++)
+			{   
+				if (types[i].IsPrimitive)
+					args[i] = ConvertPrimitive(types[i], p[i]);
+				else
+					args[i] = ConvertComplex(types[i], p[i]);
+			}
+			
+			return args;
+		}
 
-		protected Object ConvertPrimitive(Type t, Property p)
+		/// <summary>
+		/// Helper function to convert a property's value to a primitive type 
+		/// (e.g. char, int, float, ...).
+		/// </summary>
+		protected object ConvertPrimitive(Type t, Property p)
 		{
 			return ConvertPrimitive(t, (System.String)p.Value);
 		}
-
-		protected Object ConvertPrimitive(Type t, System.Object oValue)
+		
+		/// <summary>
+		/// Utility function to convert an arbitrary object to a primitive type 
+		/// using the object's Parse method (like the one in System.String).
+		/// </summary>
+		protected object ConvertPrimitive(Type t, System.Object oValue)
 		{
 			string value = (string)oValue;
 			if(oValue is string)
@@ -50,18 +99,42 @@ namespace Uiml.Rendering
 			else if(t.FullName == "System.String")
 				return oValue.ToString();
 					
-
 			try
 			{
 				MethodInfo method = t.GetMethod(PARSE, new Type [] { value.GetType() });
 				return method.Invoke(null, new System.Object [] { value } );
 			}
-				catch(Exception e)
-				{
-					return value;
-				}
-
+			catch(Exception e)
+			{
+				return value;
+			}
 		}
+		
+		/// <summary>
+		/// Helper function to convert a property to a complex type.
+		/// </summary>
+		protected abstract object ConvertComplex(Type t, Property p);
+		
+		/// <summary>
+		/// Utility function to convert an arbitrary object to a complex type.
+		/// </summary>
+		protected abstract object ConvertComplex(Type t, object oValue);
+		
+		/// <summary>
+		/// Utility function to convert a UIML constant to a string array.
+		/// </summary>
+		protected string[] DecodeStringArray(Constant constant)
+		{
+			ArrayList strArrayList = new ArrayList();
+			IEnumerator enumConstants = constant.Children.GetEnumerator();
+			while(enumConstants.MoveNext())
+			{
+				Constant child = (Constant)enumConstants.Current;
+				strArrayList.Add(child.Value);
+			}
+			return (string[]) (strArrayList.ToArray(Type.GetType("System.String")));
+		}
+
 		
 		public static string PARSE = "Parse";
 	}

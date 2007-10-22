@@ -43,60 +43,6 @@ namespace Uiml.Rendering.GTKsharp
 
 	public class GtkTypeDecoder : TypeDecoder
 	{
-
-		public GtkTypeDecoder()
-		{
-		}
-
-		public override System.Object[] GetArgs(Property p, Type[] types)
-		{
-			System.Object[] args= new System.Object[types.Length];
-			int i = 0;
-			foreach(Type t in types)
-			{
-				if(t.IsPrimitive)
-					args[i] = ConvertPrimitive(t, p);
-				else
-					args[i] = ConvertComplex(t, p);
-				i++;
-			}
-			return args;
-		}
-	
-		///<summary>
-		///Given an array of properties and an array of types, this method will create
-		/// an array of objects by converting each property value (p[i].Value)
-		/// into its appropriate type accoriding to the Type array (types[i])
-		///</summary>
-		public override System.Object[] GetMultipleArgs(Property[] p, Type[] types)
-		{
-			System.Object[] args= new System.Object[types.Length];
-			int i = 0;
-			foreach(Type t in types)
-			{
-				if(t.IsPrimitive)
-					args[i] = ConvertPrimitive(t, p[i]);
-				else
-					args[i] = ConvertComplex(t, p[i]);
-				i++;
-			}
-			return args;
-
-		}
-
-
-		public override System.Object GetArg(System.Object o, Type t)
-		{
-			if(t.IsPrimitive)
-			{
-				return ConvertPrimitive(t, o);
-			}
-			else
-			{
-				return ConvertComplex(t, o);
-			}
-		}
-
 		///<summary>
 		/// Converts the object oValue to the type given by t
 		///</summary>
@@ -131,7 +77,7 @@ namespace Uiml.Rendering.GTKsharp
 				case "System.String":
 					return (System.String)value;
 				case "System.String[]":
-					return DecodeStringArray(oValue);
+					return DecodeStringArray((Constant)oValue);
 				default:
 					return value;
 			}
@@ -153,7 +99,7 @@ namespace Uiml.Rendering.GTKsharp
 				case "GLib.List":
 					return DecodeList(p.Value);
 				case "System.String[]":
-					return DecodeStringArray(p.Value);
+					return DecodeStringArray((Constant)p.Value);
 				default:
 					return p.Value;
 			}
@@ -221,19 +167,6 @@ namespace Uiml.Rendering.GTKsharp
 			}
 			return list;
 		}
-
-		private System.String[] DecodeStringArray(System.Object value)
-		{
-			ArrayList strArrayList = new ArrayList();
-			IEnumerator enumConstants = (((Constant)value).Children).GetEnumerator();	
-			while(enumConstants.MoveNext())
-			{
-				Constant c = (Constant)enumConstants.Current;
-				strArrayList.Add(c.Value);
-			}
-			return (System.String[])(strArrayList.ToArray(Type.GetType("System.String")));
-		}
-
 
 		private Gtk.TreeModel DecodeTree(System.Object value)
 		{

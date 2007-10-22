@@ -38,64 +38,6 @@ namespace Uiml.Rendering.SWF
 
 	public class SWFTypeDecoder : TypeDecoder
 	{
-
-		public SWFTypeDecoder()
-		{
-		}
-
-		public override System.Object[] GetArgs(Property p, Type[] types)
-		{
-		
-			System.Object[] args = new System.Object[types.Length];
-			
-			int i = 0;
-			foreach(Type t in types)
-			{
-				if(t.IsPrimitive)
-					args[i] = ConvertPrimitive(t, p);
-				else
-					args[i] = ConvertComplex(t, p);
-				i++;
-			}
-			
-			return args;
-		}
-	
-		///<summary>
-		/// Given an array of properties and an array of types, this method will create
-		/// an array of objects by converting each property value (p[i].Value)
-		/// into its appropriate type according to the Type array (types[i])
-		///</summary>
-		public override System.Object[] GetMultipleArgs(Property[] p, Type[] types)
-		{
-		
-			System.Object[] args= new System.Object[types.Length];
-			
-			int i = 0;
-			foreach(Type t in types)
-			{
-				if(t.IsPrimitive)
-					args[i] = ConvertPrimitive(t, p[i]);
-				else
-					args[i] = ConvertComplex(t, p[i]);
-				i++;
-			}
-			
-			return args;
-		}
-
-		public override System.Object GetArg(System.Object o, Type t)
-		{
-			if(t.IsPrimitive)
-			{
-				return ConvertPrimitive(t, o);
-			}
-			else
-			{
-				return ConvertComplex(t, o);
-			}
-		}
-
 		///<summary>
 		/// Converts the object oValue to the type given by t
 		///</summary>
@@ -108,7 +50,6 @@ namespace Uiml.Rendering.SWF
 				return oValue.ToString();
 
 			string[] coords = null;
-			// TODO: use reflection to create SWF types!			
 			switch(t.FullName)
 			{
 				case "System.Int32":
@@ -126,11 +67,11 @@ namespace Uiml.Rendering.SWF
 				case "System.Drawing.Color":
 					return DecodeColor(value);
 				case "System.Drawing.Image":
-					return System.Drawing.Image.FromFile((string)value);					
+					return System.Drawing.Image.FromFile((string)value);
 				case "System.String":
 					return (System.String)value;
 				case "System.String[]":
-					return DecodeStringArray(oValue);				
+					return DecodeStringArray((Constant)oValue);
 				case "System.DateTime":
 					return DecodeDateTime(value);
 				case "System.Windows.Forms.Appearance":
@@ -159,7 +100,7 @@ namespace Uiml.Rendering.SWF
 			switch(t.FullName)
 			{
 				case "System.String[]":
-					return DecodeStringArray(p.Value);
+					return DecodeStringArray((Constant)p.Value);
 				case "System.Windows.Forms.ColumnHeader":
                     return DecodeColumnHeader(p.Value);
                 case "System.Windows.Forms.ColumnHeader[]":
@@ -345,7 +286,7 @@ namespace Uiml.Rendering.SWF
 
 		private System.Object DecodeListViewItemArray(Property p)
 		{	
-			string[] a = DecodeStringArray(p.Value);
+			string[] a = DecodeStringArray((Constant)p.Value);
 			ListViewItem[] b = new ListViewItem[a.Length];
 			for(int i = 0; i < a.Length; i++)
 			{
@@ -394,7 +335,7 @@ namespace Uiml.Rendering.SWF
 
 		private System.Object DecodeColumnHeaderArray(Property p)
 		{
-			string[] strHeaders = DecodeStringArray(p.Value);
+			string[] strHeaders = DecodeStringArray((Constant)p.Value);
 			ColumnHeader[] headers = new ColumnHeader[strHeaders.Length];
 
 			for (int i = 0; i < strHeaders.Length; i++)
@@ -404,18 +345,6 @@ namespace Uiml.Rendering.SWF
 
 			return headers;
 		}
-		private System.String[] DecodeStringArray(System.Object value)
-		{
-			ArrayList strArrayList = new ArrayList();
-			IEnumerator enumConstants = (((Constant)value).Children).GetEnumerator();	
-			while(enumConstants.MoveNext())
-			{
-				Constant c = (Constant)enumConstants.Current;
-				strArrayList.Add(c.Value);
-			}
-			return (System.String[])(strArrayList.ToArray(Type.GetType("System.String")));
-		}
-
 		
 		///<summary>
 		///Decodes color from a string
@@ -583,7 +512,6 @@ namespace Uiml.Rendering.SWF
 				default : return System.Drawing.Color.Black ;
 			}
 		}
-
 	}	
 }
 
