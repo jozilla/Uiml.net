@@ -41,84 +41,77 @@ namespace Uiml.Rendering.SWF
 		///<summary>
 		/// Converts the object oValue to the type given by t
 		///</summary>
-		protected override System.Object ConvertComplex(Type t, System.Object oValue)
+		protected override object ConvertComplex(Type t, object oValue)
 		{
-			string value = "";
-			if(oValue is string)
-				value = (string)oValue;
-			else if(t.FullName == "System.String")
+			string sValue = "";
+		    Constant cValue = null;
+
+			if (oValue is string)
+				sValue = (string)oValue;
+			else if (t.FullName == "System.String")
 				return oValue.ToString();
+			else if (oValue is Constant)
+			    cValue = (Constant)oValue;
 
 			string[] coords = null;
 			switch(t.FullName)
 			{
 				case "System.Int32":
-					return System.Int32.Parse(value);
+					return System.Int32.Parse(sValue);
 				case "System.Int64":
-					return System.Int64.Parse(value);
+					return System.Int64.Parse(sValue);
 				case "System.Int16":
-					return System.Int16.Parse(value);
+					return System.Int16.Parse(sValue);
 				case "System.Drawing.Point":
-					coords = value.Split(new Char[] {','});
+					coords = sValue.Split(new Char[] {','});
 					return new System.Drawing.Point(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
 				case "System.Drawing.Size":
-					coords = value.Split(new Char[] {','});
+					coords = sValue.Split(new Char[] {','});
 					return new System.Drawing.Size(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
 				case "System.Drawing.Color":
-					return DecodeColor(value);
+					return DecodeColor(sValue);
 				case "System.Drawing.Image":
-					return System.Drawing.Image.FromFile((string)value);
+					return System.Drawing.Image.FromFile(sValue);
 				case "System.String":
-					return (System.String)value;
+					return (System.String)sValue;
 				case "System.String[]":
-					return DecodeStringArray((Constant)oValue);
+					return DecodeStringArray(cValue);
 				case "System.DateTime":
-					return DecodeDateTime(value);
+					return DecodeDateTime(sValue);
 				case "System.Windows.Forms.Appearance":
-					return DecodeAppearance(value);
+					return DecodeAppearance(sValue);
 				case "System.Windows.Forms.ScrollBars":
-					return DecodeScrollBars(value);
+					return DecodeScrollBars(sValue);
 				case "System.Windows.Forms.SelectionMode":
-					return DecodeSelectionMode(value);
+					return DecodeSelectionMode(sValue);
 				case "System.Windows.Forms.View":
-					return DecodeView(value);
+					return DecodeView(sValue);
 				case "System.Windows.Forms.Orientation":
-					return DecodeOrientation(value);
+					return DecodeOrientation(sValue);
 				case "System.Windows.Forms.TickStyle":
-					return DecodeTickStyle(value);
+					return DecodeTickStyle(sValue);
                 case "System.Windows.Forms.TabAlignment":
-                    return DecodeTabAlignment(value);
+                    return DecodeTabAlignment(sValue);
                 case "System.Drawing.Font":
-                    return DecodeFont(value);
-				default:
-					return value;
-			}			
-		}
-
-		protected override System.Object ConvertComplex(Type t, Property p)
-		{
-			switch(t.FullName)
-			{
-				case "System.String[]":
-					return DecodeStringArray((Constant)p.Value);
+                    return DecodeFont(sValue);
 				case "System.Windows.Forms.ColumnHeader":
-                    return DecodeColumnHeader(p.Value);
+                    return DecodeColumnHeader(sValue);
                 case "System.Windows.Forms.ColumnHeader[]":
-                    return DecodeColumnHeaderArray(p);
+                    return DecodeColumnHeaderArray(cValue);
 				case "System.Windows.Forms.ListViewItem":
-					return DecodeListViewItem(p);
+					return DecodeListViewItem(sValue);
 				case "System.Windows.Forms.ListViewItem[]":
-					return DecodeListViewItemArray(p);
+					return DecodeListViewItemArray(cValue);
 				case "System.Windows.Forms.TreeNode":
-					return new System.Windows.Forms.TreeNode((string)p.Value);
+					return new System.Windows.Forms.TreeNode(sValue);
 				case "System.Windows.Forms.TreeNode[]":
-					return DecodeTreeNodeArray(p);
+					return DecodeTreeNodeArray(cValue);
 				default:
-					return p.Value;
+					return sValue;
 			}			
 		}
 
-		private System.Object DecodeFont(string value)
+		private object DecodeFont(string value)
 		{
 			string name = "Microsoft Sans Serif";
 			float size = 8.25F;
@@ -174,7 +167,7 @@ namespace Uiml.Rendering.SWF
 			
 			return new Font(name, size, style, unit);
 		}
-		private System.Object DecodeDateTime(string value)
+		private object DecodeDateTime(string value)
 		{
 			string[] coords = value.Split(new Char[] {'/'});
 			int month = int.Parse(coords[0]);
@@ -183,7 +176,7 @@ namespace Uiml.Rendering.SWF
 			return new DateTime(year, month, day);
 		}
 
-		private System.Object DecodeAppearance(string value)
+		private object DecodeAppearance(string value)
 		{
 			if(value == "Button")
 				return Appearance.Button;
@@ -191,7 +184,7 @@ namespace Uiml.Rendering.SWF
 				return Appearance.Normal;
 		}
 
-		private System.Object DecodeScrollBars(string value)
+		private object DecodeScrollBars(string value)
 		{
 			if(value == "Both")
 				return ScrollBars.Both;
@@ -203,7 +196,7 @@ namespace Uiml.Rendering.SWF
 				return ScrollBars.None;
 		}
 
-		private System.Object DecodeSelectionMode(string value)
+		private object DecodeSelectionMode(string value)
 		{
 			if(value == "MultiExtended")
 				return SelectionMode.MultiExtended;
@@ -215,7 +208,7 @@ namespace Uiml.Rendering.SWF
 				return SelectionMode.One;
 		}
 
-		private System.Object DecodeView(string value)
+		private object DecodeView(string value)
 		{
 			if(value == "LargeIcon")
 				return View.LargeIcon;
@@ -226,7 +219,7 @@ namespace Uiml.Rendering.SWF
 			else
 				return View.Details;
 		}
-		private System.Object DecodeOrientation(string value)
+		private object DecodeOrientation(string value)
 		{
 			if(value == "Vertical")
 				return Orientation.Vertical;
@@ -234,7 +227,7 @@ namespace Uiml.Rendering.SWF
 				return Orientation.Horizontal;
 		}
 
-		private System.Object DecodeTickStyle(string value)
+		private object DecodeTickStyle(string value)
 		{
 			if(value == "Both")
 				return TickStyle.Both;
@@ -246,7 +239,7 @@ namespace Uiml.Rendering.SWF
 				return TickStyle.TopLeft;
 		}
 
-        private System.Object DecodeTabAlignment(string value)
+        private object DecodeTabAlignment(string value)
         {
             switch (value.ToLower())
             {
@@ -262,12 +255,7 @@ namespace Uiml.Rendering.SWF
             }
         }
 
-		private System.Object DecodeListViewItem(Property p)
-		{
-			return DecodeListViewItem((string) p.Value);
-		}
-
-		private System.Object DecodeListViewItem(string s)
+		private object DecodeListViewItem(string s)
 		{
 			string[] vals = s.Split(new Char[] {';'});
 			ListViewItem top = new ListViewItem(s);
@@ -284,9 +272,9 @@ namespace Uiml.Rendering.SWF
 			return top;
 		}
 
-		private System.Object DecodeListViewItemArray(Property p)
+		private object DecodeListViewItemArray(Constant c)
 		{	
-			string[] a = DecodeStringArray((Constant)p.Value);
+			string[] a = DecodeStringArray(c);
 			ListViewItem[] b = new ListViewItem[a.Length];
 			for(int i = 0; i < a.Length; i++)
 			{
@@ -296,15 +284,14 @@ namespace Uiml.Rendering.SWF
 			return b;
 		}
 
-		private System.Object DecodeTreeNodeArray(Property p)
+		private object DecodeTreeNodeArray(Constant c)
 		{
-			Constant top = (Constant) p.Value;
-			TreeNode[] a = new TreeNode[top.ChildCount];
+			TreeNode[] a = new TreeNode[c.ChildCount];
 
 			int i = 0;
-			foreach(Constant c in top.Children)
+			foreach(Constant child in c.Children)
 			{
-				a[i] = DecodeTreeNode(c);
+				a[i] = DecodeTreeNode(child);
 				i++;
 			}
 
@@ -326,16 +313,16 @@ namespace Uiml.Rendering.SWF
 			return result;
 		}
 
-		private System.Object DecodeColumnHeader(System.Object val)
+		private object DecodeColumnHeader(string val)
 		{
-					ColumnHeader result = new ColumnHeader();
-					result.Text = (string) val;
-					return result;
+			ColumnHeader result = new ColumnHeader();
+			result.Text = val;
+			return result;
 		}
 
-		private System.Object DecodeColumnHeaderArray(Property p)
+		private object DecodeColumnHeaderArray(Constant c)
 		{
-			string[] strHeaders = DecodeStringArray((Constant)p.Value);
+			string[] strHeaders = DecodeStringArray(c);
 			ColumnHeader[] headers = new ColumnHeader[strHeaders.Length];
 
 			for (int i = 0; i < strHeaders.Length; i++)
@@ -350,7 +337,7 @@ namespace Uiml.Rendering.SWF
 		///Decodes color from a string
 		///</summary>
 		///<param name="value">String containing the specification for a color</param>
-		private System.Object DecodeColor(string value)
+		private object DecodeColor(string value)
 		{
 			string[] coords = value.Split(new Char[] {','});
 			if(coords.Length < 2)
@@ -364,7 +351,7 @@ namespace Uiml.Rendering.SWF
 		/// Original source: MyXaml project, Bert Bier
 		///</summary>
 		///<param name="value">String containing the name of a color</param>
-		private System.Object DecodeKnownColor(string value) 
+		private object DecodeKnownColor(string value) 
 		{
 			switch (value.ToLower() )
 			{

@@ -41,75 +41,64 @@ namespace Uiml.Rendering.CompactSWF
 		///<summary>
 		/// Converts the object oValue to the type given by t
 		///</summary>
-		protected override System.Object ConvertComplex(Type t, System.Object oValue)
+		protected override object ConvertComplex(Type t, object oValue)
 		{
-			string value = "";
-			if(oValue is string)
-				value = (string)oValue;
-			else if(t.FullName == "System.String")
+			string sValue = "";
+		    Constant cValue = null;
+
+			if (oValue is string)
+				sValue = (string)oValue;
+			else if (t.FullName == "System.String")
 				return oValue.ToString();
+			else if (oValue is Constant)
+			    cValue = (Constant)oValue;
 
 			string[] coords = null;
 			// TODO: use reflection to create SWF types!			
 			switch(t.FullName)
 			{
 				case "System.Int32":
-					return System.Int32.Parse(value);
+					return System.Int32.Parse(sValue);
 				case "System.Int64":
-					return System.Int64.Parse(value);
+					return System.Int64.Parse(sValue);
 				case "System.Int16":
-					return System.Int16.Parse(value);
+					return System.Int16.Parse(sValue);
 				case "System.Drawing.Point":
-					coords = value.Split(new Char[] {','});
+					coords = sValue.Split(new Char[] {','});
 					return new System.Drawing.Point(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
 				case "System.Drawing.Size":
-					coords = value.Split(new Char[] {','});
+					coords = sValue.Split(new Char[] {','});
 					return new System.Drawing.Size(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
 				case "System.Drawing.Color":
-					return DecodeColor(value);
+					return DecodeColor(sValue);
 				case "System.Drawing.Image":
-					return new System.Drawing.Bitmap((string)value);
+					return new System.Drawing.Bitmap(sValue);
 				case "System.String":
-					return (System.String)value;
+					return (System.String)sValue;
 				case "System.String[]":
-					return DecodeStringArray((Constant)oValue);				
+					return DecodeStringArray(cValue);				
 				case "System.DateTime":
-					return DecodeDateTime(value);
+					return DecodeDateTime(sValue);
 				case "System.Windows.Forms.ScrollBars":
-					return DecodeScrollBars(value);
+					return DecodeScrollBars(sValue);
 				case "System.Windows.Forms.View":
-					return DecodeView(value);
+					return DecodeView(sValue);
 				case "System.Windows.Forms.Orientation":
-					return DecodeOrientation(value);
+					return DecodeOrientation(sValue);
 				case "System.Drawing.Font":
-					return DecodeFont(value);
-				default:
-					return value;
-			}			
-		}
-
-		protected override System.Object ConvertComplex(Type t, Property p)
-		{
-			switch(t.FullName)
-			{
-				case "System.String[]":
-					return DecodeStringArray((Constant)p.Value);
+					return DecodeFont(sValue);
 				case "System.Windows.Forms.ColumnHeader":
-					ColumnHeader result = new ColumnHeader();
-					result.Text = (string)p.Value;
-					return result;
+					return DecodeColumnHeader(sValue);
 				case "System.Windows.Forms.ListViewItem":
-					return DecodeListViewItem(p);
+					return DecodeListViewItem(sValue);
 				case "System.Windows.Forms.ListViewItem[]":
-					return DecodeListViewItemArray(p);
+					return DecodeListViewItemArray(cValue);
 				case "System.Windows.Forms.TreeNode":
-					return new System.Windows.Forms.TreeNode((string)p.Value);
+					return new System.Windows.Forms.TreeNode(sValue);
 				case "System.Windows.Forms.TreeNode[]":
-					return DecodeTreeNodeArray(p);
-				case "System.Drawing.Font":
-					return DecodeFont((string)p.Value);
+					return DecodeTreeNodeArray(cValue);					
 				default:
-					return p.Value;
+					return sValue;
 			}			
 		}
 
@@ -118,7 +107,7 @@ namespace Uiml.Rendering.CompactSWF
 		///Original code from the MyXaml project, Bert Bier
 		///</summary>
 		///<param name="value">Contains the font information that has to be decoded</param>
-		private System.Object DecodeFont(string value)
+		private object DecodeFont(string value)
 		{
 			System.Drawing.Font c = new Font("MS Sans Serif", 10, FontStyle.Regular );
 			string [] Fontparts;
@@ -168,7 +157,7 @@ namespace Uiml.Rendering.CompactSWF
 		///Original code from the MyXaml project, Bert Bier
 		///</summary>
 		///<param name="value">The string containing a description for a font</param>
-		private System.Object DecodeFormBorderStyle(string value) 
+		private object DecodeFormBorderStyle(string value) 
 		{
 			switch (value.ToLower()) 
 			{
@@ -185,7 +174,7 @@ namespace Uiml.Rendering.CompactSWF
 			}
 		}
 
-		private System.Object DecodeDateTime(string value)
+		private object DecodeDateTime(string value)
 		{
 			string[] coords = value.Split(new Char[] {'/'});
 			int month = int.Parse(coords[0]);
@@ -194,7 +183,7 @@ namespace Uiml.Rendering.CompactSWF
 			return new DateTime(year, month, day);
 		}
 
-		private System.Object DecodeScrollBars(string value)
+		private object DecodeScrollBars(string value)
 		{
 			if(value == "Both")
 				return ScrollBars.Both;
@@ -206,7 +195,7 @@ namespace Uiml.Rendering.CompactSWF
 				return ScrollBars.None;
 		}
 
-		private System.Object DecodeView(string value)
+		private object DecodeView(string value)
 		{
 			if(value == "LargeIcon")
 				return View.LargeIcon;
@@ -217,7 +206,7 @@ namespace Uiml.Rendering.CompactSWF
 			else
 				return View.Details;
 		}
-		private System.Object DecodeOrientation(string value)
+		private object DecodeOrientation(string value)
 		{
 			if(value == "Vertical")
 				return Orientation.Vertical;
@@ -225,12 +214,12 @@ namespace Uiml.Rendering.CompactSWF
 				return Orientation.Horizontal;
 		}
 
-		private System.Object DecodeListViewItem(Property p)
+		private object DecodeListViewItem(Property p)
 		{
 			return DecodeListViewItem((string) p.Value);
 		}
 
-		private System.Object DecodeListViewItem(string s)
+		private object DecodeListViewItem(string s)
 		{
 			string[] vals = s.Split(new Char[] {';'});
 			ListViewItem top = new ListViewItem(s);
@@ -247,9 +236,9 @@ namespace Uiml.Rendering.CompactSWF
 			return top;
 		}
     
-		private System.Object DecodeListViewItemArray(Property p)
+		private object DecodeListViewItemArray(Constant c)
 		{
-			string[] a = DecodeStringArray((Constant)p.Value);
+			string[] a = DecodeStringArray(c);
 			ListViewItem[] b = new ListViewItem[a.Length];
 			for(int i = 0; i < a.Length; i++)
 			{
@@ -259,15 +248,14 @@ namespace Uiml.Rendering.CompactSWF
 			return b;
 		}
 
-		private System.Object DecodeTreeNodeArray(Property p)
+		private object DecodeTreeNodeArray(Constant c)
 		{
-			Constant top = (Constant) p.Value;
-			TreeNode[] a = new TreeNode[top.ChildCount];
+			TreeNode[] a = new TreeNode[c.ChildCount];
 
 			int i = 0;
-			foreach(Constant c in top.Children)
+			foreach(Constant child in c.Children)
 			{
-				a[i] = DecodeTreeNode(c);
+				a[i] = DecodeTreeNode(child);
 				i++;
 			}
 
@@ -288,12 +276,20 @@ namespace Uiml.Rendering.CompactSWF
 
 			return result;
 		}
+		
+		private object DecodeColumnHeader(string val)
+		{
+			ColumnHeader result = new ColumnHeader();
+			result.Text = val;
+			return result;
+		}
+
 
 		///<summary>
 		///Decodes color from a string
 		///</summary>
 		///<param name="value">String containing the specification for a color</param>
-		private System.Object DecodeColor(string value)
+		private object DecodeColor(string value)
 		{
 			string[] coords = value.Split(new Char[] {','});
 			if(coords.Length < 2)
@@ -307,7 +303,7 @@ namespace Uiml.Rendering.CompactSWF
 		/// Original source: MyXaml project, Bert Bier
 		///</summary>
 		///<param name="value">String containing the name of a color</param>
-		private System.Object DecodeKnownColor(string value) 
+		private object DecodeKnownColor(string value) 
 		{
 			switch (value.ToLower() )
 			{

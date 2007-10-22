@@ -46,67 +46,49 @@ namespace Uiml.Rendering.GTKsharp
 		///<summary>
 		/// Converts the object oValue to the type given by t
 		///</summary>
-		protected override System.Object ConvertComplex(Type t, System.Object oValue)
+		protected override object ConvertComplex(Type t, object oValue)
 		{
-			string value = "";
-			if(oValue is string)
-				value = (string)oValue;
-			else if(t.FullName == "System.String")
+			string sValue = "";
+			Constant cValue = null;
+			
+			if (oValue is string)
+				sValue = (string)oValue;
+			else if (t.FullName == "System.String")
 				return oValue.ToString();
-		
+			else if (oValue is Constant)
+			    cValue = (Constant)oValue;
 
 			switch(t.FullName)
 			{
 				case "System.Int32":
-					return System.Int32.Parse(value);
+					return System.Int32.Parse(sValue);
 				case "System.Int64":
-					return System.Int64.Parse(value);
+					return System.Int64.Parse(sValue);
 				case "System.Int16":
-					return System.Int16.Parse(value);
+					return System.Int16.Parse(sValue);
 				case "Gdk.Color":
 					if(oValue.GetType().FullName == "Gdk.Color")
 						return oValue;
 					else
-						return DecodeColor(value);
+						return DecodeColor(sValue);
 				case "Gtk.StateType":
-					return DecodeStateType(value);
+					return DecodeStateType(sValue);
 				case "GLib.List":
-					return DecodeList(oValue);
+					return DecodeList(cValue);
 				case "Gtk.TreeModel":
-					return DecodeTree(oValue);
+					return DecodeTree(cValue);
 				case "System.String":
-					return (System.String)value;
+					return (System.String)sValue;
 				case "System.String[]":
-					return DecodeStringArray((Constant)oValue);
-				default:
-					return value;
-			}
-		}
-
-		protected override System.Object ConvertComplex(Type t, Property p)
-		{
-			switch(t.FullName)
-			{
-				case "Gdk.Color":
-					if(p.Value.GetType().FullName == "Gdk.Color"	)
-						return p.Value;
-					else
-						return DecodeColor((System.String)p.Value);
-				case "Gtk.StateType":
-					return DecodeStateType(p.Name);
+					return DecodeStringArray(cValue);
 				case "Pango.FontDescription":
-					return DecodeFont((System.String)p.Value);
-				case "GLib.List":
-					return DecodeList(p.Value);
-				case "System.String[]":
-					return DecodeStringArray((Constant)p.Value);
+					return DecodeFont(sValue);
 				default:
-					return p.Value;
+					return sValue;
 			}
 		}
 
-
-		private System.Object DecodeFont(string value)
+		private object DecodeFont(string value)
 		{
 			return Pango.FontDescription.FromString(value);
 		}
@@ -143,7 +125,7 @@ namespace Uiml.Rendering.GTKsharp
 		///Decodes the StateType value. This method only returns StateType.Normal; it should
 		///be fixed for more complex behavior of widgets.
 		///</summary>
-		private System.Object DecodeStateType(string value)
+		private object DecodeStateType(string value)
 		{
 			switch(value)
 			{
@@ -156,21 +138,20 @@ namespace Uiml.Rendering.GTKsharp
 			}
 		}
 
-		private GLib.List DecodeList(System.Object value)
+		private GLib.List DecodeList(Constant c)
 		{
 			List list = new GLib.List((IntPtr) 0, typeof (System.String));
-			IEnumerator enumConstants = (((Constant)value).Children).GetEnumerator();	
+			IEnumerator enumConstants = c.Children.GetEnumerator();
 			while(enumConstants.MoveNext())
 			{
-				Constant c = (Constant)enumConstants.Current;
-				list.Append((String)c.Value);
+				Constant child = (Constant)enumConstants.Current;
+				list.Append((string)child.Value);
 			}
 			return list;
 		}
 
-		private Gtk.TreeModel DecodeTree(System.Object value)
+		private Gtk.TreeModel DecodeTree(Constant c)
 		{
-			Constant c = (Constant)value;
 			if(c.Model == Constant.LIST)
 				return DecodeListStore(c);
 			else

@@ -113,7 +113,10 @@ namespace Uiml.Rendering
 		/// <summary>
 		/// Helper function to convert a property to a complex type.
 		/// </summary>
-		protected abstract object ConvertComplex(Type t, Property p);
+		protected object ConvertComplex(Type t, Property p)
+		{
+		    return ConvertComplex(t, p.Value);
+		}
 		
 		/// <summary>
 		/// Utility function to convert an arbitrary object to a complex type.
