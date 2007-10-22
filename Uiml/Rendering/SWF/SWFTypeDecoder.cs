@@ -304,14 +304,14 @@ namespace Uiml.Rendering.SWF
 			int i = 0;
 			foreach(Constant c in top.Children)
 			{
-				a[i] = (TreeNode)DecodeConstant(c);
+				a[i] = DecodeTreeNode(c);
 				i++;
 			}
 
 			return a;
 		}
 
-		private System.Object DecodeConstant(Constant c)
+		private TreeNode DecodeTreeNode(Constant c)
 		{
 			TreeNode result = new TreeNode((string)c.Value);
 			
@@ -320,7 +320,7 @@ namespace Uiml.Rendering.SWF
 						
 			foreach(Constant child in c.Children)
 			{
-				result.Nodes.Add((TreeNode)DecodeConstant(child));
+				result.Nodes.Add(DecodeTreeNode(child));
 			}
 
 			return result;
