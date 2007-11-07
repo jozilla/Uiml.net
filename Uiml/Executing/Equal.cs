@@ -31,6 +31,7 @@ namespace Uiml.Executing
 
 	public class Equal :  IExecutable, IUimlElement
 	{
+        Part m_top = null;
 
 		public Equal()
 		{
@@ -39,7 +40,16 @@ namespace Uiml.Executing
 		public Equal(XmlNode xmlNode, Part partTop) : this()
 		{
 			Process(xmlNode);
+            m_top = partTop;
 		}
+
+        public virtual object Clone()
+        {
+            Equal clone = new Equal();
+            clone.m_top = m_top;
+
+            return clone;
+        }
 
 		public void Process(XmlNode n)
 		{
@@ -63,6 +73,18 @@ namespace Uiml.Executing
 		{
 			get { return null; }
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_top;
+            }
+            set
+            {
+                m_top = value;
+            }
+        }
 
 
 	}

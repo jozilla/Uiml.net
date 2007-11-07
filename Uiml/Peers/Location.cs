@@ -26,7 +26,7 @@ using System;
 
 namespace Uiml.Peers
 {
-	public class Location
+	public class Location : ICloneable
 	{
 		private string m_value = "";
 		private Protocol m_type = Protocol.Local;
@@ -35,6 +35,19 @@ namespace Uiml.Peers
 		{
 			Process(s);
 		}
+
+        protected Location()
+        {
+        }
+
+        public virtual object Clone()
+        {
+            Location location = new Location();
+            location.m_value = m_value;
+            location.m_type = m_type;
+
+            return location;
+        }
 
 		public void Process(string s)
 		{

@@ -37,12 +37,49 @@ namespace Uiml
 
 		private Presentation m_selected;
 
-		public Peer(XmlNode nTopPeer)
+		public Peer(XmlNode nTopPeer):this()
 		{
-			m_presentations = new ArrayList();
-			m_logic = new ArrayList();
 			Process(nTopPeer);
 		}
+
+        protected Peer()
+        {
+            m_presentations = new ArrayList();
+            m_logic = new ArrayList();
+        }
+
+        public virtual object Clone()
+        {
+            Peer clone = new Peer();
+            clone.CopyAttributesFrom(this);
+
+            if(m_presentations != null)
+            {
+                clone.m_presentations = new ArrayList();
+                for(int i = 0; i < m_presentations.Count; i++)
+                {
+                    Presentation pres = (Presentation)((Presentation)m_presentations[i]).Clone();
+                    clone.AddPeer(pres);
+                }
+            }
+            if(m_logic != null)
+            {
+                clone.m_logic = new ArrayList();
+                for(int i = 0; i < m_logic.Count; i++)
+                {
+                    Logic logic = (Logic)((Logic)m_logic[i]).Clone();
+                    clone.AddLogic(logic);
+                    clone.GetVocabulary().MergeLogic(logic);
+                }
+            }
+            if(m_selected != null)
+            {
+                clone.m_selected = (Presentation)m_selected.Clone();
+            }
+
+            return clone;
+
+        }
 
 		public void AddPeer(Presentation presvoc)
 		{

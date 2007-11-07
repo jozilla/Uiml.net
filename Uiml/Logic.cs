@@ -42,6 +42,15 @@ namespace Uiml
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            Logic logic = new Logic();
+            logic.CopyAttributesFrom(this);
+            if(m_tag != null)
+                logic.m_tag = (XmlNode)m_tag.Clone();
+            return logic;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name == IAM)

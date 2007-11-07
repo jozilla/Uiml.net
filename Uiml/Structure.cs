@@ -52,6 +52,17 @@ namespace Uiml{
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            Structure structure = new Structure();
+            if(m_top != null)
+            {
+                structure.m_top = (Part)m_top.Clone();
+            }
+
+            return structure;
+        }
+
 		///<summary>
 		///Processes the structure subtree
 		///</summary>

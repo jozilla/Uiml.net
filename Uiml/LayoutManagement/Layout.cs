@@ -72,6 +72,22 @@ namespace Uiml.LayoutManagement
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            //FIXME:Fix this clone function
+            Layout clone = new Layout();
+            clone.m_constraints = m_constraints;
+            clone.m_clConstraints = m_clConstraints;
+            clone.m_implicitConstraints = m_implicitConstraints;
+            clone.m_properties = m_properties;
+            clone.m_structure = m_structure;
+            clone.m_constraintSystem = m_constraintSystem;
+            clone.m_container = m_container;
+            clone.m_box = m_box;
+
+            return clone;
+        }
+
 		public void Process(System.Xml.XmlNode n)
 		{
 			if (n.Name != IAM)

@@ -43,6 +43,21 @@ namespace Uiml{
 			Process(nTopPeer);
 		}
 
+        public virtual object Clone()
+        {
+            Presentation pres = new Presentation();
+            pres.CopyAttributesFrom(this);
+
+            pres.m_base = m_base;
+            
+            if(m_voc != null)
+            {
+                pres.m_voc = (Vocabulary)m_voc.Clone();
+            }
+
+            return pres;
+        }
+
 		public void Process(XmlNode n){//Exception toevoegen
 			if(n.Name == IAM){
 				base.ReadAttributes(n);

@@ -47,8 +47,25 @@ namespace Uiml{
 
 		public Content(XmlNode n) : this()
 		{
-			Process(n);
-		}
+			Process(n);        
+        }
+
+        public virtual object Clone()
+        {
+            Content clone = new Content();
+            clone.CopyAttributesFrom(this);
+            clone.m_urlName = m_urlName;
+            if(m_constantList != null)
+            {
+                clone.m_constantList = new ArrayList();
+                for(int i = 0; i<m_constantList.Count; i++)
+                {
+                    Constant c = (Constant)m_constantList[i];
+                    clone.m_constantList.Add(c.Clone());
+                }
+            }
+            return clone;
+        }
 
 		public void Process(XmlNode n)
 		{

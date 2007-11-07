@@ -34,6 +34,8 @@ namespace Uiml.Executing
 	public class Action : IExecutable, IUimlElement
 	{
 		private Part m_partTree;
+        //FIXME: Change the name to a more comprehensive one
+        //(subCalls,subElements,...)
 		private ArrayList m_subActions;
 		private Event m_event = null;
 		private IRenderer       m_renderer;
@@ -49,6 +51,26 @@ namespace Uiml.Executing
 			m_partTree = partTop;
 			Process(xmlNode);
 		}
+
+        public virtual object Clone()
+        {
+            Action clone = new Action();
+            
+            if(m_subActions != null)
+            {
+                clone.m_subActions = new ArrayList();
+                for(int i = 0; i< m_subActions.Count; i++)
+                {
+                    IUimlElement tmp = (IUimlElement)m_subActions[i];
+                    clone.m_subActions.Add(tmp.Clone());
+                }
+            }
+
+            clone.PartTree = m_partTree;
+
+
+            return clone;
+        }
 
 		public void Process(XmlNode n)
 		{
@@ -133,6 +155,29 @@ namespace Uiml.Executing
 		{
 			get { return m_subActions; }
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_subActions != null)
+                {
+                    for(int i = 0; i <m_subActions.Count; i++)
+                    {
+                        if(m_subActions[i] is Call)
+                        {
+                            Call tmp = (Call)m_subActions[i];
+                            tmp.PartTree = value;
+                        }
+                    }
+                }
+            }
+        }
 
 		public const string ACTION   = "action";
 		public const string PROPERTY = "property";

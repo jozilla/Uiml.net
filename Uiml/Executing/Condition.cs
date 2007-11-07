@@ -51,6 +51,27 @@ namespace Uiml.Executing
 			Process(xmlNode);
 		}
 
+        public virtual object Clone()
+        {
+            Condition clone = new Condition();
+            clone.m_conditionType = m_conditionType;
+            if(m_conditionObject != null)
+            {
+                clone.m_conditionObject = ((IUimlElement)m_conditionObject).Clone();
+            }
+            if(m_actions != null)
+            {
+                clone.m_actions = new ArrayList();
+                for(int i = 0; i < m_actions.Count; i++)
+                {
+                    Action action = ((Action)m_actions[i]);
+                    clone.m_actions.Add(action.Clone());
+                }
+            }
+            clone.PartTree = m_partTree;
+            return clone;
+        }
+
 		//for events:
 		public delegate System.Object EventNotifier();
 
@@ -160,6 +181,25 @@ namespace Uiml.Executing
         public System.Object ConditionObject 
         {
             get { return m_conditionObject; }
+        }
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_conditionObject != null)
+                {
+                    if(m_conditionObject is Op)
+                        ((Op)m_conditionObject).PartTree = value;
+                    else if(m_conditionObject is Equal)
+                        ((Equal)m_conditionObject).PartTree = value;
+                }
+            }
         }
 
 		public const string CONDITION = "condition";

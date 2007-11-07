@@ -75,6 +75,18 @@ namespace Uiml.Executing
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            Script script = new Script();
+            script.m_scriptSource = m_scriptSource;
+            script.m_type = m_type;
+            script.m_preCompiled = m_preCompiled;
+            script.m_compiledAssembly = m_compiledAssembly;
+            script.m_retValue = m_retValue;
+
+            return script;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != IAM)

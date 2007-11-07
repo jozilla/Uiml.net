@@ -43,6 +43,17 @@ namespace Uiml
 			Console.WriteLine("PARAM!");
 			Process(n);
 		}
+
+        public virtual object Clone()
+        {
+            Param clone = new Param();
+            clone.m_type = m_type;
+            clone.m_value = m_value;
+            clone.m_identifier = m_identifier;
+            clone.m_isout = m_isout;
+
+            return clone;
+        }
 		
 		/// <summary>
 		/// This function is used by the DParam class.
