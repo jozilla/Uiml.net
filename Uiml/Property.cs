@@ -73,7 +73,10 @@ namespace Uiml{
 			prop.m_hasToBeSet = m_hasToBeSet;
 			prop.m_class_name = m_class_name;
 			prop.m_part_name = m_part_name;
-			prop.m_subprop = m_subprop;
+
+            if(m_subprop != null)
+			prop.m_subprop = ((IUimlElement)m_subprop).Clone();
+
             prop.m_value = m_value;
 			//if(m_subprop != null  && m_subprop is Constant)
 			//	prop.SubProp = ((Constant)m_subprop).Clone();
