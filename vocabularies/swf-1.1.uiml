@@ -1272,7 +1272,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="tickStyle" maps-type="setMethod" maps-to="TickStyle">
 			<d-param type="System.Windows.Forms.TickStyle"/>
 		</d-property>
-		<!-- orientation should be set automatically for a VerticalRange class -->
+		<!-- orientation is set automatically for a VerticalRange class -->
 		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
             <d-param type="System.Windows.Forms.Orientation">Vertical</d-param>
 		</d-property>
