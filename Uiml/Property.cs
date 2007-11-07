@@ -68,12 +68,13 @@ namespace Uiml{
 			Property prop = new Property();
             prop.CopyAttributesFrom(this);
 
-			prop.Setter = Setter;
-			prop.Lazy = Lazy;
-			prop.PartClass = PartClass;
-			prop.PartName = PartName;
-			prop.Value = Value;
-			prop.Name = Name;
+            prop.m_name = m_name;
+			prop.m_setter = m_setter;
+			prop.m_hasToBeSet = m_hasToBeSet;
+			prop.m_class_name = m_class_name;
+			prop.m_part_name = m_part_name;
+			prop.m_subprop = m_subprop;
+            prop.m_value = m_value;
 			//if(m_subprop != null  && m_subprop is Constant)
 			//	prop.SubProp = ((Constant)m_subprop).Clone();
 			//else
