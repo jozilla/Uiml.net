@@ -65,7 +65,10 @@ namespace Uiml.Peers
             Console.WriteLine("Debug 3");
             clone.m_mapsTo = m_mapsTo;
             Console.WriteLine("Debug 4");
-            clone.m_location = (Location)Location.Clone();
+            if(m_location != null)
+            {
+                clone.m_location = (Location)m_location.Clone();
+            }
             Console.WriteLine("Debug 5");
 
             if(m_children != null)
