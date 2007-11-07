@@ -58,20 +58,31 @@ namespace Uiml.Peers
 
         public virtual object Clone()
         {
+            Console.WriteLine("Debug 1");
             DComponent clone = new DComponent();
+            Console.WriteLine("Debug 2");
             clone.CopyAttributesFrom(this);
+            Console.WriteLine("Debug 3");
             clone.m_mapsTo = m_mapsTo;
+            Console.WriteLine("Debug 4");
             clone.m_location = (Location)Location.Clone();
+            Console.WriteLine("Debug 5");
 
             if(m_children != null)
             {
+                Console.WriteLine("Debug 6");
                 clone.m_children = new ArrayList();
+                Console.WriteLine("Debug 7");
                 for(int i = 0; i < m_children.Count; i++)
                 {
+                    Console.WriteLine("Debug 8");
                     IUimlElement element = (IUimlElement)m_children[i];
+                    Console.WriteLine("Debug 9");
                     clone.m_children.Add(element.Clone());
+                    Console.WriteLine("Debug 10");
                 }
             }
+            Console.WriteLine("Debug 11");
 
 
             return clone;
