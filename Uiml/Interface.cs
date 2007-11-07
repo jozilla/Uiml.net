@@ -64,6 +64,34 @@ namespace Uiml{
 		private Interface()
 		{
 		}
+		
+        public virtual object Clone()
+		{
+			Interface clone  = new Interface();
+            clone.m_structure = cloneList(m_structure);
+            clone.m_style = cloneList(m_style);
+            clone.m_behavior = cloneList(m_behavior);
+            clone.m_content = cloneList(m_content);
+            clone.m_layout = cloneList(m_layout);
+
+            return clone;
+        }
+
+        private ArrayList cloneList(ArrayList list)
+        {
+            if(list != null)
+            {
+                ArrayList cloned = new ArrayList();
+                for(int i = 0; i < list.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)list[i];
+                    cloned.Add(element.Clone());
+                }
+                return cloned;
+            }
+
+            return null;
+        }
 
 		public void Process(XmlNode n)
 		{
@@ -202,22 +230,6 @@ namespace Uiml{
 			} 
 		}
 		
-		//IClonaeble implementation:
-		public object Clone()
-		{
-			Interface iamclone  = new Interface();
-			if(UBehavior != null)
-				iamclone.UBehavior  = (ArrayList)UBehavior.Clone();
-			if(UContent != null)
-				iamclone.UContent   = (ArrayList)UContent.Clone();
-			if(UStructure != null)
-				iamclone.UStructure = (ArrayList)UStructure.Clone();
-			if(UStyle != null)
-				iamclone.UStyle     = (ArrayList)UStyle.Clone();
-			return iamclone;
-		}
-
-
 		public const string STRUCTURE = "structure";
 		public const string STYLE     = "style";
 		public const string CONTENT   = "content";

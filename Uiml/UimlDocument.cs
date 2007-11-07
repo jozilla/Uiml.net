@@ -276,13 +276,22 @@ namespace Uiml {
 		//ICloneable methods:
 		public object Clone()
 		{
-			UimlDocument iamclone = new UimlDocument();
-			if (UHead == null)
-				iamclone.UHead = null;
-			else 
-				iamclone.UHead = (Head)UHead.Clone();
-			iamclone.UInterface  = (Interface)UInterface.Clone(); 
-			return iamclone;
+			UimlDocument clone = new UimlDocument();
+            if(m_peers != null)
+            {
+                clone.m_peers = new ArrayList();
+                for(int i = 0; i < m_peers.Count; i++)
+                {
+                    clone.AddPeer((Peer)((Peer)m_peers[i]).Clone());
+                }
+            }
+            if(m_interface != null)
+                clone.m_interface = (Interface)m_interface.Clone();
+            if(m_head != null)
+                clone.m_head = (Head)m_head.Clone();
+            clone.m_hasLayout = m_hasLayout;
+            clone.m_solver = m_solver;
+			return clone;
 		}
 		
 		// IUimlComponent methods:
