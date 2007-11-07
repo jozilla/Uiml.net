@@ -38,10 +38,13 @@ namespace Uiml.Executing
 		private Action    m_action;
 		private Part      m_partTree;
 
-		private XmlNode   m_waitingNode;
+        private XmlNode   m_waitingNode;
+
+        private bool      m_empty;
 
 		public Rule()
-		{
+        {
+            IsEmpty = true;
 		}
 
 		public Rule(XmlNode xmlNode, Part partTop) : this()
@@ -76,7 +79,8 @@ namespace Uiml.Executing
 			if(n.Name == IAM)
 			{
 				if(n.HasChildNodes)
-				{
+                {
+                    IsEmpty = false;
 					XmlNodeList xnl = n.ChildNodes;
 					m_condition = new Condition(xnl[0], m_partTree);
 					m_action    = new Action(xnl[1], m_partTree);
@@ -123,7 +127,13 @@ namespace Uiml.Executing
 		public ArrayList Children
 		{
 			get { return null; }
-		}
+        }
+
+        public bool IsEmpty
+        {
+            set { m_empty = value; }
+            get { return m_empty; }
+        }
 
 		public const string IAM      = "rule";
 

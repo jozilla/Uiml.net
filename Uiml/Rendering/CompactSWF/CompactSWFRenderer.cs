@@ -83,7 +83,8 @@ namespace Uiml.Rendering.CompactSWF
 				Control c = Render(uiStruct.Top, uiStyle);
 				//Render has filled the part-tree with the concrete object references
 				//to the individual widgets, now attach the behavior			
-				CompactSWFEventLinker sel = new CompactSWFEventLinker(this);
+				//CompactSWFEventLinker sel = new CompactSWFEventLinker(this);
+                EventLinker sel = new EventLinker(this);
 				sel.Link(uiStruct, uiBehavior);
 				m_topWindow.Add(c);
 				return m_topWindow;

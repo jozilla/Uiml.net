@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<uiml>
+	<interface>
+		<structure>
+			<part id="cont" class="VBox">
+				<part id="l1" class="Label" />
+				<part id="l2" class="Label" />
+				<part id="cb1" class="CheckButton" />
+				<part id="tb1" class="Entry" />
+				<part id="b1" class="Button" />
+			</part>
+		</structure>
+		<style>
+			<!-- label -->
+            <property part-name="l1" name="text">The text of the textfield is printed to the console when you check the checkbox.</property>
+            <!-- label -->
+            <property part-name="l2" name="text">If you fill in a number less than 4 and click the button, the field is disabled as well.</property>
+			<!-- checkbox -->
+			<property part-name="cb1" name="label">check this to enable the textfield</property>
+			<property part-name="cb1" name="checked">false</property>
+			<!-- textbox -->
+			<property part-name="tb1" name="text">Just type something here</property>
+			<property part-name="tb1" name="editable">false</property>
+			<!-- button -->
+			<property part-name="b1" name="label">Click me!</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<op name="equal">
+						<property part-name="cb1" name="checked" />
+						<constant value="true" />
+					</op>
+				</condition>
+				<action>
+					<property part-name="tb1" name="editable">true</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<op name="equal">
+						<property part-name="cb1" name="checked" />
+						<constant value="false" />
+					</op>
+				</condition>
+				<action>
+					<property part-name="tb1" name="editable">false</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<op name="and">
+						<event part-name="b1" class="ButtonPressed" />
+						<op name="lessthan">
+							<property part-name="tb1" name="text" />
+							<constant value="4" />
+						</op>
+					</op>
+				</condition>
+				<action>
+					<property part-name="tb1" name="editable">false</property>					
+				</action>
+			</rule>
+			<rule>
+				<condition>
+						<op name="equal">
+							<property part-name="tb1" name="editable" />
+							<constant value="true" />
+						</op>
+				</condition>
+				<action>
+					<call name="Console.println">
+						<param><property part-name="tb1" name="text" /></param>
+					</call>				
+				</action>
+			</rule>
+		</behavior>	
+	</interface>
+	<peers>
+        <presentation base="gtk-sharp-1.0.uiml"/> 
+	</peers>
+</uiml>

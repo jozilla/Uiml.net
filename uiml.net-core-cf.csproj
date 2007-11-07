@@ -55,6 +55,7 @@
     <Compile Include="Uiml\Constant.cs" />
     <Compile Include="Uiml\Content.cs" />
     <Compile Include="Uiml\Executing\Action.cs" />
+    <Compile Include="Uiml\Executing\AttributeException.cs" />
     <Compile Include="Uiml\Executing\Binding\UimlEventArgs.cs" />
     <Compile Include="Uiml\Executing\Binding\UimlEventHandlerAttribute.cs" />
     <Compile Include="Uiml\Executing\Call.cs" />
@@ -66,11 +67,13 @@
     <Compile Include="Uiml\Executing\Event.cs" />
     <Compile Include="Uiml\Executing\EventHandlerAttribute.cs" />
     <Compile Include="Uiml\Executing\IExecutable.cs" />
+    <Compile Include="Uiml\Executing\NotInitializedException.cs" />
     <Compile Include="Uiml\Executing\Op.cs" />
     <Compile Include="Uiml\Executing\Param.cs" />
     <Compile Include="Uiml\Executing\Rule.cs" />
     <Compile Include="Uiml\Executing\Script.cs" />
     <Compile Include="Uiml\Executing\ValueNotEvaluatedException.cs" />
+    <Compile Include="Uiml\Executing\XmlElementMismatchException.cs" />
     <Compile Include="Uiml\ExternalLibraries.cs" />
     <Compile Include="Uiml\ExternalObjects.cs" />
     <Compile Include="Uiml\Head.cs" />
@@ -107,6 +110,13 @@
     <Compile Include="Uiml\Property.cs" />
     <Compile Include="Uiml\Reference.cs" />
     <Compile Include="Uiml\Rendering\BackendFactory.cs" />
+    <Compile Include="Uiml\Rendering\ConditionChecker.cs" />
+    <Compile Include="Uiml\Rendering\ConditionLinker.cs" />
+    <Compile Include="Uiml\Rendering\ConditionManager.cs" />
+    <Compile Include="Uiml\Rendering\EventLink.cs" />
+    <Compile Include="Uiml\Rendering\EventLinker.cs" />
+    <Compile Include="Uiml\Rendering\IEventLink.cs" />
+    <Compile Include="Uiml\Rendering\IEventLinker.cs" />
     <Compile Include="Uiml\Rendering\InvalidTypeValueException.cs" />
     <Compile Include="Uiml\Rendering\IPropertySetter.cs" />
     <Compile Include="Uiml\Rendering\IRenderedInstance.cs" />
