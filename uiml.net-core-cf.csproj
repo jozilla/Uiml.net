@@ -55,6 +55,7 @@
     <Compile Include="Uiml\Constant.cs" />
     <Compile Include="Uiml\Content.cs" />
     <Compile Include="Uiml\Executing\Action.cs" />
+    <Compile Include="Uiml\Executing\AttributeException.cs" />
     <Compile Include="Uiml\Executing\Binding\UimlEventArgs.cs" />
     <Compile Include="Uiml\Executing\Binding\UimlEventHandlerAttribute.cs" />
     <Compile Include="Uiml\Executing\Call.cs" />
