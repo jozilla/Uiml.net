@@ -21,14 +21,62 @@
 */
 
 
-namespace Uiml.Rendering
+namespace Uiml.Rendering.TypeDecoding
 {
 	using System;
 	using System.Collections;
+	using System.Collections.Generic;
 	using System.Reflection;
-
-	public abstract class TypeDecoder : ITypeDecoder
-	{	
+	
+	/// <summary>
+    /// Class to convert between different types, amongst others to convert
+    /// (typeless) data values from the UIML document to the types required by
+    /// the specific toolkit (e.g. '255,0,0' to an instance of 
+    /// <see cref="System.Drawing.Color"/>).
+    /// </summary>
+    /// <remarks>
+    /// Implements the Singleton pattern. 
+    /// <seealso cref="http://msdn2.microsoft.com/en-us/library/ms954629.aspx"/>
+    /// </remarks>
+	public sealed class TypeDecoder : ITypeDecoder
+	{
+	    protected TypeDecoderRegistry m_registry;
+	
+	    protected TypeDecoderRegistry Registry
+	    {
+	        get { return m_registry; } 
+	        set { m_registry = value; }
+	    }
+	
+        // Singleton
+        public static readonly TypeDecoder Instance = new TypeDecoder();
+                
+		private TypeDecoder() 
+		{
+		    Registry = new TypeDecoderRegistry();
+		}
+		
+		public void Register(Type t)
+		{
+		    Registry.Register(t);
+		}
+		
+		/// <summary>
+		/// Register a new function for type decoding. The from and to types are
+		/// automatically extracted.
+		/// </summary>
+	    /// <param name="method">
+	    /// The function we want to register as a type decoder.
+	    /// </param>
+		/// <exception cref="Uiml.Rendering.TypeDecoderRegistry.InvalidDecoderException"/>
+		/// Thrown when <paramref>method</paramref> does not have exactly one
+		/// argument and a non-void return type.
+		/// </exception>
+		public void Register(MethodInfo method)
+		{
+		    Registry.Register(method);
+		}
+	
 		public object GetArg(object o, Type t)
 		{
 			if (t.IsPrimitive)
@@ -121,23 +169,34 @@ namespace Uiml.Rendering
 		/// <summary>
 		/// Utility function to convert an arbitrary object to a complex type.
 		/// </summary>
-		protected abstract object ConvertComplex(Type t, object oValue);
-		
-		/// <summary>
-		/// Utility function to convert a UIML constant to a string array.
-		/// </summary>
-		protected string[] DecodeStringArray(Constant constant)
+		protected object ConvertComplex(Type t, object oValue)
 		{
-			ArrayList strArrayList = new ArrayList();
-			IEnumerator enumConstants = constant.Children.GetEnumerator();
-			while(enumConstants.MoveNext())
-			{
-				Constant child = (Constant)enumConstants.Current;
-				strArrayList.Add(child.Value);
-			}
-			return (string[]) (strArrayList.ToArray(Type.GetType("System.String")));
+		    if (t == oValue.GetType())
+		        return oValue;    
+		    
+		    object returnVal = null;
+		    
+		    // get all type conversions from oValue's type to to Type t
+		    List<Delegate> decoders = Registry.FindAll(oValue.GetType(), t);
+		    
+		    foreach (Delegate d in decoders)
+		    {
+		        try
+		        {
+		            // FIXME: log this
+		            //Console.WriteLine("found delegate {0}, invoking it", d);
+    		        return d.Method.Invoke(d.Target, new object[] { oValue });
+    		    }
+    		    catch (Exception e)
+    		    {
+    		        // TODO
+    		        Console.WriteLine(e);
+    		    }
+		    }
+		    
+		    // FIXME
+		    return null;
 		}
-
 		
 		public static string PARSE = "Parse";
 	}

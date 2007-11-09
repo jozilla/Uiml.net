@@ -42,7 +42,7 @@
     <Compile Include="Uiml\Rendering\GTKsharp\GtkEventLinker.cs" />
     <Compile Include="Uiml\Rendering\GTKsharp\GtkRenderedInstance.cs" />
     <Compile Include="Uiml\Rendering\GTKsharp\GtkRenderer.cs" />
-    <Compile Include="Uiml\Rendering\GTKsharp\GtkTypeDecoder.cs" />
+    <Compile Include="Uiml\Rendering\GTKsharp\GtkTypeDecoders.cs" />
     <Compile Include="Uiml\Rendering\GTKsharp\Widgets\UFrame.cs" />
     <Compile Include="Uiml\Rendering\GTKsharp\Widgets\WidgetRepository.cs" />
   </ItemGroup>

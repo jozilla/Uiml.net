@@ -37,13 +37,14 @@ namespace Uiml.Rendering.GTKsharp
 		
 	using Uiml;
 	using Uiml.Rendering;
+    using Uiml.Rendering.TypeDecoding;
 
 	using Property = Uiml.Property;
 	
 
-	public class GtkTypeDecoder : TypeDecoder
+	public class GtkTypeDecoders
 	{
-		///<summary>
+/*		///<summary>
 		/// Converts the object oValue to the type given by t
 		///</summary>
 		protected override object ConvertComplex(Type t, object oValue)
@@ -87,8 +88,9 @@ namespace Uiml.Rendering.GTKsharp
 					return sValue;
 			}
 		}
-
-		private object DecodeFont(string value)
+*/
+        [TypeDecoderMethod]
+		public static Pango.FontDescription DecodeFont(string value)
 		{
 			return Pango.FontDescription.FromString(value);
 		}
@@ -96,7 +98,8 @@ namespace Uiml.Rendering.GTKsharp
 		///<summary>
 		/// This method decodes a color from a string value. 
 		///</summary>
-		private Gdk.Color DecodeColor(string value)
+		[TypeDecoderMethod]
+		public static Gdk.Color DecodeColor(string value)
 		{
 			//try whether it is a color name
 			Gdk.Color c = new Gdk.Color();
@@ -113,32 +116,32 @@ namespace Uiml.Rendering.GTKsharp
 					blue = Byte.Parse(splitted[2]);
 					return new Gdk.Color(red,green,blue);
 				}
-					catch(Exception e)
-					{
-						throw new InvalidTypeValueException(COLOR, value);
-					}			
+				catch(Exception e)
+				{
+					throw new InvalidTypeValueException(COLOR, value);
+				}			
 			}
 		}
-		
 
 		///<summary>
 		///Decodes the StateType value. This method only returns StateType.Normal; it should
 		///be fixed for more complex behavior of widgets.
 		///</summary>
-		private object DecodeStateType(string value)
+		[TypeDecoderMethod]
+		public static StateType DecodeStateType(string value)
 		{
 			switch(value)
 			{
-				case "background" :
-				case "foreground" :
-				case "base-color" :
-					return StateType.Normal;
+				case "background":
+				case "foreground":
+				case "base-color":
 				default:
-					return value;
+					return StateType.Normal;
 			}
 		}
 
-		private GLib.List DecodeList(Constant c)
+        [TypeDecoderMethod]
+		public static GLib.List DecodeList(Constant c)
 		{
 			List list = new GLib.List((IntPtr) 0, typeof (System.String));
 			IEnumerator enumConstants = c.Children.GetEnumerator();
@@ -150,7 +153,8 @@ namespace Uiml.Rendering.GTKsharp
 			return list;
 		}
 
-		private Gtk.TreeModel DecodeTree(Constant c)
+        [TypeDecoderMethod]
+		public static Gtk.TreeModel DecodeTree(Constant c)
 		{
 			if(c.Model == Constant.LIST)
 				return DecodeListStore(c);
@@ -158,7 +162,7 @@ namespace Uiml.Rendering.GTKsharp
 				return DecodeTreeStore(c);
 		}
 
-		private Gtk.TreeModel DecodeTreeStore(Constant c)
+		private static Gtk.TreeModel DecodeTreeStore(Constant c)
 		{
 			TreeStore ts = new TreeStore(typeof(string), typeof(string));
 			TreeIter parent = ts.AppendValues(c.Value);
@@ -168,7 +172,7 @@ namespace Uiml.Rendering.GTKsharp
 			return ts;
 		}
 
-		private void FillTree(TreeIter it, Constant c, ref TreeStore ts)
+		private static void FillTree(TreeIter it, Constant c, ref TreeStore ts)
 		{
 			TreeIter it2 = ts.AppendValues(it, c.Value);
 			if(c.Children != null)
@@ -179,7 +183,7 @@ namespace Uiml.Rendering.GTKsharp
 			}
 		}
 
-		private Gtk.TreeModel DecodeListStore(Constant c)
+		private static Gtk.TreeModel DecodeListStore(Constant c)
 		{
 			ListStore ls = new ListStore(typeof(string));			
 			IEnumerator enumConst = (c.Children).GetEnumerator();

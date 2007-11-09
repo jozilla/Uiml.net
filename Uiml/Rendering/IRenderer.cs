@@ -33,7 +33,6 @@ namespace Uiml.Rendering
 		IRenderedInstance PreRender(UimlDocument uimlDoc);
 		IRenderedInstance Render(UimlDocument uimlDoc);
 		Vocabulary        Voc              { get; }
-		ITypeDecoder      Decoder          { get; }
 		IPropertySetter   PropertySetter   { get; }
 	}
 }
