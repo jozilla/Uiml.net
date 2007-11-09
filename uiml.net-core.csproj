@@ -90,14 +90,20 @@
     <Compile Include="Uiml\Property.cs" />
     <Compile Include="Uiml\Reference.cs" />
     <Compile Include="Uiml\Rendering\BackendFactory.cs" />
-    <Compile Include="Uiml\Rendering\InvalidTypeValueException.cs" />
+    
     <Compile Include="Uiml\Rendering\IPropertySetter.cs" />
     <Compile Include="Uiml\Rendering\IRenderedInstance.cs" />
     <Compile Include="Uiml\Rendering\IRenderer.cs" />
-    <Compile Include="Uiml\Rendering\ITypeDecoder.cs" />
     <Compile Include="Uiml\Rendering\NoRendererAvailableException.cs" />
     <Compile Include="Uiml\Rendering\Renderer.cs" />
-    <Compile Include="Uiml\Rendering\TypeDecoder.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoders.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoding\InvalidTypeValueException.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoding\ITypeDecoder.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoding\TypeDecoder.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoding\TypeDecoderRegistry.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoding\TypeDecoderMethodAttribute.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoding\Signature.cs" />
+    <Compile Include="Uiml\Rendering\TypeDecoding\InvalidTypeDecoderMethodException.cs" />
     <Compile Include="Uiml\ReplaceTemplateResolver.cs" />
     <Compile Include="Uiml\Restructure.cs" />
     <Compile Include="Uiml\Structure.cs" />

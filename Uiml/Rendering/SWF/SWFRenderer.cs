@@ -34,7 +34,8 @@ namespace Uiml.Rendering.SWF
 
 	using Uiml;
 	using Uiml.Utils.Reflection;
-	using Uiml.Rendering;	
+	using Uiml.Rendering;
+    using Uiml.Rendering.TypeDecoding;
 	using Uiml.LayoutManagement;
 
 	public class SWFRenderer : Renderer, IPropertySetter
@@ -45,14 +46,15 @@ namespace Uiml.Rendering.SWF
 		private string m_addMethod = "Add";
 
 		public SWFRenderer()
-		{ 
-			Decoder = new SWFTypeDecoder();
-
+		{
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
 			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(DRAWING_ASSEMBLY));
 
 			GuiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
 			ExternalLibraries.Instance.Add(SWF_ASSEMBLY, GuiAssembly);
+			
+			// register type decoders
+			TypeDecoder.Instance.Register(typeof(SWFTypeDecoders));
 		}
 
 		public IRenderedInstance TopWindow

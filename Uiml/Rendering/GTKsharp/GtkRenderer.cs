@@ -32,6 +32,7 @@ namespace Uiml.Rendering.GTKsharp
 	using Uiml;
 	using Uiml.Utils.Reflection;
 	using Uiml.Rendering;
+    using Uiml.Rendering.TypeDecoding;
 
 	using Style = Uiml.Style;
 	
@@ -44,13 +45,15 @@ namespace Uiml.Rendering.GTKsharp
 
 		public GtkRenderer()
 		{
-			Decoder = new GtkTypeDecoder();
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
 			GuiAssembly = AssemblyLoader.LoadFromGacOrAppDir(GTK_ASSEMBLY);
 			ExternalLibraries.Instance.Add(GTK_ASSEMBLY, GuiAssembly);
 			//ExternalLibraries.Instance.Add(GDK_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(GDK_ASSEMBLY));
 			//ExternalLibraries.Instance.Add(PANGO_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(PANGO_ASSEMBLY));
 			ExternalLibraries.Instance.Add(GLIB_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(GLIB_ASSEMBLY));
+			
+			// register type decoders
+			TypeDecoder.Instance.Register(typeof(GtkTypeDecoders));
 		}
 
 		public IRenderedInstance TopWindow
@@ -223,7 +226,7 @@ namespace Uiml.Rendering.GTKsharp
 			 {
 			  //create the arguments for the constructor from the property array
 			  //and pass it to the constuctor immediately
-			  try{ return (Widget)construct.Invoke(Decoder.GetMultipleArgs(props,tparamTypes));}
+			  try{ return (Widget)construct.Invoke(TypeDecoder.Instance.GetMultipleArgs(props,tparamTypes));}
 			  catch 
 			  { 
 				  String paramsString = "";

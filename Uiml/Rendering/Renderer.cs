@@ -25,6 +25,7 @@ namespace Uiml.Rendering
 
 	using Uiml;
 	using Uiml.Peers;
+    using Uiml.Rendering.TypeDecoding;
 
 	using System;
 	using System.Collections;
@@ -37,7 +38,6 @@ namespace Uiml.Rendering
 	///</summary>
 	public abstract class Renderer : IRenderer
 	{
-		private ITypeDecoder m_typeDecoder;
 		private Assembly m_guiAssembly;
 		private Vocabulary m_voc;
 		private Part m_top;
@@ -61,18 +61,7 @@ namespace Uiml.Rendering
 		}
 
 		///<summary>
-		/// Provides the Decoder for the specific backend that is being used. The decoder converts
-		/// (typeless) data values out of the UIML document to the types required by the backend.
-		///</summary>
-		public ITypeDecoder Decoder          
-		{
-			get { return m_typeDecoder;  } 
-			set { m_typeDecoder = value; }
-		}
-
-
-		///<summary>
-		/// The assmebly that containts the widgets used by the backend renderer.
+		/// The assembly that containts the widgets used by the backend renderer.
 		///</summary>
 		///<remarks>
 		/// This needs to be changed to support a widget sets whose widgets are spread
@@ -98,7 +87,11 @@ namespace Uiml.Rendering
 			set { m_top = value; }
 		}
 
-
+        public Renderer()
+        {
+            // register common type decoders
+			TypeDecoder.Instance.Register(typeof(TypeDecoders));
+        }
 
 		///<summary>
 		/// Applies several properties to an individual concrete widget instance.
@@ -314,7 +307,7 @@ namespace Uiml.Rendering
 		///</summary>
 		private void SetProperty(System.Object targetObject, Property prop, PropertyInfo pInfo)
 		{
-			System.Object bla= Decoder.GetArg(prop.Value, pInfo.PropertyType);
+			System.Object bla= TypeDecoder.Instance.GetArg(prop.Value, pInfo.PropertyType);
   		   pInfo.SetValue(targetObject, bla, null);
 		}
 
@@ -338,7 +331,7 @@ namespace Uiml.Rendering
 			   	while(tparamTypes[i] == null)
 						tparamTypes[i] = ((Assembly)ExternalLibraries.Instance.Assemblies[k++]).GetType(paramTypes[i].Type);
 				}
-				System.Object[] args = Decoder.GetArgs(prop, tparamTypes);
+				System.Object[] args = TypeDecoder.Instance.GetArgs(prop, tparamTypes);
 
 				// We must invoke it on the target Object, not on the UI Object!							
 				//m.Invoke(uiObject, args);
