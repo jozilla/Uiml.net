@@ -64,7 +64,7 @@ exe: lib
 
 lib: 
 	@echo "building library"
-	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:../uiml.net-core.snk -out:uiml.net-core.dll -target:library ../Properties/AssemblyInfo-uiml.net-core.cs *.cs Rendering/*.cs Executing/*.cs \
+	${COMPILER} ${DEBUG} $(SOLVERLIBS) -keyfile:../uiml.net-core.snk -out:uiml.net-core.dll -target:library ../Properties/AssemblyInfo-uiml.net-core.cs *.cs Rendering/*.cs Rendering/TypeDecoding/*.cs Executing/*.cs \
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
 	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
 	@echo "done"
@@ -81,7 +81,7 @@ exe-cf:	lib-cf
 
 lib-cf:	
 	@echo "building Compact .NET library"
-	${COMPILER} ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:../uiml.net-core-cf.snk -out:uiml.net-core-cf.dll -target:library ../Properties/AssemblyInfo-uiml.net-core-cf.cs *.cs Rendering/*.cs Executing/*.cs \
+	${COMPILER} ${DEBUG} $(SOLVERLIBS) -d:COMPACT -keyfile:../uiml.net-core-cf.snk -out:uiml.net-core-cf.dll -target:library ../Properties/AssemblyInfo-uiml.net-core-cf.cs *.cs Rendering/*.cs Rendering/TypeDecoding/*.cs Executing/*.cs \
 	Executing/Callers/Caller.cs Executing/Callers/LocalCaller.cs Executing/Callers/CallerFactory.cs Utils/*.cs Utils/Reflection/*.cs \
 	Peers/*.cs Executing/Binding/*.cs LayoutManagement/*.cs
 	@echo "done"
