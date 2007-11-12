@@ -52,8 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo-uiml.net-swf-cf.cs" />
-    <Compile Include="Uiml\Rendering\CompactSWF\CompactSWFEventLink.cs" />
-    <Compile Include="Uiml\Rendering\CompactSWF\CompactSWFEventLinker.cs" />
     <Compile Include="Uiml\Rendering\CompactSWF\CompactSWFRenderedInstance.cs">
       <SubType>Form</SubType>
     </Compile>

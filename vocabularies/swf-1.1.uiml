@@ -62,9 +62,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -112,9 +114,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
-		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
-			<d-param type="System.Boolean"/>						
-		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
+    <d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+      <d-param type="System.Boolean"/>
+    </d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -163,9 +167,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -224,9 +230,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -275,9 +283,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -329,9 +339,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -390,9 +402,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -402,6 +416,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+        <d-property id="checked" return-type="System.Boolean" maps-type="getMethod" maps-to="Checked"/>
 		<d-property id="checked" maps-type="setMethod" maps-to="Checked">
 			<d-param type="System.Boolean"/>
 		</d-property>
@@ -454,9 +469,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -466,6 +483,8 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="checked" return-type="System.Boolean"
+        maps-type="getMethod" maps-to="Checked"/>
 		<d-property id="checked" maps-type="setMethod" maps-to="Checked">
 			<d-param type="System.Boolean"/>
 		</d-property>
@@ -518,9 +537,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -583,9 +604,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -645,9 +668,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -698,9 +723,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -759,9 +786,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -823,9 +852,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -895,9 +926,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -945,9 +978,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -995,9 +1030,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -1071,9 +1108,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -1133,9 +1172,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -1202,9 +1243,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -1229,7 +1272,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="tickStyle" maps-type="setMethod" maps-to="TickStyle">
 			<d-param type="System.Windows.Forms.TickStyle"/>
 		</d-property>
-		<!-- orientation should be set automatically for a VerticalRange class -->
+		<!-- orientation is set automatically for a VerticalRange class -->
 		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
             <d-param type="System.Windows.Forms.Orientation">Vertical</d-param>
 		</d-property>
@@ -1271,9 +1314,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
@@ -1329,9 +1374,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
 			<d-param type="System.Int"/>
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>

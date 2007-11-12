@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<uiml>
+	<interface>
+		<structure>
+			<part id="cont" class="Container">
+				<part id="l_firstName" class="Label" />
+				<part id="firstName" class="Text" />
+				<part id="l_lastName" class="Label" />
+				<part id="lastName" class="Text" />
+				<part id="l_street" class="Label" />
+				<part id="street" class="Text" />
+				<part id="l_number" class="Label" />
+				<part id="number" class="Text" />
+				<part id="l_country" class="Label" />
+				<part id="country" class="Text" />
+				<part id="send" class="Button" />
+				<part id="reset" class="Button" />
+			</part>
+		</structure>
+		<style>
+			<!-- Container -->
+			<property part-name="cont" name="size">500,500</property>
+			
+			<property part-name="l_firstName" name="text">Voornaam:</property>
+			<property part-name="l_firstName" name="size">80,15</property>
+			<property part-name="l_firstName" name="position">10,15</property>
+			
+			<property part-name="firstName" name="position">100,15</property>
+			
+			<property part-name="l_lastName" name="text">Achternaam:</property>
+			<property part-name="l_lastName" name="size">80,15</property>
+			<property part-name="l_lastName" name="position">10,45</property>
+			
+			<property part-name="lastName" name="position">100,45</property>
+			
+			<property part-name="l_street" name="text">Straat:</property>
+			<property part-name="l_street" name="size">80,15</property>
+			<property part-name="l_street" name="position">10,75</property>
+			
+			<property part-name="street" name="position">100,75</property>
+			
+			<property part-name="l_number" name="text">Nummer:</property>
+			<property part-name="l_number" name="size">80,15</property>
+			<property part-name="l_number" name="position">10,105</property>
+			
+			<property part-name="number" name="position">100,105</property>
+			
+			<property part-name="l_country" name="text">Land:</property>
+			<property part-name="l_country" name="size">80,15</property>
+			<property part-name="l_country" name="position">10,135</property>
+			
+			<property part-name="country" name="position">100,135</property>
+			
+			<property part-name="send" name="label">Registreer</property>
+			<property part-name="send" name="position">10,205</property>
+			
+			<property part-name="reset" name="label">Legen</property>
+			<property part-name="reset" name="position">100,205</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<event part-name="reset" class="ButtonPressed" />
+				</condition>
+				<action>
+					<property part-name="firstName" name="text"></property>
+					<property part-name="lastName" name="text"></property>
+					<property part-name="street" name="text"></property>
+					<property part-name="number" name="text"></property>
+					<property part-name="country" name="text"></property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<op name="and">
+						<event part-name="send" class="ButtonPressed" />
+						<op name="and">
+							<op name="notequal">
+								<property part-name="firstName" name="text" />
+								<constant value="" />
+							</op>
+							<op name="notequal">
+								<property part-name="lastName" name="text" />
+								<constant value="" />
+							</op>
+							<op name="notequal">
+								<property part-name="street" name="text" />
+								<constant value="" />
+							</op>
+							<op name="notequal">
+								<property part-name="number" name="text" />
+								<constant value="" />
+							</op>
+							<op name="notequal">
+								<property part-name="country" name="text" />
+								<constant value="" />
+							</op>
+						</op>
+					</op>
+				</condition>
+				<action>
+					<call name="Box.Show">
+						<param>Succesvol geregistreerd</param>
+					</call>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<op name="and">
+						<event part-name="send" class="ButtonPressed" />
+						<op name="or">
+							<op name="equal">
+								<property part-name="firstName" name="text" />
+								<constant value="" />
+							</op>
+							<op name="equal">
+								<property part-name="lastName" name="text" />
+								<constant value="" />
+							</op>
+							<op name="equal">
+								<property part-name="street" name="text" />
+								<constant value="" />
+							</op>
+							<op name="equal">
+								<property part-name="number" name="text" />
+								<constant value="" />
+							</op>
+							<op name="equal">
+								<property part-name="country" name="text" />
+								<constant value="" />
+							</op>
+						</op>
+					</op>
+				</condition>
+				<action>
+					<call name="Box.Show">
+						<param>Alle velden zijn verplicht!!</param>
+					</call>
+				</action>
+			</rule>
+		</behavior>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml" />
+		<logic id="registerFormLogic">
+			<d-component id="Box" maps-to="RegisterForm">
+				<d-method id="Show" return-type="void" maps-to="ShowMessageBox">
+					<d-param type="System.String" />
+				</d-method>
+			</d-component>
+		</logic>
+	</peers>
+</uiml>

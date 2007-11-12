@@ -36,8 +36,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo-uiml.net-swf.cs" />
     <Compile Include="Uiml\LayoutManagement\SWF\SWFReorderer.cs" />
-    <Compile Include="Uiml\Rendering\SWF\SWFEventLink.cs" />
-    <Compile Include="Uiml\Rendering\SWF\SWFEventLinker.cs" />
     <Compile Include="Uiml\Rendering\SWF\SWFRenderedInstance.cs">
       <SubType>Form</SubType>
     </Compile>

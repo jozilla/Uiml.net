@@ -1,6 +1,4 @@
 <?xml version="1.0"?>
-<!DOCTYPE uiml 
-	PUBLIC "-//Harmonia//DTD UIML 3.0a Draft//EN" "http://uiml.org/dtds/UIML3_0a.dtd">
 
 <!-- Dictionary.ui; the example from the uiml spec with minimal changes to make
 	  it work with uiml.net 
