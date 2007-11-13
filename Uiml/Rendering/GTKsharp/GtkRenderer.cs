@@ -48,8 +48,8 @@ namespace Uiml.Rendering.GTKsharp
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
 			GuiAssembly = AssemblyLoader.LoadFromGacOrAppDir(GTK_ASSEMBLY);
 			ExternalLibraries.Instance.Add(GTK_ASSEMBLY, GuiAssembly);
-			//ExternalLibraries.Instance.Add(GDK_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(GDK_ASSEMBLY));
-			//ExternalLibraries.Instance.Add(PANGO_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(PANGO_ASSEMBLY));
+			ExternalLibraries.Instance.Add(GDK_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(GDK_ASSEMBLY));
+			ExternalLibraries.Instance.Add(PANGO_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(PANGO_ASSEMBLY));
 			ExternalLibraries.Instance.Add(GLIB_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(GLIB_ASSEMBLY));
 		}
 
