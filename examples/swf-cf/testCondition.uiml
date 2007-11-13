@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<uiml>
+	<interface>
+		<structure>
+			<part id="cont" class="Container">
+				<part id="l1" class="Label" />
+				<part id="l2" class="Label" />
+				<part id="cb1" class="CheckButton" />
+				<part id="tb1" class="Text" />
+				<part id="b1" class="Button" />
+			</part>
+		</structure>
+		<style>
+			<property part-name="cont" name="size">1000,300</property>
+			<!-- label -->
+            <property part-name="l1" name="text">The text of the textfield is printed to the console when you check the checkbox.</property>
+			<property part-name="l1" name="position">10,10</property>
+			<property part-name="l1" name="size">1000,20</property>
+            <!-- label -->
+            <property part-name="l2" name="text">If you fill in a number less than 4 and click the button, the field is disabled as well.</property>
+            <property part-name="l2" name="position">10,40</property>
+            <property part-name="l2" name="size">1000,20</property>
+			<!-- checkbox -->
+			<property part-name="cb1" name="label">check this to enable the textfield</property>
+			<property part-name="cb1" name="enabled">true</property>
+			<property part-name="cb1" name="checked">false</property>
+			<property part-name="cb1" name="position">10,60</property>
+			<property part-name="cb1" name="size">200,20</property>
+			<!-- textbox -->
+			<property part-name="tb1" name="text">Just type something here</property>
+			<property part-name="tb1" name="enabled">false</property>
+			<property part-name="tb1" name="position">10,90</property>
+			<property part-name="tb1" name="size">200,20</property>
+			<!-- button -->
+			<property part-name="b1" name="label">Click me!</property>
+			<property part-name="b1" name="position">10,130</property>
+		</style>
+		<behavior>
+			<rule>
+				<condition>
+					<op name="equal">
+						<property part-name="cb1" name="checked" />
+						<constant value="true" />
+					</op>
+				</condition>
+				<action>
+					<property part-name="tb1" name="enabled">true</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<op name="equal">
+						<property part-name="cb1" name="checked" />
+						<constant value="false" />
+					</op>
+				</condition>
+				<action>
+					<property part-name="tb1" name="enabled">false</property>
+				</action>
+			</rule>
+			<rule>
+				<condition>
+					<op name="and">
+						<event part-name="b1" class="ButtonPressed" />
+						<op name="lessthan">
+							<property part-name="tb1" name="text" />
+							<constant value="4" />
+						</op>
+					</op>
+				</condition>
+				<action>
+					<property part-name="tb1" name="enabled">false</property>					
+				</action>
+			</rule>
+			<rule>
+				<condition>
+						<op name="equal">
+							<property part-name="tb1" name="enabled" />
+							<constant value="true" />
+						</op>
+				</condition>
+				<action>
+					<call name="Console.println">
+						<param><property part-name="tb1" name="text" /></param>
+					</call>				
+				</action>
+			</rule>
+		</behavior>	
+	</interface>
+	<peers>
+        <presentation base="cswf-1.0.uiml"/> 
+	</peers>
+</uiml>
