@@ -61,6 +61,11 @@ namespace Uiml.Rendering.TypeDecoding
 		    Registry.Register(t);
 		}
 		
+		public void Register(Assembly a)
+		{
+		    Registry.Register(a);
+		}
+		
 		/// <summary>
 		/// Register a new function for type decoding. The from and to types are
 		/// automatically extracted.

@@ -53,6 +53,15 @@ namespace Uiml.Rendering.TypeDecoding
 		        Register(m); 
 		    }
 		}
+		
+		public void Register(Assembly a)
+		{
+		    // register all types in a certain assembly
+		    foreach (Type t in a.GetTypes())
+		    {
+		        Register(t);
+		    }
+		}
 
 		/// <summary>
 		/// Register a new function for type decoding. The from and to types are
