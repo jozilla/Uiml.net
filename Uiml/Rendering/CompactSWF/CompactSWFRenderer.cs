@@ -34,7 +34,8 @@ namespace Uiml.Rendering.CompactSWF
 
 	using Uiml;
 	using Uiml.Utils.Reflection;
-	using Uiml.Rendering;	
+	using Uiml.Rendering;
+    using Uiml.Rendering.TypeDecoding;
 
 	public class CompactSWFRenderer : Renderer, IPropertySetter
 	{
@@ -44,14 +45,14 @@ namespace Uiml.Rendering.CompactSWF
 		private string m_addMethod = "Add";
 
 		public CompactSWFRenderer()
-		{ 
-			Decoder = new CompactSWFTypeDecoder();
-
+		{
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
 			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(DRAWING_ASSEMBLY));
 
 			GuiAssembly = AssemblyLoader.LoadFromGacOrAppDir(SWF_ASSEMBLY);
 			ExternalLibraries.Instance.Add(SWF_ASSEMBLY, GuiAssembly);
+
+            TypeDecoder.Instance.Register(typeof(CompactSWFTypeDecoders));
 		}
 
 		public IRenderedInstance TopWindow
@@ -254,7 +255,7 @@ namespace Uiml.Rendering.CompactSWF
 						tparamTypes[i] = ((Assembly)ExternalLibraries.Instance.Assemblies[k++]).GetType(paramTypes[i].Type);
 				}
 
-				System.Object[] blaai = Decoder.GetArgs(prop, tparamTypes);
+				System.Object[] blaai = TypeDecoder.Instance.GetArgs(prop, tparamTypes);
 				string[] content = (string[])blaai[0];
 
 				switch(part.Class)
