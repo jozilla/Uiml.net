@@ -50,6 +50,11 @@ namespace Uiml.Rendering
 		abstract public IPropertySetter   PropertySetter   { get; }	
 		abstract protected System.Object LoadAdHocProperties(ref System.Object uiObject, Part part, Style s);
 
+        /// <summary>
+        /// Used to set ad-hoc properties after the other properties
+        /// have been set.
+        /// </summary>
+		virtual protected System.Object LoadAdHocPropertiesAfter(ref System.Object uiObject, Part part, Style s) { return null; }
 
 		///<summary>
 		/// the mapping voabulary that is used to convert the uiml document into the target widget set.
@@ -114,6 +119,7 @@ namespace Uiml.Rendering
 				LoadPartProperties(ref uiObject, part);
 				LoadNamedProperties(ref uiObject, part, style);
 				LoadClassProperties(ref uiObject, part, style);
+                LoadAdHocPropertiesAfter(ref uiObject, part, style);
 			}
 				catch(MappingNotFoundException mnfe)
 				{
