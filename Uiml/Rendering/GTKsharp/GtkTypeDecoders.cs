@@ -44,51 +44,6 @@ namespace Uiml.Rendering.GTKsharp
 
 	public class GtkTypeDecoders
 	{
-/*		///<summary>
-		/// Converts the object oValue to the type given by t
-		///</summary>
-		protected override object ConvertComplex(Type t, object oValue)
-		{
-			string sValue = "";
-			Constant cValue = null;
-			
-			if (oValue is string)
-				sValue = (string)oValue;
-			else if (t.FullName == "System.String")
-				return oValue.ToString();
-			else if (oValue is Constant)
-			    cValue = (Constant)oValue;
-
-			switch(t.FullName)
-			{
-				case "System.Int32":
-					return System.Int32.Parse(sValue);
-				case "System.Int64":
-					return System.Int64.Parse(sValue);
-				case "System.Int16":
-					return System.Int16.Parse(sValue);
-				case "Gdk.Color":
-					if(oValue.GetType().FullName == "Gdk.Color")
-						return oValue;
-					else
-						return DecodeColor(sValue);
-				case "Gtk.StateType":
-					return DecodeStateType(sValue);
-				case "GLib.List":
-					return DecodeList(cValue);
-				case "Gtk.TreeModel":
-					return DecodeTree(cValue);
-				case "System.String":
-					return (System.String)sValue;
-				case "System.String[]":
-					return DecodeStringArray(cValue);
-				case "Pango.FontDescription":
-					return DecodeFont(sValue);
-				default:
-					return sValue;
-			}
-		}
-*/
         [TypeDecoderMethod]
 		public static Pango.FontDescription DecodeFont(string value)
 		{
@@ -141,6 +96,15 @@ namespace Uiml.Rendering.GTKsharp
 		}
 
         [TypeDecoderMethod]
+        public static TreeViewColumn DecodeColumn(string s)
+        {
+            TreeViewColumn column = new TreeViewColumn();
+            column.Title = s;
+
+            return column;
+        }
+
+        [TypeDecoderMethod]
 		public static GLib.List DecodeList(Constant c)
 		{
 			List list = new GLib.List((IntPtr) 0, typeof (System.String));
@@ -185,15 +149,32 @@ namespace Uiml.Rendering.GTKsharp
 
 		private static Gtk.TreeModel DecodeListStore(Constant c)
 		{
-			ListStore ls = new ListStore(typeof(string));			
+            ListStore ls = null;
+            bool created = false;
+
 			IEnumerator enumConst = (c.Children).GetEnumerator();
 			while(enumConst.MoveNext())
 			{
-				ls.AppendValues(((Constant)enumConst.Current).Value);
-			}
+                Constant child = ((Constant)enumConst.Current);
+                string[] values = ((string)child.Value).Split(';');
+
+                if (!created) // if we didn't create the ListStore yet
+                {
+                    // create a new ListStore with the number of
+                    // columns the first value provides 
+                    Type[] columnTypes = new Type[values.Length];
+                    for (int i = 0; i < values.Length; i++)
+                        columnTypes[i] = typeof(string);
+                    ls = new ListStore(columnTypes);
+
+                    created = true; // don't do this again
+                }
+
+                ls.AppendValues(values);
+            }
+
 			return ls;
 		}
-
 
 		public static string COLOR = "Gdk.Color";
 	}

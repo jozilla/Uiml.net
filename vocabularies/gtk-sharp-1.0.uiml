@@ -141,6 +141,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="bool"/>
 		</d-property>
 		<d-property id="editable" maps-type="getMethod" maps-to="Editable"/>
+		<d-property id="visibility" maps-type="setMethod" maps-to="Visibility">
+			<d-param type="bool"/>
+		</d-property>
+		<d-property id="visibility" maps-type="getMethod" maps-to="Visibility"/>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
 			<d-param type="Gdk.Color"/>
@@ -158,7 +162,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param name="color" type="Gdk.Color"/>
 		</d-property>
 		<d-property id="text" maps-type="setMethod" maps-to="Text">
-			<d-param type="Gtk.TextBuffer"/>
+            <d-param type="System.String"/>
 		</d-property>	
 		<d-property id="text" maps-type="getMethod" maps-to="Text"/>		
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
@@ -381,7 +385,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="Gtk.ListStore"/>
 		</d-property>
 		<d-property id="content" return-type="Gtk.ListStore" maps-type="getMethod" maps-to="Model"/>
-		<d-property id="title" maps-type="setMethod" maps-to="TreeViewColumn.Title"/>
+		<d-property id="title" maps-type="setMethod" maps-to="AppendColumn">
+			<d-param id="header" type="Gtk.TreeViewColumn"/>
+        </d-property>
+        <d-property id="headers-clickable" return-type="System.Boolean" maps-type="getMethod" maps-to="HeadersClickable"/>
+        <d-property id="headers-clickable" maps-type="setMethod" maps-to="HeadersClickable">
+			<d-param type="System.Boolean"/>
+        </d-property>
 		<d-property id="entry" maps-type="getMethod" maps-to="Selection.GetSelectedRows">
 			<d-param id="model" type="Gtk.TreeModel"/>
 		</d-property>
@@ -395,7 +405,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="Gtk.TreeStore"/>
 		</d-property>
 		<d-property id="content" return-type="Gtk.TreeStore" maps-type="getMethod" maps-to="Model"/>
-		<d-property id="title" maps-type="setMethod" maps-to="TreeViewColumn.Title"/>
+		<d-property id="title" maps-type="setMethod" maps-to="AppendColumn">
+			<d-param id="header" type="Gtk.TreeViewColumn"/>
+        </d-property>
+        <d-property id="headers-clickable" return-type="System.Boolean" maps-type="getMethod" maps-to="HeadersClickable"/>
+        <d-property id="headers-clickable" maps-type="setMethod" maps-to="HeadersClickable">
+			<d-param type="System.Boolean"/>
+        </d-property>
 		<d-property id="select" maps-type="event" maps-to="Model.RowChanged">
 			<d-param type="GtkSharp.SelectionNotifyEventHandler"/>
 		</d-property>
@@ -481,6 +497,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	</d-class>
 
 	<d-class id="HBox"  used-in-tag="part" maps-type="class" maps-to="Gtk.HBox">
+	</d-class>
+
+	<d-class id="ScrolledWindow"  used-in-tag="part" maps-type="class" maps-to="Gtk.ScrolledWindow">
 	</d-class>
 
 	<d-class id="VBox"  used-in-tag="part" maps-type="class" maps-to="Gtk.VBox">
