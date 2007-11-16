@@ -183,7 +183,49 @@ namespace Uiml.Rendering.TypeDecoding
 		    
 		    // get all type conversions from oValue's type to to Type t
 		    List<Delegate> decoders = Registry.FindAll(oValue.GetType(), t);
-		    
+
+            // if we find no decoders for these types, try to find
+            // decoder combinations to solve it. 
+            //
+            // A possible use case is converting from a type to a
+            // Constant, instead of converting to a widget
+            // set-specific container 
+            // (e.g. System.Windows.Forms.ListViewItem[]).
+            if (decoders.Count == 0)
+            {
+                // perform a deep search
+                List<Signature[]> sigs = Registry.FindIndirect(oValue.GetType(), t);
+                foreach (Signature[] pair in sigs)
+                {
+                    List<Delegate> toUnknown = Registry.FindAll(pair[0]);
+                    List<Delegate> fromUnknown = Registry.FindAll(pair[1]);
+
+                    // go through the entire list, normally this will
+                    // only contain one element, but if it does not,
+                    // we will continue to loop until we find a working
+                    // conversion.
+                    foreach (Delegate tu in toUnknown)
+                    {
+                        foreach (Delegate fu in fromUnknown)
+                        {
+                            try
+                            {
+                                // invoke the decoders in sequence
+                                return fu.Method.Invoke(fu.Target, new object[] { 
+                                    tu.Method.Invoke(tu.Target, new object[] { oValue })
+                                    });
+                            }
+                            catch (Exception e)
+                            {
+                                // TODO
+                                Console.WriteLine(e);
+                            }
+                        }
+                    }
+
+                }
+            }
+
 		    foreach (Delegate d in decoders)
 		    {
 		        try

@@ -196,7 +196,7 @@ namespace Uiml.Rendering.TypeDecoding
 		    return FindAll(new Signature(from, to));
 		}
 		
-		protected List<Delegate> FindAll(Signature sig)
+		public List<Delegate> FindAll(Signature sig)
 		{
             if (m_decoders.ContainsKey(sig))
             {
@@ -214,6 +214,69 @@ namespace Uiml.Rendering.TypeDecoding
 		}
 
 	    /// <summary>
+	    /// Get a list of decoder function pairs that can be invoked in
+        /// sequence to get to the requested conversion. 
+	    /// </summary>
+	    /// <param name="from">The type that we want to decode from</param>
+  	    /// <param name="to">The type that we want to decode to</param>
+	    /// <returns>
+	    /// The list of matching decoder function pairs to invoke in
+        /// sequence.
+	    /// </returns>
+		public List<Signature[]> FindIndirect(Type from, Type to)
+		{
+		    return FindIndirect(new Signature(from, to));
+		}
+
+        public List<Signature[]> FindIndirect(Signature sig)
+        {
+            // we need to go from sig.From to sig.To
+            // => look for two decoders to do this:
+            // 
+            // [sig.From => unknown] and [unknown => sig.To].
+            // 
+            // TODO: allow multiple levels (although this might
+            // become inefficient). In fact that would be pretty
+            // simple:
+            //
+            // suppose we have these decoders and there is no 
+            // decoder [A => B] available:
+            //
+            // [sig.From => A] and [B => sig.To]
+            //
+            // We need to repeat the process we perform now to 
+            // search for an A => B decoder. If that doesn't work out,
+            // we continue with all other combinations.
+
+            List<Signature> toUnknown = new List<Signature>();
+            List<Signature> fromUnknown = new List<Signature>();
+            List<Signature[]> decoderPairs = new List<Signature[]>(); 
+
+            foreach (Signature s in m_decoders.Keys)
+            {
+                if (s.From == sig.From)
+                    toUnknown.Add(s);
+
+                if (s.To == sig.To)
+                    fromUnknown.Add(s);
+            }
+
+            foreach (Signature tu in toUnknown)
+            {
+                foreach (Signature fu in fromUnknown)
+                {
+                    if (tu.To == fu.From)
+                    {
+                        // found one!
+                        decoderPairs.Add(new Signature[] { tu, fu });
+                    }
+                }
+            }
+
+            return decoderPairs;
+        }
+
+	    /// <summary>
 	    /// Checks whether a decoder exists for a certain signature.
 	    /// </summary>
 	    /// <param name="from">The type that we want to decode from</param>
@@ -226,7 +289,7 @@ namespace Uiml.Rendering.TypeDecoding
 		    return HasDecoder(new Signature(from, to));
 		}
 		
-		protected bool HasDecoder(Signature s)
+		public bool HasDecoder(Signature s)
 		{
 		    return m_decoders.ContainsKey(s);
 		}

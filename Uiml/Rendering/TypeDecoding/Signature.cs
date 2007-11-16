@@ -29,8 +29,8 @@ namespace Uiml.Rendering.TypeDecoding
 {
 		public struct Signature
 		{
-		    Type To;
-		    Type From;
+		    public Type To;
+		    public Type From;
 		    
 		    public Signature(Type from, Type to)
 		    {
