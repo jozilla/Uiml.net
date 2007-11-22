@@ -31,21 +31,23 @@ namespace Uiml.Executing
 
 	
 	public class Op :  IExecutable, IUimlElement
-	{
-		private ArrayList m_children;
-		private Part m_top;
+    {
+        private ArrayList m_children;
+        private string m_type; // type of the OP => && || == != < >
+        private Part m_top;
 
-		public Op()
-		{
-			m_children = new ArrayList();
-		}
+        public Op()
+        {
+            m_children = new ArrayList();
+        }
 
-		public Op(XmlNode xmlNode, Part partTop) : this()
-		{
-			Process(xmlNode);
-			m_top = partTop;
-		}
-        
+        public Op(XmlNode xmlNode, Part partTop)
+            : this()
+        {
+            m_top = partTop;
+            Process(xmlNode);
+        }	 
+
         public virtual object Clone()
         {
             Op clone = new Op();
@@ -63,59 +65,90 @@ namespace Uiml.Executing
             return clone;
         }
 
-		public void Process(XmlNode n)
-		{
-			if(n.Name == OP)
-			{
-				if(n.HasChildNodes)
-				{
-					XmlNodeList xnl = n.ChildNodes;
-					for(int i=0; i<xnl.Count; i++)
-					{
-						switch(xnl[i].Name)
-						{
-							case CONSTANT:
-								m_children.Add(new Constant(xnl[i]));
-								break;
-							case PROPERTY:
-								m_children.Add(new Property(xnl[i]));
-								break;
-							case REFERENCE:
-								m_children.Add(new Reference(xnl[i]));
-								break;
-							case CALL:
-								m_children.Add(new Call(xnl[i]));
-								break;
-							case OP:
-								m_children.Add(new Op(xnl[i], m_top));
-								break;
-							case EVENT:
-								m_children.Add(new Event(xnl[i]));
-								break;
-						}
-					}
-				}
-			}
-		}
+        public void Process(XmlNode n)
+        {
+            if (n.Name == OP)
+            {
+                ReadAttributes(n);
 
-		public void GetEvents(ArrayList al)
-		{
-		}
+                if (n.HasChildNodes)
+                {
+                    XmlNodeList xnl = n.ChildNodes;
+                    for (int i = 0; i < xnl.Count; i++)
+                    {
+                        switch (xnl[i].Name)
+                        {
+                            case CONSTANT:
+                                m_children.Add(new Constant(xnl[i]));
+                                break;
+                            case PROPERTY:
+                                m_children.Add(new Property(xnl[i]));
+                                break;
+                            case REFERENCE:
+                                m_children.Add(new Reference(xnl[i]));
+                                break;
+                            case CALL:
+                                m_children.Add(new Call(xnl[i]));
+                                break;
+                            case OP:
+                                m_children.Add(new Op(xnl[i], m_top));
+                                break;
+                            case EVENT:
+                                m_children.Add(new Event(xnl[i]));
+                                break;
+                        }
+                    }
+                }
+            }
+        }
 
-		public Object Execute()
-		{
-			return null;
-		}
+        public void ReadAttributes(XmlNode node)
+        {
+            XmlAttributeCollection xac = node.Attributes;
 
-		public Object Execute(Uiml.Rendering.IRenderer renderer)
-		{
-			return Execute();
-		}
+            if (xac.GetNamedItem(NAME) != null)
+                Type = xac.GetNamedItem(NAME).Value;
+            else
+                throw new AttributeException("An <op> needs an attribute called 'name'");
+        }
 
-		public ArrayList Children
-		{
-			get { return null; }
-		}
+        public void GetEvents(ArrayList al)
+        {
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] is Op)
+                    ((Op)Children[i]).GetEvents(al);
+                else
+                    al.Add(Children[i]);
+            }
+        }
+
+        public Object Execute()
+        {
+            return null;
+        }
+
+        public Object Execute(Uiml.Rendering.IRenderer renderer)
+        {
+            return Execute();
+        }
+
+        public ArrayList Children
+        {
+            get { return m_children; }
+        }
+
+        public string Type
+        {
+            get { return m_type; }
+            set { m_type = value; }
+        }
+
+        public bool CheckCondition()
+        {
+            return true;
+            //throw new Exception("The method or operation is not implemented.");
+        }		
 
         public Part PartTree
         {
@@ -138,13 +171,20 @@ namespace Uiml.Executing
         }
 
 
-		public const string ACTION    = "action";
-		public const string PROPERTY  = "property";
-		public const string CALL      = "call";
-		public const string OP        = "op";
-		public const string EVENT     = "event";
-		public const string REFERENCE = "reference";		
-		public const string CONSTANT  = "constant";
-	}
+        public const string ACTION      = "action";
+        public const string PROPERTY    = "property";
+        public const string CALL        = "call";
+        public const string OP          = "op";
+        public const string EVENT       = "event";
+        public const string REFERENCE   = "reference";
+        public const string CONSTANT    = "constant";
+        public const string AND         = "and";            // &&
+        public const string OR          = "or";             // ||
+        public const string EQUAL       = "equal";          // ==
+        public const string NOTEQUAL    = "notequal";       // !=
+        public const string LESSTHAN    = "lessthan";       // <
+        public const string GREATERTHAN = "greatherthan";   // >
+        public const string NAME        = "name";
+    }
 	
 }

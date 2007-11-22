@@ -87,6 +87,9 @@
     <Content Include="examples\swf-cf\cswfTabs.uiml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="examples\swf-cf\testCondition.uiml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="uiml.net-cf.snk" />
