@@ -449,14 +449,23 @@ namespace Uiml.Peers
 
 			throw new MappingNotFoundException(delegateTypeName);
 		}
-		
-		public DParam[] GetParams(string identifier, string abstractName)
+
+        public DParam[] GetParams(string identifier, string abstractName)
+        {
+           return GetParams(identifier, abstractName, null);
+        }
+		        
+		public DParam[] GetParams(string identifier, string abstractName, string mapsType)
 		{
 			DClass cls = FindDClass(abstractName);
 			if(cls == null)
 				throw new MappingNotFoundException(abstractName);
 			
-			DProperty prop = FindDProperty(cls.Search(typeof(DProperty)), identifier);
+            DProperty prop = null;
+            if(mapsType == null)
+                prop = FindDProperty(cls.Search(typeof(DProperty)), identifier);
+            else
+			    prop = FindDProperty(cls.Search(typeof(DProperty)), identifier, mapsType);
 
 			if(prop != null)
 				return (DParam[]) prop.Search(typeof(DParam)).ToArray(typeof(DParam));			

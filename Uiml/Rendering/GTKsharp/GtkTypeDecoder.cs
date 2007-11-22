@@ -206,7 +206,7 @@ namespace Uiml.Rendering.GTKsharp
 				case "base-color" :
 					return StateType.Normal;
 				default:
-					return value;
+                    return StateType.Normal;
 			}
 		}
 
