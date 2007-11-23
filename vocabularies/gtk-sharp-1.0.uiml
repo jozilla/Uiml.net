@@ -133,11 +133,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="cursor" maps-type="setMethod" maps-to="CursorVisible">
 			<d-param type="System.Boolean"/>
 		</d-property>
-		<d-property id="cursor" maps-type="getMethod" maps-to="CursorVisible"/>
+		<d-property id="cursor" return-type="System.Boolean" maps-type="getMethod" maps-to="CursorVisible"/>
 		<d-property id="editable" maps-type="setMethod" maps-to="Editable">
 			<d-param type="System.Boolean"/>
 		</d-property>
-		<d-property id="editable" maps-type="getMethod" maps-to="Editable"/>
+		<d-property id="editable" return-type="System.Boolean" maps-type="getMethod" maps-to="Editable"/>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
 			<d-param type="Gdk.Color"/>
@@ -157,7 +157,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="text" maps-type="setMethod" maps-to="Text">
 			<d-param type="Gtk.TextBuffer"/>
 		</d-property>	
-		<d-property id="text" maps-type="getMethod" maps-to="Text"/>		
+		<d-property id="text" return-type="Gtk.TextBuffer" maps-type="getMethod" maps-to="Text"/>		
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
 		</d-property>
@@ -168,11 +168,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="cursor" maps-type="setMethod" maps-to="CursorVisible">
 			<d-param type="System.Boolean"/>
 		</d-property>
-		<d-property id="cursor" maps-type="getMethod" maps-to="CursorVisible"/>
+		<d-property id="cursor" return-type="System.Boolean" maps-type="getMethod" maps-to="CursorVisible"/>
 		<d-property id="editable" maps-type="setMethod" maps-to="Editable">
 			<d-param type="System.Boolean"/>
 		</d-property>
-		<d-property id="editable" maps-type="getMethod" maps-to="Editable"/>
+		<d-property id="editable" return-type="System.Boolean" maps-type="getMethod" maps-to="Editable"/>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
 			<d-param type="Gdk.Color"/>
@@ -192,7 +192,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="text" maps-type="setMethod" maps-to="Buffer.Text">
 			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="text" maps-type="getMethod" maps-to="Buffer.Text"/>
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="Buffer.Text"/>
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
 		</d-property>
@@ -341,7 +341,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="text" maps-type="setMethod" maps-to="TextBuffer">
 			<d-param type="Gtk.TextBuffer"/>
 		</d-property>
-		<d-property id="text" maps-type="getMethod" maps-to="TextBuffer"/>		
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="TextBuffer"/>		
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
 		</d-property>
@@ -379,7 +379,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		</d-property>
 		<d-property id="content" return-type="Gtk.ListStore" maps-type="getMethod" maps-to="Model"/>
 		<d-property id="title" maps-type="setMethod" maps-to="TreeViewColumn.Title"/>
-		<d-property id="entry" maps-type="getMethod" maps-to="Selection.GetSelectedRows">
+		<d-property id="entry" return-type="Gtk.TreePath[]" maps-type="getMethod" maps-to="Selection.GetSelectedRows">
 			<d-param id="model" type="Gtk.TreeModel"/>
 		</d-property>
 		<d-property id="add" return-type="void" maps-type="setMethod" maps-to="ListStore.AppendValues">
@@ -402,7 +402,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="selected-rows" maps-type="getMethod" maps-to="Gtk.TreeSelection.GetSelectedRows" return-type="Glib.List">
 			<d-param type="Gtk.TreeModel"/>
 		</d-property>
-		<d-property id="entry" maps-type="getMethod" maps-to="Selection.GetSelected">
+		<d-property id="entry" return-type="Gtk.TreePath[]" maps-type="getMethod" maps-to="Selection.GetSelected">
 			<d-param id="model" type="Gtk.TreeModel"/>
 			<d-param id="iter" type="Gtk.TreeIter"/>
 		</d-property>
