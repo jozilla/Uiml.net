@@ -423,10 +423,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param id="month" type="System.Int"/>
 			<d-param id="year" type="System.Int"/>
 		</d-property>
-		<d-property id="date" returns-type="System.DateTime" maps-type="getMethod" maps-to="GetDate"/>
-		<d-property id="day" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Day"/>
-		<d-property id="month" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Month"/>
-		<d-property id="year" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Year"/>
+		<d-property id="date" return-type="System.DateTime" maps-type="getMethod" maps-to="GetDate"/>
+		<d-property id="day" return-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Day"/>
+		<d-property id="month" return-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Month"/>
+		<d-property id="year" return-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Year"/>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
 			<d-param type="Gdk.Color"/>
@@ -468,7 +468,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	</d-class>
 
 	<d-class id="ColorSelection"  used-in-tag="part" maps-type="class" maps-to="Gtk.ColorSelection">
-		<d-property id="color" returns-type="Gdk.Color" maps-type="getMethod" maps-to="CurrentColor"/>
+		<d-property id="color" return-type="Gdk.Color" maps-type="getMethod" maps-to="CurrentColor"/>
 	</d-class>
 
 	<d-class id="FontSelection"  used-in-tag="part" maps-type="class" maps-to="Gtk.FontSelection">
