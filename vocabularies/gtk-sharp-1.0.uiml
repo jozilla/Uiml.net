@@ -338,9 +338,6 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param name="state" type="Gtk.StateType"/>
 			<d-param name="color" type="Gdk.Color"/>
 		</d-property>
-		<d-property id="text" maps-type="setMethod" maps-to="TextBuffer">
-			<d-param type="Gtk.TextBuffer"/>
-		</d-property>
 		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="TextBuffer"/>		
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
