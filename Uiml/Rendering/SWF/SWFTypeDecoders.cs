@@ -241,6 +241,20 @@ namespace Uiml.Rendering.SWF
 			return b;
 		}
 
+        [TypeDecoderMethod]
+        public static ListViewItem[] DecodeSelectedListViewItemCollection(ListView.SelectedListViewItemCollection selList)
+        {
+            ListViewItem[] list = new ListViewItem[selList.Count];
+
+            for (int i = 0; i < selList.Count; i++)
+            {
+                // a ListViewItem can only be in one list => clone
+                list[i] = (ListViewItem) selList[i].Clone();
+            }
+
+            return list;
+        }
+
    		[TypeDecoderMethod]
 		public static TreeNode[] DecodeTreeNodeArray(Constant c)
 		{
