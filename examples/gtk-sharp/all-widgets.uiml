@@ -61,7 +61,10 @@
 						</style>
 					</part>
 					<part class="ProgressBar" id="progr">
-						<style><property name="fraction">0.7</property></style>
+                        <style>
+                            <property name="fraction">0.7</property>
+                            <property name="text">Processing</property>
+                        </style>
 					</part>
 			 </part>
 			</part>
