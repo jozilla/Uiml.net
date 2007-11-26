@@ -52,7 +52,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		</d-property>
 		<d-property id="underLineMnemonic" return-type="System.Boolean" maps-type="getMethod" maps-to="UseUnderline"/>
 		<d-property id="underLineMnemonic" maps-type="setMethod" maps-to="UseUnderline">
-			<d-param type="system.Boolean"/>
+			<d-param type="System.Boolean"/>
 		</d-property>
 		<d-property id="clicked" maps-type="event" maps-to="Clicked">
 			<d-param type="GtkSharp.ButtonPressEventHandler"/>
