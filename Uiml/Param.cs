@@ -44,9 +44,14 @@ namespace Uiml
 			Process(n);
 		}
 
+        protected virtual Param PreClone()
+        {
+            return new Param();
+        }
+
         public virtual object Clone()
         {
-            Param clone = new Param();
+            Param clone = PreClone();
             clone.m_type = m_type;
             clone.m_value = m_value;
             clone.m_identifier = m_identifier;

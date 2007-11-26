@@ -52,6 +52,29 @@ namespace Uiml.Peers
 		{
 			Process(n);
 		}
+        
+        protected override Param PreClone()
+        {
+            return new DParam();
+        }
+
+        public override object Clone()
+        {
+            DParam clone = (DParam)base.Clone();
+            clone.m_defValue = m_defValue;
+            if (m_children != null)
+            {
+                clone.m_children = new ArrayList();
+                for (int i = 0; i < m_children.Count; i++)
+                {
+                    if (m_children[i] is ICloneable)
+                        clone.m_children.Add(((ICloneable)m_children[i]).Clone());
+                    else
+                        clone.m_children.Add(m_children[i]);
+                }
+            }
+            return clone;
+        }
 
 		public new void Process(XmlNode n)
 		{

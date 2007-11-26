@@ -291,6 +291,9 @@ namespace Uiml {
                 clone.m_head = (Head)m_head.Clone();
             clone.m_hasLayout = m_hasLayout;
             clone.m_solver = m_solver;
+            //attach peers....
+            if(clone.m_interface != null)
+                clone.m_interface.AttachPeers(clone.m_peers);
 			return clone;
 		}
 		

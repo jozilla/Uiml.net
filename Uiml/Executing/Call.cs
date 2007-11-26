@@ -83,8 +83,16 @@ namespace Uiml.Executing
             call.m_caller = m_caller;
             call.m_outputParams = m_outputParams;
 
-            //FIXME: clone the logic descriptions
-            call.m_logicDescriptions = m_logicDescriptions;
+            //clone the logic descriptions
+            if (m_logicDescriptions != null)
+            {
+                call.m_logicDescriptions = new ArrayList();
+                for (int i = 0; i < m_logicDescriptions.Count; i++)
+                {
+                    Logic logic = (Logic)((Logic)m_logicDescriptions[i]).Clone();
+                    call.m_logicDescriptions.Add(logic);
+                }
+            }            
 
             if(m_params != null)
             {
