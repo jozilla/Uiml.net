@@ -55,6 +55,7 @@ namespace Uiml.Executing
         {
             Condition clone = new Condition();
             clone.m_conditionType = m_conditionType;
+            clone.m_renderer = m_renderer;
             if(m_conditionObject != null)
             {
                 clone.m_conditionObject = ((IUimlElement)m_conditionObject).Clone();

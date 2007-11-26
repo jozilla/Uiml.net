@@ -75,7 +75,7 @@ namespace Uiml.Executing
             }
             if(m_subprop != null)
             {
-                //FIXME: Whats this ?
+                param.m_subprop = m_subprop;
             }
 
             param.PartTree = m_partTree;

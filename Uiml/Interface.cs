@@ -71,6 +71,11 @@ namespace Uiml{
             clone.m_structure = cloneList(m_structure);
             clone.m_style = cloneList(m_style);
             clone.m_behavior = cloneList(m_behavior);
+            for (int i = 0; i < clone.m_behavior.Count; i++)
+            {
+                Behavior behavior = (Behavior)clone.m_behavior[i];
+                behavior.PartTree = ((Structure)clone.UStructure[0]).Top;
+            }
             clone.m_content = cloneList(m_content);
             clone.m_layout = cloneList(m_layout);
 

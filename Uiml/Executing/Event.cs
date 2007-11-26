@@ -62,6 +62,7 @@ namespace Uiml.Executing
             clone.m_class = m_class;
             clone.m_partName = m_partName;
             clone.m_partClass = m_partClass;
+            clone.m_ExecuteObject = m_ExecuteObject;
 
             return clone;
         }

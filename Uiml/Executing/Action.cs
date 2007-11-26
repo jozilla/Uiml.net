@@ -63,6 +63,8 @@ namespace Uiml.Executing
                     clone.m_subActions.Add(tmp.Clone());
                 }
             }
+            clone.m_renderer = m_renderer;
+            clone.m_propSetter = m_propSetter;
 
             clone.PartTree = m_partTree;
 

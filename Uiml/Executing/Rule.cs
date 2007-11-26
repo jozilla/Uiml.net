@@ -64,15 +64,16 @@ namespace Uiml.Executing
 
         public virtual object Clone()
         {
-            Rule clone = new Rule();
-            clone.PartTree = PartTree;
-            clone.m_waitingNode = (XmlNode)m_waitingNode.Clone();
+            Rule clone = new Rule();            
+            if(m_waitingNode != null)
+                clone.m_waitingNode = (XmlNode)m_waitingNode.Clone();
 
             clone.m_action = (Action)m_action.Clone();
+            clone.m_empty = m_empty;
 
             clone.m_condition = (Condition)m_condition.Clone();
             clone.m_condition.Attach(clone.m_action);
-            
+            clone.PartTree = PartTree;
             return clone;
         }
 

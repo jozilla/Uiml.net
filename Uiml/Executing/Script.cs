@@ -51,6 +51,7 @@ namespace Uiml.Executing
 		private bool m_preCompiled = false;
 		private Assembly m_compiledAssembly;
 		private Object m_retValue = null;
+        private Part m_partTree = null;
 
 		public Script()
 		{
@@ -286,6 +287,18 @@ namespace Uiml.Executing
 		{
 			get { return m_retValue; }
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+            }
+        }
 
 		
 		public const string IAM  = "script";

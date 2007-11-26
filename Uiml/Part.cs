@@ -126,6 +126,8 @@ namespace Uiml {
 			
             clone.Class = Class;
             clone.CopyAttributesFrom(this);
+            clone.m_uiObject = m_uiObject;
+            clone.m_eventArgs = m_eventArgs;
 
 			//TODO : m_componentsByDepth and m_layout
 			return clone;
