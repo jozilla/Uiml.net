@@ -23,6 +23,7 @@
 namespace Uiml{
 
 	using System.Xml;
+    using System.Xml.Serialization;
     using System;
 
 	///<summary>
@@ -67,29 +68,34 @@ namespace Uiml{
 				 Identifier = attr.GetNamedItem(ID).Value;
 		}
 
+        [XmlAttribute("id")]
 		public string Identifier
 		{
 			get { return m_identifier;}
 			set { m_identifier = value; }
 		}
 
+        [XmlAttribute("source")]
 		public string Source
 		{
 			get { return m_source;}
 			set { m_source = value; }
 		}
 
+        [XmlIgnore]
 		public bool SourceAvailable
 		{
 			get { return (m_source != null); }
 		}
 
+        [XmlAttribute("how")]
 		public string How
 		{
 			get { return m_how;}
 			set { m_how = value; }
 		}
 
+        [XmlAttribute("export")]
 		public string Export
 		{
 			get { return m_export;}

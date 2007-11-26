@@ -26,9 +26,11 @@ namespace Uiml {
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Xml.Serialization;
 
 	using Uiml.LayoutManagement;
 	
+    [XmlRoot("uiml")]
 	public class UimlDocument : IUimlElement, IUimlComponent, ICloneable {
 		private Interface m_interface;
 		private ArrayList m_peers;
@@ -91,18 +93,21 @@ namespace Uiml {
 			}
 		}
 
+        [XmlArray("interface")]
 		public Interface UInterface 
 		{
 			get { return m_interface; }
 			set {	m_interface = value; }
 		}
 
+        [XmlIgnore]
 		public Head UHead
 		{
 			get { return m_head; }
 			set { m_head = value; }
 		}
 
+        [XmlIgnore]
 		public String Title
 		{
 			get 
@@ -116,11 +121,13 @@ namespace Uiml {
 			}
 		}
 
+        [XmlIgnore]
 		public IEnumerator Peers
 		{
 			get { return m_peers.GetEnumerator(); }
 		}
 
+        [XmlIgnore]
         public ArrayList ListOfPeers
         {
             get { return m_peers; }
@@ -148,6 +155,7 @@ namespace Uiml {
 		///<summary>
 		///For now, only a single vocabulary peer will be taken into account
 		///</summary>
+        [XmlIgnore]
 		public String Vocabulary
 		{
 			get 
@@ -255,7 +263,8 @@ namespace Uiml {
 				Solver.Resolve();
 			}
 		}
-		
+
+        [XmlIgnore]
 		public ArrayList Children
 		{
 			get 
@@ -300,26 +309,32 @@ namespace Uiml {
 		// IUimlComponent methods:
 		//public ArrayList Children { get ; } //This method already exist to return a "complete" UIML document in an ArrayList
 		public void Add(string pattern, IUimlComponent component) { /* do nothing */ }
-		public void Remove(IUimlComponent component) { /* do nothing */ }		
+		public void Remove(IUimlComponent component) { /* do nothing */ }
+
+        [XmlIgnore]
 		public UimlComposite Composite 
 		{ 
 			get { return null; } 
-		}		
+		}
+        [XmlIgnore]
 		public Hashtable CompChildren
 		{
 			get {return null; }
-		} 
-		
+		}
+
+        [XmlIgnore]
 		public ConstraintSystem Solver
 		{
 			get { return m_solver; }
 		}
 
+        [XmlIgnore]
 		public bool HasSolver
 		{
 			get { return Solver != null; }
 		}
 
+        [XmlIgnore]
 		public bool HasLayout
 		{
 			get { return m_hasLayout; }

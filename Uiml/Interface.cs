@@ -28,6 +28,7 @@ namespace Uiml{
 
 	using System;
 	using System.Xml;
+    using System.Xml.Serialization;
 	using System.IO;
 	using System.Collections;
 
@@ -41,6 +42,7 @@ namespace Uiml{
 	///             how (union|cascade|replace) "replace" 
 	///             export (hidden|optional|required) "optional"&gt;
 	///</summary>
+    [XmlRoot("interface")]
 	public class Interface : UimlAttributes, IUimlElement, ICloneable{
 
 		//private Structure m_structure;
@@ -144,6 +146,7 @@ namespace Uiml{
 
 		}
 
+        [XmlIgnore]
 		public ArrayList UStructure
 		{
 			get { 
@@ -155,6 +158,7 @@ namespace Uiml{
 			set { m_structure.Add(value); }
 		}
 
+        [XmlIgnore]
 		public ArrayList UStyle
 		{
 			get {
@@ -166,6 +170,7 @@ namespace Uiml{
 			set { m_style.Add(value); }
 		}
 
+        [XmlIgnore]
 		public ArrayList UBehavior
 		{
 			get { 
@@ -177,6 +182,7 @@ namespace Uiml{
 			set { m_behavior.Add(value); }
 		}
 
+        [XmlIgnore]
 		public ArrayList UContent
 		{
 			get {
@@ -188,6 +194,7 @@ namespace Uiml{
 			set { m_content.Add(value); }
 		}
 
+        [XmlIgnore]
 		public ArrayList ULayout
 		{
 			get
@@ -200,6 +207,7 @@ namespace Uiml{
  			set { m_layout.Add(value); }
 		}
 
+        [XmlIgnore]
 		public bool HasLayout
 		{
 			get { return ULayout != null; }
@@ -221,6 +229,7 @@ namespace Uiml{
 					b.AttachPeers(logics);
 		}
 
+        [XmlIgnore]
 		public ArrayList Children
 		{
 			get 
