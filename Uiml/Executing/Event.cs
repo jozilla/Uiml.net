@@ -52,6 +52,21 @@ namespace Uiml.Executing
 			Process(xmlNode);
 		}
 
+        public virtual object Clone()
+        {
+            Event clone = new Event();
+            clone.CopyAttributesFrom(this);
+
+            clone.m_name = m_name;
+            clone.m_executeType = m_executeType;
+            clone.m_class = m_class;
+            clone.m_partName = m_partName;
+            clone.m_partClass = m_partClass;
+            clone.m_ExecuteObject = m_ExecuteObject;
+
+            return clone;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name == EVENT)

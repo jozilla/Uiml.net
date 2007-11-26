@@ -44,7 +44,7 @@ namespace Uiml{
 	///              call-name NMTOKEN #IMPLIED 
 	///              call-class NMTOKEN #IMPLIED&gt;
 	///</summary>
-	public class Property : UimlAttributes, IUimlElement {
+	public class Property : UimlAttributes, IUimlElement, ICloneable {
 
 		// Properties
 		private string m_name;
@@ -62,6 +62,29 @@ namespace Uiml{
 		//This number will take care of counting which Property was created before/after another.
 		private static int counter = 0;
 		private int m_nr = -1;
+
+		public object Clone()
+		{
+			Property prop = new Property();
+            prop.CopyAttributesFrom(this);
+
+            prop.m_name = m_name;
+			prop.m_setter = m_setter;
+			prop.m_hasToBeSet = m_hasToBeSet;
+			prop.m_class_name = m_class_name;
+			prop.m_part_name = m_part_name;
+
+            if(m_subprop != null)
+			prop.m_subprop = ((IUimlElement)m_subprop).Clone();
+
+            prop.m_value = m_value;
+			//if(m_subprop != null  && m_subprop is Constant)
+			//	prop.SubProp = ((Constant)m_subprop).Clone();
+			//else
+			//	prop.SubProp = SubProp;
+
+			return prop;
+		}
 
 		public Property()
 		{

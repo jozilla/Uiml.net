@@ -30,6 +30,7 @@ namespace Uiml{
 		public abstract void Process(XmlNode node);
 
 		public abstract ArrayList Children { get; }
+        public abstract object Clone();
 
 		public void ApplyTemplate()
 		{

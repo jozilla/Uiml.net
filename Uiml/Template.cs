@@ -69,6 +69,19 @@ namespace Uiml{
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            Template clone = new Template();
+
+            clone.m_identifier = m_identifier;
+            if(m_top != null)
+            {
+                clone.m_top = (IUimlElement)m_top.Clone();
+            }
+
+            return clone;
+        }
+
 		private void LoadTemplate(string tidentifier, string path)
 		{			
 			if(TemplateRepository.Instance.Query(tidentifier)==null)

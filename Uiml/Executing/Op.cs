@@ -46,6 +46,23 @@ namespace Uiml.Executing
         {
             m_top = partTop;
             Process(xmlNode);
+        }	 
+
+        public virtual object Clone()
+        {
+            Op clone = new Op();
+            if(m_children != null)
+            {
+                clone.m_children = new ArrayList();
+                for(int i = 0; i < m_children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)m_children[i];
+                    clone.m_children.Add(element.Clone());
+                }
+            }
+            clone.PartTree = m_top;
+
+            return clone;
         }
 
         public void Process(XmlNode n)
@@ -131,6 +148,26 @@ namespace Uiml.Executing
         {
             return true;
             //throw new Exception("The method or operation is not implemented.");
+        }		
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_top;
+            }
+            set
+            {
+                m_top = value;
+                for(int i = 0; i < m_children.Count; i++)
+                {
+                    if(m_children[i] is Op)
+                    {
+                        Op tmp = (Op)m_children[i];
+                        tmp.PartTree = m_top;
+                    }
+                }
+            }
         }
 
 

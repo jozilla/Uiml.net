@@ -23,11 +23,12 @@
 namespace Uiml{
 
 	using System.Xml;
+    using System;
 
 	///<summary>
 	/// Holds 4 common attributes of UIML tags: id, source, how and export
 	///</summary>
-	public abstract class UimlAttributes{
+	public abstract class UimlAttributes {
 
 		protected string m_identifier;
 		protected string m_source;
@@ -43,6 +44,15 @@ namespace Uiml{
 		public const string HIDDEN = "hidden";
 		public const string OPTIONAL = "optional";
 		public const string REQUIRED = "required";
+
+
+        protected void CopyAttributesFrom(UimlAttributes attr)
+        {
+            m_identifier = attr.m_identifier;
+            m_source = attr.m_source;
+            m_how = attr.m_how;
+            m_export = attr.m_export;
+        }
 
 		protected void ReadAttributes(XmlNode n)
 		{

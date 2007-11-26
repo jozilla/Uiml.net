@@ -48,7 +48,7 @@ namespace Uiml {
 	///                 how (union|cascade|replace) "replace" 
 	///                 export (hidden|optional|required) "optional"&gt;
 	///</summary>
-	public class Part : UimlAttributes, IUimlElement
+	public class Part : UimlAttributes, IUimlElement, ICloneable
 	{
 		#if COMPACT
 		public class Connection
@@ -100,6 +100,38 @@ namespace Uiml {
 		#if COMPACT
 		private ArrayList m_connections = null;
 		#endif
+
+		public Object Clone()
+		{
+			Part clone = new Part();
+			if(m_children != null)
+			{
+                clone.m_children = new ArrayList();
+				for(int i = 0; i<m_children.Count; i++){
+                    object obj = m_children[i];
+					clone.m_children.Add( (ICloneable) (((ICloneable)obj).Clone()) );
+                    if(obj is Part)
+                        ((Part)obj).Parent = clone;
+                    if(obj is Behavior)
+                        ((Behavior)obj).PartTree = clone;
+                }
+			}
+
+			if(m_properties != null)
+			{
+                clone.m_properties = new ArrayList();
+				for(int i = 0; i<m_properties.Count; i++)
+					clone.m_properties.Add( (Property)  (((Property)m_properties[i]).Clone()));
+			}
+			
+            clone.Class = Class;
+            clone.CopyAttributesFrom(this);
+            clone.m_uiObject = m_uiObject;
+            clone.m_eventArgs = m_eventArgs;
+
+			//TODO : m_componentsByDepth and m_layout
+			return clone;
+		}
 
 		public Part()
 		{

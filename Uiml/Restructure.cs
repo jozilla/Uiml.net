@@ -47,6 +47,11 @@ namespace Uiml{
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            return new Restructure();
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != IAM)

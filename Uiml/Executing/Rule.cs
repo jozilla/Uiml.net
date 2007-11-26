@@ -62,6 +62,21 @@ namespace Uiml.Executing
 			m_waitingNode = xmlNode;
 		}
 
+        public virtual object Clone()
+        {
+            Rule clone = new Rule();            
+            if(m_waitingNode != null)
+                clone.m_waitingNode = (XmlNode)m_waitingNode.Clone();
+
+            clone.m_action = (Action)m_action.Clone();
+            clone.m_empty = m_empty;
+
+            clone.m_condition = (Condition)m_condition.Clone();
+            clone.m_condition.Attach(clone.m_action);
+            clone.PartTree = PartTree;
+            return clone;
+        }
+
 		///<summary>
 		///Factory method that resolves this Rule for a given Part 
 		///</summary>
@@ -133,6 +148,26 @@ namespace Uiml.Executing
         {
             set { m_empty = value; }
             get { return m_empty; }
+        }
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_action != null)
+                {
+                    m_action.PartTree = value;
+                }
+                if(m_condition != null)
+                {
+                    m_condition.PartTree = value;
+                }
+            }
         }
 
 		public const string IAM      = "rule";
