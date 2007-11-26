@@ -38,29 +38,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -90,29 +90,32 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
+		</d-property>
+		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+			<d-param type="System.Boolean"/>						
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
     <d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -143,29 +146,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
 		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -206,29 +209,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -259,29 +262,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -315,29 +318,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -378,29 +381,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -445,29 +448,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -513,29 +516,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -580,29 +583,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -619,16 +622,16 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 		<d-property id="maximum" maps-type="setMethod" maps-to="Maximum">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="minimum" maps-type="setMethod" maps-to="Minimum">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="step" maps-type="setMethod" maps-to="Step">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="value" maps-type="setMethod" maps-to="Value">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 	</d-class>
 	
@@ -644,29 +647,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -699,29 +702,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -741,7 +744,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.String[]"/>
 		</d-property>
 		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="entries" return-type="System.Windows.Forms.ListView.SelectedListViewItemCollection" maps-type="getMethod" maps-to="SelectedItems"/>
 		<!-- events -->
@@ -762,29 +765,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -804,7 +807,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.String[]"/>
 		</d-property>
 		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="entry" return-type="System.Windows.Forms.ListBox.SelectedObjectCollection" maps-type="getMethod" maps-to="SelectedItems"/>
 		<d-property id="selectionMode" maps-type="setMethod" maps-to="SelectionMode">
@@ -828,29 +831,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -902,29 +905,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -954,29 +957,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -1006,29 +1009,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -1051,7 +1054,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.Windows.Forms.ListViewItem"/>
 		</d-property>
 		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="entry" return-type="System.Windows.Forms.ListView.SelectedListViewItemCollection" maps-type="getMethod" maps-to="SelectedItems"/>
 		<d-property id="multiSelect" maps-type="setMethod" maps-to="MultiSelect">
@@ -1084,29 +1087,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -1148,29 +1151,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -1187,16 +1190,16 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 		<d-property id="min" maps-type="setMethod" maps-to="Minimum">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="max" maps-type="setMethod" maps-to="Maximum">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="step" maps-type="setMethod" maps-to="SmallChange">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="ticks" maps-type="setMethod" maps-to="TickFrequency">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="tickStyle" maps-type="setMethod" maps-to="TickStyle">
 			<d-param type="System.Windows.Forms.TickStyle"/>
@@ -1219,29 +1222,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -1258,16 +1261,16 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 		<d-property id="min" maps-type="setMethod" maps-to="Minimum">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="max" maps-type="setMethod" maps-to="Maximum">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="step" maps-type="setMethod" maps-to="SmallChange">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="ticks" maps-type="setMethod" maps-to="TickFrequency">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="tickStyle" maps-type="setMethod" maps-to="TickStyle">
 			<d-param type="System.Windows.Forms.TickStyle"/>
@@ -1290,29 +1293,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
@@ -1350,29 +1353,29 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" return-type="System.Int" maps-type="getMethod" maps-to="Width"/>
+		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int"/>	
+			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" return-type="System.Int" maps-type="getMethod" maps-to="Height"/>
+		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int"/>		
+			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="top" return-type="System.Int" maps-type="getMethod" maps-to="Top"/>
+		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
 		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="bottom" return-type="System.Int" maps-type="getMethod" maps-to="Bottom"/>
+		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
 		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="left" return-type="System.Int" maps-type="getMethod" maps-to="Left"/>
+		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
 		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
-		<d-property id="right" return-type="System.Int" maps-type="getMethod" maps-to="Right"/>
+		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
 		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">

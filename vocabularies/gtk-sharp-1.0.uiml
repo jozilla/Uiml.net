@@ -28,7 +28,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 <presentation base="gtk-sharp-1.0" id="GTK">
 	<d-class id="Button" used-in-tag="part" maps-type="class" maps-to="Gtk.Button">
 		<d-property id="label" maps-type="setMethod" maps-to="Label">
-			<d-param type="string"/>
+			<d-param type="System.String"/>
 		</d-property>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
@@ -46,13 +46,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param name="state" type="Gtk.StateType"/>
 			<d-param name="color" type="Gdk.Color"/>
 		</d-property>
-		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Label"/>
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
 		</d-property>
-		<d-property id="underLineMnemonic" return-type="boolean" maps-type="getMethod" maps-to="UseUnderline"/>
+		<d-property id="underLineMnemonic" return-type="System.Boolean" maps-type="getMethod" maps-to="UseUnderline"/>
 		<d-property id="underLineMnemonic" maps-type="setMethod" maps-to="UseUnderline">
-			<d-param type="system.Boolean"/>
+			<d-param type="System.Boolean"/>
 		</d-property>
 		<d-property id="clicked" maps-type="event" maps-to="Clicked">
 			<d-param type="GtkSharp.ButtonPressEventHandler"/>
@@ -63,16 +63,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="left" maps-type="event" maps-to="Left">
 			<d-param type="GtkSharp.ButtonLeftEventHandler"/>
 		</d-property>
-		<d-property id="textDirection" maps-type="Direction">
-			<d-param name="textDir" type="Gtk.TextDirection"/>
-		</d-property>
 	</d-class>
 
 	<d-class id="Label" used-in-tag="part" maps-type="class" maps-to="Gtk.Label">
 		<d-property id="text" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="text" return-type="string" maps-type="getMethod" maps-to="Text"/>
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
 			<d-param type="Gdk.Color"/>
@@ -90,7 +87,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param name="color" type="Gdk.Color"/>
 		</d-property>
 		<d-property id="selectable" maps-type="setMethod" maps-to="Selectable">
-			<d-param type="bool"/>			
+			<d-param type="System.Boolean"/>			
 		</d-property>
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
@@ -105,9 +102,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 
 	<d-class id="Frame" used-in-tag="part" maps-type="class" maps-to="Gtk.Frame">
 		<d-property id="label" maps-type="setMethod" maps-to="Label">
-			<d-param type="string"/>
+			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Label"/>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
 			<d-param type="Gdk.Color"/>
@@ -134,13 +131,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 
 	<d-class id="Entry"  used-in-tag="part" maps-type="class" maps-to="Gtk.Entry">
 		<d-property id="cursor" maps-type="setMethod" maps-to="CursorVisible">
-			<d-param type="bool"/>
+			<d-param type="System.Boolean"/>
 		</d-property>
-		<d-property id="cursor" maps-type="getMethod" maps-to="CursorVisible"/>
+		<d-property id="cursor" return-type="System.Boolean" maps-type="getMethod" maps-to="CursorVisible"/>
 		<d-property id="editable" maps-type="setMethod" maps-to="Editable">
-			<d-param type="bool"/>
+			<d-param type="System.Boolean"/>
 		</d-property>
-		<d-property id="editable" maps-type="getMethod" maps-to="Editable"/>
+		<d-property id="editable" return-type="System.Boolean" maps-type="getMethod" maps-to="Editable"/>
 		<d-property id="visibility" maps-type="setMethod" maps-to="Visibility">
 			<d-param type="bool"/>
 		</d-property>
@@ -164,7 +161,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="text" maps-type="setMethod" maps-to="Text">
             <d-param type="System.String"/>
 		</d-property>	
-		<d-property id="text" maps-type="getMethod" maps-to="Text"/>		
+		<d-property id="text" return-type="Gtk.TextBuffer" maps-type="getMethod" maps-to="Text"/>		
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
 		</d-property>
@@ -173,13 +170,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 
 	<d-class id="Text"  used-in-tag="part" maps-type="class" maps-to="Gtk.TextView">
 		<d-property id="cursor" maps-type="setMethod" maps-to="CursorVisible">
-			<d-param type="bool"/>
+			<d-param type="System.Boolean"/>
 		</d-property>
-		<d-property id="cursor" maps-type="getMethod" maps-to="CursorVisible"/>
+		<d-property id="cursor" return-type="System.Boolean" maps-type="getMethod" maps-to="CursorVisible"/>
 		<d-property id="editable" maps-type="setMethod" maps-to="Editable">
-			<d-param type="bool"/>
+			<d-param type="System.Boolean"/>
 		</d-property>
-		<d-property id="editable" maps-type="getMethod" maps-to="Editable"/>
+		<d-property id="editable" return-type="System.Boolean" maps-type="getMethod" maps-to="Editable"/>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
 			<d-param type="Gdk.Color"/>
@@ -199,7 +196,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="text" maps-type="setMethod" maps-to="Buffer.Text">
 			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="text" maps-type="getMethod" maps-to="Buffer.Text"/>
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="Buffer.Text"/>
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
 		</d-property>
@@ -207,7 +204,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 
 	<d-class id="Image" used-in-tag="part" maps-type="class" maps-to="Gtk.Image">
 		<d-property id="file" maps-type="setMethod" maps-to="FromFile">
-			<d-param type="string"/>
+			<d-param type="System.String"/>
 		</d-property>
 		<d-property id="line" maps-type="setMethod" maps-to="PixMap.DrawLine">
 			<d-param name="context" type="Gdk.GC"/>
@@ -227,9 +224,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	
 	<d-class id="CheckButton" used-in-tag="part" maps-type="class" maps-to="Gtk.CheckButton">
 		<d-property id="label" maps-type="setMethod" maps-to="Label">
-			<d-param type="string"/>
+			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Label"/>
 		<d-property id="clicked" maps-type="event" maps-to="Clicked">
 			<d-param type="GtkSharp.ButtonPressEventHandler"/>
 		</d-property>
@@ -260,9 +257,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 
 	<d-class id="RadioButton" used-in-tag="part" maps-type="class" maps-to="Gtk.RadioButton">
 		<d-property id="label" maps-type="setMethod" maps-to="Label">
-			<d-param type="string"/>
+			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Label"/>
 		<d-property id="clicked" maps-type="event" maps-to="Clicked">
 			<d-param type="GtkSharp.ButtonPressEventHandler"/>
 		</d-property>
@@ -289,9 +286,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 
 	<d-class id="ToggleButton" used-in-tag="part" maps-type="class" maps-to="Gtk.ToggleButton">
 		<d-property id="label" maps-type="setMethod" maps-to="Label">
-			<d-param type="string"/>
+			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="label" return-type="string" maps-type="getMethod" maps-to="Label"/>
+		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Label"/>
 		<d-property id="clicked" maps-type="event" maps-to="Clicked">
 			<d-param type="GtkSharp.ButtonPressEventHandler"/>
 		</d-property>
@@ -318,16 +315,16 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 
 	<d-class id="ProgressBar"  used-in-tag="part" maps-type="class" maps-to="Gtk.ProgressBar">
 		<d-property id="text" maps-type="setMethod" maps-to="Text">
-			<d-param type="string"/>
+			<d-param type="System.String"/>
 		</d-property>
 		<d-property id="blocks" maps-type="setMethod" maps-to="ActivityBlocks">
-			<d-param type="int"/>
+			<d-param type="System.UInt32"/>
 		</d-property>
 		<d-property id="step" maps-type="setMethod" maps-to="ActivityStep">
-			<d-param type="int"/>
+			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="fraction" maps-type="setMethod" maps-to="Fraction">
-			<d-param type="double"/>
+			<d-param type="System.Double"/>
 		</d-property>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
@@ -345,10 +342,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param name="state" type="Gtk.StateType"/>
 			<d-param name="color" type="Gdk.Color"/>
 		</d-property>
-		<d-property id="text" maps-type="setMethod" maps-to="TextBuffer">
-			<d-param type="Gtk.TextBuffer"/>
-		</d-property>
-		<d-property id="text" maps-type="getMethod" maps-to="TextBuffer"/>		
+		<d-property id="text" return-type="System.String" maps-type="getMethod" maps-to="TextBuffer"/>		
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
 		</d-property>
@@ -392,7 +386,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
         <d-property id="headers-clickable" maps-type="setMethod" maps-to="HeadersClickable">
 			<d-param type="System.Boolean"/>
         </d-property>
-		<d-property id="entry" maps-type="getMethod" maps-to="Selection.GetSelectedRows">
+		<d-property id="entry" return-type="Gtk.TreePath[]" maps-type="getMethod" maps-to="Selection.GetSelectedRows">
 			<d-param id="model" type="Gtk.TreeModel"/>
 		</d-property>
 		<d-property id="add" return-type="void" maps-type="setMethod" maps-to="ListStore.AppendValues">
@@ -421,7 +415,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="selected-rows" maps-type="getMethod" maps-to="Gtk.TreeSelection.GetSelectedRows" return-type="Glib.List">
 			<d-param type="Gtk.TreeModel"/>
 		</d-property>
-		<d-property id="entry" maps-type="getMethod" maps-to="Selection.GetSelected">
+		<d-property id="entry" return-type="Gtk.TreePath[]" maps-type="getMethod" maps-to="Selection.GetSelected">
 			<d-param id="model" type="Gtk.TreeModel"/>
 			<d-param id="iter" type="Gtk.TreeIter"/>
 		</d-property>
@@ -442,10 +436,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param id="month" type="System.Int"/>
 			<d-param id="year" type="System.Int"/>
 		</d-property>
-		<d-property id="date" returns-type="System.DateTime" maps-type="getMethod" maps-to="GetDate"/>
-		<d-property id="day" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Day"/>
-		<d-property id="month" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Month"/>
-		<d-property id="year" returns-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Year"/>
+		<d-property id="date" return-type="System.DateTime" maps-type="getMethod" maps-to="GetDate"/>
+		<d-property id="day" return-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Day"/>
+		<d-property id="month" return-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Month"/>
+		<d-property id="year" return-type="System.Int32" maps-type="getMethod" maps-to="GetDate.Year"/>
 		<d-property id="background" maps-type="setMethod" maps-to="ModifyBg">
 			<d-param type="Gtk.StateType"/>
 			<d-param type="Gdk.Color"/>
@@ -487,7 +481,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	</d-class>
 
 	<d-class id="ColorSelection"  used-in-tag="part" maps-type="class" maps-to="Gtk.ColorSelection">
-		<d-property id="color" returns-type="Gdk.Color" maps-type="getMethod" maps-to="CurrentColor"/>
+		<d-property id="color" return-type="Gdk.Color" maps-type="getMethod" maps-to="CurrentColor"/>
 	</d-class>
 
 	<d-class id="FontSelection"  used-in-tag="part" maps-type="class" maps-to="Gtk.FontSelection">
@@ -602,33 +596,33 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	been tackled...
 	-->
  	<d-component id="Math" maps-to="System.Math">
-		<d-method id="absolute" returns-value="int" maps-to="Abs">
+		<d-method id="absolute" returns-value="System.Int32" maps-to="Abs">
 			<d-param id="in" type="System.Int32"/>
 		</d-method>
-		<d-method id="power" return-value="double" maps-to="Pow">
+		<d-method id="power" return-value="System.Double" maps-to="Pow">
 			<d-param id="ground" type="System.Double"/>
 			<d-param id="power" type="System.Double"/>
 		</d-method>
-		<d-method id="acos" return-value="double" maps-to="Acos">
+		<d-method id="acos" return-value="System.Double" maps-to="Acos">
 			<d-param type="System.Double"/>
 		</d-method>
-		<d-method id="cos" return-value="double" maps-to="Cos">
+		<d-method id="cos" return-value="System.Double" maps-to="Cos">
 			<d-param type="System.Double"/>
 		</d-method>
-		<d-method id="asin" return-value="double" maps-to="Asin">
+		<d-method id="asin" return-value="System.Double" maps-to="Asin">
 			<d-param type="System.Double"/>
 		</d-method>
-		<d-method id="sin" return-value="double" maps-to="Sin">
+		<d-method id="sin" return-value="System.Double" maps-to="Sin">
 			<d-param type="System.Double"/>
 		</d-method>
-		<d-method id="atan" return-value="double" maps-to="Atan">
+		<d-method id="atan" return-value="System.Double" maps-to="Atan">
 			<d-param type="System.Double"/>
 		</d-method>
-		<d-method id="tan" return-value="double" maps-to="Tan">
+		<d-method id="tan" return-value="System.Double" maps-to="Tan">
 			<d-param type="System.Double"/>
 		</d-method>
-		<d-method id="e" return-value="double" maps-to="E"/>
-		<d-method id="pi" return-value="double" maps-to="PI"/>
+		<d-method id="e" return-value="System.Double" maps-to="E"/>
+		<d-method id="pi" return-value="System.Double" maps-to="PI"/>
 	</d-component>
 	<d-component id="Int" maps-to="System.Int32">
 		<d-method id="parse" returns-value="System.Int32" maps-to="Parse">
@@ -636,11 +630,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		</d-method>
 	</d-component>
 	<d-component id="String" maps-to="System.String">
-		<d-method id="concatenate" returns-value="string" maps-to="Concat">
+		<d-method id="concatenate" returns-value="System.String" maps-to="Concat">
 			<d-param id="str0" type="System.String"/>
 			<d-param id="str1" type="System.String"/>
 		</d-method>
-		<d-method id="compare" returns-value="int" maps-to="Compare">
+		<d-method id="compare" returns-value="System.Int32" maps-to="Compare">
 			<d-param id="str0" type="System.String"/>
 			<d-param id="str1" type="System.String"/>
 		</d-method>
@@ -658,7 +652,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	<d-component id="Date" maps-to="System.DateTime">
 		<d-method id="now"   returns-value="DateTime" maps-to="Now"/>
 		<d-method id="today" returns-value="DateTime" maps-to="Today"/>
-		<d-method id="compare" returns-value="int" maps-to="Compare">
+		<d-method id="compare" returns-value="System.Int32" maps-to="Compare">
 			<d-param id="date1" type="System.DateTime"/>
 			<d-param id="date2" type="System.DateTime"/>
 		</d-method>

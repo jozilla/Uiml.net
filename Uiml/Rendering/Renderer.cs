@@ -241,8 +241,8 @@ namespace Uiml.Rendering
 				// don't do anything, just return the widget
 				return uiObject;
 			}
-			
 			string setter = Voc.GetPropertySetter(p.Name, part.Class);
+            DParam[] parameters = Voc.GetParams(p.Name, part.Class, "setMethod");
 
 			//try to use Properties first,
 			//if that fails, look for the appropriate setters in the available methods
@@ -262,32 +262,24 @@ namespace Uiml.Rendering
 					j = setter.IndexOf('.');
 				}
 
-				#if COMPACT
-					MemberInfo[] arrayMemberInfo = SearchMembers(classType, setter);
-				#else
-					///thanks to Rafael "Monoman" Teixeira for this code
-					//pInfo = classType.GetProperty(setter);
-					MemberInfo[] arrayMemberInfo = classType.FindMembers(MemberTypes.Method  | MemberTypes.Property,
-					                                                     BindingFlags.Public | BindingFlags.Instance,
-											     Type.FilterName, setter);
-				#endif
-				
-				if (arrayMemberInfo == null || arrayMemberInfo.Length == 0) 
-				{
-					 // throw some error here, about not having the appropriate member
-					Console.WriteLine("Warning: could not load setter \"{0}\" for {1} (type {2}), please check your vocabulary", setter, part.Identifier, tclassType.FullName); 
-					return uiObject;
-				}
+                MemberInfo memInfo = GetMemberInfo(setter, classType, part, p);
+
+                if (memInfo == null)
+                {
+                    // throw some error here, about not having the appropriate member
+                    Console.WriteLine("Warning: could not load setter \"{0}\" for {1} (type {2}), please check your vocabulary", setter, part.Identifier, tclassType.FullName);
+                    return uiObject;
+                }
 
 				//if lazy, resolve property value first
 				if(p.Lazy)
 					p.Resolve(this);
 
 				//
-				if (arrayMemberInfo[0] is PropertyInfo)
-					SetProperty(targetObject, p, (PropertyInfo)arrayMemberInfo[0]);
+				if (memInfo is PropertyInfo)
+					SetProperty(targetObject, p, (PropertyInfo)memInfo);
 				else
-					InvokeMethod(targetObject, part, p, (MethodInfo)arrayMemberInfo[0]);
+					InvokeMethod(targetObject, part, p, (MethodInfo)memInfo);
 			}
 			/*
 			catch(TypeLoadException tle)
@@ -307,6 +299,74 @@ namespace Uiml.Rendering
 			}
 			return uiObject;
 		}
+
+        public MemberInfo GetMemberInfo(string setter, Type classType, Part part, Property p)
+        {
+            DParam[] parameters = Voc.GetParams(p.Name, part.Class, "setMethod");
+            #if COMPACT
+					MemberInfo[] arrayMemberInfo = SearchMembers(classType, setter);
+            #else
+                ///thanks to Rafael "Monoman" Teixeira for this code
+                //pInfo = classType.GetProperty(setter);
+
+                MemberInfo[] arrayMemberInfo = classType.FindMembers(MemberTypes.Method | MemberTypes.Property,
+                                                                     BindingFlags.Public | BindingFlags.Instance,
+                                             Type.FilterName, setter);
+            #endif
+
+                if (arrayMemberInfo.Length > 0)
+                {
+                    if (arrayMemberInfo[0] is PropertyInfo)
+                        return arrayMemberInfo[0];
+                    else
+                    {
+                        MethodInfo[] methodInfos = new MethodInfo[arrayMemberInfo.Length];
+                        for(int i = 0; i < methodInfos.Length; i++)
+                        {
+                            methodInfos[i] = (MethodInfo)arrayMemberInfo[i];
+                        }
+                        return GetMethodWithRightParameters(parameters, methodInfos);
+                    }
+                }
+                else
+                    return null;            
+        }
+
+        //This methods finds the right member value from a set of methods with the same name
+        public MethodInfo GetMethodWithRightParameters(DParam[] dparams, MethodInfo[] methods)
+        {           
+            foreach (MethodInfo mi in methods)
+            {
+                if (mi.MemberType == MemberTypes.Method)
+                {
+                    //Method
+
+                    if (mi.GetParameters().Length == dparams.Length)
+                    {
+                        int i = 0;
+                        //It could be this one, it has the same number of parameters
+                        bool found = true;
+                        foreach (ParameterInfo inf in ((MethodInfo)mi).GetParameters())
+                        {                            
+                            if ( inf.ParameterType.ToString() == dparams[i].Type || inf.ParameterType.IsAssignableFrom(Type.GetType(dparams[i].Type)))                            
+                            {
+                                found = true;
+                            }
+                            else
+                            {
+                                found = false;
+                                break;
+                            }
+                            i++;
+                        }
+                        if (found)
+                            return mi;                       
+                    }                   
+                }                
+            }
+            //Member not found...
+            return null;
+        }        
 
 		///<summary>
 		///Sets the value of property p for the object targetobject
@@ -341,7 +401,7 @@ namespace Uiml.Rendering
 
 				// We must invoke it on the target Object, not on the UI Object!							
 				//m.Invoke(uiObject, args);
-				mInfo.Invoke(targetObject, args);
+                mInfo.Invoke(targetObject, args);               
 			}
 			catch(ArgumentOutOfRangeException  e)
 			{
