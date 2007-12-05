@@ -25,8 +25,9 @@ namespace Uiml{
 
 	using System.Collections;
 	using System.Xml;
+    using System;
 
-	public interface IUimlElement
+	public interface IUimlElement : ICloneable
 	{
 		ArrayList Children { get ; } 
 		void Process(XmlNode n);

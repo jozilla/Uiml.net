@@ -41,6 +41,24 @@ namespace Uiml{
 			Process(n);
 		}
 
+		//ICloneable interface implementation:
+		public object Clone()
+		{
+			Style clone = new Style();
+            clone.CopyAttributesFrom(this);
+            if(m_properties != null)
+            {
+                clone.m_properties = new ArrayList();
+                for(int i = 0; i < m_properties.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)m_properties[i];
+                    clone.m_properties.Add(element.Clone());
+                }
+            }
+
+            return clone;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != STYLE)
@@ -150,16 +168,6 @@ namespace Uiml{
 			set { m_properties = value; }
 		}
 		
-		//ICloneable interface implementation:
-		public object Clone()
-		{
-			Style iamclone = new Style();
-			iamclone.Identifier = (string)Identifier.Clone();
-			iamclone.Source     = (string)Source.Clone();
-			iamclone.Children   = (ArrayList)Children.Clone();
-			return iamclone;
-		}
-
 		public const string STYLE = "style"; // deprecated
 		public const string IAM = "style";
 	}

@@ -56,6 +56,26 @@ namespace Uiml.Peers
 			Process(n);
 		}
 
+        public object Clone()
+        {
+            DMethod clone = new DMethod();
+            clone.CopyAttributesFrom(this);
+            clone.m_mapsTo = m_mapsTo;
+            clone.m_returnType = m_returnType;
+
+            if(m_children != null)
+            {
+                clone.m_children = new ArrayList();
+                for(int i = 0; i < m_children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)m_children[i];
+                    clone.m_children.Add(element.Clone());
+                }
+            }
+
+            return clone;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != IAM)

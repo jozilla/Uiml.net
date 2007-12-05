@@ -50,6 +50,28 @@ namespace Uiml.Executing
 			Process(xmlNode);
 		}
 
+        public virtual object Clone()
+        {
+            Action clone = new Action();
+            
+            if(m_subActions != null)
+            {
+                clone.m_subActions = new ArrayList();
+                for(int i = 0; i< m_subActions.Count; i++)
+                {
+                    IUimlElement tmp = (IUimlElement)m_subActions[i];
+                    clone.m_subActions.Add(tmp.Clone());
+                }
+            }
+            clone.m_renderer = m_renderer;
+            clone.m_propSetter = m_propSetter;
+
+            clone.PartTree = m_partTree;
+
+
+            return clone;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name == ACTION)
@@ -137,6 +159,29 @@ namespace Uiml.Executing
 		{
 			get { return m_subActions; }
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_subActions != null)
+                {
+                    for(int i = 0; i <m_subActions.Count; i++)
+                    {
+                        if(m_subActions[i] is Call)
+                        {
+                            Call tmp = (Call)m_subActions[i];
+                            tmp.PartTree = value;
+                        }
+                    }
+                }
+            }
+        }
 
 		public const string ACTION   = "action";
 		public const string PROPERTY = "property";

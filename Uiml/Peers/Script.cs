@@ -81,6 +81,19 @@ namespace Uiml.Peers
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            Script script = new Script();
+            script.CopyAttributesFrom(this);
+            script.m_scriptSource = m_scriptSource;
+            script.m_type = m_type;
+            script.m_preCompiled = m_preCompiled;
+            script.m_compiledAssemly = m_compiledAssemly;
+            script.m_retValue = m_retValue;
+
+            return script;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != IAM)

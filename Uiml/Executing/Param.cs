@@ -53,6 +53,37 @@ namespace Uiml.Executing
 			Process(xmlNode);
 		}
 
+        public virtual object Clone()
+        {
+            Param param = new Param();
+            
+            param.m_identifier = m_identifier;
+            param.m_name = m_name;
+            param.m_type = m_type;
+            param.m_lazy = m_lazy;
+
+            if(m_value != null)
+            {
+                if(m_value is IUimlElement)
+                {
+                    param.m_value = ((IUimlElement)m_value).Clone();
+                }
+                else
+                {
+                    param.m_value = m_value;
+                }
+            }
+            if(m_subprop != null)
+            {
+                param.m_subprop = m_subprop;
+            }
+
+            param.PartTree = m_partTree;
+
+            return param;
+
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name == IAM)
@@ -166,6 +197,20 @@ namespace Uiml.Executing
 				return al; 
 			}
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_value is Call)
+                    ((Call)m_value).PartTree = value;
+            }
+        }
 
 
 		public const string PARAM    = "param";

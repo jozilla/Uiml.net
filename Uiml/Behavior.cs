@@ -59,6 +59,25 @@ namespace Uiml{
 			m_waitingNode = n;
 		}
 
+        public virtual object Clone()
+        {
+            Behavior clone = new Behavior();
+            clone.CopyAttributesFrom(this);
+
+            if(m_rules != null)
+            {
+                clone.m_rules = new ArrayList();
+                for(int i = 0; i < m_rules.Count; i++)
+                {
+                    Rule rule = (Rule)m_rules[i];                    
+                    clone.m_rules.Add(rule.Clone());
+                }
+            }
+            clone.PartTree = PartTree;
+
+            return clone;
+        }
+
 		///<summary>
 		///Factory method that resolves this Behavior for a given Part 
 		///</summary>
@@ -96,6 +115,26 @@ namespace Uiml{
 				AttachPeers((Rule)enumRules.Current, logics);
 			}
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_rules != null)
+                {
+                    for(int i = 0; i < m_rules.Count; i++)
+                    {
+                        Rule rule = (Rule)m_rules[i];
+                        rule.PartTree = PartTree;
+                    }
+                }
+            }
+        }
 
 		private void AttachPeers(IUimlElement iue, ArrayList logics)
 		{

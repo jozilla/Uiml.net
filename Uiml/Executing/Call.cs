@@ -70,11 +70,61 @@ namespace Uiml.Executing
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            Call call = new Call();
+            call.m_name = m_name;
+            call.m_objectName = m_objectName;
+            call.m_methodName = m_methodName;
+
+            //Not cloneable objects
+            call.m_renderer = m_renderer;
+            call.m_callerFac = m_callerFac;
+            call.m_caller = m_caller;
+            call.m_outputParams = m_outputParams;
+
+            //clone the logic descriptions
+            if (m_logicDescriptions != null)
+            {
+                call.m_logicDescriptions = new ArrayList();
+                for (int i = 0; i < m_logicDescriptions.Count; i++)
+                {
+                    Logic logic = (Logic)((Logic)m_logicDescriptions[i]).Clone();
+                    call.m_logicDescriptions.Add(logic);
+                }
+            }            
+
+            if(m_params != null)
+            {
+                call.m_params = new ArrayList();
+                for(int i = 0; i < m_params.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement) m_params[i];
+                    call.m_params.Add(element.Clone());
+                }
+            }
+            //we do not clone this (its external application logic)
+            if(m_connObjects != null)
+            {
+                call.m_connObjects = new ArrayList();
+                for(int i = 0; i < m_connObjects.Count; i++)
+                {
+                    call.m_connObjects.Add(m_connObjects[i]);
+                }
+            }
+
+            call.PartTree = m_partTree;
+
+            return call;
+
+        }
+
 		public void AttachLogic(ArrayList logicDocs)
 		{
 			IEnumerator enumChildren = Children.GetEnumerator();
 			while(enumChildren.MoveNext())
 			{
+                //FIXME: Refactor this
 				try{
 				((Param)enumChildren.Current).AttachLogic(logicDocs);
 				}catch(Exception) { /* Never mind if this fails; it could be scripts */ }
@@ -218,6 +268,29 @@ namespace Uiml.Executing
 			get { return m_caller; }
 			set { m_caller = value; }
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_params != null)
+                {
+                    for(int i = 0; i < m_params.Count; i++)
+                    {
+                        if(m_params[i] is Param)
+                        {
+                            Param param = (Param)m_params[i];
+                            param.PartTree = value;
+                        }
+                    }
+                }
+            }
+        }
 
 		public const string CALL  = "call";
 		public const string PARAM = "param";

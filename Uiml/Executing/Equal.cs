@@ -30,11 +30,11 @@ namespace Uiml.Executing
 	using System.IO;
 
 	public class Equal :  IExecutable, IUimlElement
-	{
+	{	
         private Part m_partTree;
         private Event m_event;
         private object m_childObject;
-        private string m_childType;
+        private string m_childType = null;
 
 		public Equal()
 		{
@@ -45,7 +45,21 @@ namespace Uiml.Executing
 		public Equal(XmlNode xmlNode, Part partTop) : this()
 		{
             m_partTree = partTop;
-			Process(xmlNode);
+			Process(xmlNode);  
+		}
+
+        //TODO: Check cloning
+        public virtual object Clone()
+        {
+            Equal clone = new Equal();
+            if (m_childObject != null && m_childObject is ICloneable)
+                clone.m_childObject = ((ICloneable)m_childObject).Clone();
+            if (m_event != null)
+                clone.m_event = (Event)m_event.Clone();
+            clone.m_childType = m_childType;
+            clone.PartTree = PartTree;
+
+            return clone;
 		}
 
 		public void Process(XmlNode n)
@@ -128,7 +142,21 @@ namespace Uiml.Executing
 		public ArrayList Children
 		{
 			get { return null; }
-		}
+		}  
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if (m_childObject is Op)
+                    ((Op)m_childObject).PartTree = value;
+            }
+        }
 
         public const string IAM       = "equal";
         public const string EVENT     = "event";

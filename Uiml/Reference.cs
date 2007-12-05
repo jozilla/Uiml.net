@@ -47,6 +47,15 @@ namespace Uiml
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            Reference clone = new Reference();
+            clone.m_constantName = m_constantName;
+            clone.m_urlName = m_urlName;
+
+            return clone;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != REFERENCE)
