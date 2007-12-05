@@ -141,7 +141,7 @@ namespace Uiml.Rendering.SWF
 		/// This is the ``core'' rendering method. It will recursively descend into the Part hierarchy
 		/// and using the .net reflection mechanisms to create the appropriate widgets
 		///</summary>
-		private Control Render(Part uiPart, Style uiStyle) //throws WrongNestingException, MappingNotFoundException
+		public Control Render(Part uiPart, Style uiStyle) //throws WrongNestingException, MappingNotFoundException
 		{
 			string className = Voc.MapsOnCls(uiPart.Class);				
 			Type classType = GuiAssembly.GetType(className);
