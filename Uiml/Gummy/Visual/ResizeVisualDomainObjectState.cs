@@ -272,7 +272,7 @@ namespace Uiml.Gummy.Visual
             Dictionary<BoxID,Rectangle>.Enumerator enumerator = m_rectangles.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                g.FillRectangle(Brushes.RosyBrown, enumerator.Current.Value);
+                g.FillRectangle(Brushes.Black, enumerator.Current.Value);
             }
         }
     }
