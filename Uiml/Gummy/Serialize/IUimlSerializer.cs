@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Collections;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Visual;
-using Uiml.Peers;
 
 
 namespace Uiml.Gummy.Serialize

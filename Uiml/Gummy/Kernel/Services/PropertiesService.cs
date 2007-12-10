@@ -22,6 +22,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void Init()
         {
+            Text = "Properties";
             SelectedDomainObject.Instance.DomainObjectSelected += new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             Size = new Size(225, 500);
         }

@@ -24,6 +24,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void Init()
         {
+            Text = "Gummy";
             List<VisualDomainObject> visualDomainObjects = new List<VisualDomainObject>();
             Hashtable dclasses = ActiveSerializer.Instance.Serializer.Voc.DClasses;
             IDictionaryEnumerator enumerator = dclasses.GetEnumerator();
