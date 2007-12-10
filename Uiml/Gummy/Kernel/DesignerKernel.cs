@@ -14,6 +14,7 @@ namespace Uiml.Gummy.Kernel
         ToolboxService m_tbService = null;
         CanvasService m_cService = null;
         PropertiesService m_pService = null;
+        ApplicationGlueService m_aService = null;
 
         public DesignerKernel(string vocabulary)
         {
@@ -22,6 +23,7 @@ namespace Uiml.Gummy.Kernel
             m_tbService = new ToolboxService();
             m_cService = new CanvasService();
             m_pService = new PropertiesService();
+            m_aService = new ApplicationGlueService();
         }
 
         public void Init()
@@ -32,6 +34,8 @@ namespace Uiml.Gummy.Kernel
             m_cService.Visible = true;
             m_pService.Init();
             m_pService.Visible = true;
+            m_aService.Init();
+            m_aService.Visible = true;
 
             Application.Run(m_tbService);
         }
