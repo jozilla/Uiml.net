@@ -19,6 +19,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void Init()
         {
+            Text = "Canvas";
             Size = new Size(400, 400);
             AllowDrop = true;           
             DragDrop += new DragEventHandler(onDragDrop);
