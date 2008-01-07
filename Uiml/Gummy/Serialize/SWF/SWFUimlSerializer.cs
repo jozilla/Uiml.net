@@ -25,8 +25,8 @@ namespace Uiml.Gummy.Serialize.SWF
         public DomainObject Create()
         {
             DomainObject domObj = new DomainObject();
-            domObj.PositionManipulator = new SWFPositionManipulator(domObj, m_renderer);
-            domObj.SizeManipulator = new SWFSizeManipulator(domObj, m_renderer);
+            domObj.PositionManipulator = new SWFPositionManipulator(domObj);
+            domObj.SizeManipulator = new SWFSizeManipulator(domObj);
 
             return domObj;
         }

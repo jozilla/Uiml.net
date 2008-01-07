@@ -19,12 +19,33 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void Init()
         {
+            Text = "Canvas";
             Size = new Size(400, 400);
             AllowDrop = true;           
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
             DragLeave += new EventHandler(onDragLeave);
             DragOver += new DragEventHandler(onDragOver);            
+        }
+
+        public bool Open()
+        {
+            this.Visible = true;
+            return true;
+        }
+
+        public bool Close()
+        {
+            this.Visible = false;
+            return true;
+        }
+
+        public string ServiceName
+        {
+            get
+            {
+                return "gummy-canvas";
+            }
         }
 
         void onDragLeave(object sender, EventArgs e)

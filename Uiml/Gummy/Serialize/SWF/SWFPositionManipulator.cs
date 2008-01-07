@@ -13,7 +13,7 @@ namespace Uiml.Gummy.Serialize.SWF
     {
         public Property m_positionProperty = null;
 
-        public SWFPositionManipulator(DomainObject dom, IRenderer renderer) : base(dom, renderer)
+        public SWFPositionManipulator(DomainObject dom) : base(dom)
         {
             checkProperties();
         }
@@ -21,7 +21,7 @@ namespace Uiml.Gummy.Serialize.SWF
 
         public override object Clone()
         {
-            SWFPositionManipulator clone = new SWFPositionManipulator(null,m_renderer);
+            SWFPositionManipulator clone = new SWFPositionManipulator(null);
 
             return clone;
         }

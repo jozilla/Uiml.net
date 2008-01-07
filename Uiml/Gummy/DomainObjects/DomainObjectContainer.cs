@@ -20,5 +20,21 @@ namespace Uiml.Gummy.Domain
                 return m_children;
             }
         }
+
+        public override DomainObject MoveNext()
+        {
+            return base.MoveNext();
+        }
+
+        private void TraversePostOrder()
+        {
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] is DomainObjectContainer)
+                {
+                    TraversePostOrder();
+                }
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Uiml.Gummy
         {
             DesignerKernel kernel = new DesignerKernel("");
             kernel.Init();
+            kernel.Open();
         }
     }
 }

@@ -22,8 +22,29 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void Init()
         {
+            Text = "Properties";
             SelectedDomainObject.Instance.DomainObjectSelected += new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             Size = new Size(225, 500);
+        }
+
+        public bool Open()
+        {
+            this.Visible = true;
+            return true;
+        }
+
+        public bool Close()
+        {
+            this.Visible = false;
+            return true;
+        }
+
+        public string ServiceName
+        {
+            get
+            {
+                return "gummy-propertypanel";
+            }
         }
 
         void onDomainObjectSelected(Domain.DomainObject dom, EventArgs e)
