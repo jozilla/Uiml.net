@@ -77,7 +77,7 @@
     <Compile Include="Uiml\Gummy\Serialize\SWF\SWFSizeManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SWF\SWFUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\Swing\SwingPositionManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Serialize\Swing\SwingSerializer.cs" />
+    <Compile Include="Uiml\Gummy\Serialize\Swing\SwingUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\Swing\SwingSizeManipulator.cs" />
     <Compile Include="Uiml\Gummy\Visual\ResizeVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\SelectVisualDomainObjectState.cs" />
