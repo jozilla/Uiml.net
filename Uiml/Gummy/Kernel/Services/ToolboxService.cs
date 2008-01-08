@@ -24,6 +24,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void Init()
         {
+            Text = "Gummy";
             List<VisualDomainObject> visualDomainObjects = new List<VisualDomainObject>();
             Hashtable dclasses = ActiveSerializer.Instance.Serializer.Voc.DClasses;
             IDictionaryEnumerator enumerator = dclasses.GetEnumerator();
@@ -61,6 +62,26 @@ namespace Uiml.Gummy.Kernel.Services
             }
             int k = visualDomainObjects.Count;
             Size = new Size(size.Width * 2 + 15, height + size.Height);
+        }
+
+        public bool Open()
+        {
+            this.Visible = true;
+            return true;
+        }
+
+        public bool Close()
+        {
+            this.Visible = false;
+            return true;
+        }
+
+        public string ServiceName
+        {
+            get
+            {
+                return "gummy-toolbox";
+            }
         }
     }
 }

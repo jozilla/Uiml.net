@@ -191,7 +191,7 @@ namespace Uiml.Rendering
 			string className  = Voc.MapsOnCls(part.Class);
 			Type classType = GuiAssembly.GetType(className);
 
-			IEnumerator enumProps = style.GetClassProperties(part.Identifier);
+			IEnumerator enumProps = style.GetClassProperties(part.Class);
 			while(enumProps.MoveNext())
 			{
 				Property p = (Property)enumProps.Current;

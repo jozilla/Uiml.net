@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\PropertiesService.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,7 +59,8 @@
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectAttribute.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectContainer.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectFactory.cs" />
-    <Compile Include="Uiml\Gummy\Kernel\DesignerKernel.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\DesignerKernel.cs">
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Selected\SelectedDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\CanvasService.cs">
       <SubType>Form</SubType>
@@ -72,9 +74,6 @@
     <Compile Include="Uiml\Gummy\Serialize\IUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFPositionManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFSizeManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Visual\ResizeVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\SelectVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\VisualDomainObjectState.cs">
