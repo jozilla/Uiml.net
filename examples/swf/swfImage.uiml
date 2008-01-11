@@ -15,7 +15,7 @@
 			<property part-name="Rocks" name="position">100,5</property>
 			<property part-name="Plaatje" name="position">50,50</property>
 			<property part-name="Plaatje" name="size">184,79</property>
-			<property part-name="Plaatje" name="file">mono1.gif</property>
+			<property part-name="Plaatje" name="file">http://www.mono-project.com/files/3/31/Mono1.gif</property>
 		</style>
 	</interface>
 	<peers>

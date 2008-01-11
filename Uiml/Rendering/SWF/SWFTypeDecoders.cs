@@ -30,6 +30,8 @@ namespace Uiml.Rendering.SWF
 	using System;
 	using System.Collections;
 	using System.Reflection;
+    using System.Net;
+    using System.IO;
 
 	using System.Windows.Forms;
 	using System.Drawing;
@@ -51,6 +53,19 @@ namespace Uiml.Rendering.SWF
         {
 			string[] coords = val.Split(new Char[] {','});
 			return new System.Drawing.Size(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
+        }
+
+        [TypeDecoderMethod]
+        public static System.Drawing.Image DecodeImage(string file)
+        {
+            if (file.StartsWith("http://"))
+            {
+                // load image from the web
+                Stream ImageStream = new WebClient().OpenRead(file);
+                return Image.FromStream(ImageStream);
+            }
+
+            return System.Drawing.Image.FromFile((string) file);
         }
 
    		[TypeDecoderMethod]
