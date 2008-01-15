@@ -134,6 +134,47 @@ namespace Uiml.Peers
 			}
 		}
 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+
+            if (Identifier.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(ID);
+                attr.Value = Identifier;
+                node.Attributes.Append(attr);
+            }
+            if (MapsType.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TYPE);
+                attr.Value = MapsType;
+                node.Attributes.Append(attr);
+            }
+            if (MapsTo.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TO);
+                attr.Value = MapsTo;
+                node.Attributes.Append(attr);
+            }
+            if (ReturnType.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(RETURN_TYPE);
+                attr.Value = ReturnType;
+                node.Attributes.Append(attr);
+            }
+
+            if (HasChildren)
+            {
+                for (int i = 0; i < Children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)Children[i];
+                    node.AppendChild(element.Serialize(doc));
+                }
+            }
+
+            return node;
+        }
+
         public bool IsDefaultProperty 
         {
             get { return m_defaultProp != null; }

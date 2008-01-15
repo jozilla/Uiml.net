@@ -27,6 +27,7 @@ namespace Uiml
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	public class Logic : UimlAttributes, IUimlElement
 	{
@@ -56,6 +57,18 @@ namespace Uiml
 			if(n.Name == IAM)
 				base.ReadAttributes(n);					
 		}
+
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            return node;
+        }
 
 		public ArrayList Children
 		{

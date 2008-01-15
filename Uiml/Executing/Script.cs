@@ -101,6 +101,19 @@ namespace Uiml.Executing
 			Source = n.InnerText;
 		}
 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            if (Type.Length > 0)
+            {
+                XmlAttribute type = doc.CreateAttribute(TYPE);
+                type.Value = Type;
+                node.Attributes.Append(type);
+            }
+            node.InnerText = Source;
+            return node;
+        }
+
 		public void GetEvents(ArrayList al)
 		{
 		}

@@ -115,6 +115,11 @@ namespace Uiml.Rendering
 
             AddDefaultProperties(part);
 
+            if (part.Class == "HBox")
+            {
+                int k = 0;
+            }
+
 			try
 			{
 				LoadAdHocProperties(ref uiObject, part, style);

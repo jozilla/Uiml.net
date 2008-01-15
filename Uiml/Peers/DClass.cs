@@ -27,6 +27,7 @@
 using System;
 using System.Xml;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Uiml.Peers
 {
@@ -46,9 +47,9 @@ namespace Uiml.Peers
 	{
 		protected ArrayList m_children;
 
-		protected string m_mapsTo;
-		protected string m_mapsType;
-		protected string m_usedInTag;
+		protected string m_mapsTo = "";
+		protected string m_mapsType = "";
+		protected string m_usedInTag = "";
 
 		public enum USED_IN_TAG_VALS { Event, Listener, Part };
 		public const string EVENT = "event";
@@ -108,7 +109,49 @@ namespace Uiml.Peers
 			ProcessChildren(n.ChildNodes);
 		}
 
-		protected void ProcessChildren(XmlNodeList l)
+
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+
+            if (MapsTo.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TO);
+                attr.Value = MapsTo;
+                attributes.Add(attr);
+            }
+            if (MapsType.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TYPE);
+                attr.Value = MapsType;
+                attributes.Add(attr);
+            }
+            if (UsedInTag.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(USED_IN_TAG);
+                attr.Value = UsedInTag;
+                attributes.Add(attr);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            if (HasChildren)
+            {
+                for (int i = 0; i < Children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)Children[i];
+                    node.AppendChild(element.Serialize(doc));
+                }
+            }
+
+            return node;
+        }
+
+        protected void ProcessChildren(XmlNodeList l)
 		{
 			IEnumerator enumChildren = l.GetEnumerator();
 

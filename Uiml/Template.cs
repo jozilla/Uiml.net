@@ -69,6 +69,26 @@ namespace Uiml{
 			Process(n);
 		}
 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+
+            return node;
+        }
+
+        public virtual object Clone()
+        {
+            Template clone = new Template();
+
+            clone.m_identifier = m_identifier;
+            if(m_top != null)
+            {
+                clone.m_top = (IUimlElement)m_top.Clone();
+            }
+
+            return clone;
+        }
+
         public virtual object Clone()
         {
             Template clone = new Template();

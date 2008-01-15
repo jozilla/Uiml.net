@@ -62,6 +62,29 @@ namespace Uiml.LayoutManagement
 			ProcessStrength();
 		}
 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            //FIXME
+            return node;
+        }
+
+        public virtual object Clone()
+        {
+            Constraint clone = new Constraint();
+            clone.m_strength = m_strength;
+            clone.m_rule = m_rule;
+            clone.m_clConstraint = m_clConstraint;
+            clone.m_clStrength = m_clStrength;
+
+            if(m_layout != null)
+            {
+                clone.m_layout = (Layout)m_layout.Clone();
+            }
+
+            return clone;
+        }
+
         public virtual object Clone()
         {
             Constraint clone = new Constraint();

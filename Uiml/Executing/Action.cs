@@ -92,7 +92,20 @@ namespace Uiml.Executing
 			}
 		}
 
-		public System.Object Execute()
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            //Construct node
+            XmlNode node = doc.CreateElement(ACTION);
+            //Construct children
+            for (int i = 0; i < Children.Count; i++)
+            {
+                XmlNode child = ((IUimlElement)Children[i]).Serialize(doc);
+                node.AppendChild(child);
+            }
+            return node;
+        }
+
+        public System.Object Execute()
 		{
 			foreach(System.Object o in m_subActions)
 			{

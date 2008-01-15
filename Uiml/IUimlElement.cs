@@ -31,5 +31,7 @@ namespace Uiml{
 	{
 		ArrayList Children { get ; } 
 		void Process(XmlNode n);
+
+        XmlNode Serialize(XmlDocument doc);
 	}
 }

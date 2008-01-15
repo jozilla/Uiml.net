@@ -27,12 +27,13 @@ namespace Uiml{
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 
 	public class Presentation : UimlAttributes, IUimlElement{
 
-		private Vocabulary m_voc;
-		private string m_base;
+		private Vocabulary m_voc = null;
+		private string m_base = "";
 
 		public Presentation()
 		{ }
@@ -75,6 +76,26 @@ namespace Uiml{
 				}
 			}
 		}
+
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+
+            if (m_base.Length > 0)
+            {
+                XmlAttribute attribute = doc.CreateAttribute(BASE);
+                attribute.Value = m_base;
+                attributes.Add(attribute);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            return node;
+        }
 
 		public string Base
 		{
