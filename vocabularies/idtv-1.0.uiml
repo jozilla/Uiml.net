@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<!--
+Java IDTV Renderer
+    
+	                     Expertise Centre for Digital Media (http://edm.luc.ac.be)
+								Limburgs Universitair Centrum
+
+-->
+<uiml>
+ <presentation base="idtv-1.0" id="iDTV">
+	
+	<d-class id="Container" used-in-tag="part" maps-type="class" maps-to="DIContainer">		
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="backgroundcolor" maps-type="setMethod" maps-to="setBackgroundColor">
+			<d-param type="java.awt.Color"/>
+		</d-property>
+	</d-class>
+
+
+	<d-class id="NavigationIndicator" used-in-tag="part" maps-type="class" maps-to="DINavigationIndicator">		
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+	</d-class>
+	
+
+	<d-class id="Label" used-in-tag="part" maps-type="class" maps-to="DILabel">
+		<d-property id="text" maps-type="setMethod" maps-to="setText">
+			<d-param type="java.lang.String"/>
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+		<d-property id="color" maps-type="setMethod" maps-to="setColor">
+			<d-param type="java.awt.Color"/>
+		</d-property>
+		<d-property id="getLabel" maps-type="getMethod" returns-type="java.lang.String" maps-to="getLabel"/>
+	</d-class>
+
+
+	<d-class id="TextField" used-in-tag="part" maps-type="class" maps-to="DITextField">
+		<d-property id="text" maps-type="setMethod" maps-to="setText">
+			<d-param type="java.lang.String"/>
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="color" maps-type="setMethod" maps-to="setColor">
+			<d-param type="java.awt.Color"/>
+		</d-property>
+		<d-property id="getText" maps-type="getMethod" returns-type="java.lang.String" maps-to="getText"></d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+	</d-class>
+
+
+	<d-class id="Checkbox" used-in-tag="part" maps-type="class" maps-to="DICheckbox">
+		<d-property id="imageUnchecked" maps-type="setMethod" maps-to="setUncheckedImage">
+			<d-param type="java.lang.String"/>
+		</d-property>
+		<d-property id="imageChecked" maps-type="setMethod" maps-to="setCheckedImage">
+			<d-param type="java.lang.String"/>
+		</d-property>
+		<d-property id="text" maps-type="setMethod" maps-to="setText">
+			<d-param type="java.lang.String"/>
+		</d-property>
+		<d-property id="setChecked" maps-type="setMethod" maps-to="setChecked">
+			<d-param type="boolean"/>
+		</d-property>
+		<d-property id="flipState" maps-type="setMethod" maps-to="flipState"/>
+		<d-property id="isChecked" maps-type="getMethod" returns-type="boolean" maps-to="isChecked"/>
+		<d-property id="getValue" maps-type="getMethod" returns-type="java.lang.String" maps-to="getValue"/>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+	</d-class>
+
+
+	<d-class id="Image" used-in-tag="part" maps-type="class" maps-to="DIImage">
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="visible" maps-type="setMethod" maps-to="setVisible">
+			<d-param type="boolean"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+		<d-property id="filename" maps-type="setMethod" maps-to="loadFile">
+			<d-param type="java.lang.String"/>
+		</d-property>
+	</d-class>
+
+	<d-class id="ActionImage" used-in-tag="part" maps-type="class" maps-to="DIActionImage">
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="visible" maps-type="setMethod" maps-to="setVisible">
+			<d-param type="boolean"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+		<d-property id="filename" maps-type="setMethod" maps-to="loadFile">
+			<d-param type="java.lang.String"/>
+		</d-property>
+	</d-class>
+
+
+	<d-class id="Button" used-in-tag="part" maps-type="class" maps-to="DIButton">
+		<d-property id="text" maps-type="setMethod" maps-to="setText">
+			<d-param type="java.lang.String"/>
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="color" maps-type="setMethod" maps-to="setColor">
+			<d-param type="java.awt.Color"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+		<d-property id="getLabel" maps-type="getMethod" returns-type="java.lang.String" maps-to="getLabel"/>
+	</d-class>
+
+
+	<d-class id="ListGroup" used-in-tag="part" maps-type="class" maps-to="DIListGroup">
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+	</d-class>
+
+
+	<d-class id="ListItem" used-in-tag="part" maps-type="class" maps-to="DIListItem">
+		<d-property id="text" maps-type="setMethod" maps-to="setLabel">
+			<d-param type="java.lang.String"/>
+		</d-property>
+		<d-property id="text2" maps-type="setMethod" maps-to="setSecondLabel">
+			<d-param type="java.lang.String"/>
+		</d-property>
+		<d-property id="size" maps-type="setMethod" maps-to="setSize">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+		<d-property id="position" maps-type="setMethod" maps-to="setPosition">
+			<d-param type="int"/>
+			<d-param type="int"/>		
+		</d-property>
+	</d-class>
+ </presentation>
+</uiml>
