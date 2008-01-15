@@ -29,6 +29,7 @@ namespace Uiml.Executing
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 	using System.IO;
 
 	
@@ -103,8 +104,30 @@ namespace Uiml.Executing
 				}
 			}
 		}
-		
-		public void Connect(object o)
+
+        public override XmlNode Serialize( XmlDocument doc )
+        {
+            XmlElement element = doc.CreateElement(IAM);
+            
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            foreach( XmlAttribute attr in attributes )
+            {
+                element.Attributes.Append( attr );
+            }
+
+            ArrayList list = new ArrayList();
+            list.Add(m_condition);
+            list.Add(m_action);            
+            for (int i = 0; i < list.Count; i++)
+            {
+                IUimlElement uimlElement = (IUimlElement)list[i];
+                element.AppendChild(uimlElement.Serialize(doc));
+            }
+
+            return element;
+        }
+
+        public void Connect(object o)
 		{
 			m_action.Connect(o);
 		}
@@ -141,7 +164,10 @@ namespace Uiml.Executing
 
 		public ArrayList Children
 		{
-			get { return null; }
+			get 
+            {
+                return null;
+            }
         }
 
         public bool IsEmpty

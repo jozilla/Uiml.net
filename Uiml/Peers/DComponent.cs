@@ -27,6 +27,7 @@
 using System;
 using System.Xml;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Uiml.Peers
 {
@@ -45,8 +46,8 @@ namespace Uiml.Peers
 	{
 		protected ArrayList m_children = null;
 
-		protected string m_mapsTo;
-		protected Location m_location;		
+		protected string m_mapsTo = "";
+		protected Location m_location = null;		
 
 		public DComponent()
 		{}
@@ -110,6 +111,41 @@ namespace Uiml.Peers
 				}
 			}
 		}
+
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            //Construct the node
+            XmlNode node = doc.CreateElement(IAM);
+
+            //Add attributes
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+
+            if (MapsTo.Length > 0) {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TO);
+                attr.Value = MapsTo;
+                attributes.Add(attr);
+            }
+            if (Location != null) {
+                XmlAttribute attr = doc.CreateAttribute(LOCATION);
+                attr.Value = Location.Value;
+                attributes.Add(attr);
+            }
+            
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            //Add children
+            for (int i = 0; i < Children.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)Children[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+
+            //Return the constructed node
+            return node;
+        }
 
 		public bool HasChildren
 		{

@@ -36,6 +36,7 @@ namespace Uiml.Peers
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 	using System.IO;
 
 	using System.Reflection;
@@ -102,15 +103,33 @@ namespace Uiml.Peers
             base.ReadAttributes(n);
 			XmlAttributeCollection attr = n.Attributes;
 			
-			if(attr.GetNamedItem(ID) != null)
-				Identifier = attr.GetNamedItem(ID).Value;
-
 			if(attr.GetNamedItem(TYPE) != null)
 				Type = attr.GetNamedItem(TYPE).Value;
 			else
 				Console.WriteLine("Warning: " + IAM + " should have \"" + TYPE + "\" attribute!");
 			ScriptSource = n.InnerText;
 		}
+
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+
+            if (Type.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(TYPE);
+                attr.Value = Type;
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            node.InnerText = ScriptSource;
+
+            return node;
+        }
 
 		public void GetEvents(ArrayList al)
 		{

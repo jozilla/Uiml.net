@@ -28,6 +28,7 @@ namespace Uiml {
 	using System.Text;
 	using System.Reflection;
 	using System.Collections;
+    using System.Collections.Generic;
 	using System.Globalization;
 	
 	using Uiml.Executing.Binding;
@@ -83,7 +84,7 @@ namespace Uiml {
 		private ArrayList m_properties;
 		private ArrayList m_layout;
 		private Hashtable m_componentsByDepth;
-		private string    m_class;
+		private string    m_class = null;
 		private Part      parent = null;
 
 		///<summary>
@@ -167,7 +168,44 @@ namespace Uiml {
 			}
 		}
 
-		private void ProcessSubTree(XmlNode n)
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+
+            if (Class != null)
+            {
+                XmlAttribute attr = doc.CreateAttribute(CLASS);
+                attr.Value = Class;
+                attributes.Add(attr);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            serializeArrayList(m_children,doc,ref node);
+            serializeArrayList(m_layout,doc,ref node);
+            if (m_properties.Count > 0)
+            {
+                XmlNode style = doc.CreateElement(STYLE);
+                node.AppendChild(style);
+                serializeArrayList(m_properties, doc, ref style);
+            }
+            return node;
+        }
+
+        private void serializeArrayList(ArrayList toSerialize, XmlDocument doc, ref XmlNode node)
+        {
+            for (int i = 0; i < toSerialize.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)toSerialize[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+        }
+
+        private void ProcessSubTree(XmlNode n)
 		{
 			XmlAttributeCollection attr = n.Attributes;
 			if(attr.GetNamedItem(CLASS)!=null)

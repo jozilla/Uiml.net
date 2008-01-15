@@ -35,10 +35,10 @@ namespace Uiml.Executing
 	{
 		private string m_executeType;
 		private System.Object m_ExecuteObject;
-		private string m_name;
-		private string m_class;
-		private string m_partName;
-		private string m_partClass;
+		private string m_name = "";
+		private string m_class = "";
+		private string m_partName = "";
+		private string m_partClass = "";
 
 		private IExecutable m_parent;
 		
@@ -83,6 +83,36 @@ namespace Uiml.Executing
 			}
 		}
 
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(EVENT);
+            if (Name.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(NAME);
+                attr.Value = Name;
+                node.Attributes.Append(attr);
+            }
+            if (Class.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(CLASS);
+                attr.Value = Class;
+                node.Attributes.Append(attr);
+            }
+            if (PartName.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(PARTNAME);
+                attr.Value = PartName;
+                node.Attributes.Append(attr);
+            }
+            if (PartClass.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(PARTCLASS);
+                attr.Value = PartClass;
+                node.Attributes.Append(attr);
+            }
+
+            return node;
+        }
 
 		public System.Object Execute()
 		{
