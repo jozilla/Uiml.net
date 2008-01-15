@@ -32,10 +32,10 @@ namespace Uiml{
 	///</summary>
 	public abstract class UimlAttributes {
 
-		protected string m_identifier = "";
-		protected string m_source = "";
-		protected string m_how = "";
-		protected string m_export = "";
+		protected string m_identifier = null;
+		protected string m_source = null;
+		protected string m_how = null;
+		protected string m_export = null;
 
 		public enum HOW_VALS { Union,  Cascade,  Replace };
 		public const string REPLACE = "replace";
@@ -83,7 +83,7 @@ namespace Uiml{
 
 		public bool SourceAvailable
 		{
-			get { return (m_source.Length > 0); }
+			get { return (m_source != null); }
 		}
 
 		public string How
@@ -104,25 +104,25 @@ namespace Uiml{
         {
             List<XmlAttribute> attributesList = new List<XmlAttribute>();
 
-            if (m_identifier.Length > 0)
+            if (m_identifier != null)
             {
                 XmlAttribute id = doc.CreateAttribute(ID);
                 id.Value = m_identifier;
                 attributesList.Add(id);
             }
-            if (m_source.Length > 0)
+            if (m_source != null)
             {
                 XmlAttribute source = doc.CreateAttribute(SOURCE);
                 source.Value = m_source;
                 attributesList.Add(source);
             }
-            if (m_how.Length > 0)
+            if (m_how != null)
             {
                 XmlAttribute how = doc.CreateAttribute(HOW);
                 how.Value = m_how;
                 attributesList.Add(how);
             }
-            if (m_export.Length > 0)
+            if (m_export != null)
             {
                 XmlAttribute export = doc.CreateAttribute(EXPORT);
                 export.Value = m_export;

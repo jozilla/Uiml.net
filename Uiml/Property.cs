@@ -48,7 +48,7 @@ namespace Uiml{
 	public class Property : UimlAttributes, IUimlElement, ICloneable {
 
 		// Properties
-		private string m_name = "";
+		private string m_name = null;
 		private System.Object m_value = null;
 
 		//member vars
@@ -174,7 +174,7 @@ namespace Uiml{
             XmlNode node = doc.CreateElement(IAM);
             //Construct attributes
             List<XmlAttribute> attributes = CreateAttributes(doc);
-            if (Name.Length > 0)
+            if (Name != null)
             {
                 XmlAttribute attr = doc.CreateAttribute(NAME);
                 attr.Value = Name;

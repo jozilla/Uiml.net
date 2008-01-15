@@ -43,16 +43,16 @@ namespace Uiml {
 		///</summary>
 		public UimlDocument(String fName)
 		{
-			try
-			{
+			//try
+			//{
 				XmlDocument doc = new XmlDocument();
 				doc.Load(fName);
 				Load(doc);
-			}
-			catch(Exception e)
-			{					
-				Console.WriteLine("Error loading {0} ({1})", fName, e);
-			}
+			//}
+			//catch(Exception e)
+			//{					
+			//	Console.WriteLine("Error loading {0} ({1})", fName, e);
+			//}
 		}
 
 		public UimlDocument(XmlNode uimlTopNode)

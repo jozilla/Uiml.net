@@ -84,7 +84,7 @@ namespace Uiml {
 		private ArrayList m_properties;
 		private ArrayList m_layout;
 		private Hashtable m_componentsByDepth;
-		private string    m_class = "";
+		private string    m_class = null;
 		private Part      parent = null;
 
 		///<summary>
@@ -173,7 +173,7 @@ namespace Uiml {
             XmlNode node = doc.CreateElement(IAM);
             List<XmlAttribute> attributes = CreateAttributes(doc);
 
-            if (Class.Length > 0)
+            if (Class != null)
             {
                 XmlAttribute attr = doc.CreateAttribute(CLASS);
                 attr.Value = Class;
