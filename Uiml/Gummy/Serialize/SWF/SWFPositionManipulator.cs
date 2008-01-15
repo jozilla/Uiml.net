@@ -22,7 +22,6 @@ namespace Uiml.Gummy.Serialize.SWF
         public override object Clone()
         {
             SWFPositionManipulator clone = new SWFPositionManipulator(null);
-
             return clone;
         }
 

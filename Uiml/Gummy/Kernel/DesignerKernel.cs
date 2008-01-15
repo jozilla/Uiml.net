@@ -17,6 +17,7 @@ namespace Uiml.Gummy.Kernel
         public DesignerKernel(string vocabulary): base()
         {
             //TODO: needs to be loaded from a config file or dialog window
+            //ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer("idtv-1.0");
             ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer("swf-1.1");
         }
 

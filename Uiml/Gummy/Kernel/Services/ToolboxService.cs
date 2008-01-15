@@ -20,6 +20,7 @@ namespace Uiml.Gummy.Kernel.Services
         public ToolboxService() : base()
         {
             Size = new Size(500, 500);
+            BackColor = Color.DarkGray;
         }
 
         public void Init()

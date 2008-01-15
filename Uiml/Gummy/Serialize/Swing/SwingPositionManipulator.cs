@@ -9,27 +9,46 @@ using Uiml.Gummy.Domain;
 namespace Uiml.Gummy.Serialize.Swing
 {
     public class SwingPositionManipulator : PositionManipulator
-    {
-        public SwingPositionManipulator(DomainObject obj) : base(obj)
+    {public Property m_positionProperty = null;
+
+        public SwingPositionManipulator(DomainObject dom)
+            : base(dom)
         {
+            checkProperties();
         }
 
-        public override Point Position
-        {
-            get
-            {
-                return new Point(2,2);    
-            }
-            set
-            {
-                ;
-            }
-        }
 
         public override object Clone()
         {
             SwingPositionManipulator clone = new SwingPositionManipulator(null);
             return clone;
         }
+
+        private void checkProperties()
+        {
+            if (DomainObject == null)
+                return;
+            if (m_positionProperty == null)
+                m_positionProperty = DomainObject.FindProperty(IAM);
+        }
+
+        public override System.Drawing.Point Position
+        {
+            get
+            {
+                checkProperties();
+                string position = (string)m_positionProperty.Value;
+                string[] stringpos = position.Split(new char[] { ',' });
+                Point pnt = new Point(Convert.ToInt32(stringpos[0]), Convert.ToInt32(stringpos[1]));
+                return pnt;
+            }
+            set
+            {
+                checkProperties();
+                m_positionProperty.Value = value.X + "," + value.Y;
+            }
+        }
+
+        public static string IAM = "position";
     }
 }

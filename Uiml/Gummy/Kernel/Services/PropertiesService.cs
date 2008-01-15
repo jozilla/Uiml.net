@@ -25,6 +25,7 @@ namespace Uiml.Gummy.Kernel.Services
             Text = "Properties";
             SelectedDomainObject.Instance.DomainObjectSelected += new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             Size = new Size(225, 500);
+            BackColor = Color.DarkGray;
         }
 
         public bool Open()
