@@ -29,8 +29,7 @@ namespace Uiml {
     using System.Xml.Serialization;
 
 	using Uiml.LayoutManagement;
-	
-    [XmlRoot("uiml")]
+
 	public class UimlDocument : IUimlElement, IUimlComponent, ICloneable {
 		private Interface m_interface;
 		private ArrayList m_peers;
@@ -93,21 +92,46 @@ namespace Uiml {
 			}
 		}
 
-        [XmlArray("interface")]
-		public Interface UInterface 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(UIML);
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] != null)
+                {
+                    if (Children[i] is IUimlElement)
+                    {
+                        IUimlElement element = (IUimlElement)Children[i];
+                        node.AppendChild(element.Serialize(doc));
+                    }
+                    else if (Children[i] is ArrayList)
+                    {
+                        ArrayList peers = (ArrayList)Children[i];
+                        for (int j = 0; j < peers.Count; j++)
+                        {
+                            IUimlElement element = (IUimlElement)m_peers[j];
+                            node.AppendChild(element.Serialize(doc));
+                        }
+                    }
+                }
+            }
+
+            return node;
+        }
+
+        public Interface UInterface 
 		{
 			get { return m_interface; }
 			set {	m_interface = value; }
 		}
 
-        [XmlIgnore]
 		public Head UHead
 		{
 			get { return m_head; }
 			set { m_head = value; }
 		}
 
-        [XmlIgnore]
 		public String Title
 		{
 			get 
@@ -121,13 +145,11 @@ namespace Uiml {
 			}
 		}
 
-        [XmlIgnore]
 		public IEnumerator Peers
 		{
 			get { return m_peers.GetEnumerator(); }
 		}
 
-        [XmlIgnore]
         public ArrayList ListOfPeers
         {
             get { return m_peers; }
@@ -155,7 +177,6 @@ namespace Uiml {
 		///<summary>
 		///For now, only a single vocabulary peer will be taken into account
 		///</summary>
-        [XmlIgnore]
 		public String Vocabulary
 		{
 			get 
@@ -264,7 +285,6 @@ namespace Uiml {
 			}
 		}
 
-        [XmlIgnore]
 		public ArrayList Children
 		{
 			get 
@@ -311,30 +331,27 @@ namespace Uiml {
 		public void Add(string pattern, IUimlComponent component) { /* do nothing */ }
 		public void Remove(IUimlComponent component) { /* do nothing */ }
 
-        [XmlIgnore]
 		public UimlComposite Composite 
 		{ 
 			get { return null; } 
 		}
-        [XmlIgnore]
+
 		public Hashtable CompChildren
 		{
 			get {return null; }
 		}
 
-        [XmlIgnore]
+
 		public ConstraintSystem Solver
 		{
 			get { return m_solver; }
 		}
 
-        [XmlIgnore]
 		public bool HasSolver
 		{
 			get { return Solver != null; }
 		}
 
-        [XmlIgnore]
 		public bool HasLayout
 		{
 			get { return m_hasLayout; }

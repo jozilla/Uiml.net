@@ -27,6 +27,7 @@ namespace Uiml
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 
 	public class Peer : UimlAttributes, IUimlElement
@@ -111,10 +112,31 @@ namespace Uiml
 			}
 		}
 
-		///<summary>
-		/// Checks whether this peer has a presentation vocabulary for pattern
-		///</summary>
-		public bool Provides(string pattern)
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement("peers");
+
+            List<XmlAttribute> attributes = base.CreateAttributes(doc);
+
+            foreach(XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+            
+            ArrayList children = Children;
+            for(int i = 0; i < children.Count; i++)
+            {
+                IUimlElement child = (IUimlElement)children[i];
+                node.AppendChild(child.Serialize(doc));
+            }
+
+            return node;
+        }
+
+        ///<summary>
+        /// Checks whether this peer has a presentation vocabulary for pattern
+        ///</summary>
+        public bool Provides(string pattern)
 		{
 			IEnumerator enumPres = m_presentations.GetEnumerator();
 			while(enumPres.MoveNext())

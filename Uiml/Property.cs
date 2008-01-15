@@ -25,6 +25,7 @@ namespace Uiml{
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 	using System.IO;
 
 	using Uiml.Executing;
@@ -47,15 +48,15 @@ namespace Uiml{
 	public class Property : UimlAttributes, IUimlElement, ICloneable {
 
 		// Properties
-		private string m_name;
-		private System.Object m_value;
+		private string m_name = "";
+		private System.Object m_value = null;
 
 		//member vars
 		private bool m_setter = true;
 		private bool m_hasToBeSet;
 		private string m_class_name = "";
 		private string m_part_name  = "";
-		private System.Object m_subprop;
+		private System.Object m_subprop = null;
 
 		//To resolve conflicting
 		//properties the last property of the canonical form has to be applied over the rest.
@@ -167,6 +168,44 @@ namespace Uiml{
 			else//this property has a direct value
 				Value = n.InnerText;
 		}
+
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            //Construct attributes
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            if (Name.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(NAME);
+                attr.Value = Name;
+                attributes.Add(attr);
+            }
+            if (PartClass.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(PART_CLASS);
+                attr.Value = PartClass;
+                attributes.Add(attr);
+            }
+            if (PartName.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(PART_NAME);
+                attr.Value = PartName;
+                attributes.Add(attr);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            //Add children
+            if (m_subprop != null)
+                node.AppendChild(((IUimlElement)m_subprop).Serialize(doc));
+            else if (m_value != null)
+                node.InnerText = m_value.ToString();
+
+            return node;
+        }
 
 		public string Name
 		{

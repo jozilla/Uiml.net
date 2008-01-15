@@ -31,6 +31,7 @@ namespace Uiml{
     using System.Xml.Serialization;
 	using System.IO;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	using Uiml.LayoutManagement;
 
@@ -42,7 +43,6 @@ namespace Uiml{
 	///             how (union|cascade|replace) "replace" 
 	///             export (hidden|optional|required) "optional"&gt;
 	///</summary>
-    [XmlRoot("interface")]
 	public class Interface : UimlAttributes, IUimlElement, ICloneable{
 
 		//private Structure m_structure;
@@ -146,8 +146,32 @@ namespace Uiml{
 
 		}
 
-        [XmlIgnore]
-		public ArrayList UStructure
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] != null)
+                {
+                    ArrayList list = (ArrayList)Children[i];
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        IUimlElement element = (IUimlElement)list[j];
+                        node.AppendChild(element.Serialize(doc));
+                    }
+                }
+            }
+
+            return node;
+        }
+
+        public ArrayList UStructure
 		{
 			get { 
 				if(m_structure.Count == 0)
@@ -158,7 +182,6 @@ namespace Uiml{
 			set { m_structure.Add(value); }
 		}
 
-        [XmlIgnore]
 		public ArrayList UStyle
 		{
 			get {
@@ -170,8 +193,7 @@ namespace Uiml{
 			set { m_style.Add(value); }
 		}
 
-        [XmlIgnore]
-		public ArrayList UBehavior
+        public ArrayList UBehavior
 		{
 			get { 
 				if(m_behavior.Count == 0)
@@ -182,7 +204,6 @@ namespace Uiml{
 			set { m_behavior.Add(value); }
 		}
 
-        [XmlIgnore]
 		public ArrayList UContent
 		{
 			get {
@@ -194,7 +215,6 @@ namespace Uiml{
 			set { m_content.Add(value); }
 		}
 
-        [XmlIgnore]
 		public ArrayList ULayout
 		{
 			get
@@ -207,7 +227,6 @@ namespace Uiml{
  			set { m_layout.Add(value); }
 		}
 
-        [XmlIgnore]
 		public bool HasLayout
 		{
 			get { return ULayout != null; }
@@ -229,7 +248,6 @@ namespace Uiml{
 					b.AttachPeers(logics);
 		}
 
-        [XmlIgnore]
 		public ArrayList Children
 		{
 			get 

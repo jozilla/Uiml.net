@@ -140,6 +140,11 @@ namespace Uiml.LayoutManagement
 			}
 		}
 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            return null;
+        }
+
 		protected void ProcessBox(System.Xml.XmlNode n)
 		{
 			XmlAttributeCollection attr = n.Attributes;

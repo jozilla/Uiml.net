@@ -102,6 +102,26 @@ namespace Uiml.Executing
             }
         }
 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(OP);
+
+            if (Type.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(NAME);
+                attr.Value = Type;
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)Children[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+
+            return node;
+        }
+
         public void ReadAttributes(XmlNode node)
         {
             XmlAttributeCollection xac = node.Attributes;

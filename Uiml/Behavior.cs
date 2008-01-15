@@ -26,6 +26,7 @@ namespace Uiml{
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	using Uiml.Executing;
 
@@ -106,7 +107,26 @@ namespace Uiml{
 			}
 		}
 
-		public void AttachPeers(ArrayList logics)
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = this.CreateAttributes(doc);
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < m_rules.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)m_rules[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+
+            return node;
+        }
+
+        public void AttachPeers(ArrayList logics)
 		{
 			
 			IEnumerator enumRules = Rules;

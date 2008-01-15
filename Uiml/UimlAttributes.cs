@@ -25,16 +25,17 @@ namespace Uiml{
 	using System.Xml;
     using System.Xml.Serialization;
     using System;
+    using System.Collections.Generic;
 
 	///<summary>
 	/// Holds 4 common attributes of UIML tags: id, source, how and export
 	///</summary>
 	public abstract class UimlAttributes {
 
-		protected string m_identifier;
-		protected string m_source;
-		protected string m_how;
-		protected string m_export;
+		protected string m_identifier = "";
+		protected string m_source = "";
+		protected string m_how = "";
+		protected string m_export = "";
 
 		public enum HOW_VALS { Union,  Cascade,  Replace };
 		public const string REPLACE = "replace";
@@ -68,39 +69,67 @@ namespace Uiml{
 				 Identifier = attr.GetNamedItem(ID).Value;
 		}
 
-        [XmlAttribute("id")]
 		public string Identifier
 		{
 			get { return m_identifier;}
 			set { m_identifier = value; }
 		}
 
-        [XmlAttribute("source")]
 		public string Source
 		{
 			get { return m_source;}
 			set { m_source = value; }
 		}
 
-        [XmlIgnore]
 		public bool SourceAvailable
 		{
-			get { return (m_source != null); }
+			get { return (m_source.Length > 0); }
 		}
 
-        [XmlAttribute("how")]
 		public string How
 		{
 			get { return m_how;}
 			set { m_how = value; }
 		}
 
-        [XmlAttribute("export")]
 		public string Export
 		{
 			get { return m_export;}
 			set { m_export = value; }
 		}
+
+        public abstract XmlNode Serialize(XmlDocument doc);
+
+        public List<XmlAttribute> CreateAttributes(XmlDocument doc)
+        {
+            List<XmlAttribute> attributesList = new List<XmlAttribute>();
+
+            if (m_identifier.Length > 0)
+            {
+                XmlAttribute id = doc.CreateAttribute(ID);
+                id.Value = m_identifier;
+                attributesList.Add(id);
+            }
+            if (m_source.Length > 0)
+            {
+                XmlAttribute source = doc.CreateAttribute(SOURCE);
+                source.Value = m_source;
+                attributesList.Add(source);
+            }
+            if (m_how.Length > 0)
+            {
+                XmlAttribute how = doc.CreateAttribute(HOW);
+                how.Value = m_how;
+                attributesList.Add(how);
+            }
+            if (m_export.Length > 0)
+            {
+                XmlAttribute export = doc.CreateAttribute(EXPORT);
+                export.Value = m_export;
+                attributesList.Add(export);
+            }
+            return attributesList;
+        }
 
 		public const string ID           = "id";
 		public const string SOURCE			= "source";

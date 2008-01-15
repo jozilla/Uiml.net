@@ -27,6 +27,7 @@
 using System;
 using System.Xml;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Uiml.Peers
 {
@@ -90,7 +91,7 @@ namespace Uiml.Peers
 				ReturnType = attr.GetNamedItem(RETURN_TYPE).Value;
 			
 			ProcessChildren(n.ChildNodes);
-		}
+		}        
 
 		protected void ProcessChildren(XmlNodeList l)
 		{
@@ -111,7 +112,42 @@ namespace Uiml.Peers
 			}
 		}
 
-		public bool HasChildren
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            if (MapsTo.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TO);
+                attr.Value = MapsTo;
+                attributes.Add(attr);
+            }
+            if (ReturnType.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(RETURN_TYPE);
+                attr.Value = ReturnType;
+                attributes.Add(attr);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            if (HasChildren)
+            {
+                for (int i = 0; i < Children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)Children[i];
+                    node.AppendChild(element.Serialize(doc));
+                }
+            }
+
+            return node;
+
+        }
+
+        public bool HasChildren
 		{
 			get { return m_children != null; }
 		}
