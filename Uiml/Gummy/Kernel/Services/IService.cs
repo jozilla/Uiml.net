@@ -7,5 +7,12 @@ namespace Uiml.Gummy.Kernel.Services
     public interface IService
     {
         void Init();
+        bool Open();
+        bool Close();
+
+        string ServiceName
+        {
+            get;
+        }
     }
 }

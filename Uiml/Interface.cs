@@ -28,8 +28,10 @@ namespace Uiml{
 
 	using System;
 	using System.Xml;
+    using System.Xml.Serialization;
 	using System.IO;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	using Uiml.LayoutManagement;
 
@@ -144,7 +146,32 @@ namespace Uiml{
 
 		}
 
-		public ArrayList UStructure
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] != null)
+                {
+                    ArrayList list = (ArrayList)Children[i];
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        IUimlElement element = (IUimlElement)list[j];
+                        node.AppendChild(element.Serialize(doc));
+                    }
+                }
+            }
+
+            return node;
+        }
+
+        public ArrayList UStructure
 		{
 			get { 
 				if(m_structure.Count == 0)
@@ -166,7 +193,7 @@ namespace Uiml{
 			set { m_style.Add(value); }
 		}
 
-		public ArrayList UBehavior
+        public ArrayList UBehavior
 		{
 			get { 
 				if(m_behavior.Count == 0)

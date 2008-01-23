@@ -84,7 +84,7 @@ namespace Uiml.Executing
                         switch (xnl[i].Name)
                         {
                             case EVENT:
-                                m_event = new Event(xnl[0]);
+                                m_event = new Event(xnl[0]);//Possible bug....
                                 break;
                             case CONSTANT:
                                 m_childType = CONSTANT;
@@ -118,6 +118,13 @@ namespace Uiml.Executing
                     }
                 }
             }
+        }
+
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode nod = doc.CreateElement(IAM);
+            //FIXME
+            return nod;
         }
 
         public void GetEvents(ArrayList al)

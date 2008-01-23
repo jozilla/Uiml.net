@@ -38,9 +38,9 @@ namespace Uiml.Executing
 	/// </summary>
 	public class Call : IExecutable, IUimlElement
 	{
-		private string m_name;
-		private string m_objectName;
-		private string m_methodName;
+		private string m_name = "";
+		private string m_objectName = "";
+		private string m_methodName = "";
 
 		private ArrayList m_params;
 		private IRenderer m_renderer;
@@ -159,12 +159,32 @@ namespace Uiml.Executing
 					}
 				}
 			}
-		} 
+		}
 
-		///<summary>
-		///Used by the Rule to indicate this call will use object o when part of a rule
-		///</summary>
-		public void Connect(object o)
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(CALL);
+
+            if (Name.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(NAME);
+                attr.Value = Name;
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)Children[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+
+            return node;
+        }
+
+        ///<summary>
+        ///Used by the Rule to indicate this call will use object o when part of a rule
+        ///</summary>
+        public void Connect(object o)
 		{
 			if(!Connected)
 				m_connObjects = new ArrayList();

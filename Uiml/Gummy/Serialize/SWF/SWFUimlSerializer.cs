@@ -25,8 +25,8 @@ namespace Uiml.Gummy.Serialize.SWF
         public DomainObject Create()
         {
             DomainObject domObj = new DomainObject();
-            domObj.PositionManipulator = new SWFPositionManipulator(domObj, m_renderer);
-            domObj.SizeManipulator = new SWFSizeManipulator(domObj, m_renderer);
+            domObj.PositionManipulator = new SWFPositionManipulator(domObj);
+            domObj.SizeManipulator = new SWFSizeManipulator(domObj);
 
             return domObj;
         }
@@ -258,6 +258,8 @@ namespace Uiml.Gummy.Serialize.SWF
             else
                 return "";
         }
+
+        public const string NAME = "swf-1.1";
 
 	}
 }

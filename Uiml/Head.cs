@@ -70,6 +70,12 @@ namespace Uiml{
 				m_title = (string) MetaChildren[TITLE];
 		}
 
+        public XmlNode Serialize(XmlDocument document)
+        {
+            XmlNode node = document.CreateElement(IAM);
+            return node;
+        }
+
 		public override String ToString()
 		{
 			StringBuilder strBuffer = new StringBuilder();

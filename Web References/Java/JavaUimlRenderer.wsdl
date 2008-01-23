@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:intf="http://wtp" xmlns:impl="http://wtp" targetNamespace="http://wtp" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://wtp">
+      <xsd:element name="renderPart">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="uiml" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="renderPartResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="renderPartReturn" type="xsd:base64Binary" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="renderPartRequest">
+    <wsdl:part name="parameters" element="impl:renderPart" />
+  </wsdl:message>
+  <wsdl:message name="renderPartResponse">
+    <wsdl:part name="parameters" element="impl:renderPartResponse" />
+  </wsdl:message>
+  <wsdl:portType name="JavaUimlRenderer">
+    <wsdl:operation name="renderPart">
+      <wsdl:input name="renderPartRequest" message="impl:renderPartRequest" />
+      <wsdl:output name="renderPartResponse" message="impl:renderPartResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="JavaUimlRendererSoapBinding" type="impl:JavaUimlRenderer">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="renderPart">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="renderPartRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="renderPartResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="JavaUimlRendererService">
+    <wsdl:port name="JavaUimlRenderer" binding="impl:JavaUimlRendererSoapBinding">
+      <wsdlsoap:address location="http://localhost:8080/JavaUiml/services/JavaUimlRenderer" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

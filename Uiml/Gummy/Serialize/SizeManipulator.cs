@@ -9,7 +9,7 @@ namespace Uiml.Gummy.Serialize
 {
     public abstract class SizeManipulator : BaseManipulator
     {
-        public SizeManipulator(DomainObject dom, IRenderer renderer) : base (dom,renderer)
+        public SizeManipulator(DomainObject dom) : base (dom)
         {             
         }
 

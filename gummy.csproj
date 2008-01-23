@@ -7,7 +7,7 @@
     <ProjectGuid>{0BCDAFF5-90C5-4BE2-84FE-D3A25BA345F9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Uiml.Gummy</RootNamespace>
+    <RootNamespace>gummy</RootNamespace>
     <AssemblyName>gummy</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueService.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,9 +111,6 @@
     <Compile Include="Uiml\Gummy\Serialize\IUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFPositionManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFSizeManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Visual\ResizeVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\SelectVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\VisualDomainObjectState.cs">

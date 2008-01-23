@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AF8F1B80-83DD-4940-A3B8-86EC19DC3510}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>gummy_swf</RootNamespace>
+    <AssemblyName>gummy-swf</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\gummy\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\gummy\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Uiml.net-gummy\gummy.csproj">
+      <Project>{0BCDAFF5-90C5-4BE2-84FE-D3A25BA345F9}</Project>
+      <Name>gummy</Name>
+    </ProjectReference>
+    <ProjectReference Include="uiml.net-core.csproj">
+      <Project>{1512EF85-FCC2-41CB-B8CE-67871722EB82}</Project>
+      <Name>uiml.net-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="uiml.net-swf.csproj">
+      <Project>{064375D5-DE5C-47CA-9AC0-365928425369}</Project>
+      <Name>uiml.net-swf</Name>
+    </ProjectReference>
+    <ProjectReference Include="uiml.net.csproj">
+      <Project>{0CEA978C-FDCE-4C6E-8B37-3D4EDDD6C887}</Project>
+      <Name>uiml.net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFPositionManipulator.cs" />
+    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFSizeManipulator.cs" />
+    <Compile Include="Uiml\Gummy\Serialize\SWF\SWFUimlSerializer.cs" />
+  </ItemGroup>
+</Project>

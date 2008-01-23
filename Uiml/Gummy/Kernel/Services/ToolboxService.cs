@@ -20,6 +20,7 @@ namespace Uiml.Gummy.Kernel.Services
         public ToolboxService() : base()
         {
             Size = new Size(500, 500);
+            BackColor = Color.DarkGray;
         }
 
         public void Init()
@@ -62,6 +63,26 @@ namespace Uiml.Gummy.Kernel.Services
             }
             int k = visualDomainObjects.Count;
             Size = new Size(size.Width * 2 + 15, height + size.Height);
+        }
+
+        public bool Open()
+        {
+            this.Visible = true;
+            return true;
+        }
+
+        public bool Close()
+        {
+            this.Visible = false;
+            return true;
+        }
+
+        public string ServiceName
+        {
+            get
+            {
+                return "gummy-toolbox";
+            }
         }
     }
 }

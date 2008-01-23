@@ -36,7 +36,9 @@ namespace Uiml.Gummy.Visual
         {
             m_prop.Value = m_propertyValue.Text;
             if (SelectedDomainObject.Instance.Selected != null)
+            {
                 SelectedDomainObject.Instance.Selected.Updated();
+            }
         }
 
         //Need to become an observer function....

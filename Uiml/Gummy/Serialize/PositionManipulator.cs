@@ -10,7 +10,7 @@ namespace Uiml.Gummy.Serialize
     public abstract class PositionManipulator : BaseManipulator
     {
 
-        public PositionManipulator(DomainObject dom, IRenderer renderer) : base(dom,renderer)
+        public PositionManipulator(DomainObject dom) : base(dom)
         {
         }
 

@@ -102,6 +102,19 @@ namespace Uiml.Executing
 			}
 		}
 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(CONDITION);
+
+            if (m_conditionObject != null)
+            {
+                IUimlElement element = (IUimlElement)m_conditionObject;
+                node.AppendChild(element.Serialize(doc));
+            }
+
+            return node;
+        }
+
 
 		public System.Object Execute()
 		{

@@ -33,6 +33,7 @@ namespace Uiml.Peers
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 	using System.IO;
 
 	/// <summary>
@@ -45,12 +46,12 @@ namespace Uiml.Peers
 	/// </summary>
 	public class Event : UimlAttributes, IUimlElement
 	{
-		private string m_executeType;
+		private string m_executeType = "";
 		private System.Object m_ExecuteObject;
-		private string m_name; // FIXME: this is not part of the specification!
-		private string m_class;
-		private string m_partName;
-		private string m_partClass;
+		private string m_name = ""; // FIXME: this is not part of the specification!
+		private string m_class = "";
+		private string m_partName = "";
+		private string m_partClass = "";
 
 		private IExecutable m_parent; // wordt dit gebruikt ??
 		
@@ -95,6 +96,43 @@ namespace Uiml.Peers
 			}
 		}
 
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement("event");
+            List<XmlAttribute> attributes = base.CreateAttributes(doc);
+
+            if (Name.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(NAME);
+                attr.Value = Name;
+                attributes.Add(attr);
+            }
+            if (Class.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(CLASS);
+                attr.Value = Class;
+                attributes.Add(attr);
+            }
+            if (PartName.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(PARTNAME);
+                attr.Value = PartName;
+                attributes.Add(attr);
+            }
+            if (PartClass.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(PARTCLASS);
+                attr.Value = PartClass;
+                attributes.Add(attr);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            return node;
+        }
 
 		public System.Object Execute()
 		{
