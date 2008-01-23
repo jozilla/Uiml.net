@@ -56,9 +56,9 @@ namespace Uiml.Gummy.Visual
 
         void domainObjectUpdated(object sender, EventArgs e)
         {
-            Image = ActiveSerializer.Instance.Serializer.Serialize(DomainObject);
-            this.Size = DomainObject.Size;
-            this.Location = DomainObject.Location;
+             Image = ActiveSerializer.Instance.Serializer.Serialize(DomainObject);
+             this.Size = DomainObject.Size;
+             this.Location = DomainObject.Location;
         }       
 
         void VisualDomainObject_MouseUp(object sender, MouseEventArgs e)

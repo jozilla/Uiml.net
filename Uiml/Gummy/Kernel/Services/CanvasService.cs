@@ -25,7 +25,28 @@ namespace Uiml.Gummy.Kernel.Services
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
             DragLeave += new EventHandler(onDragLeave);
-            DragOver += new DragEventHandler(onDragOver);            
+            DragOver += new DragEventHandler(onDragOver);
+            BackColor = Color.DarkGray;
+        }
+
+        public bool Open()
+        {
+            this.Visible = true;
+            return true;
+        }
+
+        public bool Close()
+        {
+            this.Visible = false;
+            return true;
+        }
+
+        public string ServiceName
+        {
+            get
+            {
+                return "gummy-canvas";
+            }
         }
 
         void onDragLeave(object sender, EventArgs e)

@@ -14,14 +14,14 @@ namespace Uiml.Gummy.Serialize.SWF
         private Property m_sizewProperty = null;
         private Property m_sizehProperty = null;
 
-        public SWFSizeManipulator(DomainObject dom, IRenderer renderer) : base(dom, renderer)
+        public SWFSizeManipulator(DomainObject dom) : base(dom)
         {
             checkProperties();
         }
 
         public override object Clone()
         {
-            SWFSizeManipulator clone = new SWFSizeManipulator(null,m_renderer);
+            SWFSizeManipulator clone = new SWFSizeManipulator(null);
             return clone;
         }
 

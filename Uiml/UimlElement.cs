@@ -32,6 +32,9 @@ namespace Uiml{
 		public abstract ArrayList Children { get; }
         public abstract object Clone();
 
+        public abstract XmlNode Serialize(XmlDocument doc);
+
+
 		public void ApplyTemplate()
 		{
 		}

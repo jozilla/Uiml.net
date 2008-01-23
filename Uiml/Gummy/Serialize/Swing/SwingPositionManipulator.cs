@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
+
 using Uiml.Gummy.Serialize;
 using Uiml.Gummy.Domain;
-using Uiml;
-using System.Drawing;
-using Uiml.Rendering;
 
-namespace Uiml.Gummy.Serialize.SWF
+namespace Uiml.Gummy.Serialize.Swing
 {
-    public class SWFPositionManipulator : PositionManipulator
-    {
-        public Property m_positionProperty = null;
+    public class SwingPositionManipulator : PositionManipulator
+    {public Property m_positionProperty = null;
 
-        public SWFPositionManipulator(DomainObject dom) : base(dom)
+        public SwingPositionManipulator(DomainObject dom)
+            : base(dom)
         {
             checkProperties();
         }
@@ -21,7 +20,7 @@ namespace Uiml.Gummy.Serialize.SWF
 
         public override object Clone()
         {
-            SWFPositionManipulator clone = new SWFPositionManipulator(null);
+            SwingPositionManipulator clone = new SwingPositionManipulator(null);
             return clone;
         }
 

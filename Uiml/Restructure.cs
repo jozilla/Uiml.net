@@ -58,6 +58,11 @@ namespace Uiml{
 				return;
 		}
 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            return null;
+        }
+
 		public ArrayList Children
 		{
 			get { return null; }//for now

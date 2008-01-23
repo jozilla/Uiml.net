@@ -11,10 +11,10 @@ namespace Uiml.Gummy.Serialize
         protected DomainObject m_domObject = null;
         protected IRenderer m_renderer = null;
 
-        public BaseManipulator(DomainObject dom, IRenderer renderer)
+        public BaseManipulator(DomainObject dom)
         {
             DomainObject = dom;
-            m_renderer = renderer;
+            //m_renderer = renderer;
         }
 
         public DomainObject DomainObject
