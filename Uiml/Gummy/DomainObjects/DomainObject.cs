@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
+using Uiml.Gummy.Kernel.Services.ApplicationGlue;
+
 namespace Uiml.Gummy.Domain
 {
 
@@ -19,6 +21,10 @@ namespace Uiml.Gummy.Domain
 
         private PositionManipulator m_positionManipulator = null;
         private SizeManipulator m_sizeManipulator = null;
+
+        private MethodModel m_methodLink = null;
+        private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
+        private List<MethodParameterModel> m_methodInParamLinks = new List<MethodParameterModel>();
         
         public delegate void DomainObjectUpdateHandler (object sender, EventArgs e);
 
@@ -62,6 +68,26 @@ namespace Uiml.Gummy.Domain
             {
                 m_part = value;
             }
+        }
+
+        public MethodModel MethodLink 
+        {
+            get { return m_methodLink; }
+        }
+
+        public List<MethodParameterModel> MethodOutputParameterLinks 
+        {
+            get { return m_methodOutParamLinks; } 
+        }
+
+        public List<MethodParameterModel> MethodInputParameterLinks
+        {
+            get { return m_methodInParamLinks; }
+        }
+
+        public bool Linked 
+        {
+            get { return m_methodInParamLinks.Count > 0 || m_methodOutParamLinks.Count > 0 || m_methodLink != null; }
         }
 
         public Size Size
@@ -136,6 +162,38 @@ namespace Uiml.Gummy.Domain
         {
             if(DomainObjectUpdated != null)
                 DomainObjectUpdated(this, new EventArgs());
+        }
+
+        public void LinkMethodParameter(MethodParameterModel mpm)
+        {
+            if (mpm.IsOutput)
+                m_methodOutParamLinks.Add(mpm);
+            else
+                m_methodInParamLinks.Add(mpm);
+
+            Updated();
+        }
+
+        public void LinkMethod(MethodModel mm) 
+        {
+            m_methodLink = mm;
+            Updated();
+        }
+
+        public void UnlinkMethod() 
+        {
+            m_methodLink = null;
+            Updated();
+        }
+
+        public void UnlinkMethodParameter(MethodParameterModel mpm) 
+        {
+            if (mpm.IsOutput)
+                m_methodOutParamLinks.Remove(mpm);
+            else
+                m_methodInParamLinks.Remove(mpm);
+
+            Updated();
         }
 
         public Property FindProperty(string propertyName)

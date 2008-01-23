@@ -23,6 +23,12 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             InitializeComponent();
             Model = model;
             Draw();
+            param.MouseDown += new MouseEventHandler(OnMouseDown);
+        }
+
+        void OnMouseDown(object sender, MouseEventArgs e) 
+        {
+            param.DoDragDrop(model, DragDropEffects.Link);
         }
 
         protected void Draw ()

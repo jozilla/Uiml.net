@@ -68,7 +68,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 layout.Controls.Add(inputs, 0, row);
 
                 // create method name
-                Label methodName = new Label();
+                /*Label methodName = new Label();
                 methodName.AutoSize = true;
                 methodName.BackColor = System.Drawing.Color.DarkOrange;
                 methodName.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -77,7 +77,8 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 methodName.Name = "methodName";
                 methodName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 
-                methodName.Text = method.Name;
+                methodName.Text = method.Name;*/
+                MethodNameView methodName = new MethodNameView(method);
                 layout.Controls.Add(methodName, 1, row);
 
                 // create output container

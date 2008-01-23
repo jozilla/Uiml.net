@@ -7,7 +7,7 @@
     <ProjectGuid>{0BCDAFF5-90C5-4BE2-84FE-D3A25BA345F9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>gummy</RootNamespace>
+    <RootNamespace>Uiml.Gummy</RootNamespace>
     <AssemblyName>gummy</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -42,7 +42,15 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueService.Designer.cs">
       <DependentUpon>ApplicationGlueService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ILogicGenerator.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\LogicGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodModel.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.Designer.cs">
+      <DependentUpon>MethodNameView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterView.cs">
       <SubType>UserControl</SubType>
@@ -63,6 +71,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.Designer.cs">
       <DependentUpon>MethodView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionLogicGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionMethodModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionMethodParameterModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\PropertiesService.cs">
@@ -149,6 +158,18 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\CanvasService.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CanvasService.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_input.png" />
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_method.png" />
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_output.png" />
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MethodNameView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

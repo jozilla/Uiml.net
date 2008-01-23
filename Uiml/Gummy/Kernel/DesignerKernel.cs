@@ -23,7 +23,7 @@ namespace Uiml.Gummy.Kernel
             m_tbService = new ToolboxService();
             m_cService = new CanvasService();
             m_pService = new PropertiesService();
-            m_aService = new ApplicationGlueService();
+            m_aService = new ApplicationGlueService(m_cService);
         }
 
         public void Init()

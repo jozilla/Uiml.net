@@ -6,6 +6,9 @@ using System.Windows.Forms;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Serialize;
 
+using System.Reflection;
+using Uiml.Gummy.Kernel.Services.ApplicationGlue;
+
 namespace Uiml.Gummy.Visual
 {
     public class VisualDomainObject : PictureBox
@@ -23,6 +26,9 @@ namespace Uiml.Gummy.Visual
             : this()
         {
             DomainObject = domObject;
+            this.AllowDrop = true;
+            DragDrop += new DragEventHandler(OnDragDrop);
+            DragEnter += new DragEventHandler(OnDragEnter);
         }
 
         public DomainObject DomainObject
@@ -59,6 +65,7 @@ namespace Uiml.Gummy.Visual
             Image = ActiveSerializer.Instance.Serializer.Serialize(DomainObject);
             this.Size = DomainObject.Size;
             this.Location = DomainObject.Location;
+            this.Refresh(); // force a repaint
         }       
 
         void VisualDomainObject_MouseUp(object sender, MouseEventArgs e)
@@ -74,5 +81,92 @@ namespace Uiml.Gummy.Visual
         {
         }
 
+        void OnDragEnter(object sender, DragEventArgs e) 
+        {
+            Console.WriteLine("onDragEnter");
+
+            if (e.Data.GetDataPresent(typeof(ReflectionMethodParameterModel)) || e.Data.GetDataPresent(typeof(ReflectionMethodModel)))
+                e.Effect = DragDropEffects.Link;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        void OnDragDrop(object sender, DragEventArgs e) 
+        {
+            if (e.Data.GetDataPresent(typeof(ReflectionMethodParameterModel)))
+            {
+                // link a parameter
+                m_domObject.LinkMethodParameter((MethodParameterModel)e.Data.GetData(typeof(ReflectionMethodParameterModel)));
+            }
+            else if (e.Data.GetDataPresent(typeof(ReflectionMethodModel)))
+            {
+                // link a method
+                m_domObject.LinkMethod((MethodModel)e.Data.GetData(typeof(ReflectionMethodModel)));
+            }
+
+            // otherwise, do nothing
+        }
+
+        protected override void OnPaint(PaintEventArgs pe) 
+        {
+            base.OnPaint(pe);
+            DrawAnnotation(pe.Graphics);
+        }
+
+        protected void DrawAnnotation(Graphics g)
+        {
+            /*
+            // draw link icon
+            string connIcon = "";
+
+            if (m_domObject.MethodLink != null)
+                connIcon = "method";
+            else if (m_domObject.MethodParameterLink != null)
+            {
+                if (m_domObject.MethodParameterLink.IsOutput)
+                    connIcon = "output";
+                else
+                    connIcon = "input";
+            }
+
+            Bitmap icon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream(string.Format("gummy.Uiml.Gummy.Kernel.Services.ApplicationGlue.link_{0}.png", connIcon)));
+
+            //int padding = (int) ( ((icon.Width + icon.Height) / 2.0) / 4.0);
+            int padding = 15;
+            // todo: center the bastard
+            Point location = new Point(this.Width - icon.Width - padding, this.Height - icon.Height - padding);
+            pe.Graphics.DrawImage(icon, location);*/
+
+            if (m_domObject.Linked) 
+            {
+                Size s = new Size(10, this.Height - 20);
+                Point p;
+                int i = 1;
+
+                foreach (MethodParameterModel mpm in m_domObject.MethodOutputParameterLinks)
+                {
+                    p = new Point(this.Width - i * 10, 10);
+                    g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
+                    g.FillRectangle(new Pen(Color.LightCoral).Brush, new Rectangle(p, s));
+                    i++;
+                }
+
+                if (m_domObject.MethodLink != null)
+                {
+                    p = new Point(this.Width - i * 10, 10);
+                    g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
+                    g.FillRectangle(new Pen(Color.DarkOrange).Brush, new Rectangle(p, s));
+                    i++;
+                }
+
+                foreach (MethodParameterModel mpm in m_domObject.MethodInputParameterLinks)
+                {
+                    p = new Point(this.Width - i * 10, 10);
+                    g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
+                    g.FillRectangle(new Pen(Color.LightGreen).Brush, new Rectangle(p, s));
+                    i++;
+                }
+            }
+        }
     }
 }
