@@ -89,6 +89,7 @@ namespace Uiml.Gummy.Kernel
             m_services.Add(new ToolboxService());
             m_services.Add(new CanvasService());
             m_services.Add(new PropertiesService());
+            m_services.Add(new ApplicationGlueService());
         }
     }
 }

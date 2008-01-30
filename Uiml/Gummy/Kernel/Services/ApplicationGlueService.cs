@@ -11,22 +11,44 @@ using Uiml.Gummy.Kernel.Services.ApplicationGlue;
 
 namespace Uiml.Gummy.Kernel.Services {
     public partial class ApplicationGlueService : Form, IService {
+        private List<ConnectedMethod> m_methods;
+        private IBehaviorGenerator m_gen;
 
-        private CanvasService m_cs;
-
-        public ApplicationGlueService(CanvasService cs) {
-            m_cs = cs;
+        public ApplicationGlueService() {
             InitializeComponent();
         }
 
         public void Init()
         {
             DrawService(typeof(Uiml.Gummy.Kernel.DesignerKernel));
-            Button go = new Button();
-            go.AutoSize = true;
-            go.Text = "Create Logic";
-            go.Click += new EventHandler(CreateLogic);
-            layout.Controls.Add(go);
+            
+            Button createLogic = new Button();
+            createLogic.AutoSize = true;
+            createLogic.Text = "Create Logic";
+            createLogic.Click += new EventHandler(CreateLogic);
+            
+            layout.Controls.Add(createLogic);
+            Button populateMethods = new Button();
+            populateMethods.Text = "Populate methods";
+            populateMethods.Click += new EventHandler(PopulateMethods);
+            layout.Controls.Add(populateMethods);
+        }
+
+        public bool Open()
+        {
+            this.Visible = true;
+            return true;
+        }
+
+        public bool Close()
+        {
+            this.Visible = false;
+            return true;
+        }
+
+        public string ServiceName
+        {
+            get { return "application-glue"; }
         }
 
         public void DrawService (Type t)
@@ -42,8 +64,13 @@ namespace Uiml.Gummy.Kernel.Services {
 
         public void CreateLogic(object sender, EventArgs args)
         {
-            ILogicGenerator gen = new ReflectionLogicGenerator(m_cs, typeof(Uiml.Gummy.Kernel.DesignerKernel));
-            gen.Generate();
+            m_gen = new ReflectionBehaviorGenerator();
+            m_gen.GenerateLogic();
+        }
+
+        public void PopulateMethods(object sender, EventArgs args)
+        {
+            m_gen.GenerateBehavior();
         }
     }
 }

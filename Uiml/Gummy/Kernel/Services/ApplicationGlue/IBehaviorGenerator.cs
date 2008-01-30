@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    public interface ILogicGenerator
+    public interface IBehaviorGenerator
     {
-        Logic Generate();
+        Logic GenerateLogic();
+        Behavior GenerateBehavior();
     }
 }

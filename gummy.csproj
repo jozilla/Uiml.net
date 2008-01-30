@@ -43,8 +43,9 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueService.Designer.cs">
       <DependentUpon>ApplicationGlueService.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ILogicGenerator.cs" />
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\LogicGenerator.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ApplicationGlueRegistry.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethod.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IBehaviorGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.cs">
       <SubType>UserControl</SubType>
@@ -72,7 +73,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.Designer.cs">
       <DependentUpon>MethodView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionLogicGenerator.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionBehaviorGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionMethodModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionMethodParameterModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\PropertiesService.cs">

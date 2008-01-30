@@ -167,9 +167,15 @@ namespace Uiml.Gummy.Domain
         public void LinkMethodParameter(MethodParameterModel mpm)
         {
             if (mpm.IsOutput)
+            {
                 m_methodOutParamLinks.Add(mpm);
+                ApplicationGlueRegistry.Instance.RegisterOutput(mpm, this);
+            }
             else
+            {
                 m_methodInParamLinks.Add(mpm);
+                ApplicationGlueRegistry.Instance.RegisterInput(mpm, this);
+            }
 
             Updated();
         }
@@ -177,6 +183,7 @@ namespace Uiml.Gummy.Domain
         public void LinkMethod(MethodModel mm) 
         {
             m_methodLink = mm;
+            ApplicationGlueRegistry.Instance.RegisterInvoke(mm, this);
             Updated();
         }
 
