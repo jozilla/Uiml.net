@@ -49,7 +49,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Uiml.net-gummy\gummy.csproj">
+    <ProjectReference Include="gummy.csproj">
       <Project>{0BCDAFF5-90C5-4BE2-84FE-D3A25BA345F9}</Project>
       <Name>gummy</Name>
     </ProjectReference>

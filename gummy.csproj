@@ -69,6 +69,7 @@
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectContainer.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectFactory.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerKernel.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Selected\SelectedDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\CanvasService.cs">
