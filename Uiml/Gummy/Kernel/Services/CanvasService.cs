@@ -12,6 +12,8 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
     {
+        List<DomainObject> m_domainObjects = new List<DomainObject>();
+
         public CanvasService()
             : base()
         {
@@ -76,7 +78,7 @@ namespace Uiml.Gummy.Kernel.Services
             VisualDomainObject visDom = new VisualDomainObject(domCloned);
             visDom.State = new ResizeVisualDomainObjectState();
             Controls.Add(visDom);
-            
+            m_domainObjects.Add(domCloned);
         }
 
         private void InitializeComponent()
@@ -97,5 +99,29 @@ namespace Uiml.Gummy.Kernel.Services
 
         }
 
-    }
+        public List<DomainObject> DomainObjects
+        {
+            get
+            {
+                List<DomainObject> domainObjects = new List<DomainObject>();
+                for (int i = 0; i < m_domainObjects.Count; i++)
+                {
+                    domainObjects.Add((DomainObject)m_domainObjects[i].Clone());
+                }
+                return domainObjects;
+            }
+            set
+            {
+                m_domainObjects = value;
+                Controls.Clear();
+                for (int i = 0; i < m_domainObjects.Count; i++)
+                {
+                    VisualDomainObject visDom = new VisualDomainObject(m_domainObjects[i]);
+                    visDom.State = new ResizeVisualDomainObjectState();
+                    Controls.Add(visDom);                    
+                }
+            }
+        }
+
+        }
 }

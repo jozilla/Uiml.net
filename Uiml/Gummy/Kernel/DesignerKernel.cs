@@ -87,7 +87,8 @@ namespace Uiml.Gummy.Kernel
         public void LoadServices(XmlDocument doc)
         {
             m_services.Add(new ToolboxService());
-            m_services.Add(new CanvasService());
+            //m_services.Add(new CanvasService());
+            m_services.Add(new SpaceService());
             m_services.Add(new PropertiesService());
         }
     }
