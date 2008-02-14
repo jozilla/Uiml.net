@@ -24,7 +24,21 @@ namespace Uiml.Gummy.Kernel.Services
         void m_canvas_Resize(object sender, EventArgs e)
         {
             if (!m_customResize)
-            {
+            {  
+
+                Size sizeToSet = new Size(m_canvas.Size.Width, m_canvas.Size.Height);                
+                if (m_canvas.Size.Width % graph1.XStep != 0)
+                {
+                    sizeToSet.Width = m_canvas.Size.Width - (m_canvas.Size.Width % graph1.XStep);
+                }
+                if (m_canvas.Size.Height % graph1.YStep != 0)
+                { 
+                    sizeToSet.Height = m_canvas.Size.Height - (m_canvas.Size.Height % graph1.YStep);
+                }
+                m_customResize = true;
+                    m_canvas.Size = sizeToSet;
+                m_customResize = false;
+
                 graph1.FocussedSize = m_canvas.Size;
             }
         }
@@ -32,15 +46,15 @@ namespace Uiml.Gummy.Kernel.Services
         void graph1_DesignSpaceExampleSelected(object sender, Size size)
         {
             m_customResize = true;
-            m_canvas.Size = size;
-            m_canvas.DomainObjects = m_examples[size];
+                m_canvas.Size = size;
+                m_canvas.DomainObjects = m_examples[size];
             m_customResize = false;
         }
 
         void graph1_DesignSpaceCursorChanged(object sender, Size size)
         {
             m_customResize = true;
-            m_canvas.Size = size;
+                m_canvas.Size = size;
             m_customResize = false;
         }
 
@@ -60,9 +74,9 @@ namespace Uiml.Gummy.Kernel.Services
         public bool Open()
         {
             this.Visible = true;
-            graph1.InitGraph();
-            m_canvas.Size = graph1.FocussedSize;
+            graph1.InitGraph();            
             m_canvas.Resize += new EventHandler(m_canvas_Resize);
+            m_canvas.Size = new Size(200,200);
             return true;
         }
 

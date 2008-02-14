@@ -120,8 +120,8 @@ namespace Uiml.Gummy.Kernel.Services
                 size.Height = m_minSize.Height;
             }
             //Round the size to some neareby values that were anticipated during the preprocessing step
-            size.Width = size.Width - (size.Width % m_xIncrement);
-            size.Height = size.Height - (size.Height % m_yIncrement);
+            /*size.Width = size.Width - (size.Width % m_xIncrement);
+            size.Height = size.Height - (size.Height % m_yIncrement);*/
             //Get the right size
             return m_sizeToPoint[size];
         }
@@ -165,6 +165,22 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 m_cursor.Location = sizeToPoint(value);
                 Refresh();
+            }
+        }
+
+        public int XStep
+        {
+            get
+            {
+                return m_xIncrement;
+            }
+        }
+
+        public int YStep
+        {
+            get
+            {
+                return m_yIncrement;
             }
         }
         

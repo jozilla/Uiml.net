@@ -49,6 +49,7 @@ namespace Uiml.Gummy.Kernel.Services
             this.Controls.Add(this.graph1);
             this.Name = "SpaceService";
             this.Text = "2D Example Space";
+            this.TransparencyKey = System.Drawing.Color.Transparent;
             this.ResumeLayout(false);
 
         }
