@@ -12,15 +12,13 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public partial class SpaceService : Form
     {
-        CanvasService m_canvas = new CanvasService();
+        CanvasService m_canvas = null;
         Dictionary<Size, List<DomainObject>> m_examples = new Dictionary<Size, List<DomainObject>>();
         bool m_customResize = false;
 
         public SpaceService()
         {
-            InitializeComponent();            
-            graph1.DesignSpaceCursorChanged += new DesignSpaceSizeChangeHandler(graph1_DesignSpaceCursorChanged);
-            graph1.DesignSpaceExampleSelected += new DesignSpaceSizeChangeHandler(graph1_DesignSpaceExampleSelected);
+            InitializeComponent();                        
         }
 
         void m_canvas_Resize(object sender, EventArgs e)
@@ -46,14 +44,6 @@ namespace Uiml.Gummy.Kernel.Services
             m_customResize = false;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void initialize()
-        {            
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             graph1.CreateSnapshot();
@@ -62,12 +52,13 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void Init()
         {
-            m_canvas.Init();
+            m_canvas = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
+            graph1.DesignSpaceCursorChanged += new DesignSpaceSizeChangeHandler(graph1_DesignSpaceCursorChanged);
+            graph1.DesignSpaceExampleSelected += new DesignSpaceSizeChangeHandler(graph1_DesignSpaceExampleSelected);
         }
 
         public bool Open()
         {
-            m_canvas.Open();
             this.Visible = true;
             m_canvas.Size = graph1.FocussedSize;
             m_canvas.Resize += new EventHandler(m_canvas_Resize);
@@ -85,7 +76,15 @@ namespace Uiml.Gummy.Kernel.Services
         {
             get
             {
-                return "";
+                return "gummy-designspace";
+            }
+        }
+
+        public System.Windows.Forms.Control ServiceControl
+        {
+            get
+            {
+                return this;
             }
         }
     }

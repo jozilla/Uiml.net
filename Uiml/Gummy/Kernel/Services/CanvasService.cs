@@ -51,6 +51,14 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
+        public System.Windows.Forms.Control ServiceControl
+        {
+            get
+            {
+                return this;
+            }
+        }
+
         void onDragLeave(object sender, EventArgs e)
         {
             Console.WriteLine("onDragLeave");

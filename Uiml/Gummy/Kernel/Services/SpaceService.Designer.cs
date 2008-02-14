@@ -84,7 +84,6 @@ namespace Uiml.Gummy.Kernel.Services
             this.Controls.Add(this.graph1);
             this.Name = "SpaceService";
             this.Text = "2D Example Space";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
