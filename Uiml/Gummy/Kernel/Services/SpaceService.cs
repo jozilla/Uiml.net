@@ -60,6 +60,7 @@ namespace Uiml.Gummy.Kernel.Services
         public bool Open()
         {
             this.Visible = true;
+            graph1.InitGraph();
             m_canvas.Size = graph1.FocussedSize;
             m_canvas.Resize += new EventHandler(m_canvas_Resize);
             return true;

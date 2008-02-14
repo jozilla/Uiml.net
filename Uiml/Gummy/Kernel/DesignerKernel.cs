@@ -154,16 +154,8 @@ namespace Uiml.Gummy.Kernel
                     return false;
                 }
             }
-            try
-            {
-                Application.Run();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.Write(e.StackTrace);
-                return false;
-            }
+            Application.Run();
+            return true;           
         }
 
         public bool Close()

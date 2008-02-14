@@ -12,15 +12,19 @@ namespace Uiml.Gummy.Kernel.Services
 
     public partial class Graph : UserControl
     {
-        //private Rectangle m_bounds = null;
         private List<Rectangle> m_examples = new List<Rectangle>();
         private int m_selectedExample = -1;
         private Rectangle m_cursor = new Rectangle(5, 5, 10, 10);       
         private bool m_init = false;
         private bool m_cursorClicked = false;
 
-        private Size m_minSize = new Size(100, 100);
-        private Size m_maxSize = new Size(800, 800);
+        private Size m_minSize = new Size(130, 40);
+        private Size m_maxSize = new Size(1500, 1500);
+
+        private int m_xIncrement = 1;
+        private int m_yIncrement = 1;
+        private Dictionary<Size,Point> m_sizeToPoint = new Dictionary<Size,Point>();
+        private Dictionary<Point, Size> m_pointToSize = new Dictionary<Point, Size>();
 
         public event DesignSpaceSizeChangeHandler DesignSpaceCursorChanged;
         public event DesignSpaceSizeChangeHandler DesignSpaceExampleSelected;
@@ -35,10 +39,91 @@ namespace Uiml.Gummy.Kernel.Services
             MouseDown += new MouseEventHandler(onMouseDownGraph);
             MouseMove += new MouseEventHandler(onMouseMoveGraph);
             MouseUp += new MouseEventHandler(onMouseUpGraph);
+            
         }
 
-        private void Graph_Load(object sender, EventArgs e)
+        /*
+         * This method needs to be called before the graph can work properly
+         * -> The internal datastructures will be preprocessed
+         */
+        public void InitGraph()
         {
+            //Clean the old values in the hashtables
+            m_pointToSize.Clear();
+            m_sizeToPoint.Clear();
+            //Get the right size steps such that there is a good point-size relationship possible
+            m_xIncrement = (int)Math.Ceiling( (float)(m_maxSize.Width - m_minSize.Width) / (float)Width );
+            m_yIncrement = (int)Math.Ceiling((float)(m_maxSize.Height - m_minSize.Height) / (float)Height);
+            //Round the minimal and maximal edges
+            m_minSize.Width = m_minSize.Width - (m_minSize.Width % m_xIncrement);
+            m_maxSize.Width = m_maxSize.Width - (m_maxSize.Width % m_xIncrement);
+            m_minSize.Height = m_minSize.Height - (m_minSize.Height % m_yIncrement);
+            m_maxSize.Height = m_maxSize.Height - (m_maxSize.Height % m_yIncrement);
+
+            //Initialize the hashtables
+            for (int y = 0; y <= Height; y++)
+                for (int x = 0; x <= Width; x++)
+                {
+                    Point pnt = new Point(x, y);
+                    int width = m_minSize.Width + (x * m_xIncrement);
+                    int height = m_minSize.Height + (y * m_yIncrement);
+                    Size size = new Size(width, height);
+
+                    m_pointToSize.Add(pnt, size);                 
+                    m_sizeToPoint.Add(size, pnt);
+                }            
+        }
+
+        private Size pointToSize(Point pnt)
+        {
+            /*
+             * Check if it's a valid point
+             */
+            if (pnt.X >= Width)
+            {
+                pnt.X = Width;
+            }
+            else if (pnt.X < 0)
+            {
+                pnt.X = 0;
+            }
+            if (pnt.Y >= Height)
+            {
+                pnt.Y = Height - 1;
+            }
+            else if (pnt.Y < 0)
+            {
+                pnt.Y = 0;
+            }
+            //Get the right point           
+            return m_pointToSize[pnt];
+        }
+
+        private Point sizeToPoint(Size size)
+        {
+            //Check if the requested size is within the boundaries
+            if (size.Width < m_minSize.Width)
+            {
+                size.Width = m_minSize.Width;
+            }
+            else if (size.Width > m_maxSize.Width)
+            {
+                size.Width = m_minSize.Width;
+            }
+            
+            if (size.Height > m_maxSize.Height)
+            {
+                size.Height = m_maxSize.Height;
+            }
+            else if (size.Height < m_minSize.Height)
+            {
+                size.Height = m_minSize.Height;
+            }
+            //Round the size to some neareby values that were anticipated during the preprocessing step
+            size.Width = size.Width - (size.Width % m_xIncrement);
+            size.Height = size.Height - (size.Height % m_yIncrement);
+            //Get the right size
+            return m_sizeToPoint[size];
         }
 
         void onMouseUpGraph(object sender, MouseEventArgs e)
@@ -55,7 +140,7 @@ namespace Uiml.Gummy.Kernel.Services
                 m_cursor.Location = new Point( x, y );
                 if (this.DesignSpaceCursorChanged != null)
                 {
-                    DesignSpaceCursorChanged(this, calculateNewSize(x, y));
+                    DesignSpaceCursorChanged(this, pointToSize(m_cursor.Location));
                 }
                 Refresh();
             }
@@ -69,43 +154,24 @@ namespace Uiml.Gummy.Kernel.Services
                 if (m_selectedExample >= 0)
                 {
                     Rectangle selectedRec = m_examples[m_selectedExample];
-                    return calculateNewSize(selectedRec.X, selectedRec.Y);
+                    return pointToSize(selectedRec.Location);
                 }
                 else
                 {
-                    return calculateNewSize(m_cursor.X + m_cursor.Width / 2, m_cursor.Y + m_cursor.Height / 2);
+                    return pointToSize(new Point(m_cursor.X + m_cursor.Width / 2, m_cursor.Y + m_cursor.Height / 2));
                 }
             }
             set
             {
-                m_cursor.Location = calculateNewPosition(value);
+                m_cursor.Location = sizeToPoint(value);
                 Refresh();
             }
         }
-
-        Point calculateNewPosition(Size size)
-        {
-            double x = (((double)size.Width - (double)m_minSize.Width) / (double)m_maxSize.Width) *(double)Size.Width;
-            double y = (((double)size.Height - (double)m_minSize.Height) / (double)m_maxSize.Height) * (double)Size.Height;
-            //double x = ((double)(m_maxSize.Width - m_minSize.Width)) / ( (double)size.Width - (double)m_minSize.Width);
-            //double y = ((double)(m_maxSize.Height - m_minSize.Height)) / ((double)size.Height - (double)m_minSize.Height);
-
-            return new Point((int)x + m_cursor.Width/2,(int)y + m_cursor.Height/2);
-        }
-
-        Size calculateNewSize(int x, int y)
-        {
-            double width = (double)m_minSize.Width + (((double)(m_maxSize.Width - m_minSize.Width)) * ((double)((double)x / (double)this.Width)));
-            double height = (double)m_minSize.Height + ((double)(m_maxSize.Height - m_minSize.Height) * (double)((double)y / (double)this.Height));
-
-            return new Size((int)width, (int)height);
-        }
-
+        
         void onMouseDownGraph(object sender, MouseEventArgs e)
         {
             if (m_cursor.Contains(e.Location))
-            {
-                //Console.WriteLine("ok");
+            {                
                 m_cursorClicked = true;
                 m_selectedExample = -1;
             }
@@ -120,7 +186,7 @@ namespace Uiml.Gummy.Kernel.Services
                         Refresh();
                         if (DesignSpaceExampleSelected != null)
                         {
-                            DesignSpaceExampleSelected(this, calculateNewSize(rect.X, rect.Y));
+                            DesignSpaceExampleSelected(this, pointToSize(rect.Location));
                         }
                         return;
                     }
@@ -141,7 +207,6 @@ namespace Uiml.Gummy.Kernel.Services
 
             for (int i = 0; i < m_examples.Count; i++)
             {
-                //Console.Out.WriteLine(m_examples[i]);
                 if (i != m_selectedExample)
                 {
                     g.FillRectangle(Brushes.Black, m_examples[i]);
@@ -157,7 +222,6 @@ namespace Uiml.Gummy.Kernel.Services
 
         void onResizeGraph(object sender, EventArgs e)
         {
-            //m_bounds = new Rectangle(5, 5, Size.Width, Size.Height);
             m_init = true;
         }
 
