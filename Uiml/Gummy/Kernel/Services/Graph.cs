@@ -21,7 +21,7 @@ namespace Uiml.Gummy.Kernel.Services
         private bool m_cursorClicked = false;
 
         private Size m_minSize = new Size(130, 40);
-        private Size m_maxSize = new Size(1500, 1500);
+        private Size m_maxSize = new Size(600, 600);
 
         private int m_xIncrement = 1;
         private int m_yIncrement = 1;
@@ -110,14 +110,14 @@ namespace Uiml.Gummy.Kernel.Services
 
         private Point sizeToPoint(Size size)
         {
-            //Check if the requested size is within the boundaries
+            //Check if the requested size is within the boundaries --> HERE IS AN ERROR !!    
             if (size.Width < m_minSize.Width)
             {
                 size.Width = m_minSize.Width;
             }
             else if (size.Width > m_maxSize.Width)
             {
-                size.Width = m_minSize.Width;
+                size.Width = m_maxSize.Width;
             }
             
             if (size.Height > m_maxSize.Height)
@@ -128,9 +128,11 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 size.Height = m_minSize.Height;
             }
+            
             //Round the size to some neareby values that were anticipated during the preprocessing step
-            /*size.Width = size.Width - (size.Width % m_xIncrement);
-            size.Height = size.Height - (size.Height % m_yIncrement);*/
+            size.Width = size.Width - (size.Width % m_xIncrement);
+            size.Height = size.Height - (size.Height % m_yIncrement);
+
             //Get the right size
             return m_sizeToPoint[size];
         }

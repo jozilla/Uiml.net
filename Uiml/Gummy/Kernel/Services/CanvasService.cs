@@ -27,7 +27,18 @@ namespace Uiml.Gummy.Kernel.Services
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
             BackColor = Color.DarkGray;
+            Resize += new EventHandler(onResize);
             m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+        }
+
+        void onResize(object sender, EventArgs e)
+        {
+            //Update every domainobject to its new properties...
+            DomainObjectCollection.Enumerator domEnum = m_domainObjects.GetEnumerator();
+            while (domEnum.MoveNext())
+            {
+                domEnum.Current.UpdateToNewSize(Size);
+            }
         }
 
         void onDomainObjectCollectionUpdated(object sender, DomainObjectCollectionEventArgs e)
@@ -98,7 +109,10 @@ namespace Uiml.Gummy.Kernel.Services
             DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());
             DomainObject domCloned = (DomainObject)dom.Clone();
             domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
-            m_domainObjects.Add(domCloned);            
+            domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
+            m_domainObjects.Add(domCloned);
+            ExampleRepository.Instance.AddExampleDomainObject(Size, domCloned);
+          
         }
 
         private void InitializeComponent()
@@ -118,6 +132,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         }
 
+        //Deprecated -> may not be used anymore
         public List<DomainObject> DomainObjects
         {
             get
@@ -132,9 +147,9 @@ namespace Uiml.Gummy.Kernel.Services
             set
             {
                 m_domainObjects.Clear();
-                m_domainObjects.AddRange(value);                
+                m_domainObjects.AddRange(value);
             }
         }
 
-        }
+    }
 }

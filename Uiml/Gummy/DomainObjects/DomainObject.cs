@@ -71,10 +71,18 @@ namespace Uiml.Gummy.Domain
                 if(m_part != null)
                     return m_part.Identifier;
                 return "none";
-            }            
+            }
+            set
+            {
+                m_part.Identifier = value;
+                for (int i = 0; i < m_properties.Count; i++)
+                {
+                    m_properties[i].PartName = value;
+                }
+            }
         }
 
-        public Size Size
+            public Size Size
         {
             get
             {

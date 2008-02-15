@@ -16,7 +16,7 @@ namespace Uiml.Gummy.Domain
         //Event handlers
         public event ExampleDesignAddedHandler ExampleDesignAdded;
 
-        SortedDictionary<Size, Dictionary<string, DomainObject>> m_examples = new SortedDictionary<Size, Dictionary<string, DomainObject>>();
+        Dictionary<Size, Dictionary<string, DomainObject>> m_examples = new Dictionary<Size, Dictionary<string, DomainObject>>();
         static ExampleRepository m_repository = null;
 
         private ExampleRepository()
@@ -56,18 +56,18 @@ namespace Uiml.Gummy.Domain
             }
             else
             {
-                Dictionary<string, DomainObject> m_nameDict = new Dictionary<string, DomainObject>();                
+                Dictionary<string, DomainObject> m_nameDict = new Dictionary<string, DomainObject>();
                 m_nameDict.Add(obj.Identifier, obj);
-                m_examples.Add(size,m_nameDict);
+                m_examples.Add(size, m_nameDict);
                 fireExampleDesignAdded(size);
             }
         }
 
         //Get the various instances of the domain objects at certain sizes
-        public SortedDictionary<Size, DomainObject> GetDomainObjectExamples(string label)
+        public Dictionary<Size, DomainObject> GetDomainObjectExamples(string label)
         {
-            SortedDictionary<Size, DomainObject> list = new SortedDictionary<Size, DomainObject>();
-            SortedDictionary<Size, Dictionary<string, DomainObject>>.Enumerator dictEnum = m_examples.GetEnumerator();
+            Dictionary<Size, DomainObject> list = new Dictionary<Size, DomainObject>();
+            Dictionary<Size, Dictionary<string, DomainObject>>.Enumerator dictEnum = m_examples.GetEnumerator();
             while (dictEnum.MoveNext())
             {
                 if (dictEnum.Current.Value.ContainsKey(label))

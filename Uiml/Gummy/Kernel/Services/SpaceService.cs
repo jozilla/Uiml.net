@@ -12,8 +12,7 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public partial class SpaceService : Form
     {
-        CanvasService m_canvas = null;
-        Dictionary<Size, List<DomainObject>> m_examples = new Dictionary<Size, List<DomainObject>>();
+        CanvasService m_canvas = null;        
         bool m_customResize = false;
 
         public SpaceService()
@@ -47,7 +46,7 @@ namespace Uiml.Gummy.Kernel.Services
         {
             m_customResize = true;
                 m_canvas.Size = size;
-                m_canvas.DomainObjects = m_examples[size];
+                //m_canvas.DomainObjects = m_examples[size]; -> should be done by the algorithm
             m_customResize = false;
         }
 
