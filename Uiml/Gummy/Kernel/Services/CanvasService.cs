@@ -12,7 +12,7 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
     {
-        List<DomainObject> m_domainObjects = new List<DomainObject>();
+        DomainObjectCollection m_domainObjects = new DomainObjectCollection();          
 
         public CanvasService()
             : base()
@@ -120,7 +120,8 @@ namespace Uiml.Gummy.Kernel.Services
             }
             set
             {
-                m_domainObjects = value;
+                m_domainObjects.Clear();
+                m_domainObjects.AddRange(value);
                 Controls.Clear();
                 for (int i = 0; i < m_domainObjects.Count; i++)
                 {

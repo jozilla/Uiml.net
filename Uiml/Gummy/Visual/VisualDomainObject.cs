@@ -12,17 +12,25 @@ namespace Uiml.Gummy.Visual
     {
         DomainObject m_domObject = null;
         VisualDomainObjectState m_state = null;
+        DomainObject.DomainObjectUpdateHandler m_domUpdated = null;
 
         public VisualDomainObject() : base()
         {
             this.BorderStyle = BorderStyle.FixedSingle;
-            State = new SelectVisualDomainObjectState();               
+            State = new SelectVisualDomainObjectState();
+            m_domUpdated = new DomainObject.DomainObjectUpdateHandler(domainObjectUpdated);
         }
 
         public VisualDomainObject(DomainObject domObject)
             : this()
         {
             DomainObject = domObject;
+        }
+
+        ~VisualDomainObject()
+        {
+            if (m_domObject != null)
+                m_domObject.DomainObjectUpdated -= m_domUpdated;
         }
 
         public DomainObject DomainObject
@@ -33,8 +41,10 @@ namespace Uiml.Gummy.Visual
             }
             set
             {
+                if (m_domObject != null)
+                    m_domObject.DomainObjectUpdated -= m_domUpdated;
                 m_domObject = value;
-                m_domObject.DomainObjectUpdated += new DomainObject.DomainObjectUpdateHandler(domainObjectUpdated);
+                m_domObject.DomainObjectUpdated += m_domUpdated;
                 m_domObject.Updated();
             }
         }

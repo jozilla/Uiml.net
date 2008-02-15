@@ -38,16 +38,17 @@ namespace Uiml.Gummy.Kernel.Services
             this.graph1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.graph1.Location = new System.Drawing.Point(0, 0);
             this.graph1.Name = "graph1";
-            this.graph1.Size = new System.Drawing.Size(516, 433);
+            this.graph1.Size = new System.Drawing.Size(335, 262);
             this.graph1.TabIndex = 0;
             // 
             // SpaceService
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(516, 433);
+            this.ClientSize = new System.Drawing.Size(335, 262);
             this.Controls.Add(this.graph1);
             this.Name = "SpaceService";
+            this.Opacity = 0.8;
             this.Text = "2D Example Space";
             this.TransparencyKey = System.Drawing.Color.Transparent;
             this.ResumeLayout(false);
