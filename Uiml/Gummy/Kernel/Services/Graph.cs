@@ -21,7 +21,7 @@ namespace Uiml.Gummy.Kernel.Services
         private bool m_cursorClicked = false;
 
         private Size m_minSize = new Size(130, 40);
-        private Size m_maxSize = new Size(600, 600);
+        private Size m_maxSize = new Size(950, 950);
 
         private int m_xIncrement = 1;
         private int m_yIncrement = 1;
@@ -70,6 +70,8 @@ namespace Uiml.Gummy.Kernel.Services
             m_maxSize.Height = m_maxSize.Height - (m_maxSize.Height % m_yIncrement);
 
             //Initialize the hashtables
+            int maxWidth = 0;
+            int maxHeight = 0;
             for (int y = 0; y <= Height; y++)
                 for (int x = 0; x <= Width; x++)
                 {
@@ -77,10 +79,16 @@ namespace Uiml.Gummy.Kernel.Services
                     int width = m_minSize.Width + (x * m_xIncrement);
                     int height = m_minSize.Height + (y * m_yIncrement);
                     Size size = new Size(width, height);
+                    if (width > maxWidth)
+                        maxWidth = width;
+                    if (height > maxHeight)
+                        maxHeight = height;
 
                     m_pointToSize.Add(pnt, size);                 
                     m_sizeToPoint.Add(size, pnt);
-                }            
+                }
+            m_maxSize.Height = maxHeight - (2 * m_yIncrement);
+            m_maxSize.Width = maxWidth - (2 * m_xIncrement);
         }
 
         private Size pointToSize(Point pnt)
@@ -118,8 +126,7 @@ namespace Uiml.Gummy.Kernel.Services
             else if (size.Width > m_maxSize.Width)
             {
                 size.Width = m_maxSize.Width;
-            }
-            
+            }            
             if (size.Height > m_maxSize.Height)
             {
                 size.Height = m_maxSize.Height;
