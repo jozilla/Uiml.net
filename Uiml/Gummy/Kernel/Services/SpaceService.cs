@@ -58,11 +58,6 @@ namespace Uiml.Gummy.Kernel.Services
             m_customResize = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            graph1.CreateSnapshot();
-            m_examples.Add(graph1.FocussedSize, m_canvas.DomainObjects);
-        }
 
         public void Init()
         {

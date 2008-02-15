@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectCollection.cs" />
+    <Compile Include="Uiml\Gummy\DomainObjects\ExampleRepository.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceContainer.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.cs">

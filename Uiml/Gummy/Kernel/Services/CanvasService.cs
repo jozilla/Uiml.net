@@ -26,9 +26,35 @@ namespace Uiml.Gummy.Kernel.Services
             AllowDrop = true;           
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
-            DragLeave += new EventHandler(onDragLeave);
-            DragOver += new DragEventHandler(onDragOver);
             BackColor = Color.DarkGray;
+            m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+        }
+
+        void onDomainObjectCollectionUpdated(object sender, DomainObjectCollectionEventArgs e)
+        {
+            switch (e.State)
+            {
+                case DomainObjectCollectionEventArgs.STATE.MOREADDED:
+                case DomainObjectCollectionEventArgs.STATE.MOREREMOVED:
+                    Controls.Clear();
+                    for (int i = 0; i < m_domainObjects.Count; i++)
+                    {
+                        VisualDomainObject visDom = new VisualDomainObject(m_domainObjects[i]);
+                        visDom.State = new ResizeVisualDomainObjectState();
+                        Controls.Add(visDom);
+                    }
+                    break;
+                case DomainObjectCollectionEventArgs.STATE.ONEADDED:
+                    VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
+                    vDom.State = new ResizeVisualDomainObjectState();                    
+                    Controls.Add(vDom);
+                    vDom.BringToFront();
+                    break;
+                case DomainObjectCollectionEventArgs.STATE.ONEREMOVED:
+                    //FixMe: Implement removing domain objects
+                    break;
+            }
+           
         }
 
         public bool Open()
@@ -57,17 +83,7 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 return this;
             }
-        }
-
-        void onDragLeave(object sender, EventArgs e)
-        {
-            Console.WriteLine("onDragLeave");
-        }
-
-        void onDragOver(object sender, DragEventArgs e)
-        {
-            Console.WriteLine("onDragOver");
-        }
+        }       
 
         void onDragEnter(object sender, DragEventArgs e)
         {
@@ -81,12 +97,8 @@ namespace Uiml.Gummy.Kernel.Services
             DomainObject tmp = new DomainObject();            
             DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());
             DomainObject domCloned = (DomainObject)dom.Clone();
-            domCloned.Location = this.PointToClient(new Point(e.X, e.Y));           
-
-            VisualDomainObject visDom = new VisualDomainObject(domCloned);
-            visDom.State = new ResizeVisualDomainObjectState();
-            Controls.Add(visDom);
-            m_domainObjects.Add(domCloned);
+            domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
+            m_domainObjects.Add(domCloned);            
         }
 
         private void InitializeComponent()
@@ -99,7 +111,6 @@ namespace Uiml.Gummy.Kernel.Services
             this.Name = "CanvasService";
             this.Load += new System.EventHandler(this.CanvasService_Load);
             this.ResumeLayout(false);
-
         }
 
         private void CanvasService_Load(object sender, EventArgs e)
@@ -121,14 +132,7 @@ namespace Uiml.Gummy.Kernel.Services
             set
             {
                 m_domainObjects.Clear();
-                m_domainObjects.AddRange(value);
-                Controls.Clear();
-                for (int i = 0; i < m_domainObjects.Count; i++)
-                {
-                    VisualDomainObject visDom = new VisualDomainObject(m_domainObjects[i]);
-                    visDom.State = new ResizeVisualDomainObjectState();
-                    Controls.Add(visDom);                    
-                }
+                m_domainObjects.AddRange(value);                
             }
         }
 

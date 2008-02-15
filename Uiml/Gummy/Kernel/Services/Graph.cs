@@ -6,6 +6,8 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
+using Uiml.Gummy.Domain;
+
 namespace Uiml.Gummy.Kernel.Services
 {
     public delegate void DesignSpaceSizeChangeHandler(object sender, Size size);
@@ -39,7 +41,14 @@ namespace Uiml.Gummy.Kernel.Services
             MouseDown += new MouseEventHandler(onMouseDownGraph);
             MouseMove += new MouseEventHandler(onMouseMoveGraph);
             MouseUp += new MouseEventHandler(onMouseUpGraph);
-            
+            ExampleRepository.Instance.ExampleDesignAdded += new ExampleRepository.ExampleDesignAddedHandler(onExampleDesignAdded);            
+        }
+
+        private void onExampleDesignAdded(object sender, Size s)
+        {
+            Point p = sizeToPoint(s);
+            m_examples.Add(new Rectangle(p.X, p.Y, 3, 3));
+            Refresh();
         }
 
         /*
@@ -239,14 +248,6 @@ namespace Uiml.Gummy.Kernel.Services
         void onResizeGraph(object sender, EventArgs e)
         {
             m_init = true;
-        }
-
-        public void CreateSnapshot()
-        {
-            Rectangle snapshot = new Rectangle(m_cursor.X + m_cursor.Width/2, m_cursor.Y + m_cursor.Height/2, 3, 3);
-            m_examples.Add(snapshot);
-
-            Refresh();
         }
 
         private void InitializeComponent()

@@ -64,6 +64,16 @@ namespace Uiml.Gummy.Domain
             }
         }
 
+        public String Identifier
+        {
+            get
+            {
+                if(m_part != null)
+                    return m_part.Identifier;
+                return "none";
+            }            
+        }
+
         public Size Size
         {
             get
@@ -161,6 +171,11 @@ namespace Uiml.Gummy.Domain
             {
                 m_selected = value;
             }
+        }
+
+        public void UpdateToNewSize(Size size)
+        {
+            Console.Out.WriteLine("Update [{0}] to the new size [{1}]",Identifier,size);
         }
        
 	}
