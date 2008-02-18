@@ -248,15 +248,30 @@ namespace Uiml.Gummy.Visual
             switch (m_moveState)
             {
                 case MoveState.Move:
+                    if (m_oldBounds.Location.X != m_visDom.Location.X ||
+                        m_oldBounds.Location.Y != m_visDom.Location.Y)
+                    {
+                        addSnapshot();
+                    }
+                    break;
                 case MoveState.Resize:
-                    ExampleRepository.Instance.AddExampleDomainObject(
-                        DesignerKernel.Instance.GetService("gummy-canvas").ServiceControl.Size,
-                        (DomainObject)m_visDom.DomainObject.Clone()
-                    );
+                    if (m_oldBounds.Size.Width != m_visDom.Width ||
+                        m_oldBounds.Size.Height != m_visDom.Height)
+                    {
+                        addSnapshot();
+                    }
                     break;
             }
             m_moveState = MoveState.None;
             clicked = false;
+        }
+
+        private void addSnapshot()
+        {
+            ExampleRepository.Instance.AddExampleDomainObject(
+                        DesignerKernel.Instance.GetService("gummy-canvas").ServiceControl.Size,
+                        (DomainObject)m_visDom.DomainObject.Clone()
+                    );
         }
 
         protected override void onPaint(object sender, System.Windows.Forms.PaintEventArgs e)

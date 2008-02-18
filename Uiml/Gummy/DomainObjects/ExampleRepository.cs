@@ -61,6 +61,7 @@ namespace Uiml.Gummy.Domain
                 m_examples.Add(size, m_nameDict);
                 fireExampleDesignAdded(size);
             }
+            PrintRepositoryContent();
         }
 
         //Get the various instances of the domain objects at certain sizes
@@ -84,6 +85,22 @@ namespace Uiml.Gummy.Domain
             List<Size> sizes = new List<Size>();
             sizes.AddRange(m_examples.Keys);
             return sizes;
+        }
+
+        public void PrintRepositoryContent()
+        {
+            Console.Out.WriteLine("[RepositoryContent]");
+            Dictionary<Size, Dictionary<string, DomainObject>>.Enumerator dictEnum = m_examples.GetEnumerator();
+            while (dictEnum.MoveNext())
+            {
+                Dictionary<string,DomainObject>.Enumerator enumerator = dictEnum.Current.Value.GetEnumerator();
+                Console.Out.WriteLine("Examples given for size {0}",dictEnum.Current.Key);
+                while (enumerator.MoveNext())
+                {
+                    Console.Out.WriteLine("\t Part.Identifier = {0}, Size = {1}, Location = {2}", enumerator.Current.Value.Identifier, enumerator.Current.Value.Size, enumerator.Current.Value.Location);
+                }
+            }
+            Console.Out.WriteLine("[/RepositoryContent]");
         }
     }
 }

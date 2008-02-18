@@ -28,7 +28,7 @@ namespace Uiml.Gummy.Serialize.Swing
         {
             if (DomainObject == null)
                 return;
-            if (m_positionProperty == null)
+            if (m_positionProperty == null || !DomainObject.Properties.Contains(m_positionProperty))
                 m_positionProperty = DomainObject.FindProperty(IAM);
         }
 

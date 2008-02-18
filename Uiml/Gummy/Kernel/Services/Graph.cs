@@ -13,10 +13,10 @@ namespace Uiml.Gummy.Kernel.Services
     public delegate void DesignSpaceSizeChangeHandler(object sender, Size size);
 
     public partial class Graph : UserControl
-    {
+    {        
         private List<Rectangle> m_examples = new List<Rectangle>();
         private int m_selectedExample = -1;
-        private Rectangle m_cursor = new Rectangle(5, 5, 10, 10);       
+        private Rectangle m_cursor = new Rectangle(12, 12, 16, 16);
         private bool m_init = false;
         private bool m_cursorClicked = false;
 
@@ -36,7 +36,6 @@ namespace Uiml.Gummy.Kernel.Services
             InitializeComponent();
             this.DoubleBuffered = true;
 
-            Resize += new EventHandler(onResizeGraph);
             Paint += new PaintEventHandler(onPaintGraph);
             MouseDown += new MouseEventHandler(onMouseDownGraph);
             MouseMove += new MouseEventHandler(onMouseMoveGraph);
@@ -47,7 +46,8 @@ namespace Uiml.Gummy.Kernel.Services
         private void onExampleDesignAdded(object sender, Size s)
         {
             Point p = sizeToPoint(s);
-            m_examples.Add(new Rectangle(p.X, p.Y, 3, 3));
+            m_examples.Add(new Rectangle(p.X - 3, p.Y - 3, 6, 6));
+            updateSelectedExample();
             Refresh();
         }
 
@@ -87,8 +87,8 @@ namespace Uiml.Gummy.Kernel.Services
                     m_pointToSize.Add(pnt, size);                 
                     m_sizeToPoint.Add(size, pnt);
                 }
-            m_maxSize.Height = maxHeight - (2 * m_yIncrement);
-            m_maxSize.Width = maxWidth - (2 * m_xIncrement);
+            m_maxSize.Height = maxHeight - (3 * m_yIncrement);
+            m_maxSize.Width = maxWidth - (3 * m_xIncrement);
         }
 
         private Size pointToSize(Point pnt)
@@ -136,11 +136,9 @@ namespace Uiml.Gummy.Kernel.Services
                 size.Height = m_minSize.Height;
             }
             
-            //Round the size to some neareby values that were anticipated during the preprocessing step
             size.Width = size.Width - (size.Width % m_xIncrement);
             size.Height = size.Height - (size.Height % m_yIncrement);
 
-            //Get the right size
             return m_sizeToPoint[size];
         }
 
@@ -155,33 +153,50 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 int x = e.Location.X - m_cursor.Width / 2;
                 int y = e.Location.Y - m_cursor.Height / 2;
+                if (x > Width - m_cursor.Width)
+                    x = Width - m_cursor.Width;
+                else if (x < 0)
+                    x = 0;
+                if (y > Height - m_cursor.Height)
+                    y = Height - m_cursor.Height;
+                else if (y < 0)
+                    y = 0;
                 m_cursor.Location = new Point( x, y );
+                updateSelectedExample();
                 if (this.DesignSpaceCursorChanged != null)
                 {
-                    DesignSpaceCursorChanged(this, pointToSize(m_cursor.Location));
+                    DesignSpaceCursorChanged(this, pointToSize(CursorPosition));
                 }
                 Refresh();
             }
         }
 
+        public Size MaximumCanvasSize
+        {
+            get
+            {
+                return m_maxSize;
+            }
+        }
+
+        public Size MinimumCanvasSize
+        {
+            get
+            {
+                return m_minSize;
+            }
+        }
         
         public Size FocussedSize
         {
             get
             {
-                if (m_selectedExample >= 0)
-                {
-                    Rectangle selectedRec = m_examples[m_selectedExample];
-                    return pointToSize(selectedRec.Location);
-                }
-                else
-                {
-                    return pointToSize(new Point(m_cursor.X + m_cursor.Width / 2, m_cursor.Y + m_cursor.Height / 2));
-                }
+                return pointToSize(CursorPosition);
             }
             set
             {
-                m_cursor.Location = sizeToPoint(value);
+                CursorPosition = sizeToPoint(value);
+                updateSelectedExample();
                 Refresh();
             }
         }
@@ -201,34 +216,49 @@ namespace Uiml.Gummy.Kernel.Services
                 return m_yIncrement;
             }
         }
+
+        void updateSelectedExample()
+        {
+            for (int i = 0; i < m_examples.Count; i++)
+            {
+                Rectangle rect = m_examples[i];
+                if (rect.Contains(CursorPosition))
+                {
+                    m_selectedExample = i;
+                    int centerX = rect.X + rect.Width / 2;
+                    int centerY = rect.Y + rect.Height / 2;
+                    CursorPosition = new Point(centerX, centerY);
+                    Refresh();                    
+                    return;
+                }
+            }
+            m_selectedExample = -1;
+        }
         
         void onMouseDownGraph(object sender, MouseEventArgs e)
-        {
-            if (m_cursor.Contains(e.Location))
-            {                
-                m_cursorClicked = true;
-                m_selectedExample = -1;
-            }
-            else
-            {
-                for (int i = 0; i < m_examples.Count; i++)
-                {
-                    Rectangle rect = m_examples[i];
-                    if (rect.Contains(e.Location))
-                    {
-                        m_selectedExample = i;
-                        Refresh();
-                        if (DesignSpaceExampleSelected != null)
-                        {
-                            DesignSpaceExampleSelected(this, pointToSize(rect.Location));
-                        }
-                        return;
-                    }
-                }
-                m_selectedExample = -1;
-                m_cursorClicked = false;                
-            }
+        {            
+            m_cursorClicked = true;
+            CursorPosition = e.Location;
+            updateSelectedExample();
             Refresh();
+            if (this.DesignSpaceCursorChanged != null)
+            {
+                DesignSpaceCursorChanged(this, pointToSize(CursorPosition));
+            }
+        }
+
+        Point CursorPosition
+        {
+            get
+            {
+                Point position = new Point(m_cursor.X + m_cursor.Width / 2, m_cursor.Y + m_cursor.Height / 2);                
+                return position;
+            }
+            set
+            {
+                Point position = new Point(value.X - m_cursor.Width / 2, value.Y - m_cursor.Height / 2);               
+                m_cursor.Location = position;
+            }
         }
 
 
@@ -237,26 +267,31 @@ namespace Uiml.Gummy.Kernel.Services
             Graphics g = e.Graphics;
             
             g.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Bounds.Width, Bounds.Height));
-            g.FillRectangle(Brushes.Red, m_cursor);
 
             for (int i = 0; i < m_examples.Count; i++)
             {
                 if (i != m_selectedExample)
                 {
-                    g.FillRectangle(Brushes.Black, m_examples[i]);
+                    g.FillRectangle(Brushes.DarkBlue, m_examples[i]);
                 }
                 else
                 {
-                    g.FillRectangle(Brushes.Green, m_examples[i]);
+                    g.FillRectangle(Brushes.YellowGreen, m_examples[i]);
+                    g.DrawRectangle(Pens.Chocolate, m_examples[i]);                    
                 }
             }
 
-            g.FillRectangle(Brushes.Red, m_cursor);
-        }
+            SolidBrush semiTransUIBrush = new SolidBrush(Color.FromArgb(50,Color.Gray));
+            SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(50, 255, 0, 0));
 
-        void onResizeGraph(object sender, EventArgs e)
-        {
-            m_init = true;
+            g.FillRectangle(semiTransBrush, m_cursor);
+
+            g.FillRectangle(semiTransUIBrush, 0, 0, CursorPosition.X, CursorPosition.Y);
+            g.DrawRectangle(Pens.Black, 0, 0, CursorPosition.X, CursorPosition.Y);
+            g.DrawRectangle(Pens.Black, m_cursor);
+            g.DrawLine(Pens.Black, m_cursor.X + m_cursor.Width / 2, m_cursor.Y, m_cursor.X + m_cursor.Width / 2, m_cursor.Y + m_cursor.Height);
+            g.DrawLine(Pens.Black, m_cursor.X, m_cursor.Y + m_cursor.Height / 2, m_cursor.X + m_cursor.Width, m_cursor.Y + m_cursor.Height / 2);
+            
         }
 
         private void InitializeComponent()

@@ -111,7 +111,7 @@ namespace Uiml.Gummy.Kernel.Services
             domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
             domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
             m_domainObjects.Add(domCloned);
-            ExampleRepository.Instance.AddExampleDomainObject(Size, domCloned);
+            ExampleRepository.Instance.AddExampleDomainObject(Size, (DomainObject)domCloned.Clone());
           
         }
 

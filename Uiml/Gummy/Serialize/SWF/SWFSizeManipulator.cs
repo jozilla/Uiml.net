@@ -29,9 +29,9 @@ namespace Uiml.Gummy.Serialize.SWF
         {
             if (DomainObject == null)
                 return;
-            if (m_sizewProperty == null)
+            if (m_sizewProperty == null || !DomainObject.Properties.Contains(m_sizewProperty))
                 m_sizewProperty = DomainObject.FindProperty("width");
-            if (m_sizehProperty == null)
+            if (m_sizehProperty == null || !DomainObject.Properties.Contains(m_sizehProperty))
                 m_sizehProperty = DomainObject.FindProperty("height");
         }
 

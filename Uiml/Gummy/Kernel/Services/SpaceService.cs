@@ -21,7 +21,7 @@ namespace Uiml.Gummy.Kernel.Services
         }
 
         void m_canvas_Resize(object sender, EventArgs e)
-        {
+        {            
             if (!m_customResize)
             {  
 
@@ -33,7 +33,7 @@ namespace Uiml.Gummy.Kernel.Services
                 if (m_canvas.Size.Height % graph1.YStep != 0)
                 { 
                     sizeToSet.Height = m_canvas.Size.Height - (m_canvas.Size.Height % graph1.YStep);
-                }
+                }                
                 m_customResize = true;
                     m_canvas.Size = sizeToSet;
                 m_customResize = false;
@@ -62,7 +62,9 @@ namespace Uiml.Gummy.Kernel.Services
         {
             m_canvas = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
             graph1.DesignSpaceCursorChanged += new DesignSpaceSizeChangeHandler(graph1_DesignSpaceCursorChanged);
-            graph1.DesignSpaceExampleSelected += new DesignSpaceSizeChangeHandler(graph1_DesignSpaceExampleSelected);
+            //graph1.DesignSpaceExampleSelected += new DesignSpaceSizeChangeHandler(graph1_DesignSpaceExampleSelected);
+            //m_canvas.MinimumSize = graph1.MinimumCanvasSize;
+            //m_canvas.MaximumSize = graph1.MaximumCanvasSize;
         }
 
         public bool Open()
