@@ -18,13 +18,13 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         private int m_selectedExample = -1;
         private Rectangle m_cursor = new Rectangle(12, 12, 16, 16);
 
-        private Point m_origin = new Point(20,20);
+        private Point m_origin = new Point(30,30);
         private Point m_max = new Point(100, 100);
         
         private bool m_cursorClicked = false;
 
         private Size m_minSize = new Size(0, 0);
-        private Size m_maxSize = new Size(800, 800);
+        private Size m_maxSize = new Size(770, 770);
 
         private int m_xIncrement = 1;
         private int m_yIncrement = 1;
@@ -270,6 +270,10 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             
             g.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Bounds.Width, Bounds.Height));
 
+            drawXAxis(g);
+            drawYAxis(g); 
+            g.DrawRectangle(Pens.Black, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);            
+
             for (int i = 0; i < m_examples.Count; i++)
             {
                 if (i != m_selectedExample)
@@ -293,9 +297,64 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             g.DrawRectangle(Pens.Black, m_cursor);
             g.DrawLine(Pens.Black, m_cursor.X + m_cursor.Width / 2, m_cursor.Y, m_cursor.X + m_cursor.Width / 2, m_cursor.Y + m_cursor.Height);
             g.DrawLine(Pens.Black, m_cursor.X, m_cursor.Y + m_cursor.Height / 2, m_cursor.X + m_cursor.Width, m_cursor.Y + m_cursor.Height / 2);
+                       
+        }
 
-            g.DrawRectangle(Pens.Black, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);
-            
+        private void drawYAxis(Graphics g)
+        {
+            float x1 = (float)m_origin.X * ((float)3 / (float)5);
+            float x2 = (float)m_origin.X * ((float)4 / (float)5);
+            float x3 = (float)m_origin.X * ((float)2 / (float)4);
+
+            Font fnt = new Font("Arial", 7);
+            int counter = 0;
+            for (int y = m_origin.Y; y <= m_max.Y; y++)
+            {
+                Point pnt = new Point(m_origin.X,y);
+                Size size = pointToSize(pnt);
+                if (counter % 20 == 0)
+                {
+                    g.DrawLine(Pens.Black, x1, y, m_origin.X, y);
+                    g.DrawLine(Pens.LightGray, m_origin.X, y, m_max.X, y);
+                    Rectangle rect = new Rectangle(0,y - 5, 20, 10);
+                    g.DrawString(size.Height.ToString(), fnt, Brushes.Black, rect);
+                }
+                else if (counter % 2 == 0)
+                    g.DrawLine(Pens.Black, x2, y, m_origin.X, y);                    
+                counter++;
+            }
+        }
+
+        private void drawXAxis(Graphics g)
+        {
+            float y1 = (float)m_origin.Y * ((float)3 /(float)5);
+            float y2 = (float)m_origin.Y * ((float)4 / (float)5);
+            float y3 = (float)m_origin.Y * ((float)2 / (float)4);
+            Font fnt = new Font("Arial", 7);
+            int counter = 0;
+            for (int x = m_origin.X; x <= m_max.X; x+=1)
+            {
+                Point pnt = new Point(x, m_origin.Y);
+                Size size = pointToSize(pnt);
+                //g.DrawString(size.Width.ToString(),new Font(
+                if (counter % 20 == 0)
+                {
+                    g.DrawLine(Pens.Black, x, y1, x, m_origin.Y);
+                    g.DrawLine(Pens.LightGray, x, m_origin.Y, x, m_max.Y);
+                    int l = 20;
+                    if (size.Width.ToString().Length == 1)
+                        l = 10;
+                    else if (size.Width.ToString().Length == 2)
+                        l = 16;
+                    else
+                        l = 20;
+                    Rectangle rect = new Rectangle(x - l/2, 0, l, (int)y3);
+                    g.DrawString(size.Width.ToString(), fnt, Brushes.Black, rect);
+                }
+                else if (counter % 2 == 0)
+                    g.DrawLine(Pens.Black, x, y2, x, m_origin.Y);
+                counter++;
+            }
         }
 
         private void InitializeComponent()
