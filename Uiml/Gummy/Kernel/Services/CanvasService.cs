@@ -27,11 +27,11 @@ namespace Uiml.Gummy.Kernel.Services
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
             BackColor = Color.DarkGray;
-            Resize += new EventHandler(onResize);
+            //Resize += new EventHandler(onResize);
             m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
         }
 
-        void onResize(object sender, EventArgs e)
+        public void UpdateToNewSize()
         {
             //Update every domainobject to its new properties...
             DomainObjectCollection.Enumerator domEnum = m_domainObjects.GetEnumerator();
