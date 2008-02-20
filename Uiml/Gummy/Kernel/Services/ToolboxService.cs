@@ -84,5 +84,13 @@ namespace Uiml.Gummy.Kernel.Services
                 return "gummy-toolbox";
             }
         }
+
+        public System.Windows.Forms.Control ServiceControl
+        {
+            get
+            {
+                return this;
+            }
+        }
     }
 }

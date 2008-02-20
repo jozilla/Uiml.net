@@ -9,22 +9,57 @@ using System.Windows.Forms;
 
 namespace Uiml.Gummy.Kernel
 {
-    public class DesignerKernel : Form, IService
+    public class DesignerKernel : Form, IService, IServiceContainer
     {
         List<IService> m_services = new List<IService>();
         DesignerLoader m_loader = new DesignerLoader();
+        string m_platform = "swf-1.1";
 
-        public DesignerKernel(string vocabulary): base()
+        static DesignerKernel m_kernel = null;
+
+        private DesignerKernel()
+        {
+            ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer(m_platform);
+        }
+
+        private DesignerKernel(string vocabulary): base()
         {
             //TODO: needs to be loaded from a config file or dialog window
             //ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer("idtv-1.0");
-            ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer("swf-1.1");
+            Platform = vocabulary;
+        }
+
+        public static DesignerKernel Instance
+        {
+            get
+            {
+                if (m_kernel == null)
+                    m_kernel = new DesignerKernel();
+                return m_kernel;
+            }
+            set
+            {
+                m_kernel = value;
+            }
+        }
+
+        public string Platform
+        {
+            get
+            {
+                return m_platform;
+            }
+            set
+            {
+                m_platform = value;
+                ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer(m_platform);
+            }
         }
 
         public void Init()
         {
-            InitializeComponents();
             LoadServices(null);
+            InitializeComponents();            
             InitializeMdiChildren();
         }
 
@@ -52,7 +87,7 @@ namespace Uiml.Gummy.Kernel
             {
                 child.Init();
 
-                Form childForm = (Form)child;
+                Form childForm = (Form)child.ServiceControl;
                 childForm.MdiParent = this;
                 childForm.ShowIcon = false;
                 childForm.ControlBox = false;
@@ -62,7 +97,7 @@ namespace Uiml.Gummy.Kernel
 
         private void DockMdiChild(IService child)
         {
-            Form childForm = (Form)child;
+            Form childForm = (Form)child.ServiceControl;
 
             switch (child.ServiceName)
             {
@@ -71,7 +106,12 @@ namespace Uiml.Gummy.Kernel
                     break;
                 case "gummy-canvas":
                     childForm.Dock = DockStyle.None;
-                    childForm.Left = 0;
+                    childForm.Left = 100;
+                    childForm.Top = 0;
+                    break;
+                case "gummy-designspace":
+                    childForm.Dock = DockStyle.None;
+                    childForm.Left = 400;
                     childForm.Top = 0;
                     break;
                 case "gummy-propertypanel":
@@ -90,7 +130,7 @@ namespace Uiml.Gummy.Kernel
 
         private void UnDockMdiChild(IService child)
         {
-            Form childForm = (Form)child;
+            Form childForm = (Form)child.ServiceControl;
             childForm.Dock = DockStyle.None;
         }
 
@@ -114,16 +154,8 @@ namespace Uiml.Gummy.Kernel
                     return false;
                 }
             }
-            try
-            {
-                Application.Run();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.Write(e.StackTrace);
-                return false;
-            }
+            Application.Run();
+            return true;           
         }
 
         public bool Close()
@@ -157,12 +189,44 @@ namespace Uiml.Gummy.Kernel
             }
         }
 
+        public System.Windows.Forms.Control ServiceControl
+        {
+            get
+            {
+                return this;
+            }
+        }
+
+        public List<IService> Services
+        {
+            get
+            {
+                return m_services;
+            }
+        }
+
+        public IService GetService(string name)
+        {
+            for (int i = 0; i < m_services.Count; i++)
+            {
+                if (m_services[i].ServiceName == name)
+                    return m_services[i];
+            }
+            return null;
+        }
+
+        public void AttachService(IService service)
+        {
+            m_services.Add(service);
+        }
+
         //Load the services from an Xml Document
         public void LoadServices(XmlDocument doc)
-        {
-            m_services.Add(new ToolboxService());
-            m_services.Add(new CanvasService());
-            m_services.Add(new PropertiesService());
+        {            
+            AttachService(new ToolboxService());
+            AttachService(new CanvasService());
+            AttachService(new SpaceService());
+            AttachService(new PropertiesService());
         }
 
         public void WindowCascade_Clicked(object sender, EventArgs args)

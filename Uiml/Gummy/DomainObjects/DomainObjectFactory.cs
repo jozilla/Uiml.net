@@ -37,7 +37,7 @@ namespace Uiml.Gummy.Domain
             }
         }
 
-        private string AutoID()
+        public string AutoID()
         {
             string id = "part" + autoId;
             autoId++;

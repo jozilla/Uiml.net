@@ -13,9 +13,8 @@ namespace Uiml.Gummy
         [STAThread]
         static void Main()
         {
-            DesignerKernel kernel = new DesignerKernel("");
-            kernel.Init();
-            kernel.Open();
+            DesignerKernel.Instance.Init();
+            DesignerKernel.Instance.Open();
         }
     }
 }

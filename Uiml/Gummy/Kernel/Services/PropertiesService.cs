@@ -48,6 +48,14 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
+        public System.Windows.Forms.Control ServiceControl
+        {
+            get
+            {
+                return this;
+            }
+        }
+
         void onDomainObjectSelected(Domain.DomainObject dom, EventArgs e)
         {
             if (m_dom != dom)
