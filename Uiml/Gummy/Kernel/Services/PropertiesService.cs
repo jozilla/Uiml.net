@@ -106,5 +106,13 @@ namespace Uiml.Gummy.Kernel.Services
                 }
             }
         }
+
+        public System.Windows.Forms.Control ServiceConfigurationControl 
+        {
+            get 
+            {
+                return null; // no configuration
+            }
+        }
     }
 }

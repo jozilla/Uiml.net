@@ -19,5 +19,10 @@ namespace Uiml.Gummy.Kernel.Services
         {
             get;
         }
+
+        System.Windows.Forms.Control ServiceConfigurationControl 
+        {
+            get;
+        }
     }
 }
