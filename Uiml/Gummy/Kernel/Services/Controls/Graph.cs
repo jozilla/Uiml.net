@@ -268,10 +268,11 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         {
             Graphics g = e.Graphics;
             
-            g.FillRectangle(Brushes.White, new Rectangle(0, 0, this.Bounds.Width, Bounds.Height));
+            g.FillRectangle(Brushes.Gray, new Rectangle(0, 0, this.Bounds.Width, Bounds.Height));
 
+            g.FillRectangle(Brushes.White, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);  
             drawXAxis(g);
-            drawYAxis(g); 
+            drawYAxis(g);           
             g.DrawRectangle(Pens.Black, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);            
 
             for (int i = 0; i < m_examples.Count; i++)

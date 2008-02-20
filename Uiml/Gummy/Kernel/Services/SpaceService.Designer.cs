@@ -45,14 +45,14 @@ namespace Uiml.Gummy.Kernel.Services
             // 
             // SpaceService
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(377, 314);
             this.Controls.Add(this.graph1);
             this.Name = "SpaceService";
-            this.Opacity = 0.8;
+            //this.Opacity = 0.8;
             this.Text = "2D Example Space";
-            this.TransparencyKey = System.Drawing.Color.Transparent;
+            //this.TransparencyKey = System.Drawing.Color.Transparent;
             this.ResumeLayout(false);
 
         }

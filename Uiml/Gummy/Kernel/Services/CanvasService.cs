@@ -12,7 +12,12 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
     {
-        DomainObjectCollection m_domainObjects = new DomainObjectCollection();          
+        DomainObjectCollection m_domainObjects = new DomainObjectCollection();
+        Size m_canvasSize = new Size(20,20);
+        Rectangle m_uiRectangle = new Rectangle(0,0,20,20);
+        Point m_origin = new Point(0, 0);
+
+        public event EventHandler CanvasResized;
 
         public CanvasService()
             : base()
@@ -29,6 +34,10 @@ namespace Uiml.Gummy.Kernel.Services
             BackColor = Color.DarkGray;
             //Resize += new EventHandler(onResize);
             m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+            Paint += new PaintEventHandler(onPaint);
+            DoubleBuffered = true;
+            CanvasSize = new Size(100, 100);
+            //IsMdiContainer = true;
         }
 
         public void UpdateToNewSize()
@@ -37,7 +46,7 @@ namespace Uiml.Gummy.Kernel.Services
             DomainObjectCollection.Enumerator domEnum = m_domainObjects.GetEnumerator();
             while (domEnum.MoveNext())
             {
-                domEnum.Current.UpdateToNewSize(Size);
+                domEnum.Current.UpdateToNewSize(CanvasSize);
             }
         }
 
@@ -51,13 +60,13 @@ namespace Uiml.Gummy.Kernel.Services
                     for (int i = 0; i < m_domainObjects.Count; i++)
                     {
                         VisualDomainObject visDom = new VisualDomainObject(m_domainObjects[i]);
-                        visDom.State = new ResizeVisualDomainObjectState();
+                        visDom.State = new ResizeAndMoveVisualDomainObjectState();
                         Controls.Add(visDom);
                     }
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEADDED:
                     VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
-                    vDom.State = new ResizeVisualDomainObjectState();                    
+                    vDom.State = new ResizeAndMoveVisualDomainObjectState();                    
                     Controls.Add(vDom);
                     vDom.BringToFront();
                     break;
@@ -70,7 +79,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public bool Open()
         {
-            this.Visible = true;
+            this.Visible = true;           
             return true;
         }
 
@@ -111,9 +120,22 @@ namespace Uiml.Gummy.Kernel.Services
             domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
             domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
             m_domainObjects.Add(domCloned);
-            ExampleRepository.Instance.AddExampleDomainObject(Size, (DomainObject)domCloned.Clone());
+            ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
           
         }
+
+        void onPaint(object sender, PaintEventArgs e)
+        {            
+            Graphics g = e.Graphics;
+            g.FillRectangle(Brushes.DarkGray,new Rectangle(0,0,Width,Height));            
+            g.FillRectangle(Brushes.WhiteSmoke,m_uiRectangle);
+            g.DrawRectangle(Pens.Blue, m_uiRectangle);            
+            //Font fnt = new Font("Arial", 12);
+            //g.FillRectangle(Brushes.DarkBlue, rectTitle);
+            //g.DrawRectangle(Pens.Black, rectTitle);
+            //g.DrawString("User Interface", fnt, Brushes.White, rectTitle);
+        }
+
 
         private void InitializeComponent()
         {
@@ -148,6 +170,22 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 m_domainObjects.Clear();
                 m_domainObjects.AddRange(value);
+            }
+        }
+
+        public Size CanvasSize
+        {
+            get
+            {
+                return m_canvasSize;
+            }
+            set
+            {
+                m_canvasSize = value;                
+                m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);
+                Refresh();
+                if (CanvasResized != null)
+                    CanvasResized(this, new EventArgs());                
             }
         }
 

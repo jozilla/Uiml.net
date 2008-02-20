@@ -43,7 +43,7 @@
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceContainer.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.Designer.cs">
       <DependentUpon>SpaceService.cs</DependentUpon>
@@ -89,7 +89,7 @@
     <Compile Include="Uiml\Gummy\Serialize\IUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Visual\ResizeVisualDomainObjectState.cs" />
+    <Compile Include="Uiml\Gummy\Visual\ResizeAndMoveVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\SelectVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\VisualDomainObjectState.cs">
     </Compile>

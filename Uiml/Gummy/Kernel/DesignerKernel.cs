@@ -6,6 +6,7 @@ using Uiml.Gummy.Serialize;
 using Uiml.Gummy.Kernel.Services;
 
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Uiml.Gummy.Kernel
 {
@@ -87,45 +88,47 @@ namespace Uiml.Gummy.Kernel
             {
                 child.Init();
 
-                Form childForm = (Form)child.ServiceControl;
-                childForm.MdiParent = this;
-                childForm.ShowIcon = false;
-                childForm.ControlBox = false;
-                DockMdiChild(child);
+                if (child.ServiceControl is Form)
+                {
+                    Form childForm = (Form)child.ServiceControl;
+                    childForm.MdiParent = this;
+                    childForm.ShowIcon = false;
+                    childForm.ControlBox = false;
+                }
             }
         }
 
         private void DockMdiChild(IService child)
         {
-            Form childForm = (Form)child.ServiceControl;
-
-            switch (child.ServiceName)
+            if (child.ServiceControl is Form)
             {
-                case "gummy-toolbox":
-                    childForm.Dock = DockStyle.Left;
-                    break;
-                case "gummy-canvas":
-                    childForm.Dock = DockStyle.None;
-                    childForm.Left = 100;
-                    childForm.Top = 0;
-                    break;
-                case "gummy-designspace":
-                    childForm.Dock = DockStyle.None;
-                    childForm.Left = 400;
-                    childForm.Top = 0;
-                    break;
-                case "gummy-propertypanel":
-                    childForm.Dock = DockStyle.Right;
-                    break;
+                Form childForm = (Form)child.ServiceControl;
+
+                switch (child.ServiceName)
+                {
+                    case "gummy-toolbox":
+                        childForm.Dock = DockStyle.Left;
+                        break;
+                    case "gummy-canvas":
+                        Form toolbox = (Form)GetService("gummy-toolbox").ServiceControl;
+                        Form properties = (Form)GetService("gummy-propertypanel").ServiceControl;
+                        childForm.StartPosition = FormStartPosition.Manual;
+                        childForm.Location = new System.Drawing.Point(toolbox.Width + 1, toolbox.Location.Y);
+                        childForm.Size = new System.Drawing.Size(properties.Location.X - toolbox.Width - 1, toolbox.Height);                        
+                        break;                    
+                    case "gummy-propertypanel":
+                        childForm.Dock = DockStyle.Right;
+                        childForm.Width = 300;
+                        break;
+                }
             }
         }
 
         private void DockMdiChildren()
         {
-            foreach (IService child in m_services)
-            {
-                DockMdiChild(child);
-            }
+            DockMdiChild(GetService("gummy-toolbox"));
+            DockMdiChild(GetService("gummy-propertypanel"));
+            DockMdiChild(GetService("gummy-canvas"));
         }
 
         private void UnDockMdiChild(IService child)
@@ -154,7 +157,8 @@ namespace Uiml.Gummy.Kernel
                     return false;
                 }
             }
-            Application.Run();
+            DockMdiChildren();
+            Application.Run();            
             return true;           
         }
 
@@ -222,11 +226,12 @@ namespace Uiml.Gummy.Kernel
 
         //Load the services from an Xml Document
         public void LoadServices(XmlDocument doc)
-        {            
+        {
             AttachService(new ToolboxService());
             AttachService(new CanvasService());
-            AttachService(new SpaceService());
-            AttachService(new PropertiesService());
+            AttachService(new SpaceService());            
+            AttachService(new PropertiesService());            
+            
         }
 
         public void WindowCascade_Clicked(object sender, EventArgs args)

@@ -11,7 +11,7 @@ using Uiml.Gummy.Kernel.Services.Controls;
 
 namespace Uiml.Gummy.Kernel.Services
 {
-    public partial class SpaceService : Form
+    public partial class SpaceService : Panel
     {
         CanvasService m_canvas = null;
         bool m_customResize = false;
@@ -25,7 +25,7 @@ namespace Uiml.Gummy.Kernel.Services
         {
             if (!m_customResize)
             {
-                Size sizeToSet = new Size(m_canvas.Size.Width, m_canvas.Size.Height);
+                Size sizeToSet = new Size(m_canvas.CanvasSize.Width, m_canvas.CanvasSize.Height);
                 if (m_canvas.Size.Width % graph1.XStep != 0)
                 {
                     sizeToSet.Width = m_canvas.Size.Width - (m_canvas.Size.Width % graph1.XStep);
@@ -41,7 +41,7 @@ namespace Uiml.Gummy.Kernel.Services
         void graph1_DesignSpaceCursorChanged(object sender, Size size)
         {
             m_customResize = true;
-                m_canvas.Size = size;
+                m_canvas.CanvasSize = size;
             m_customResize = false;
             m_canvas.UpdateToNewSize();
         }
@@ -57,8 +57,8 @@ namespace Uiml.Gummy.Kernel.Services
         {
             this.Visible = true;
             graph1.InitGraph();            
-            m_canvas.Resize += new EventHandler(m_canvas_Resize);
-            m_canvas.Size = new Size(200,200);
+            m_canvas.CanvasResized += new EventHandler(m_canvas_Resize);
+            graph1.FocussedSize = m_canvas.CanvasSize;
             return true;
         }
 
