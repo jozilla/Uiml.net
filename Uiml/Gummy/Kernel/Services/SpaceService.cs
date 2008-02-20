@@ -26,13 +26,13 @@ namespace Uiml.Gummy.Kernel.Services
             if (!m_customResize)
             {
                 Size sizeToSet = new Size(m_canvas.CanvasSize.Width, m_canvas.CanvasSize.Height);
-                if (m_canvas.Size.Width % graph1.XStep != 0)
+                if (m_canvas.CanvasSize.Width % graph1.XStep != 0)
                 {
-                    sizeToSet.Width = m_canvas.Size.Width - (m_canvas.Size.Width % graph1.XStep);
+                    sizeToSet.Width = m_canvas.CanvasSize.Width - (m_canvas.CanvasSize.Width % graph1.XStep);
                 }
-                if (m_canvas.Size.Height % graph1.YStep != 0)
+                if (m_canvas.CanvasSize.Height % graph1.YStep != 0)
                 {
-                    sizeToSet.Height = m_canvas.Size.Height - (m_canvas.Size.Height % graph1.YStep);
+                    sizeToSet.Height = m_canvas.CanvasSize.Height - (m_canvas.CanvasSize.Height % graph1.YStep);
                 }
                 graph1.FocussedSize = sizeToSet;
             }

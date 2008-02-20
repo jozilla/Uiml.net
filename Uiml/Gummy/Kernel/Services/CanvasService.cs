@@ -16,6 +16,10 @@ namespace Uiml.Gummy.Kernel.Services
         Size m_canvasSize = new Size(20,20);
         Rectangle m_uiRectangle = new Rectangle(0,0,20,20);
         Point m_origin = new Point(0, 0);
+        
+        List<Rectangle> m_modifiers = new List<Rectangle>();
+        int m_boxSize = 8;
+        BoxID m_clickedBox = BoxID.None;
 
         public event EventHandler CanvasResized;
 
@@ -37,7 +41,40 @@ namespace Uiml.Gummy.Kernel.Services
             Paint += new PaintEventHandler(onPaint);
             DoubleBuffered = true;
             CanvasSize = new Size(100, 100);
+            MouseDown += new MouseEventHandler(onMouseDown);
+            MouseMove += new MouseEventHandler(onMouseMove);
+            MouseUp += new MouseEventHandler(onMouseUp);
             //IsMdiContainer = true;
+        }
+
+        void onMouseUp(object sender, MouseEventArgs e)
+        {
+            m_clickedBox = BoxID.None;
+        }
+
+        void onMouseMove(object sender, MouseEventArgs e)
+        {
+
+            if (m_clickedBox != BoxID.None)
+            {
+                switch (m_clickedBox)
+                {
+                    case BoxID.MiddleRight:
+                        CanvasSize = new Size(e.X - m_origin.X, CanvasSize.Height);
+                        break;
+                    case BoxID.BottomMiddle:
+                        CanvasSize = new Size(CanvasSize.Width,e.Y - m_origin.Y);
+                        break;
+                    case BoxID.BottomRight:
+                        CanvasSize = new Size(e.X - m_origin.X, e.Y - m_origin.Y);
+                        break;
+                }
+            }
+        }
+
+        void onMouseDown(object sender, MouseEventArgs e)
+        {
+            m_clickedBox = clickedBox(e.Location);
         }
 
         public void UpdateToNewSize()
@@ -66,7 +103,7 @@ namespace Uiml.Gummy.Kernel.Services
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEADDED:
                     VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
-                    vDom.State = new ResizeAndMoveVisualDomainObjectState();                    
+                    vDom.State = new ResizeAndMoveVisualDomainObjectState();
                     Controls.Add(vDom);
                     vDom.BringToFront();
                     break;
@@ -114,28 +151,63 @@ namespace Uiml.Gummy.Kernel.Services
         void onDragDrop(object sender, DragEventArgs e)
         {
             //Fixme: isn't there a better way to visualize the drag and drop?
-            DomainObject tmp = new DomainObject();            
-            DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());
-            DomainObject domCloned = (DomainObject)dom.Clone();
-            domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
-            domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
-            m_domainObjects.Add(domCloned);
-            ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
+            if(m_uiRectangle.Contains(new Point(e.X,e.Y)))
+            {
+                DomainObject tmp = new DomainObject();            
+                DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());
+                DomainObject domCloned = (DomainObject)dom.Clone();
+                domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
+                domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
+                m_domainObjects.Add(domCloned);
+                ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
+            }
           
         }
 
         void onPaint(object sender, PaintEventArgs e)
         {            
             Graphics g = e.Graphics;
-            g.FillRectangle(Brushes.DarkGray,new Rectangle(0,0,Width,Height));            
-            g.FillRectangle(Brushes.WhiteSmoke,m_uiRectangle);
-            g.DrawRectangle(Pens.Blue, m_uiRectangle);            
-            //Font fnt = new Font("Arial", 12);
-            //g.FillRectangle(Brushes.DarkBlue, rectTitle);
-            //g.DrawRectangle(Pens.Black, rectTitle);
-            //g.DrawString("User Interface", fnt, Brushes.White, rectTitle);
+            g.FillRectangle(Brushes.WhiteSmoke,new Rectangle(0,0,Width,Height));
+            Rectangle doubleBorder0 = new Rectangle(m_uiRectangle.X, m_uiRectangle.Y, m_uiRectangle.Width + 2, m_uiRectangle.Height + 2);
+            Rectangle doubleBorder1 = new Rectangle(m_uiRectangle.X, m_uiRectangle.Y, m_uiRectangle.Width - 2, m_uiRectangle.Height - 2);
+            g.FillRectangle(Brushes.DarkGray,m_uiRectangle);
+            g.DrawRectangle(Pens.Black, m_uiRectangle);
+            g.DrawRectangle(Pens.Black, doubleBorder0);
+            g.DrawRectangle(Pens.Black, doubleBorder1);
+
+            recalculateModifiers();
+            foreach (Rectangle r in m_modifiers)
+            {
+                g.FillRectangle(Brushes.DarkGray, r);
+                g.DrawRectangle(Pens.Black, r);
+            }
         }
 
+        BoxID clickedBox(Point p)
+        {
+            for (int i = 0; i < m_modifiers.Count; i++)
+            {
+                if(m_modifiers[i].Contains(p))
+                    switch (i)
+                    {
+                        case 0:
+                            return BoxID.BottomMiddle;
+                        case 1:
+                            return BoxID.BottomRight;
+                        case 2:
+                            return BoxID.MiddleRight;
+                    }
+            }
+            return BoxID.None;
+        }
+
+        void recalculateModifiers()
+        {
+            m_modifiers.Clear();
+            m_modifiers.Add(new Rectangle(CanvasSize.Width / 2 - m_boxSize / 2, CanvasSize.Height - m_boxSize/2, m_boxSize, m_boxSize));
+            m_modifiers.Add(new Rectangle(CanvasSize.Width - m_boxSize/2, CanvasSize.Height - m_boxSize/2, m_boxSize, m_boxSize));
+            m_modifiers.Add(new Rectangle(CanvasSize.Width - m_boxSize/2, CanvasSize.Height / 2 - m_boxSize / 2, m_boxSize, m_boxSize));            
+        }
 
         private void InitializeComponent()
         {
@@ -152,7 +224,7 @@ namespace Uiml.Gummy.Kernel.Services
         private void CanvasService_Load(object sender, EventArgs e)
         {
 
-        }
+        }        
 
         //Deprecated -> may not be used anymore
         public List<DomainObject> DomainObjects
@@ -182,10 +254,10 @@ namespace Uiml.Gummy.Kernel.Services
             set
             {
                 m_canvasSize = value;                
-                m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);
-                Refresh();
+                m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);                
                 if (CanvasResized != null)
-                    CanvasResized(this, new EventArgs());                
+                    CanvasResized(this, new EventArgs());
+                Refresh();
             }
         }
 

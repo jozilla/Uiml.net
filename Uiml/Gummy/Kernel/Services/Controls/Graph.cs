@@ -18,13 +18,13 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         private int m_selectedExample = -1;
         private Rectangle m_cursor = new Rectangle(12, 12, 16, 16);
 
-        private Point m_origin = new Point(30,30);
+        private Point m_origin = new Point(30,36);
         private Point m_max = new Point(100, 100);
         
         private bool m_cursorClicked = false;
 
         private Size m_minSize = new Size(0, 0);
-        private Size m_maxSize = new Size(770, 770);
+        private Size m_maxSize = new Size(1100, 820);
 
         private int m_xIncrement = 1;
         private int m_yIncrement = 1;
@@ -313,11 +313,11 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             {
                 Point pnt = new Point(m_origin.X,y);
                 Size size = pointToSize(pnt);
-                if (counter % 20 == 0)
+                if (counter % 30 == 0)
                 {
                     g.DrawLine(Pens.Black, x1, y, m_origin.X, y);
                     g.DrawLine(Pens.LightGray, m_origin.X, y, m_max.X, y);
-                    Rectangle rect = new Rectangle(0,y - 5, 20, 10);
+                    Rectangle rect = new Rectangle(0,y - 5, 25, 10);
                     g.DrawString(size.Height.ToString(), fnt, Brushes.Black, rect);
                 }
                 else if (counter % 2 == 0)
@@ -338,7 +338,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 Point pnt = new Point(x, m_origin.Y);
                 Size size = pointToSize(pnt);
                 //g.DrawString(size.Width.ToString(),new Font(
-                if (counter % 20 == 0)
+                if (counter % 30 == 0)
                 {
                     g.DrawLine(Pens.Black, x, y1, x, m_origin.Y);
                     g.DrawLine(Pens.LightGray, x, m_origin.Y, x, m_max.Y);
@@ -347,8 +347,10 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                         l = 10;
                     else if (size.Width.ToString().Length == 2)
                         l = 16;
-                    else
+                    else if (size.Width.ToString().Length == 3)
                         l = 20;
+                    else
+                        l = 25;
                     Rectangle rect = new Rectangle(x - l/2, 0, l, (int)y3);
                     g.DrawString(size.Width.ToString(), fnt, Brushes.Black, rect);
                 }
