@@ -8,11 +8,6 @@ using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Visual;
 using Uiml.Gummy.Domain;
 
-using UMD.HCIL.Piccolo;
-using UMD.HCIL.Piccolo.Nodes;
-using UMD.HCIL.PiccoloX;
-using UMD.HCIL.Piccolo.Util;
-
 namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
