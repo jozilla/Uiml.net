@@ -152,7 +152,7 @@ namespace Uiml.Gummy.Kernel.Services
         void onDragDrop(object sender, DragEventArgs e)
         {
             //Fixme: isn't there a better way to visualize the drag and drop?
-            if(m_uiRectangle.Contains(new Point(e.X,e.Y)))
+            if (m_uiRectangle.Contains(this.PointToClient(new Point(e.X, e.Y))))
             {
                 DomainObject tmp = new DomainObject();            
                 DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());

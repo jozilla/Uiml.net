@@ -251,12 +251,23 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         }
         
         void onMouseDownGraph(object sender, MouseEventArgs e)
-        {            
-            m_cursorClicked = true;
-            CursorPosition = e.Location;
-            updateSelectedExample();
-            Refresh();
-            fireDesignSpaceCursorChanged();
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                m_cursorClicked = true;
+                CursorPosition = e.Location;
+                updateSelectedExample();
+                Refresh();
+                fireDesignSpaceCursorChanged();
+            }
+            else if(e.Button == MouseButtons.Right)
+            {
+                Rectangle rect = detectSelectedExample(e.Location);
+                if (rect != Rectangle.Empty)
+                {
+                    MessageBox.Show("blaai");
+                }
+            }
         }
 
         Point CursorPosition
