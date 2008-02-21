@@ -19,5 +19,12 @@ namespace Uiml.Gummy.Kernel.Services
         {
             get;
         }
+
+        IServiceConfiguration ServiceConfiguration
+        {
+            get;
+        }
+
+        void NotifyConfigurationChanged();
     }
 }

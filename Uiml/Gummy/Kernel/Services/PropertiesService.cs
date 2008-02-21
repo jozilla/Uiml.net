@@ -116,5 +116,18 @@ namespace Uiml.Gummy.Kernel.Services
                 }
             }            
         }
+
+        public IServiceConfiguration ServiceConfiguration
+        {
+            get 
+            {
+                return null; // no configuration
+            }
+        }
+
+        public void NotifyConfigurationChanged()
+        {
+            return;
+        }
     }
 }

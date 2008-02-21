@@ -20,17 +20,17 @@ namespace Uiml.Gummy.Kernel.Services
         DomainObjectCollection m_domainObjects = new DomainObjectCollection();
         Size m_canvasSize = new Size(20,20);
         Rectangle m_uiRectangle = new Rectangle(0,0,20,20);
-        Point m_origin = new Point(0, 0);
-        
+        Point m_origin = new Point(0, 0);        
         List<Rectangle> m_modifiers = new List<Rectangle>();
         int m_boxSize = 8;
         BoxID m_clickedBox = BoxID.None;
 
-        public event EventHandler CanvasResized;
+        public event EventHandler CanvasResized;        
+        private CanvasServiceConfiguration m_config;
 
-        public CanvasService()
-            : base()
+        public CanvasService() : base()
         {
+            m_config = new CanvasServiceConfiguration(this);
         }
 
         public void Init()
@@ -269,5 +269,18 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
+
+        public IServiceConfiguration ServiceConfiguration
+        {
+            get 
+            {
+                return m_config;
+            }
+        }
+
+        public void NotifyConfigurationChanged()
+        {
+            this.Size = m_config.ScreenSize;
+        }
     }
 }
