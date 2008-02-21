@@ -12,11 +12,12 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
     {
-        DomainObjectCollection m_domainObjects = new DomainObjectCollection();          
+        DomainObjectCollection m_domainObjects = new DomainObjectCollection();
+        private CanvasServiceConfiguration m_config;
 
-        public CanvasService()
-            : base()
+        public CanvasService() : base()
         {
+            m_config = new CanvasServiceConfiguration(this);
         }
 
         public void Init()
@@ -151,12 +152,17 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
-        public System.Windows.Forms.Control ServiceConfigurationControl 
+        public IServiceConfiguration ServiceConfiguration
         {
             get 
             {
-                return null; // no configuration
+                return m_config;
             }
+        }
+
+        public void NotifyConfigurationChanged()
+        {
+            this.Size = m_config.ScreenSize;
         }
     }
 }

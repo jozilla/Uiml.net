@@ -20,9 +20,11 @@ namespace Uiml.Gummy.Kernel.Services
             get;
         }
 
-        System.Windows.Forms.Control ServiceConfigurationControl 
+        IServiceConfiguration ServiceConfiguration
         {
             get;
         }
+
+        void NotifyConfigurationChanged();
     }
 }

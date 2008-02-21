@@ -72,6 +72,7 @@ namespace Uiml.Gummy.Kernel
 
             Menu = new MainMenu();
             MenuItem file = Menu.MenuItems.Add("&File");
+            file.MenuItems.Add("&New", this.FileNew_Clicked);
             file.MenuItems.Add("&Quit", this.FileQuit_Clicked);
             MenuItem windows = Menu.MenuItems.Add("&Window");
             windows.MenuItems.Add("&Docked", this.WindowDocked_Clicked);
@@ -257,17 +258,39 @@ namespace Uiml.Gummy.Kernel
             Close();
         }
 
+        public void FileNew_Clicked(object sender, EventArgs args) 
+        {
+            NewWizard wizard = new NewWizard();
+
+            foreach (IService s in Services)
+            {
+                if (s.ServiceConfiguration != null)
+                {
+                    wizard.AddConfiguration(s.ServiceConfiguration);
+                }
+            }
+
+            wizard.Start();
+            wizard.ShowDialog();
+            // TODO: notify services that their settings are changed
+        }
+
         public void DesignerKernel_FormClosing(object sender, EventArgs args)
         {
             Close();
         }
 
-        public System.Windows.Forms.Control ServiceConfigurationControl 
+        public IServiceConfiguration ServiceConfiguration
         {
             get 
             {
                 return null; // no configuration
             }
+        }
+
+        public void NotifyConfigurationChanged()
+        {
+            return;
         }
     }
 }

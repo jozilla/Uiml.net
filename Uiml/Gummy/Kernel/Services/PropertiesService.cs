@@ -107,12 +107,17 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
-        public System.Windows.Forms.Control ServiceConfigurationControl 
+        public IServiceConfiguration ServiceConfiguration
         {
             get 
             {
                 return null; // no configuration
             }
+        }
+
+        public void NotifyConfigurationChanged()
+        {
+            return;
         }
     }
 }

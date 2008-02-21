@@ -36,9 +36,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectCollection.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\ExampleRepository.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\NewWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\NewWizard.Designer.cs">
+      <DependentUpon>NewWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.Designer.cs">
+      <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\IServiceConfiguration.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceContainer.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.cs">
       <SubType>Form</SubType>
@@ -51,6 +69,12 @@
     </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\PropertiesService.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ToolboxServiceConfiguration.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ToolboxServiceConfiguration.Designer.cs">
+      <DependentUpon>ToolboxServiceConfiguration.cs</DependentUpon>
     </Compile>
     <Compile Include="Uiml\Gummy\Program.cs" />
     <!--<EmbeddedResource Include="Properties\Resources.resx">
@@ -113,9 +137,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\NewWizard.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NewWizard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\CanvasService.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CanvasService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\SpaceService.resx">
       <SubType>Designer</SubType>
@@ -124,6 +161,10 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Graph.resx">
       <DependentUpon>Graph.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ToolboxServiceConfiguration.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolboxServiceConfiguration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
