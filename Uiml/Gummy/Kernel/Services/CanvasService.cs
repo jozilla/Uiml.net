@@ -280,7 +280,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void NotifyConfigurationChanged()
         {
-            this.Size = m_config.ScreenSize;
+            this.CanvasSize = m_config.ScreenSize;
         }
     }
 }
