@@ -13,7 +13,7 @@ using System.Drawing;
 
 namespace Uiml.Gummy.Kernel.Services
 {
-    public class ToolboxService : Form, IService
+    public class ToolboxService : Form, IService, IUimlProvider
     {
         private List<DomainObject> m_domainObjects = new List<DomainObject>();
 
@@ -83,6 +83,29 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 return "gummy-toolbox";
             }
+        }
+
+        public bool IsEssential
+        {
+            get { return true; }
+        }
+
+        public List<IUimlElement> GetUimlElements()
+        {
+            List<IUimlElement> elements = new List<IUimlElement>();
+
+            // TODO: return presentation with correct vocabulary
+
+            return elements;
+        }
+
+        public List<string> GetUimlElementsXml()
+        {
+            List<string> xmlStrings = new List<string>();
+
+            // TODO: return presentation with voc XML string
+
+            return xmlStrings;
         }
     }
 }

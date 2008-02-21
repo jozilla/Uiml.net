@@ -48,6 +48,11 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
+        public bool IsEssential
+        {
+            get { return true; }
+        }
+
         void onDomainObjectSelected(Domain.DomainObject dom, EventArgs e)
         {
             if (m_dom != dom)

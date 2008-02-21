@@ -15,9 +15,15 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
         public ReflectionBehaviorGenerator()
         {
+        }
+
+        private void Init()
+        {
+            m_logicTree.Clear();
+
             foreach (ConnectedMethod cm in ApplicationGlueRegistry.Instance.Methods.Values)
             {
-                ReflectionMethodModel method = (ReflectionMethodModel) cm.Method;
+                ReflectionMethodModel method = (ReflectionMethodModel)cm.Method;
                 Type type = method.MethodInfo.ReflectedType;
 
                 if (!m_logicTree.ContainsKey(type))
@@ -27,8 +33,10 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             }
         }
 
-        public Logic GenerateLogic()
+        public Logic GenerateLogic(out string logicXml)
         {
+            Init(); //FIXME: efficiency
+
             StringWriter writer = new StringWriter();
             XmlTextWriter xmlw = new XmlTextWriter(writer);
 
@@ -75,11 +83,14 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             string xml = writer.ToString();
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
+            logicXml = doc.DocumentElement.OuterXml;
             return new Logic(doc.DocumentElement);
         }
 
-        public Behavior GenerateBehavior()
+        public Behavior GenerateBehavior(out string behaviorXml)
         {
+            Init(); //FIXME: efficiency
+
             StringWriter writer = new StringWriter();
             XmlTextWriter xmlw = new XmlTextWriter(writer);
 
@@ -135,6 +146,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             string xml = writer.ToString();
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
+            behaviorXml = doc.DocumentElement.OuterXml;
             return new Behavior(doc); // todo
         }
     }

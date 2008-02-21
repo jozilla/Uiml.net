@@ -46,6 +46,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ApplicationGlueRegistry.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethod.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IBehaviorGenerator.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\IUimlProvider.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.cs">
       <SubType>UserControl</SubType>

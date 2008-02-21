@@ -10,28 +10,26 @@ using System.Reflection;
 using Uiml.Gummy.Kernel.Services.ApplicationGlue;
 
 namespace Uiml.Gummy.Kernel.Services {
-    public partial class ApplicationGlueService : Form, IService {
+    public partial class ApplicationGlueService : Form, IService, IUimlProvider {
         private List<ConnectedMethod> m_methods;
         private IBehaviorGenerator m_gen;
+        private Logic m_logic;
+        private string m_logicXmlString;
+        private Behavior m_behavior;
+        private string m_behaviorXmlString;
 
         public ApplicationGlueService() {
             InitializeComponent();
+            m_gen = new ReflectionBehaviorGenerator();
         }
 
         public void Init()
         {
-            DrawService(typeof(Uiml.Gummy.Kernel.DesignerKernel));
-            
-            Button createLogic = new Button();
-            createLogic.AutoSize = true;
-            createLogic.Text = "Create Logic";
-            createLogic.Click += new EventHandler(CreateLogic);
-            
-            layout.Controls.Add(createLogic);
-            Button populateMethods = new Button();
-            populateMethods.Text = "Populate methods";
-            populateMethods.Click += new EventHandler(PopulateMethods);
-            layout.Controls.Add(populateMethods);
+            DrawService(typeof(System.Math));
+
+            Menu = new MainMenu();
+            MenuItem service = Menu.MenuItems.Add("Logic");
+            service.MenuItems.Add("Select", this.LogicSelect_Clicked);
         }
 
         public bool Open()
@@ -51,6 +49,11 @@ namespace Uiml.Gummy.Kernel.Services {
             get { return "application-glue"; }
         }
 
+        public bool IsEssential
+        {
+            get { return false; }
+        }
+
         public void DrawService (Type t)
         {
             List<MethodModel> methods = new List<MethodModel>();
@@ -62,15 +65,29 @@ namespace Uiml.Gummy.Kernel.Services {
             layout.Controls.Add(new MethodsView(new MethodsModel(methods.ToArray())));
         }
 
-        public void CreateLogic(object sender, EventArgs args)
+        public void LogicSelect_Clicked(object sender, EventArgs args)
         {
-            m_gen = new ReflectionBehaviorGenerator();
-            m_gen.GenerateLogic();
         }
 
-        public void PopulateMethods(object sender, EventArgs args)
+        public List<IUimlElement> GetUimlElements()
         {
-            m_gen.GenerateBehavior();
+            m_logic = m_gen.GenerateLogic(out m_logicXmlString);
+            m_behavior = m_gen.GenerateBehavior(out m_behaviorXmlString);
+
+            List<IUimlElement> elements = new List<IUimlElement>();
+            elements.Add(m_logic);
+            elements.Add(m_behavior);
+            return elements;
+        }
+
+        public List<string> GetUimlElementsXml()
+        {
+            List<string> xmlStrings = new List<string>();
+
+            xmlStrings.Add(m_logicXmlString);
+            xmlStrings.Add(m_behaviorXmlString);
+
+            return xmlStrings;
         }
     }
 }

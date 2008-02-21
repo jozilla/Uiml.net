@@ -6,7 +6,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
     public interface IBehaviorGenerator
     {
-        Logic GenerateLogic();
-        Behavior GenerateBehavior();
+        Logic GenerateLogic(out string logicXml);
+        Behavior GenerateBehavior(out string behaviorXml);
     }
 }

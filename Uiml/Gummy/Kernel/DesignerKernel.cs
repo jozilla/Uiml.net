@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using System.Xml;
 using Uiml.Gummy.Serialize;
 using Uiml.Gummy.Kernel.Services;
@@ -30,7 +31,7 @@ namespace Uiml.Gummy.Kernel
 
         private void InitializeComponents()
         {
-            Text = "Gummy";
+            Text = "CROSLOCiS Service Creation Environment";
             IsMdiContainer = true;
             WindowState = FormWindowState.Maximized;
             FormClosing += new FormClosingEventHandler(DesignerKernel_FormClosing);
@@ -38,6 +39,7 @@ namespace Uiml.Gummy.Kernel
             Menu = new MainMenu();
             MenuItem file = Menu.MenuItems.Add("&File");
             file.MenuItems.Add("&Quit", this.FileQuit_Clicked);
+            file.MenuItems.Add("&Export", this.FileExport_Clicked);
             MenuItem windows = Menu.MenuItems.Add("&Window");
             windows.MenuItems.Add("&Docked", this.WindowDocked_Clicked);
             windows.MenuItems.Add("&Cascade", this.WindowCascade_Clicked);
@@ -55,7 +57,10 @@ namespace Uiml.Gummy.Kernel
                 Form childForm = (Form)child;
                 childForm.MdiParent = this;
                 childForm.ShowIcon = false;
-                childForm.ControlBox = false;
+
+                if (child.IsEssential)
+                    childForm.ControlBox = false;
+
                 DockMdiChild(child);
             }
         }
@@ -75,6 +80,9 @@ namespace Uiml.Gummy.Kernel
                     childForm.Top = 0;
                     break;
                 case "gummy-propertypanel":
+                    childForm.Dock = DockStyle.Right;
+                    break;
+                case "application-glue":
                     childForm.Dock = DockStyle.Right;
                     break;
             }
@@ -157,6 +165,11 @@ namespace Uiml.Gummy.Kernel
             }
         }
 
+        public bool IsEssential
+        {
+            get { return true; }
+        }
+
         //Load the services from an Xml Document
         public void LoadServices(XmlDocument doc)
         {
@@ -192,6 +205,97 @@ namespace Uiml.Gummy.Kernel
         public void FileQuit_Clicked(object sender, EventArgs args)
         {
             Close();
+        }
+
+        public void FileExport_Clicked(object sender, EventArgs args)
+        {
+            List<Part> parts = new List<Part>();
+            List<Property> properties = new List<Property>();
+            Logic logic;
+            Behavior behavior;
+            string logicXml = "";
+            string behaviorXml = "";
+
+            // collect all the UIML pieces
+            foreach (IService service in m_services)
+            {
+                if (service is IUimlProvider)
+                {
+                    foreach (IUimlElement item in ((IUimlProvider)service).GetUimlElements())
+                    {
+                        if (item is Part)
+                            parts.Add((Part)item);
+                        else if (item is Property)
+                            properties.Add((Property)item);
+                        else if (item is Behavior)
+                            behavior = (Behavior)item; // FIXME: should only happen once
+                        else if (item is Logic)
+                            logic = (Logic)item; // FIXME: should only happen once
+                    }
+
+                    List<string> xmlStrings = ((IUimlProvider)service).GetUimlElementsXml();
+
+                    if (xmlStrings.Count > 0)
+                    {
+                        // FIXME: hard-coded now
+                        logicXml = xmlStrings[0];
+                        behaviorXml = xmlStrings[1];
+                    }
+                }
+            }
+
+            // create standard UIML document
+            StringWriter writer = new StringWriter();
+            XmlTextWriter xmlw = new XmlTextWriter(writer);
+
+            xmlw.WriteStartDocument();
+            xmlw.WriteStartElement("uiml");
+            xmlw.WriteStartElement("interface");
+            xmlw.WriteEndElement(); // </interface>
+            xmlw.WriteStartElement("structure");
+
+            // parts
+            foreach (Part p in parts)
+            {
+                XmlNode partXml = p.Serialize(new XmlDocument());
+                xmlw.WriteRaw(partXml.OuterXml);
+            }
+
+            xmlw.WriteEndElement(); // </structure>
+            xmlw.WriteStartElement("style");
+
+            // properties
+
+            foreach (Property p in properties)
+            {
+                XmlNode propXml = p.Serialize(new XmlDocument());
+                xmlw.WriteRaw(propXml.OuterXml);
+            }
+
+            xmlw.WriteEndElement(); // </style>
+
+            // behavior
+            xmlw.WriteRaw(behaviorXml);
+
+            xmlw.WriteEndElement(); // </interface>
+
+            xmlw.WriteStartElement("peers");
+            xmlw.WriteStartElement("presentation");
+            xmlw.WriteAttributeString("base", "swf-1.1.uiml");
+            xmlw.WriteEndElement(); // </presentation>
+
+            // logic
+            xmlw.WriteRaw(logicXml);
+
+            xmlw.WriteEndElement(); // </peers>
+
+            xmlw.WriteEndElement(); // </uiml>
+
+            xmlw.WriteEndDocument();
+            xmlw.Close();
+
+            string xml = writer.ToString();
+            string s = xml;
         }
 
         public void DesignerKernel_FormClosing(object sender, EventArgs args)

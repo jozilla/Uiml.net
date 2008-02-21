@@ -14,5 +14,10 @@ namespace Uiml.Gummy.Kernel.Services
         {
             get;
         }
+
+        bool IsEssential
+        {
+            get;
+        }
     }
 }

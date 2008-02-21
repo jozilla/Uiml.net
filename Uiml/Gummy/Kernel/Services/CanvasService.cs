@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -10,7 +11,7 @@ using Uiml.Gummy.Domain;
 
 namespace Uiml.Gummy.Kernel.Services
 {
-    public class CanvasService : Form, IService
+    public class CanvasService : Form, IService, IUimlProvider
     {
         public CanvasService()
             : base()
@@ -47,6 +48,11 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 return "gummy-canvas";
             }
+        }
+
+        public bool IsEssential
+        {
+            get { return true; }
         }
 
         void onDragLeave(object sender, EventArgs e)
@@ -97,5 +103,30 @@ namespace Uiml.Gummy.Kernel.Services
 
         }
 
+        public List<IUimlElement> GetUimlElements()
+        {
+            List<IUimlElement> elements = new List<IUimlElement>();
+
+            foreach (VisualDomainObject vdom in Controls)
+            {
+                XmlNode partXml = vdom.DomainObject.Part.Serialize(new XmlDocument());
+                elements.Add(new Part(partXml));
+                foreach (Property p in vdom.DomainObject.Properties)
+                {
+                    elements.Add(p);
+                }
+            }
+
+            return elements;
+        }
+
+        public List<string> GetUimlElementsXml()
+        {
+            List<string> xmlStrings = new List<string>();
+
+            // TODO:
+
+            return xmlStrings;
+        }
     }
 }
