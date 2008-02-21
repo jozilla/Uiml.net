@@ -222,20 +222,30 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             }
         }
 
-        void updateSelectedExample()
+        Rectangle detectSelectedExample(Point pnt)
         {
             for (int i = 0; i < m_examples.Count; i++)
             {
                 Rectangle rect = m_examples[i];
-                if (rect.Contains(CursorPosition))
+                if (rect.Contains(pnt))
                 {
-                    m_selectedExample = i;
-                    int centerX = rect.X + rect.Width / 2;
-                    int centerY = rect.Y + rect.Height / 2;
-                    CursorPosition = new Point(centerX, centerY);
-                    Refresh();                    
-                    return;
+                    return rect;
                 }
+            }
+            return Rectangle.Empty;
+        }
+
+        void updateSelectedExample()
+        {
+            Rectangle rect = detectSelectedExample(CursorPosition);
+            if (rect != Rectangle.Empty)
+            {
+                int centerX = rect.X + rect.Width / 2;
+                int centerY = rect.Y + rect.Height / 2;
+                CursorPosition = new Point(centerX, centerY);
+                //m_selectedExample = m_examples.
+                Refresh();                
+                return;
             }
             m_selectedExample = -1;
         }

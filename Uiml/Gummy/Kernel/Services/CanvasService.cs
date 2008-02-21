@@ -8,6 +8,11 @@ using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Visual;
 using Uiml.Gummy.Domain;
 
+using UMD.HCIL.Piccolo;
+using UMD.HCIL.Piccolo.Nodes;
+using UMD.HCIL.PiccoloX;
+using UMD.HCIL.Piccolo.Util;
+
 namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
@@ -39,6 +44,7 @@ namespace Uiml.Gummy.Kernel.Services
             //Resize += new EventHandler(onResize);
             m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
             Paint += new PaintEventHandler(onPaint);
+            
             DoubleBuffered = true;
             CanvasSize = new Size(100, 100);
             MouseDown += new MouseEventHandler(onMouseDown);
@@ -163,6 +169,8 @@ namespace Uiml.Gummy.Kernel.Services
             }
           
         }
+
+       
 
         void onPaint(object sender, PaintEventArgs e)
         {            

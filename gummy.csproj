@@ -34,10 +34,23 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UMD.HCIL.Piccolo, Version=1.0.2165.24847, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\downloads\Piccolo.NET\Bin\UMD.HCIL.Piccolo.dll</HintPath>
+    </Reference>
+    <Reference Include="UMD.HCIL.PiccoloDirect3D, Version=1.0.2165.24848, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\downloads\Piccolo.NET\Bin\UMD.HCIL.PiccoloDirect3D.dll</HintPath>
+    </Reference>
+    <Reference Include="UMD.HCIL.PiccoloX, Version=1.0.2165.24848, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\downloads\Piccolo.NET\Bin\UMD.HCIL.PiccoloX.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectCollection.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\ExampleRepository.cs" />
+    <Compile Include="Uiml\Gummy\Interpolation\Bezier2DInterpolation.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\ExamplePickingAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
