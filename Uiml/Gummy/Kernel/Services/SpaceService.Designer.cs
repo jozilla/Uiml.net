@@ -1,5 +1,7 @@
 namespace Uiml.Gummy.Kernel.Services
 {
+    using Uiml.Gummy.Kernel.Services.Controls;
+
     partial class SpaceService : IService
     {
         /// <summary>
@@ -29,7 +31,7 @@ namespace Uiml.Gummy.Kernel.Services
         /// </summary>
         private void InitializeComponent()
         {
-            this.graph1 = new Uiml.Gummy.Kernel.Services.Graph();
+            this.graph1 = new Uiml.Gummy.Kernel.Services.Controls.Graph();
             this.SuspendLayout();
             // 
             // graph1
@@ -38,26 +40,26 @@ namespace Uiml.Gummy.Kernel.Services
             this.graph1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.graph1.Location = new System.Drawing.Point(0, 0);
             this.graph1.Name = "graph1";
-            this.graph1.Size = new System.Drawing.Size(335, 262);
+            this.graph1.Size = new System.Drawing.Size(377, 314);
             this.graph1.TabIndex = 0;
             // 
             // SpaceService
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(335, 262);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(377, 314);
             this.Controls.Add(this.graph1);
             this.Name = "SpaceService";
-            this.Opacity = 0.8;
+            //this.Opacity = 0.8;
             this.Text = "2D Example Space";
-            this.TransparencyKey = System.Drawing.Color.Transparent;
+            //this.TransparencyKey = System.Drawing.Color.Transparent;
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        public Graph graph1;
+        public Uiml.Gummy.Kernel.Services.Controls.Graph graph1;
 
     }
 }

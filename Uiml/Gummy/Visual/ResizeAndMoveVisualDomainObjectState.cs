@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Kernel;
+using Uiml.Gummy.Kernel.Services;
 
 namespace Uiml.Gummy.Visual
 {
@@ -31,7 +32,7 @@ namespace Uiml.Gummy.Visual
         Move
     }
 
-    public class ResizeVisualDomainObjectState : VisualDomainObjectState
+    public class ResizeAndMoveVisualDomainObjectState : VisualDomainObjectState
     {        
         int m_boxSize = 8;
         Dictionary<BoxID, Rectangle> m_rectangles = new Dictionary<BoxID, Rectangle>();
@@ -50,12 +51,12 @@ namespace Uiml.Gummy.Visual
         MouseEventHandler m_mouseDownHandler = null;
         //MouseEventHandler m_mouseUpHandler = null;
        
-        public ResizeVisualDomainObjectState()
+        public ResizeAndMoveVisualDomainObjectState()
             : base()
         {
         }
 
-        ~ResizeVisualDomainObjectState()
+        ~ResizeAndMoveVisualDomainObjectState()
         {
             finalize();
         }
@@ -248,15 +249,30 @@ namespace Uiml.Gummy.Visual
             switch (m_moveState)
             {
                 case MoveState.Move:
+                    if (m_oldBounds.Location.X != m_visDom.Location.X ||
+                        m_oldBounds.Location.Y != m_visDom.Location.Y)
+                    {
+                        addSnapshot();
+                    }
+                    break;
                 case MoveState.Resize:
-                    ExampleRepository.Instance.AddExampleDomainObject(
-                        DesignerKernel.Instance.GetService("gummy-canvas").ServiceControl.Size,
-                        (DomainObject)m_visDom.DomainObject.Clone()
-                    );
+                    if (m_oldBounds.Size.Width != m_visDom.Width ||
+                        m_oldBounds.Size.Height != m_visDom.Height)
+                    {
+                        addSnapshot();
+                    }
                     break;
             }
             m_moveState = MoveState.None;
             clicked = false;
+        }
+
+        private void addSnapshot()
+        {
+            ExampleRepository.Instance.AddExampleDomainObject(
+                        ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).CanvasSize,
+                        (DomainObject)m_visDom.DomainObject.Clone()
+                    );
         }
 
         protected override void onPaint(object sender, System.Windows.Forms.PaintEventArgs e)

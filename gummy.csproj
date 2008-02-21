@@ -43,7 +43,16 @@
     </Compile>
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectCollection.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\ExampleRepository.cs" />
+    <Compile Include="Uiml\Gummy\Interpolation\Bezier2DInterpolation.cs" />
+    <Compile Include="Uiml\Gummy\Interpolation\ExamplePickingAlgorithm.cs" />
+    <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\Arrow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\Arrow.Designer.cs">
+      <DependentUpon>Arrow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\NewWizard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,12 +68,12 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceConfiguration.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceContainer.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.Designer.cs">
       <DependentUpon>SpaceService.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\Graph.cs">
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\Graph.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\PropertiesService.cs">
@@ -111,7 +120,7 @@
     <Compile Include="Uiml\Gummy\Serialize\IUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
-    <Compile Include="Uiml\Gummy\Visual\ResizeVisualDomainObjectState.cs" />
+    <Compile Include="Uiml\Gummy\Visual\ResizeAndMoveVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\SelectVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\VisualDomainObjectState.cs">
     </Compile>
@@ -123,6 +132,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cassowary.net\Cassowary.csproj">
+      <Project>{F01578A3-BA19-47E6-B333-40E41158658B}</Project>
+      <Name>Cassowary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cassowary.net\Cassowary.Parsing.csproj">
+      <Project>{DAE0FC0E-44C5-4B1F-8D81-80BA4CFFFB47}</Project>
+      <Name>Cassowary.Parsing</Name>
+    </ProjectReference>
     <ProjectReference Include="uiml.net-core.csproj">
       <Project>{1512EF85-FCC2-41CB-B8CE-67871722EB82}</Project>
       <Name>uiml.net-core</Name>
@@ -150,6 +167,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>CanvasService.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Controls\Arrow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Arrow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
@@ -158,7 +179,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>SpaceService.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Graph.resx">
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Controls\Graph.resx">
       <DependentUpon>Graph.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
