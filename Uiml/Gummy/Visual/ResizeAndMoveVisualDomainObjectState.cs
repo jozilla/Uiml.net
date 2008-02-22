@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Domain;
+using Uiml.Gummy.Kernel;
+using Uiml.Gummy.Kernel.Services;
 
 namespace Uiml.Gummy.Visual
 {
@@ -23,10 +25,18 @@ namespace Uiml.Gummy.Visual
         None
     }
 
-    public class ResizeVisualDomainObjectState : VisualDomainObjectState
+    public enum MoveState
+    {
+        None,
+        Resize,
+        Move
+    }
+
+    public class ResizeAndMoveVisualDomainObjectState : VisualDomainObjectState
     {        
         int m_boxSize = 8;
-        Dictionary<BoxID, Rectangle> m_rectangles = new Dictionary<BoxID, Rectangle>();        
+        Dictionary<BoxID, Rectangle> m_rectangles = new Dictionary<BoxID, Rectangle>();
+        MoveState m_moveState = MoveState.None;
 
         BoxID m_lastClicked = BoxID.Center;
         Point m_delta;
@@ -41,12 +51,12 @@ namespace Uiml.Gummy.Visual
         MouseEventHandler m_mouseDownHandler = null;
         //MouseEventHandler m_mouseUpHandler = null;
        
-        public ResizeVisualDomainObjectState()
+        public ResizeAndMoveVisualDomainObjectState()
             : base()
         {
         }
 
-        ~ResizeVisualDomainObjectState()
+        ~ResizeAndMoveVisualDomainObjectState()
         {
             finalize();
         }
@@ -74,15 +84,7 @@ namespace Uiml.Gummy.Visual
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
             m_mouseDownHandler = new MouseEventHandler(onMouseDown);
             m_visDom.MouseDown += m_mouseDownHandler;
-            //m_mouseUpHandler = new MouseEventHandler(onMouseUp);
-            //m_visDom.MouseUp += m_mouseUpHandler;
-        }
-
-        /*void onMouseUp(object sender, MouseEventArgs e)
-        {
-            Console.Out.WriteLine("mouseUp");
-        }*/
-        
+        }    
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
         {
@@ -128,6 +130,7 @@ namespace Uiml.Gummy.Visual
             }
 
             m_visDom.Refresh();
+            m_moveState = MoveState.None;
 
         }
         
@@ -138,7 +141,10 @@ namespace Uiml.Gummy.Visual
         protected override void onMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!clicked)
+            {
+                m_moveState = MoveState.None;
                 return;
+            }
             int position_x = e.X + m_visDom.Location.X;
             int position_y = e.Y + m_visDom.Location.Y;
 
@@ -153,11 +159,13 @@ namespace Uiml.Gummy.Visual
             switch (m_lastClicked)
             {
                 case BoxID.None :
+                    m_moveState = MoveState.None;
                     break;
                 case BoxID.Center:
                     m_visDom.DomainObject.Location = new Point(m_visDom.Location.X + e.X - m_delta.X,
                         m_visDom.Location.Y + e.Y - m_delta.Y
                         );
+                    m_moveState = MoveState.Move;
                     break;
                 case BoxID.BottomLeft:
                     width =	m_oldBounds.Width - dX;
@@ -168,17 +176,20 @@ namespace Uiml.Gummy.Visual
                         m_visDom.DomainObject.Location = loc;
                         m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
                     }
+                    m_moveState = MoveState.Resize;
                     break;
                 case BoxID.BottomMiddle:
                     height = m_oldBounds.Height + dY;
                     m_visDom.DomainObject.Location = new Point(m_oldBounds.X, m_oldBounds.Y);
-                    m_visDom.DomainObject.Size = new Size(m_oldBounds.Width, height <= (2 * BoxSize) ? (2 * BoxSize) : height); 
+                    m_visDom.DomainObject.Size = new Size(m_oldBounds.Width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                    m_moveState = MoveState.Resize;
                     break;
                 case BoxID.BottomRight:
                     height = m_oldBounds.Height + dY;
 					width =	m_oldBounds.Width + dX ;
 					m_visDom.DomainObject.Location = new Point(m_oldBounds.X, m_oldBounds.Y);
-                    m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height); 
+                    m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                    m_moveState = MoveState.Resize;
                     break;
                 case BoxID.MiddleLeft:
                     width = m_oldBounds.Width - dX;
@@ -188,11 +199,13 @@ namespace Uiml.Gummy.Visual
                         m_visDom.DomainObject.Location = loc;
                         m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, m_oldBounds.Height);
                     }
+                    m_moveState = MoveState.Resize;
                     break;
                 case BoxID.MiddleRight:
                     width = m_oldBounds.Width + dX;
                     m_visDom.DomainObject.Location = new Point(m_oldBounds.X, m_oldBounds.Y);
-                    m_visDom.DomainObject.Size = new Size(width <=( 2*BoxSize) ?( 2*BoxSize) : width, m_oldBounds.Height); 
+                    m_visDom.DomainObject.Size = new Size(width <=( 2*BoxSize) ?( 2*BoxSize) : width, m_oldBounds.Height);
+                    m_moveState = MoveState.Resize;
                     break;
                 case BoxID.TopLeft:
                     width = m_oldBounds.Width - dX;
@@ -204,6 +217,7 @@ namespace Uiml.Gummy.Visual
                         m_visDom.DomainObject.Location = loc;
                         m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
                     }
+                    m_moveState = MoveState.Resize;
                     break;
                 case BoxID.TopMiddle:
                     height = m_oldBounds.Height - dY;
@@ -213,7 +227,7 @@ namespace Uiml.Gummy.Visual
                         m_visDom.DomainObject.Location = loc;
                         m_visDom.DomainObject.Size = new Size(m_oldBounds.Width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
                     }
-                    //loc = new Point(m_oldBounds.X, m_oldBounds.Y + dY);
+                    m_moveState = MoveState.Resize;
                     break;
                 case BoxID.TopRight:
                     height = m_oldBounds.Height - dY;
@@ -224,6 +238,7 @@ namespace Uiml.Gummy.Visual
                         m_visDom.DomainObject.Location = loc;
                         m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
                     }
+                    m_moveState = MoveState.Resize;
                     break;                    
             }
         }
@@ -231,7 +246,33 @@ namespace Uiml.Gummy.Visual
         protected override void onMouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             Console.WriteLine("mouseUp");
+            switch (m_moveState)
+            {
+                case MoveState.Move:
+                    if (m_oldBounds.Location.X != m_visDom.Location.X ||
+                        m_oldBounds.Location.Y != m_visDom.Location.Y)
+                    {
+                        addSnapshot();
+                    }
+                    break;
+                case MoveState.Resize:
+                    if (m_oldBounds.Size.Width != m_visDom.Width ||
+                        m_oldBounds.Size.Height != m_visDom.Height)
+                    {
+                        addSnapshot();
+                    }
+                    break;
+            }
+            m_moveState = MoveState.None;
             clicked = false;
+        }
+
+        private void addSnapshot()
+        {
+            ExampleRepository.Instance.AddExampleDomainObject(
+                        ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).CanvasSize,
+                        (DomainObject)m_visDom.DomainObject.Clone()
+                    );
         }
 
         protected override void onPaint(object sender, System.Windows.Forms.PaintEventArgs e)

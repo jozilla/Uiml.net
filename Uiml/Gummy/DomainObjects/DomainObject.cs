@@ -1,11 +1,12 @@
 using System;
 using System.IO;
-using Uiml;
-using Uiml.Gummy.Serialize;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
+using Uiml.Gummy.Serialize;
+using Uiml;
+using Uiml.Gummy.Interpolation;
 using Uiml.Gummy.Kernel.Services.ApplicationGlue;
 
 namespace Uiml.Gummy.Domain
@@ -18,6 +19,8 @@ namespace Uiml.Gummy.Domain
         private Part m_part = null;
 
         private bool m_selected = false;
+
+        private InterpolationAlgorithm m_interpolationAlgorithm = null;
 
         private PositionManipulator m_positionManipulator = null;
         private SizeManipulator m_sizeManipulator = null;
@@ -32,6 +35,8 @@ namespace Uiml.Gummy.Domain
         		
 		public DomainObject()
 		{
+            //The default interpolation algorithm
+            m_interpolationAlgorithm = new ExamplePickingAlgorithm(this);
 		}
 
         public object Clone()
@@ -90,6 +95,24 @@ namespace Uiml.Gummy.Domain
             get { return m_methodInParamLinks.Count > 0 || m_methodOutParamLinks.Count > 0 || m_methodLink != null; }
         }
 
+        public String Identifier
+        {
+            get
+            {
+                if(m_part != null)
+                    return m_part.Identifier;
+                return "none";
+            }
+            set
+            {
+                m_part.Identifier = value;
+                for (int i = 0; i < m_properties.Count; i++)
+                {
+                    m_properties[i].PartName = value;
+                }
+            }
+        }
+
         public Size Size
         {
             get
@@ -138,6 +161,10 @@ namespace Uiml.Gummy.Domain
             get
             {
                 return m_properties;
+            }
+            set
+            {
+                m_properties = value;
             }
         }
 
@@ -226,6 +253,40 @@ namespace Uiml.Gummy.Domain
             {
                 m_selected = value;
             }
+        }
+
+        public InterpolationAlgorithm InterpolationAlgorithm
+        {
+            get
+            {
+                return m_interpolationAlgorithm;
+            }
+            set
+            {
+                m_interpolationAlgorithm = value;
+            }
+        }
+
+        //Copies the properties and part of the parameter domain object to this domain object
+        public void CopyUIMLFrom(DomainObject dom)
+        {
+            string id = Identifier;
+            Properties.Clear();
+            for (int i = 0; i < dom.Properties.Count; i++)
+            {
+                Property prop = (Property)dom.Properties[i].Clone();
+                prop.PartName = id;
+                Properties.Add(prop);
+            }
+
+            Part = (Part)dom.Part.Clone();
+            Part.Identifier = id;
+        }
+
+        public void UpdateToNewSize(Size size)
+        {
+            Console.Out.WriteLine("Update [{0}] to the new size [{1}]",Identifier,size);
+            m_interpolationAlgorithm.Update(size);
         }
        
 	}

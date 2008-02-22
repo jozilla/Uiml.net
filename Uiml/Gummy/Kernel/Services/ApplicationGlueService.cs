@@ -89,5 +89,20 @@ namespace Uiml.Gummy.Kernel.Services {
 
             return xmlStrings;
         }
+
+        public Control ServiceControl
+        {
+            get { return this; }
+        }
+
+        public IServiceConfiguration ServiceConfiguration
+        {
+            get { return null; } // todo
+        }
+
+        public void NotifyConfigurationChanged()
+        {
+            return; // todo
+        }
     }
 }

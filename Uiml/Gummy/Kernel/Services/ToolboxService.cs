@@ -16,9 +16,11 @@ namespace Uiml.Gummy.Kernel.Services
     public class ToolboxService : Form, IService, IUimlProvider
     {
         private List<DomainObject> m_domainObjects = new List<DomainObject>();
+        private ToolboxServiceConfiguration m_config;
 
         public ToolboxService() : base()
         {
+            m_config = new ToolboxServiceConfiguration(this);
             Size = new Size(500, 500);
             BackColor = Color.DarkGray;
         }
@@ -85,11 +87,6 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
-        public bool IsEssential
-        {
-            get { return true; }
-        }
-
         public List<IUimlElement> GetUimlElements()
         {
             List<IUimlElement> elements = new List<IUimlElement>();
@@ -106,6 +103,42 @@ namespace Uiml.Gummy.Kernel.Services
             // TODO: return presentation with voc XML string
 
             return xmlStrings;
+        }
+
+        public System.Windows.Forms.Control ServiceControl
+        {
+            get
+            {
+                return this;
+            }
+        }
+
+        public IServiceConfiguration ServiceConfiguration
+        {
+            get 
+            {
+                return m_config;
+            }
+        }
+
+        public void NotifyConfigurationChanged()
+        {
+            switch (m_config.Widgetset)
+            {
+                case "Gtk#":
+                    DesignerKernel.Instance.Platform = "swf-1.1";
+                    break;
+                case "Compact Windows Forms":
+                    DesignerKernel.Instance.Platform = "cswf-1.0";
+                    break;
+                case "iDTV Swing":
+                    DesignerKernel.Instance.Platform = "idtv-1.0";
+                    break;
+                case "Windows Forms":
+                default:
+                    DesignerKernel.Instance.Platform = "swf-1.1";
+                    break;
+            }
         }
     }
 }

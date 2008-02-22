@@ -15,9 +15,16 @@ namespace Uiml.Gummy.Kernel.Services
             get;
         }
 
-        bool IsEssential
+        System.Windows.Forms.Control ServiceControl
         {
             get;
         }
+
+        IServiceConfiguration ServiceConfiguration
+        {
+            get;
+        }
+
+        void NotifyConfigurationChanged();
     }
 }

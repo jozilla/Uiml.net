@@ -14,6 +14,7 @@ namespace Uiml.Gummy.Kernel.Services
     {
         Domain.DomainObject m_dom = null;
         Domain.DomainObject.DomainObjectUpdateHandler m_domUpdateHandler = null;
+        List<Control> m_propertyControls = new List<Control>();
 
         public PropertiesService()
             : base()
@@ -24,8 +25,14 @@ namespace Uiml.Gummy.Kernel.Services
         {
             Text = "Properties";
             SelectedDomainObject.Instance.DomainObjectSelected += new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
-            Size = new Size(225, 500);
-            BackColor = Color.DarkGray;
+            Size = new Size(300, 500);
+            Panel spaceService = (Panel)DesignerKernel.Instance.GetService("gummy-designspace").ServiceControl;
+            if (spaceService != null)
+            {
+                spaceService.Dock = DockStyle.Bottom;
+                Controls.Add(spaceService);
+            }
+            BackColor = Color.Gray;
         }
 
         public bool Open()
@@ -48,9 +55,12 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
-        public bool IsEssential
+        public System.Windows.Forms.Control ServiceControl
         {
-            get { return true; }
+            get
+            {
+                return this;
+            }
         }
 
         void onDomainObjectSelected(Domain.DomainObject dom, EventArgs e)
@@ -62,7 +72,9 @@ namespace Uiml.Gummy.Kernel.Services
                 m_domUpdateHandler = new Uiml.Gummy.Domain.DomainObject.DomainObjectUpdateHandler(onDomainObjectUpdate);
                 m_dom = dom;
                 m_dom.DomainObjectUpdated += m_domUpdateHandler;
-                this.Controls.Clear();
+                for (int i = 0; i < m_propertyControls.Count; i++)
+                    Controls.Remove(m_propertyControls[i]);
+                m_propertyControls.Clear();
                 int y = 0;
                 int x = 5;
                 for (int i = 0; i < dom.Properties.Count; i++)
@@ -71,8 +83,9 @@ namespace Uiml.Gummy.Kernel.Services
                     prop.Location = new Point(x, y);
                     y += prop.Size.Height;
                     Controls.Add(prop);
+                    m_propertyControls.Add(prop);
                 }
-                Size = new Size(200, y + 100);
+                //Size = new Size(200, y + 100);                
             }
             else
             {
@@ -102,6 +115,19 @@ namespace Uiml.Gummy.Kernel.Services
                     visProp.RefreshMe();
                 }
             }
+        }
+
+        public IServiceConfiguration ServiceConfiguration
+        {
+            get 
+            {
+                return null; // no configuration
+            }
+        }
+
+        public void NotifyConfigurationChanged()
+        {
+            return;
         }
     }
 }
