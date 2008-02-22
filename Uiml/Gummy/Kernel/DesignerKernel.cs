@@ -83,6 +83,10 @@ namespace Uiml.Gummy.Kernel
             windows.MenuItems.Add("Tile &Horizontal", this.WindowTileH_Clicked);
             windows.MenuItems.Add("Tile &Vertical", this.WindowTileV_Clicked);
             windows.MdiList = true;
+
+            // set icon
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerKernel));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
         }
 
         private void InitializeMdiChildren()
@@ -388,6 +392,10 @@ namespace Uiml.Gummy.Kernel
         public void NotifyConfigurationChanged()
         {
             return;
+        }
+
+        private void InitializeComponent()
+        {
         }
     }
 }
