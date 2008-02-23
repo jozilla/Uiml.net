@@ -136,6 +136,7 @@ namespace Uiml.Gummy.Kernel
             DockMdiChild(GetService("gummy-toolbox"));
             DockMdiChild(GetService("gummy-propertypanel"));
             DockMdiChild(GetService("gummy-canvas"));
+            DockMdiChild(GetService("application-glue"));
         }
 
         private void UnDockMdiChild(IService child)
@@ -237,7 +238,8 @@ namespace Uiml.Gummy.Kernel
             AttachService(new ToolboxService());
             AttachService(new CanvasService());
             AttachService(new SpaceService());            
-            AttachService(new PropertiesService());            
+            AttachService(new PropertiesService());
+            AttachService(new ApplicationGlueService());
         }
 
         public void WindowCascade_Clicked(object sender, EventArgs args)
