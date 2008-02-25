@@ -47,6 +47,10 @@
     <Compile Include="Uiml\Gummy\Interpolation\ExamplePickingAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ACommand.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ICommand.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\MenuFactory.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ShowWireFrameExample.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\Arrow.cs">
       <SubType>UserControl</SubType>
     </Compile>

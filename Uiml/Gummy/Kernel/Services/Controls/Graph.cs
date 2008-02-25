@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Uiml.Gummy.Domain;
+using Uiml.Gummy.Kernel.Services.Commands;
 
 namespace Uiml.Gummy.Kernel.Services.Controls
 {
@@ -251,12 +252,31 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         }
         
         void onMouseDownGraph(object sender, MouseEventArgs e)
-        {            
-            m_cursorClicked = true;
-            CursorPosition = e.Location;
-            updateSelectedExample();
-            Refresh();
-            fireDesignSpaceCursorChanged();
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                m_cursorClicked = true;
+                CursorPosition = e.Location;
+                updateSelectedExample();
+                Refresh();
+                fireDesignSpaceCursorChanged();
+            }
+            else if(e.Button == MouseButtons.Right)
+            {
+                Rectangle rect = detectSelectedExample(e.Location);
+                if (rect != Rectangle.Empty)
+                {
+                    if (m_selectedExample == -1 || m_examples[m_selectedExample] != rect)
+                    {
+                        ContextMenu cMenu = new ContextMenu();
+                        List<ICommand> commands = new List<ICommand>();
+                        commands.Add( new ShowWireFrameExample( pointToSize(new Point(rect.Location.X + rect.Width/2, rect.Location.Y + rect.Height / 2) ) ) );
+                        Menu menu = (Menu)cMenu;
+                        MenuFactory.CreateMenu(commands, ref menu );
+                        cMenu.Show(this, e.Location);
+                    }
+                }
+            }
         }
 
         Point CursorPosition

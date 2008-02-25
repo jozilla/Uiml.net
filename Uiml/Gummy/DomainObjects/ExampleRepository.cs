@@ -87,6 +87,15 @@ namespace Uiml.Gummy.Domain
             return sizes;
         }
 
+        public Dictionary<string,DomainObject> GetExample(Size size)
+        {
+            if (m_examples.ContainsKey(size))
+            {
+                return m_examples[size];
+            }
+            return null;
+        }
+
         public void PrintRepositoryContent()
         {
             Console.Out.WriteLine("[RepositoryContent]");

@@ -23,6 +23,8 @@ namespace Uiml.Gummy.Kernel.Services
         public event EventHandler CanvasResized;        
         private CanvasServiceConfiguration m_config;
 
+        Size m_wireFrameSize = Size.Empty;
+
         public CanvasService() : base()
         {
             m_config = new CanvasServiceConfiguration(this);
@@ -45,7 +47,6 @@ namespace Uiml.Gummy.Kernel.Services
             MouseDown += new MouseEventHandler(onMouseDown);
             MouseMove += new MouseEventHandler(onMouseMove);
             MouseUp += new MouseEventHandler(onMouseUp);
-            //IsMdiContainer = true;
         }
 
         void onMouseUp(object sender, MouseEventArgs e)
@@ -152,7 +153,7 @@ namespace Uiml.Gummy.Kernel.Services
         void onDragDrop(object sender, DragEventArgs e)
         {
             //Fixme: isn't there a better way to visualize the drag and drop?
-            if(m_uiRectangle.Contains(new Point(e.X,e.Y)))
+            if (m_uiRectangle.Contains(this.PointToClient(new Point(e.X, e.Y))))
             {
                 DomainObject tmp = new DomainObject();            
                 DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());
@@ -183,6 +184,11 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 g.FillRectangle(Brushes.DarkGray, r);
                 g.DrawRectangle(Pens.Black, r);
+            }
+
+            if (WireFramed)
+            {
+                g.DrawRectangle(Pens.Green, 0, 0, 100, 100);
             }
         }
 
@@ -270,6 +276,35 @@ namespace Uiml.Gummy.Kernel.Services
             get 
             {
                 return m_config;
+            }
+        }
+
+        //Is there a wire framed mode shown?
+        public bool WireFramed
+        {
+            set
+            {
+                if(value == false)
+                    m_wireFrameSize = Size.Empty;
+                Refresh();
+            }
+            get
+            {
+                return m_wireFrameSize != Size.Empty;
+            }
+        }
+
+        //Which size should be wireframed?
+        public Size WireFrameSize
+        {
+            get
+            {
+                return m_wireFrameSize;
+            }
+            set
+            {
+                m_wireFrameSize = value;
+                Refresh();
             }
         }
 
