@@ -11,7 +11,7 @@ namespace Uiml.Gummy.Kernel.Services
     public partial class ToolboxServiceConfiguration : UserControl, IServiceConfiguration
     {
         private Dictionary<string, string[]> platforms = new Dictionary<string, string[]>();
-        private bool m_ready = false; // set to not ready by default
+        private bool m_ready;
         private IService m_service;
 
         public ToolboxServiceConfiguration(IService parent)
@@ -27,6 +27,8 @@ namespace Uiml.Gummy.Kernel.Services
             platform.Items.AddRange(platformStrings);
 
             widgetset.Enabled = false;
+
+            CheckIfReady();
         }
 
         private void platform_SelectedIndexChanged(object sender, EventArgs e)

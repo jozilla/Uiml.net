@@ -12,12 +12,13 @@ namespace Uiml.Gummy.Kernel.Services {
         private uint m_height;
         private IService m_service;
 
-        private bool m_ready = true; // set ready to true
+        private bool m_ready;
 
         public CanvasServiceConfiguration(IService parent) 
         {
             InitializeComponent();
             m_service = parent;
+            CheckIfReady();
         }
 
         public event ReadyStateChangedEventHandler ReadyStateChanged;
