@@ -17,6 +17,7 @@ namespace Uiml.Gummy.Domain
         public event ExampleDesignAddedHandler ExampleDesignAdded;
 
         Dictionary<Size, Dictionary<string, DomainObject>> m_examples = new Dictionary<Size, Dictionary<string, DomainObject>>();
+
         static ExampleRepository m_repository = null;
 
         private ExampleRepository()
@@ -77,6 +78,11 @@ namespace Uiml.Gummy.Domain
                 }
             }
             return list;
+        }
+
+        public DomainObject GetDomainObjectExample(string label, Size size)
+        {
+            return GetDomainObjectExamples(label)[size];
         }
 
         //Get all the example sizes where the designer specifies some things 

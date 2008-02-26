@@ -7,6 +7,9 @@ using System.Drawing;
 using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Visual;
 using Uiml.Gummy.Domain;
+using Uiml.Gummy.Kernel.Services.Controls;
+
+using Shape;
 
 namespace Uiml.Gummy.Kernel.Services
 {
@@ -24,6 +27,8 @@ namespace Uiml.Gummy.Kernel.Services
         private CanvasServiceConfiguration m_config;
 
         Size m_wireFrameSize = Size.Empty;
+        List<Line> m_wireFrameLines = new List<Line>();
+        //WireFrameCanvas m_wfCanvas = new WireFrameCanvas();
 
         public CanvasService() : base()
         {
@@ -34,19 +39,30 @@ namespace Uiml.Gummy.Kernel.Services
         {
             Text = "Canvas";
             Size = new Size(400, 400);
-            AllowDrop = true;           
+            /*m_wfCanvas.AllowDrop = true;
+            m_wfCanvas.DragDrop += new DragEventHandler(onDragDrop);
+            m_wfCanvas.DragEnter += new DragEventHandler(onDragEnter);*/
+            AllowDrop = true;
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
             BackColor = Color.DarkGray;
             //Resize += new EventHandler(onResize);
             m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
-            Paint += new PaintEventHandler(onPaint);
+            Paint += new PaintEventHandler(painting);
             
             DoubleBuffered = true;
             CanvasSize = new Size(100, 100);
+            
+            /*m_wfCanvas.MouseDown += new MouseEventHandler(onMouseDown);
+            m_wfCanvas.MouseMove += new MouseEventHandler(onMouseMove);
+            m_wfCanvas.MouseUp += new MouseEventHandler(onMouseUp);*/
             MouseDown += new MouseEventHandler(onMouseDown);
             MouseMove += new MouseEventHandler(onMouseMove);
             MouseUp += new MouseEventHandler(onMouseUp);
+
+            /*m_wfCanvas.Size = CanvasSize;
+            m_wfCanvas.Location = m_origin;            
+            Controls.Add(m_wfCanvas);*/
         }
 
         void onMouseUp(object sender, MouseEventArgs e)
@@ -102,15 +118,21 @@ namespace Uiml.Gummy.Kernel.Services
                         visDom.State = new ResizeAndMoveVisualDomainObjectState();
                         Controls.Add(visDom);
                     }
+                    bringLinesToFront();
+                    //Controls.Add(m_wfCanvas);
+                    //m_wfCanvas.BringToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEADDED:
                     VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
                     vDom.State = new ResizeAndMoveVisualDomainObjectState();
                     Controls.Add(vDom);
                     vDom.BringToFront();
+                    bringLinesToFront();
+                    //m_wfCanvas.BringToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEREMOVED:
                     //FixMe: Implement removing domain objects
+                    bringLinesToFront();
                     break;
             }
            
@@ -168,8 +190,8 @@ namespace Uiml.Gummy.Kernel.Services
 
        
 
-        void onPaint(object sender, PaintEventArgs e)
-        {            
+        void painting(object sender, PaintEventArgs e)
+        { 
             Graphics g = e.Graphics;
             g.FillRectangle(Brushes.WhiteSmoke,new Rectangle(0,0,Width,Height));
             Rectangle doubleBorder0 = new Rectangle(m_uiRectangle.X, m_uiRectangle.Y, m_uiRectangle.Width + 2, m_uiRectangle.Height + 2);
@@ -184,13 +206,9 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 g.FillRectangle(Brushes.DarkGray, r);
                 g.DrawRectangle(Pens.Black, r);
-            }
-
-            if (WireFramed)
-            {
-                g.DrawRectangle(Pens.Green, 0, 0, 100, 100);
-            }
+            }            
         }
+
 
         BoxID clickedBox(Point p)
         {
@@ -236,22 +254,23 @@ namespace Uiml.Gummy.Kernel.Services
         }        
 
         //Deprecated -> may not be used anymore
-        public List<DomainObject> DomainObjects
+        public DomainObjectCollection DomainObjects
         {
             get
             {
-                List<DomainObject> domainObjects = new List<DomainObject>();
+                return m_domainObjects;
+                /*List<DomainObject> domainObjects = new List<DomainObject>();
                 for (int i = 0; i < m_domainObjects.Count; i++)
                 {
                     domainObjects.Add((DomainObject)m_domainObjects[i].Clone());
                 }
-                return domainObjects;
+                return domainObjects;*/
             }
-            set
+            /*set
             {
                 m_domainObjects.Clear();
                 m_domainObjects.AddRange(value);
-            }
+            }*/
         }
 
         public Size CanvasSize
@@ -266,6 +285,7 @@ namespace Uiml.Gummy.Kernel.Services
                 m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);                
                 if (CanvasResized != null)
                     CanvasResized(this, new EventArgs());
+                //m_wfCanvas.Size = value;
                 Refresh();
             }
         }
@@ -284,8 +304,10 @@ namespace Uiml.Gummy.Kernel.Services
         {
             set
             {
-                if(value == false)
-                    m_wireFrameSize = Size.Empty;
+                if (value == false)
+                {
+                    m_wireFrameSize = Size.Empty;                    
+                }
                 Refresh();
             }
             get
@@ -303,9 +325,26 @@ namespace Uiml.Gummy.Kernel.Services
             }
             set
             {
-                m_wireFrameSize = value;
-                Refresh();
+                //Clean up old lines
+                for (int i = 0; i < m_wireFrameLines.Count; i++)
+                    Controls.Remove(m_wireFrameLines[i]);
+                m_wireFrameLines.Clear();
+
+                //Set up new set of lines
+                m_wireFrameSize = value;                
+                List<Shape.Line> lines = WireFrameFactory.GetWireFrames(value);
+                m_wireFrameLines.AddRange(lines);
+                Controls.AddRange(m_wireFrameLines.ToArray());
+                bringLinesToFront();             
             }
+        }
+
+        private void bringLinesToFront()
+        {
+            for (int i = 0; i < m_wireFrameLines.Count; i++)
+            {
+                m_wireFrameLines[i].BringToFront();
+            }   
         }
 
         public void NotifyConfigurationChanged()
