@@ -29,8 +29,6 @@ namespace Uiml.Gummy.Kernel.Services {
 
         public void Init()
         {
-            DrawService(typeof(Appearance));
-
             Menu = new MainMenu();
             MenuItem service = Menu.MenuItems.Add("Logic");
             service.MenuItems.Add("Select", this.LogicSelect_Clicked);
@@ -106,7 +104,7 @@ namespace Uiml.Gummy.Kernel.Services {
 
         public void NotifyConfigurationChanged()
         {
-            return; // todo
+            DrawService(m_config.Assembly.GetTypes()[0]); // todo: check correct type
         }
     }
 }
