@@ -235,7 +235,8 @@ namespace Uiml.Gummy.Kernel
         {
             AttachService(new ToolboxService());
             AttachService(new CanvasService());
-            AttachService(new SpaceService());            
+            AttachService(new SpaceService());
+            AttachService(new WireFrameService());
             AttachService(new PropertiesService());            
             
         }

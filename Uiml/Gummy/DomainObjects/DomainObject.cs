@@ -22,10 +22,12 @@ namespace Uiml.Gummy.Domain
         private InterpolationAlgorithm m_interpolationAlgorithm = null;
         private PositionManipulator m_positionManipulator = null;
         private SizeManipulator m_sizeManipulator = null;
+
+        private Color m_color = DEFAULT_COLOR;        
         
         public delegate void DomainObjectUpdateHandler (object sender, EventArgs e);
 
-        public event DomainObjectUpdateHandler DomainObjectUpdated;
+        public event DomainObjectUpdateHandler DomainObjectUpdated;        
         		
 		public DomainObject()
 		{
@@ -43,6 +45,7 @@ namespace Uiml.Gummy.Domain
             }
             clone.m_part = (Part)m_part.Clone();
             clone.m_selected = m_selected;
+            clone.m_color = m_color;
             if (m_positionManipulator != null)
             {
                 clone.m_positionManipulator = (PositionManipulator)m_positionManipulator.Clone();
@@ -87,7 +90,7 @@ namespace Uiml.Gummy.Domain
             }
         }
 
-            public Size Size
+        public Size Size
         {
             get
             {
@@ -109,6 +112,19 @@ namespace Uiml.Gummy.Domain
             set
             {
                 m_positionManipulator.Position = value;
+                Updated();
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return m_color;
+            }
+            set
+            {
+                m_color = value;
                 Updated();
             }
         }
@@ -223,6 +239,10 @@ namespace Uiml.Gummy.Domain
             Console.Out.WriteLine("Update [{0}] to the new size [{1}]",Identifier,size);
             m_interpolationAlgorithm.Update(size);
         }
+
+        public static Color DEFAULT_COLOR = Color.Black;
+        public static Color SELECTED_COLOR = Color.Blue;
+        public static Color UNSELECTED_COLOR = Color.LightGoldenrodYellow;
        
 	}
 }

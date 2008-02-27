@@ -41,6 +41,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Shape\Line.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shape\Line.Designer.cs">
+      <DependentUpon>Line.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectCollection.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\ExampleRepository.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\Bezier2DInterpolation.cs" />
@@ -48,6 +54,7 @@
     <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ACommand.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\DisableWireFrameExample.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ICommand.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\MenuFactory.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ShowWireFrameExample.cs" />
@@ -69,6 +76,12 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.Designer.cs">
       <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.Designer.cs">
+      <DependentUpon>WireFrameController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceConfiguration.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceContainer.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.cs">
@@ -89,6 +102,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ToolboxServiceConfiguration.Designer.cs">
       <DependentUpon>ToolboxServiceConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\WireFrameService.cs" />
     <Compile Include="Uiml\Gummy\Program.cs" />
     <!--<EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -124,6 +138,7 @@
     <Compile Include="Uiml\Gummy\Serialize\IUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
+    <Compile Include="Uiml\Gummy\Visual\BorderDrawer.cs" />
     <Compile Include="Uiml\Gummy\Visual\ResizeAndMoveVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\SelectVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\VisualDomainObjectState.cs">
@@ -134,6 +149,7 @@
     <Compile Include="Uiml\Gummy\Visual\VisualProperty.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Uiml\Gummy\Visual\WireFrameFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cassowary.net\Cassowary.csproj">
@@ -182,6 +198,10 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WireFrameController.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\SpaceService.resx">
       <SubType>Designer</SubType>
