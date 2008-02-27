@@ -97,9 +97,9 @@ namespace Uiml.Gummy.Kernel.Services
             this.title.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.title.Location = new System.Drawing.Point(3, 0);
             this.title.Name = "title";
-            this.title.Size = new System.Drawing.Size(213, 13);
+            this.title.Size = new System.Drawing.Size(282, 13);
             this.title.TabIndex = 1;
-            this.title.Text = "Specify the target screen resolution.";
+            this.title.Text = "Select the service to design a user interface for.";
             // 
             // resolutionTable
             // 
@@ -137,7 +137,7 @@ namespace Uiml.Gummy.Kernel.Services
             this.mainTable.RowCount = 2;
             this.mainTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.mainTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.mainTable.Size = new System.Drawing.Size(287, 128);
+            this.mainTable.Size = new System.Drawing.Size(288, 128);
             this.mainTable.TabIndex = 6;
             // 
             // ApplicationGlueServiceConfiguration
