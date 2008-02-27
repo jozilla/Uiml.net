@@ -5,6 +5,7 @@ using System.Drawing;
 
 using Uiml.Gummy.Kernel.Services;
 using Uiml.Gummy.Kernel;
+using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Domain;
 
 using Shape;
@@ -107,20 +108,26 @@ namespace Uiml.Gummy.Visual
         public static List<Shape.Line> GetWireFrames(Size size)
         {
             List<Shape.Line> lines = new List<Shape.Line>();
-
+            
             Dictionary<string, DomainObject> example = ExampleRepository.Instance.GetExample(size);
-            Dictionary<string, DomainObject>.Enumerator enumerator = example.GetEnumerator();
-
-            CanvasService service = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
-
-            int index = 0;
-            while (enumerator.MoveNext())
+            if (example != null)
             {
-                DomainObject domObject = enumerator.Current.Value;                
-                //ExampleRepository.Instance.GetDomainObjectExample(domObject.Identifier, service.CanvasSize).Color = randomColors[index];
-                service.DomainObjects.Get(domObject.Identifier).Color = randomColors[index];
-                lines.AddRange(GetWireFrames(domObject, randomColors[index]));
-                index++;
+                Dictionary<string, DomainObject>.Enumerator enumerator = example.GetEnumerator();
+
+                CanvasService service = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
+
+                int index = 0;
+                while (enumerator.MoveNext())
+                {
+                    DomainObject domObject = enumerator.Current.Value;
+                    //ExampleRepository.Instance.GetDomainObjectExample(domObject.Identifier, service.CanvasSize).Color = randomColors[index];
+                    service.DomainObjects.Get(domObject.Identifier).Color = randomColors[index];
+                    if(SelectedDomainObject.Instance.Selected != null && SelectedDomainObject.Instance.Selected.Identifier == domObject.Identifier)
+                        lines.AddRange(GetWireFrames(domObject, DomainObject.SELECTED_COLOR));
+                    else
+                        lines.AddRange(GetWireFrames(domObject, DomainObject.UNSELECTED_COLOR));
+                    index++;
+                }
             }
 
             return lines;
@@ -130,9 +137,13 @@ namespace Uiml.Gummy.Visual
         {
             List<Line> lines = new List<Line>();
             Line line1 = new Line(dom.Size.Width, Orientation.HORIZONTAL, color);
+            line1.Label = dom.Identifier;
             Line line2 = new Line(dom.Size.Height + 2, Orientation.VERTICAL, color);
+            line2.Label = dom.Identifier;
             Line line3 = new Line(dom.Size.Width, Orientation.HORIZONTAL, color);
+            line3.Label = dom.Identifier;
             Line line4 = new Line(dom.Size.Height, Orientation.VERTICAL, color);
+            line4.Label = dom.Identifier;
             line1.Location = new Point(dom.Location.X - 1, dom.Location.Y - 1);
             line2.Location = new Point(dom.Location.X - 1 + dom.Size.Width, dom.Location.Y - 1);
             line3.Location = new Point(dom.Location.X - 1, dom.Location.Y - 1 + dom.Size.Height);

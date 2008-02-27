@@ -11,7 +11,7 @@ using Uiml.Gummy.Kernel.Services.Commands;
 
 namespace Uiml.Gummy.Kernel.Services.Controls
 {
-    public delegate void DesignSpaceSizeChangeHandler(object sender, Size size);
+    public delegate void SizeChangeHandler(object sender, Size size);
 
     public partial class Graph : UserControl
     {        
@@ -32,7 +32,8 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         private Dictionary<Size,Point> m_sizeToPoint = new Dictionary<Size,Point>();
         private Dictionary<Point, Size> m_pointToSize = new Dictionary<Point, Size>();
 
-        public event DesignSpaceSizeChangeHandler DesignSpaceCursorChanged;
+        public event SizeChangeHandler DesignSpaceCursorChanged;
+        //public event SizeChangeHandler WireFrameExampleSelected;
 
         public Graph()
         {

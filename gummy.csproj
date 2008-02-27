@@ -54,6 +54,7 @@
     <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ACommand.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\DisableWireFrameExample.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ICommand.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\MenuFactory.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ShowWireFrameExample.cs" />
@@ -75,6 +76,12 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.Designer.cs">
       <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.Designer.cs">
+      <DependentUpon>WireFrameController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceConfiguration.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceContainer.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.cs">
@@ -95,6 +102,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ToolboxServiceConfiguration.Designer.cs">
       <DependentUpon>ToolboxServiceConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\WireFrameService.cs" />
     <Compile Include="Uiml\Gummy\Program.cs" />
     <!--<EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -190,6 +198,10 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WireFrameController.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\SpaceService.resx">
       <SubType>Designer</SubType>

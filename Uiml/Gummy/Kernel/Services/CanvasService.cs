@@ -28,7 +28,8 @@ namespace Uiml.Gummy.Kernel.Services
 
         Size m_wireFrameSize = Size.Empty;
         List<Line> m_wireFrameLines = new List<Line>();
-        //WireFrameCanvas m_wfCanvas = new WireFrameCanvas();
+
+        SelectedDomainObject.DomainObjectSelectedHandler m_selectedHandler = null;
 
         public CanvasService() : base()
         {
@@ -39,30 +40,34 @@ namespace Uiml.Gummy.Kernel.Services
         {
             Text = "Canvas";
             Size = new Size(400, 400);
-            /*m_wfCanvas.AllowDrop = true;
-            m_wfCanvas.DragDrop += new DragEventHandler(onDragDrop);
-            m_wfCanvas.DragEnter += new DragEventHandler(onDragEnter);*/
             AllowDrop = true;
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
-            BackColor = Color.DarkGray;
-            //Resize += new EventHandler(onResize);
+            BackColor = Color.DarkGray;            
             m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
             Paint += new PaintEventHandler(painting);
             
             DoubleBuffered = true;
             CanvasSize = new Size(100, 100);
-            
-            /*m_wfCanvas.MouseDown += new MouseEventHandler(onMouseDown);
-            m_wfCanvas.MouseMove += new MouseEventHandler(onMouseMove);
-            m_wfCanvas.MouseUp += new MouseEventHandler(onMouseUp);*/
+
             MouseDown += new MouseEventHandler(onMouseDown);
             MouseMove += new MouseEventHandler(onMouseMove);
             MouseUp += new MouseEventHandler(onMouseUp);
 
-            /*m_wfCanvas.Size = CanvasSize;
-            m_wfCanvas.Location = m_origin;            
-            Controls.Add(m_wfCanvas);*/
+            m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
+            SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
+        }
+
+        void onDomainObjectSelected(DomainObject dom, EventArgs e)
+        {
+            if (WireFramed)
+            {
+                for (int i = 0; i < m_wireFrameLines.Count; i++)
+                    m_wireFrameLines[i].LineColor = DomainObject.UNSELECTED_COLOR;
+                List<Line> lines = GetLinesWithLabel(dom.Identifier);
+                for (int i = 0; i < lines.Count; i++)
+                    lines[i].LineColor = DomainObject.SELECTED_COLOR;
+            }
         }
 
         void onMouseUp(object sender, MouseEventArgs e)
@@ -119,8 +124,6 @@ namespace Uiml.Gummy.Kernel.Services
                         Controls.Add(visDom);
                     }
                     bringLinesToFront();
-                    //Controls.Add(m_wfCanvas);
-                    //m_wfCanvas.BringToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEADDED:
                     VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
@@ -128,7 +131,6 @@ namespace Uiml.Gummy.Kernel.Services
                     Controls.Add(vDom);
                     vDom.BringToFront();
                     bringLinesToFront();
-                    //m_wfCanvas.BringToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEREMOVED:
                     //FixMe: Implement removing domain objects
@@ -259,18 +261,8 @@ namespace Uiml.Gummy.Kernel.Services
             get
             {
                 return m_domainObjects;
-                /*List<DomainObject> domainObjects = new List<DomainObject>();
-                for (int i = 0; i < m_domainObjects.Count; i++)
-                {
-                    domainObjects.Add((DomainObject)m_domainObjects[i].Clone());
-                }
-                return domainObjects;*/
             }
-            /*set
-            {
-                m_domainObjects.Clear();
-                m_domainObjects.AddRange(value);
-            }*/
+           
         }
 
         public Size CanvasSize
@@ -285,7 +277,6 @@ namespace Uiml.Gummy.Kernel.Services
                 m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);                
                 if (CanvasResized != null)
                     CanvasResized(this, new EventArgs());
-                //m_wfCanvas.Size = value;
                 Refresh();
             }
         }
@@ -306,7 +297,7 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 if (value == false)
                 {
-                    m_wireFrameSize = Size.Empty;                    
+                    WireFrameSize = Size.Empty;                    
                 }
                 Refresh();
             }
@@ -328,6 +319,8 @@ namespace Uiml.Gummy.Kernel.Services
                 //Clean up old lines
                 for (int i = 0; i < m_wireFrameLines.Count; i++)
                     Controls.Remove(m_wireFrameLines[i]);
+                for (int i = 0; i < DomainObjects.Count; i++)
+                    DomainObjects[i].Color = DomainObject.DEFAULT_COLOR;
                 m_wireFrameLines.Clear();
 
                 //Set up new set of lines
@@ -337,6 +330,18 @@ namespace Uiml.Gummy.Kernel.Services
                 Controls.AddRange(m_wireFrameLines.ToArray());
                 bringLinesToFront();             
             }
+        }
+
+        private List<Line> GetLinesWithLabel(string label)
+        {
+            List<Line> list = new List<Line>();
+            for (int i = 0; i < m_wireFrameLines.Count; i++)
+            {
+                if (m_wireFrameLines[i].Label == label)
+                    list.Add(m_wireFrameLines[i]);
+            }
+
+            return list;
         }
 
         private void bringLinesToFront()

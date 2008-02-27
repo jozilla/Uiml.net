@@ -23,7 +23,7 @@ namespace Uiml.Gummy.Domain
         private PositionManipulator m_positionManipulator = null;
         private SizeManipulator m_sizeManipulator = null;
 
-        private Color m_color = Color.Black;
+        private Color m_color = DEFAULT_COLOR;        
         
         public delegate void DomainObjectUpdateHandler (object sender, EventArgs e);
 
@@ -239,6 +239,10 @@ namespace Uiml.Gummy.Domain
             Console.Out.WriteLine("Update [{0}] to the new size [{1}]",Identifier,size);
             m_interpolationAlgorithm.Update(size);
         }
+
+        public static Color DEFAULT_COLOR = Color.Black;
+        public static Color SELECTED_COLOR = Color.Blue;
+        public static Color UNSELECTED_COLOR = Color.LightGoldenrodYellow;
        
 	}
 }

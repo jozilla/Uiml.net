@@ -83,8 +83,8 @@ namespace Uiml.Gummy.Visual
         {
             base.OnPaint(pe);
 
-            Graphics g = pe.Graphics;
-            g.DrawRectangle(new Pen(DomainObject.Color,2.0f), 0, 0, Bounds.Width - 2.0f, Bounds.Height - 2.0f);
+            //Graphics g = pe.Graphics;
+            //g.DrawRectangle(new Pen(DomainObject.Color,2.0f), 0, 0, Bounds.Width - 2.0f, Bounds.Height - 2.0f);
         }
 
         void VisualDomainObject_MouseUp(object sender, MouseEventArgs e)
