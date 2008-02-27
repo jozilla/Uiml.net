@@ -53,6 +53,12 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueService.Designer.cs">
       <DependentUpon>ApplicationGlueService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.Designer.cs">
+      <DependentUpon>ApplicationGlueServiceConfiguration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ApplicationGlueRegistry.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethod.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IBehaviorGenerator.cs" />
@@ -252,6 +258,10 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ApplicationGlueServiceConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_input.png" />
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_method.png" />
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_output.png" />

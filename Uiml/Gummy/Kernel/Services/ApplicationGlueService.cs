@@ -18,14 +18,18 @@ namespace Uiml.Gummy.Kernel.Services {
         private Behavior m_behavior;
         private string m_behaviorXmlString;
 
+        private ApplicationGlueServiceConfiguration m_config;
+
         public ApplicationGlueService() {
             InitializeComponent();
             m_gen = new ReflectionBehaviorGenerator();
+
+            m_config = new ApplicationGlueServiceConfiguration(this);
         }
 
         public void Init()
         {
-            DrawService(typeof(System.Math));
+            DrawService(typeof(Appearance));
 
             Menu = new MainMenu();
             MenuItem service = Menu.MenuItems.Add("Logic");
@@ -97,7 +101,7 @@ namespace Uiml.Gummy.Kernel.Services {
 
         public IServiceConfiguration ServiceConfiguration
         {
-            get { return null; } // todo
+            get { return m_config; }
         }
 
         public void NotifyConfigurationChanged()
