@@ -25,6 +25,8 @@ namespace Uiml.Gummy.Domain
         private PositionManipulator m_positionManipulator = null;
         private SizeManipulator m_sizeManipulator = null;
 
+        private Color m_color = DEFAULT_COLOR;
+
         private MethodModel m_methodLink = null;
         private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
         private List<MethodParameterModel> m_methodInParamLinks = new List<MethodParameterModel>();
@@ -49,6 +51,7 @@ namespace Uiml.Gummy.Domain
             }
             clone.m_part = (Part)m_part.Clone();
             clone.m_selected = m_selected;
+            clone.m_color = m_color;
             if (m_positionManipulator != null)
             {
                 clone.m_positionManipulator = (PositionManipulator)m_positionManipulator.Clone();
@@ -135,6 +138,19 @@ namespace Uiml.Gummy.Domain
             set
             {
                 m_positionManipulator.Position = value;
+                Updated();
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return m_color;
+            }
+            set
+            {
+                m_color = value;
                 Updated();
             }
         }
@@ -288,6 +304,10 @@ namespace Uiml.Gummy.Domain
             Console.Out.WriteLine("Update [{0}] to the new size [{1}]",Identifier,size);
             m_interpolationAlgorithm.Update(size);
         }
+
+        public static Color DEFAULT_COLOR = Color.Black;
+        public static Color SELECTED_COLOR = Color.Blue;
+        public static Color UNSELECTED_COLOR = Color.LightGoldenrodYellow;
        
 	}
 }

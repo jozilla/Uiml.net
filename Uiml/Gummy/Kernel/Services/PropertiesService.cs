@@ -7,6 +7,7 @@ using System.Drawing;
 using Uiml.Gummy.Kernel;
 using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Visual;
+using Uiml.Gummy.Kernel.Services.Controls;
 
 namespace Uiml.Gummy.Kernel.Services
 {
@@ -26,11 +27,19 @@ namespace Uiml.Gummy.Kernel.Services
             Text = "Properties";
             SelectedDomainObject.Instance.DomainObjectSelected += new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             Size = new Size(300, 500);
-            Panel spaceService = (Panel)DesignerKernel.Instance.GetService("gummy-designspace").ServiceControl;
-            if (spaceService != null)
+            Panel bottom = new Panel();            
+            //TODO: this kind of attachments should be done by service dependencys
+            Control spaceService = DesignerKernel.Instance.GetService("gummy-designspace").ServiceControl;
+            bottom.Controls.Add(spaceService);
+            Control wfController = DesignerKernel.Instance.GetService("gummy-wireframes").ServiceControl;
+            bottom.Controls.Add(wfController);
+            bottom.Height = spaceService.Height + wfController.Height + 10;
+            spaceService.Dock = DockStyle.Bottom;
+            wfController.Dock = DockStyle.Fill;
+            if (bottom != null)
             {
-                spaceService.Dock = DockStyle.Bottom;
-                Controls.Add(spaceService);
+                bottom.Dock = DockStyle.Bottom;
+                Controls.Add(bottom);
             }
             BackColor = Color.Gray;
         }

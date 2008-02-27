@@ -281,6 +281,7 @@ namespace Uiml.Gummy.Visual
             {
                 PaintBoundary(e.Graphics);
             }
+            //e.Graphics.DrawRectangle(new Pen(m_visDom.DomainObject.Color, 2.0f), 0, 0, m_visDom.Width-2f, m_visDom.Height-2f);            
         }
 
         private void initializeBoxes()

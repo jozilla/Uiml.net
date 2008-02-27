@@ -50,7 +50,7 @@ namespace Uiml.Gummy.Kernel.Services
         public void Init()
         {
             m_canvas = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
-            graph1.DesignSpaceCursorChanged += new DesignSpaceSizeChangeHandler(graph1_DesignSpaceCursorChanged);            
+            graph1.DesignSpaceCursorChanged += new SizeChangeHandler(graph1_DesignSpaceCursorChanged);            
         }
 
         public bool Open()

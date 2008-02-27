@@ -123,6 +123,16 @@ namespace Uiml.Gummy.Domain
             fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.MOREREMOVED));
         }
 
+        public DomainObject Get(string label)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (this[i].Identifier == label)
+                    return this[i];
+            }
+            return null;
+        }
+
         public new void Remove(DomainObject dom)
         {
             if (Contains(dom))

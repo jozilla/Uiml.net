@@ -8,6 +8,9 @@ using System.Drawing;
 using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Visual;
 using Uiml.Gummy.Domain;
+using Uiml.Gummy.Kernel.Services.Controls;
+
+using Shape;
 
 namespace Uiml.Gummy.Kernel.Services
 {
@@ -24,6 +27,10 @@ namespace Uiml.Gummy.Kernel.Services
         public event EventHandler CanvasResized;        
         private CanvasServiceConfiguration m_config;
 
+        Size m_wireFrameSize = Size.Empty;
+        List<Line> m_wireFrameLines = new List<Line>();
+
+        SelectedDomainObject.DomainObjectSelectedHandler m_selectedHandler = null;
         public CanvasService() : base()
         {
             m_config = new CanvasServiceConfiguration(this);
@@ -39,14 +46,28 @@ namespace Uiml.Gummy.Kernel.Services
             BackColor = Color.DarkGray;
             //Resize += new EventHandler(onResize);
             m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
-            Paint += new PaintEventHandler(onPaint);
+            Paint += new PaintEventHandler(painting);
             
             DoubleBuffered = true;
             CanvasSize = new Size(100, 100);
             MouseDown += new MouseEventHandler(onMouseDown);
             MouseMove += new MouseEventHandler(onMouseMove);
             MouseUp += new MouseEventHandler(onMouseUp);
-            //IsMdiContainer = true;
+
+            m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
+            SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;            
+        }
+
+        void onDomainObjectSelected(DomainObject dom, EventArgs e)
+        {
+            if (WireFramed)
+            {
+                for (int i = 0; i < m_wireFrameLines.Count; i++)
+                    m_wireFrameLines[i].LineColor = DomainObject.UNSELECTED_COLOR;
+                List<Line> lines = GetLinesWithLabel(dom.Identifier);
+                for (int i = 0; i < lines.Count; i++)
+                    lines[i].LineColor = DomainObject.SELECTED_COLOR;
+            }
         }
 
         void onMouseUp(object sender, MouseEventArgs e)
@@ -102,15 +123,18 @@ namespace Uiml.Gummy.Kernel.Services
                         visDom.State = new ResizeAndMoveVisualDomainObjectState();
                         Controls.Add(visDom);
                     }
+                    bringLinesToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEADDED:
                     VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
                     vDom.State = new ResizeAndMoveVisualDomainObjectState();
                     Controls.Add(vDom);
                     vDom.BringToFront();
+                    bringLinesToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEREMOVED:
                     //FixMe: Implement removing domain objects
+                    bringLinesToFront();
                     break;
             }
            
@@ -153,7 +177,7 @@ namespace Uiml.Gummy.Kernel.Services
         void onDragDrop(object sender, DragEventArgs e)
         {
             //Fixme: isn't there a better way to visualize the drag and drop?
-            if(m_uiRectangle.Contains(new Point(e.X,e.Y)))
+            if(m_uiRectangle.Contains(this.PointToClient(new Point(e.X, e.Y))))
             {
                 DomainObject tmp = new DomainObject();            
                 DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());
@@ -165,7 +189,7 @@ namespace Uiml.Gummy.Kernel.Services
             }
         }
 
-        void onPaint(object sender, PaintEventArgs e)
+        void painting(object sender, PaintEventArgs e)
         {            
             Graphics g = e.Graphics;
             g.FillRectangle(Brushes.WhiteSmoke,new Rectangle(0,0,Width,Height));
@@ -254,21 +278,11 @@ namespace Uiml.Gummy.Kernel.Services
         }
 
         //Deprecated -> may not be used anymore
-        public List<DomainObject> DomainObjects
+        public DomainObjectCollection DomainObjects
         {
             get
             {
-                List<DomainObject> domainObjects = new List<DomainObject>();
-                for (int i = 0; i < m_domainObjects.Count; i++)
-                {
-                    domainObjects.Add((DomainObject)m_domainObjects[i].Clone());
-                }
-                return domainObjects;
-            }
-            set
-            {
-                m_domainObjects.Clear();
-                m_domainObjects.AddRange(value);
+                return m_domainObjects;
             }
         }
 
@@ -295,6 +309,68 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 return m_config;
             }
+        }
+
+        //Is there a wire framed mode shown?
+        public bool WireFramed
+        {
+            set
+            {
+                if (value == false)
+                {
+                    WireFrameSize = Size.Empty;                    
+                }
+                Refresh();
+            }
+            get
+            {
+                return m_wireFrameSize != Size.Empty;
+            }
+        }
+
+        //Which size should be wireframed?
+        public Size WireFrameSize
+        {
+            get
+            {
+                return m_wireFrameSize;
+            }
+            set
+            {
+                //Clean up old lines
+                for (int i = 0; i < m_wireFrameLines.Count; i++)
+                    Controls.Remove(m_wireFrameLines[i]);
+                for (int i = 0; i < DomainObjects.Count; i++)
+                    DomainObjects[i].Color = DomainObject.DEFAULT_COLOR;
+                m_wireFrameLines.Clear();
+
+                //Set up new set of lines
+                m_wireFrameSize = value;                
+                List<Shape.Line> lines = WireFrameFactory.GetWireFrames(value);
+                m_wireFrameLines.AddRange(lines);
+                Controls.AddRange(m_wireFrameLines.ToArray());
+                bringLinesToFront();             
+            }
+        }
+
+        private List<Line> GetLinesWithLabel(string label)
+        {
+            List<Line> list = new List<Line>();
+            for (int i = 0; i < m_wireFrameLines.Count; i++)
+            {
+                if (m_wireFrameLines[i].Label == label)
+                    list.Add(m_wireFrameLines[i]);
+            }
+
+            return list;
+        }
+
+        private void bringLinesToFront()
+        {
+            for (int i = 0; i < m_wireFrameLines.Count; i++)
+            {
+                m_wireFrameLines[i].BringToFront();
+            }   
         }
 
         public void NotifyConfigurationChanged()
