@@ -32,7 +32,7 @@ namespace Uiml.Gummy.Domain
 		public DomainObject()
 		{
             //The default interpolation algorithm
-            m_interpolationAlgorithm = new ExamplePickingAlgorithm(this);
+            m_interpolationAlgorithm = new CosineInterpolationAlgorithm(this);
 		}
 
         public object Clone()
