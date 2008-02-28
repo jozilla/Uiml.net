@@ -58,6 +58,11 @@ namespace Uiml.Gummy.Kernel.Services {
 
         public void DrawService (Type t)
         {
+            if (layout.Controls.Count > 0)
+            {
+                layout.Controls.Clear();
+            }
+
             List<MethodModel> methods = new List<MethodModel>();
 
             foreach (MethodInfo m in t.GetMethods())
