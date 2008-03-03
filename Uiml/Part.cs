@@ -268,6 +268,11 @@ namespace Uiml {
 			m_properties.Add(p);
 		}
 
+        public void RemoveAllProperties()
+        {
+            m_properties.Clear();
+        }
+
 		public void RemoveProperty(Property p)
 		{
 			m_properties.Remove(p);
@@ -345,6 +350,16 @@ namespace Uiml {
 			//not found...
 			return null;
 		}
+
+        public bool HasProperty(string prop, Style s)
+        {
+            return HasProperty(prop) || s.SearchProperty(prop, prop) != null;
+        }
+
+        public bool HasProperty(string prop)
+        {
+            return GetProperty(prop) != null;
+        }
 		
 		public Property GetProperty(string name)
 		{
