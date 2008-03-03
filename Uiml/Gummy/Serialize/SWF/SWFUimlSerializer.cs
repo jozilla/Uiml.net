@@ -160,7 +160,11 @@ namespace Uiml.Gummy.Serialize.SWF
                 if (p.Name == "background" && part.Class == "Container")
                     return "khaki";
                 if (p.Name == "background")
-                    return "255,255,255";
+                {
+                    //Button button = new Button();
+                    //return "" + button.BackColor.R + "," + button.BackColor.G + "," + button.BackColor.B;
+                    return "226,226,226";
+                }
                 else if (p.Name == "foreground")
                     return "0,0,0";
                 else
