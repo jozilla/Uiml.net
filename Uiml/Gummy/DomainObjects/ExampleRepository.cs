@@ -117,5 +117,201 @@ namespace Uiml.Gummy.Domain
             }
             Console.Out.WriteLine("[/RepositoryContent]");
         }
+        /*
+        public Size[] GetShortestSizesByWidth(Size size, DomainObject dom, int number_of_examples)
+        {
+            //Get all the examples of this domain object
+            Dictionary<Size, DomainObject> examples = GetDomainObjectExamples(dom.Identifier);
+            //Check if there are enough examples
+            if (examples.Count < number_of_examples)
+            {
+                return null;
+            }
+            Dictionary<Size, DomainObject>.Enumerator enumerator = examples.GetEnumerator();
+            //Sort the distances...
+            SortedDictionary<int, List<Size>> distances = new SortedDictionary<int, List<Size>>();
+            while (enumerator.MoveNext())
+            {
+                Size exampleSize = enumerator.Current.Key;
+                int dist = Math.Abs(exampleSize.Width - size.Width);
+                if (!distances.ContainsKey(dist))
+                {
+                    List<Size> sizeList = new List<Size>();
+                    sizeList.Add(exampleSize);
+                    distances.Add(dist, sizeList);
+                }
+                else
+                {
+                    distances[dist].Add(exampleSize);
+                }
+            }
+            //Pick the right distances from the temporal datastructure
+            Size[] shortest_examples = new Size[number_of_examples];
+
+            SortedDictionary<int, List<Size>>.Enumerator sortedDictEnumerator = distances.GetEnumerator();
+            int counter = 0;
+            while (sortedDictEnumerator.MoveNext() && counter < number_of_examples)
+            {
+                List<Size> tmpSizes = sortedDictEnumerator.Current.Value;
+                for (int i = 0; i < tmpSizes.Count && counter < number_of_examples; i++)
+                {
+                    shortest_examples[counter] = tmpSizes[i];
+                    counter++;
+                }
+            }
+
+            return shortest_examples;
+        }
+
+        public Size[] GetShortestSizesByHeight(Size size, DomainObject dom, int number_of_examples)
+        {
+            //Get all the examples of this domain object
+            Dictionary<Size, DomainObject> examples = GetDomainObjectExamples(dom.Identifier);
+            //Check if there are enough examples
+            if (examples.Count < number_of_examples)
+            {
+                return null;
+            }
+            Dictionary<Size, DomainObject>.Enumerator enumerator = examples.GetEnumerator();
+            //Sort the distances...
+            SortedDictionary<int, List<Size>> distances = new SortedDictionary<int, List<Size>>();
+            while (enumerator.MoveNext())
+            {
+                Size exampleSize = enumerator.Current.Key;
+                int dist = Math.Abs(exampleSize.Height - size.Height);
+                if (!distances.ContainsKey(dist))
+                {
+                    List<Size> sizeList = new List<Size>();
+                    sizeList.Add(exampleSize);
+                    distances.Add(dist, sizeList);
+                }
+                else
+                {
+                    distances[dist].Add(exampleSize);
+                }
+            }
+            //Pick the right distances from the temporal datastructure
+            Size[] shortest_examples = new Size[number_of_examples];
+
+            SortedDictionary<int, List<Size>>.Enumerator sortedDictEnumerator = distances.GetEnumerator();
+            int counter = 0;
+            while (sortedDictEnumerator.MoveNext() && counter < number_of_examples)
+            {
+                List<Size> tmpSizes = sortedDictEnumerator.Current.Value;
+                for (int i = 0; i < tmpSizes.Count && counter < number_of_examples; i++)
+                {
+                    shortest_examples[counter] = tmpSizes[i];
+                    counter++;
+                }
+            }
+
+            return shortest_examples;
+        }
+        */
+        public Size[] GetShortestSizes(Size size, DomainObject dom, int number_of_examples)
+        {
+            //Get all the examples of this domain object
+            Dictionary<Size, DomainObject> examples = GetDomainObjectExamples(dom.Identifier);
+            //Check if there are enough examples
+            if (examples.Count < number_of_examples)
+            {
+                return null;
+            }
+            Dictionary<Size, DomainObject>.Enumerator enumerator = examples.GetEnumerator();
+
+            //Sort the distances...
+            SortedDictionary<double, List<Size>> distances = new SortedDictionary<double, List<Size>>();
+            while (enumerator.MoveNext())
+            {
+                Size exampleSize = enumerator.Current.Key;
+                
+                double x1 = (double)size.Width;
+                double y1 = (double)size.Height;
+                double x2 = (double)exampleSize.Width;
+                double y2 = (double)exampleSize.Height;
+
+                double dist = distance(x1, y1, x2, y2);
+
+                if (!distances.ContainsKey(dist))
+                {
+                    List<Size> sizeList = new List<Size>();
+                    sizeList.Add(exampleSize);
+                    distances.Add(dist, sizeList);
+                }
+                else
+                {
+                    distances[dist].Add(exampleSize);
+                }
+            }
+            //Pick the right distances from the temporal datastructure
+            Size[] shortest_examples = new Size[number_of_examples];
+
+            SortedDictionary<double, List<Size>>.Enumerator sortedDictEnumerator = distances.GetEnumerator();
+            int counter = 0;
+            while (sortedDictEnumerator.MoveNext() && counter < number_of_examples)
+            {
+                List<Size> tmpSizes = sortedDictEnumerator.Current.Value;
+                for (int i = 0; i < tmpSizes.Count && counter < number_of_examples; i++)
+                {
+                    shortest_examples[counter] = tmpSizes[i];
+                    counter++;
+                }                
+            }
+
+            return shortest_examples;
+        }
+
+        private double distance(double x1, double y1, double x2, double y2)
+        {
+            double distance = Math.Sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
+            return distance;
+        }
+
+        public List<Zone> GetZones(DomainObject dom)
+        {
+            Dictionary<Size, DomainObject> examples = GetDomainObjectExamples(dom.Identifier);
+            Dictionary<Size, DomainObject>.Enumerator enumerator = examples.GetEnumerator();
+            List<Zone> zones = new List<Zone>();            
+            if (examples != null && examples.Count > 2)
+            {
+                PointF pnt1 = PointF.Empty;
+                PointF pnt2 = PointF.Empty;
+                while (enumerator.MoveNext())
+                {
+                    if (pnt1 == PointF.Empty || pnt2 == PointF.Empty)
+                    {
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+                return zones;
+            }
+            else
+                return zones;
+        }
+
+        private PointF intersection(PointF pnt1, PointF pnt2, PointF pnt3, PointF pnt4)
+        {
+            float ua_teller = (((pnt4.X - pnt3.X) * (pnt1.Y - pnt3.Y)) - ((pnt4.Y - pnt3.Y) * (pnt1.X - pnt3.X)));
+            float ua_noemer = (((pnt4.Y - pnt3.Y) * (pnt2.X - pnt1.X)) - ((pnt4.X - pnt3.X) * (pnt2.Y - pnt1.Y)));
+            float ua = ua_teller / ua_noemer;
+            float ub_teller = ((pnt2.X - pnt1.X)* (pnt1.Y - pnt3.Y)) - ((pnt2.Y - pnt1.Y)*(pnt1.X - pnt3.X)); 
+            float ub_noemer = ((pnt4.Y - pnt3.Y)* (pnt2.X - pnt1.X)) - ((pnt4.X - pnt3.X) * (pnt2.Y - pnt1.Y));
+            float ub = ub_teller / ub_noemer;
+
+            return new PointF(pnt1.X + (ua * (pnt2.X - pnt1.X)), pnt1.X + (ub * (pnt2.Y - pnt1.Y)));
+        }
+    }
+
+    public class Zone
+    {
+        public List<PointF> Points = new List<PointF>();
+
+        public Zone()
+        {
+        }
     }
 }
