@@ -267,24 +267,25 @@ namespace Uiml.Gummy.Domain
             return distance;
         }
 
-        public List<Zone> GetZones(DomainObject dom)
+        public List<PointF> GetZones(DomainObject dom)
         {
             Dictionary<Size, DomainObject> examples = GetDomainObjectExamples(dom.Identifier);
             Dictionary<Size, DomainObject>.Enumerator enumerator = examples.GetEnumerator();
-            List<Zone> zones = new List<Zone>();            
+            List<PointF> zones = new List<PointF>();            
             if (examples != null && examples.Count > 2)
             {
-                PointF pnt1 = PointF.Empty;
-                PointF pnt2 = PointF.Empty;
+                List<PointF> keyPoints = new List<PointF>();                
                 while (enumerator.MoveNext())
                 {
-                    if (pnt1 == PointF.Empty || pnt2 == PointF.Empty)
-                    {
-                    }
-                    else
-                    {
-
-                    }
+                    keyPoints.Add(new PointF((float)enumerator.Current.Key.Width,(float)enumerator.Current.Key.Height));                    
+                }
+                PointF old1 = keyPoints[0];
+                PointF old2 = keyPoints[1];                
+                for (int i = 2; i < keyPoints.Count; i++)
+                {
+                    zones.Add(intersection(old1, keyPoints[i], old2, keyPoints[i]));
+                    old1 = old2;
+                    old2 = keyPoints[i];
                 }
 
                 return zones;

@@ -76,8 +76,8 @@ namespace Uiml.Gummy.Interpolation
         private void oldUpdate(Size size)
         {
             //Get the two shortest examples
-            Size[] shortestSizesHeight = ExampleRepository.Instance.GetShortestSizesByHeight(size, DomainObject, 2);
-            Size[] shortestSizesWidth = ExampleRepository.Instance.GetShortestSizesByWidth(size, DomainObject, 2);
+            Size[] shortestSizesHeight = ExampleRepository.Instance.GetShortestSizes(size, DomainObject, 2);
+            Size[] shortestSizesWidth = ExampleRepository.Instance.GetShortestSizes(size, DomainObject, 2);
 
             if (shortestSizesHeight != null || shortestSizesWidth != null)
             {
