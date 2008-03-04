@@ -28,6 +28,8 @@ namespace Uiml.Gummy.Visual
             : this()
         {
             DomainObject = domObject;
+            //AutoSize = true;
+            //this.SizeMode = PictureBoxSizeMode.AutoSize;            
             this.AllowDrop = true;
             DragDrop += new DragEventHandler(OnDragDrop);
             DragEnter += new DragEventHandler(OnDragEnter);
@@ -52,6 +54,7 @@ namespace Uiml.Gummy.Visual
                 m_domObject = value;
                 m_domObject.DomainObjectUpdated += m_domUpdated;
                 m_domObject.Updated();
+                FixSize();
             }
         }
 
@@ -180,5 +183,15 @@ namespace Uiml.Gummy.Visual
                 }
             }
         }
+
+        /*
+         * Fix the size between the image and the UIML properties
+         */
+        public void FixSize()
+        {
+            if(Image != null)
+                DomainObject.Size = Image.Size;
+        }
+
     }
 }

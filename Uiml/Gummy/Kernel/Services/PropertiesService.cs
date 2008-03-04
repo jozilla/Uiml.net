@@ -41,7 +41,6 @@ namespace Uiml.Gummy.Kernel.Services
                 bottom.Dock = DockStyle.Bottom;
                 Controls.Add(bottom);
             }
-            BackColor = Color.Gray;
         }
 
         public bool Open()

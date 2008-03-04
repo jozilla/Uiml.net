@@ -75,24 +75,8 @@ namespace Uiml.Gummy.Domain
                         
                         if (dprop.MapsType == "setMethod" && dprop.Identifier != "daySelected"
                             && m_serializer.Accept(dprop, dclass))
-                        {                            
-                            Property prop = new Property();
-                            prop.PartName = p.Identifier;
-                            prop.Name = dprop.Identifier; //The property name
-                            //Explore the parameters...
-                            if (dprop.HasChildren)
-                            {                                
-                                for (int j = 0; j < dprop.Children.Count; j++)
-                                {                                   
-                                    if (dprop.Children[j] is DParam)
-                                    {                                        
-                                        DParam dparam = (DParam)dprop.Children[j];
-                                        //Resolve the right type
-                                        prop.Value = m_serializer.DefaultValue(prop, p, dparam.Type);
-                                    }
-                                }
-                            }
-                            domObject.AddAttribute(prop);
+                        {   
+                            domObject.AddAttribute(Create(dprop,p));
                         }
                     }
                     else if (child is Event)
@@ -105,6 +89,27 @@ namespace Uiml.Gummy.Domain
 
             return domObject;
 
+        }
+
+        public Property Create(DProperty dprop, Part p)
+        {            
+            Property prop = new Property();
+            prop.PartName = p.Identifier;
+            prop.Name = dprop.Identifier; //The property name
+            //Explore the parameters...
+            if (dprop.HasChildren)
+            {
+                for (int j = 0; j < dprop.Children.Count; j++)
+                {
+                    if (dprop.Children[j] is DParam)
+                    {
+                        DParam dparam = (DParam)dprop.Children[j];                        
+                        prop.Value = m_serializer.DefaultValue(prop, p, dparam.Type);
+                    }
+                }
+            }
+            return prop;
+            
         }
 
         public DomainObject Create(String classtype)
@@ -128,56 +133,5 @@ namespace Uiml.Gummy.Domain
             }
             return null;
         }
-
-        /*
-        public WidgetModel Create(Part p, Style s)
-        {
-            if (WidgetTabContainerModel.GetFactory().CanHandle(p, s))
-            {
-                return WidgetTabContainerModel.GetFactory().DeSerialize(p, s);
-            }
-            else if (WidgetContainerModel.GetFactory().CanHandle(p, s))
-            {
-                return WidgetContainerModel.GetFactory().DeSerialize(p, s);
-            }
-            else if (WidgetModel.GetFactory().CanHandle(p, s))
-            {
-                return WidgetModel.GetFactory().DeSerialize(p, s);
-            }
-            return null;
-        }*/
-
-        /*
-        public WidgetModel Create(Part p, Style s)
-        {
-            WidgetModel model = Create(p.Class,p.Identifier);
-            IEnumerator prop = s.GetNamedProperties(p.Identifier);
-            Console.WriteLine("Searching properties for "+p.Identifier);
-            while(prop.MoveNext())
-            {
-                Console.WriteLine("DeSerialize the property");
-                Property property = (Property)prop.Current;
-                PropertyModel pmodel = model.GetPropertyByName(property.Name);
-                if(pmodel != null)
-                {
-                    if(property.SubProp != null)
-                    {
-                        Console.WriteLine("Set the property subprop of "+property.Name+" from "+pmodel.Value+" to "+property.SubProp+" 9999");
-                        pmodel.Value = property.SubProp;
-                    }
-                    if(property.Value != null)
-                    {
-                        Console.WriteLine("Set the property value of "+property.Name+" from "+pmodel.Value+" to "+property.Value + " 9999");
-                        pmodel.Value = property.Value;
-                    }
-                }
-                else
-                    Console.WriteLine("[WARNING] Propertymodel for "+property.Name+" not found ! ");
-            }
-            Console.WriteLine("Created widgetmodel ....");
-            model.Print();
-            Console.WriteLine("End widgetmodel creation ....");
-            return model;
-        }*/
     }
 }

@@ -22,8 +22,7 @@ namespace Uiml.Gummy.Kernel.Services
         public ToolboxService() : base()
         {
             InitializeComponent();
-            m_config = new ToolboxServiceConfiguration(this);
-            BackColor = Color.DarkGray;
+            m_config = new ToolboxServiceConfiguration(this);           
         }
 
         public void Init()
@@ -50,7 +49,7 @@ namespace Uiml.Gummy.Kernel.Services
                     //domObject.Location = new Point(x, y);
 
                     // create container for image and label
-                    TableLayoutPanel table = new TableLayoutPanel();
+                    TableLayoutPanel table = new TableLayoutPanel();                    
                     table.RowCount = 1;
                     table.ColumnCount = 2;
                     table.AutoSize = true;
@@ -167,13 +166,13 @@ namespace Uiml.Gummy.Kernel.Services
             this.layout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layout.Location = new System.Drawing.Point(0, 0);
             this.layout.Name = "layout";
-            this.layout.Size = new System.Drawing.Size(238, 522);
+            this.layout.Size = new System.Drawing.Size(182, 522);
             this.layout.TabIndex = 0;
             // 
             // ToolboxService
             // 
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(238, 522);
+            this.ClientSize = new System.Drawing.Size(182, 522);
             this.Controls.Add(this.layout);
             this.Name = "ToolboxService";
             this.ResumeLayout(false);

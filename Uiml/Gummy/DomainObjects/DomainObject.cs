@@ -27,13 +27,13 @@ namespace Uiml.Gummy.Domain
 
         private Color m_color = DEFAULT_COLOR;
 
-        private MethodModel m_methodLink = null;
-        private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
-        private List<MethodParameterModel> m_methodInParamLinks = new List<MethodParameterModel>();
-        
         public delegate void DomainObjectUpdateHandler (object sender, EventArgs e);
 
         public event DomainObjectUpdateHandler DomainObjectUpdated;
+
+        private MethodModel m_methodLink = null;
+        private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
+        private List<MethodParameterModel> m_methodInParamLinks = new List<MethodParameterModel>();
         		
 		public DomainObject()
 		{

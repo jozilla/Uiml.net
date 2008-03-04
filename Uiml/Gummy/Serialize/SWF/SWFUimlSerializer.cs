@@ -53,13 +53,6 @@ namespace Uiml.Gummy.Serialize.SWF
 			#if MONO
             		return control;            
 			#else
-
-	            	//FIXME: Why are 'entries' and 'texts' not rendered on images?
-                    /*if (p.Class.ToLower() == "entry")
-                    {                        
-                        return control;
-                    }*/
-
 	            	Rectangle old_bounds = control.Bounds;
         	    	bool oldVisible = control.Visible;
 
@@ -82,7 +75,7 @@ namespace Uiml.Gummy.Serialize.SWF
 
         public bool Accept(DClass dclass)
         {
-            if (dclass.Identifier == "TabPage")
+            if (dclass.Identifier == "TabPage" || dclass.Identifier == "Tabs")
                 return false;
             return true;
         }
@@ -111,72 +104,25 @@ namespace Uiml.Gummy.Serialize.SWF
         }
 
         public object DefaultValue(Property p, Part part, string type)
-        {            
-            if (type == "System.String")
+        {    
+            if (p.Name == "maximum" || p.Name == "max")
+                return "5";
+            else if (p.Name == "value" && part.Class == "ProgressBar")
+                return "2";
+            else if (p.Name == "step")
+                return "1";
+            else if (p.Name == "ticks")
+                return "3";
+            else if (p.Name == "multiline")
+                return "true";
+            else if (type == "System.Windows.Forms.ListViewItem[]")
             {
-                if (p.Name == "text")
-                    return part.Class;
-                else if (p.Name == "label")
-                    return part.Class;
-                else
-                    return " ";
-            }
-            else if (type == "System.Drawing.Point")
-            {
-                return "10,10";
-            }
-            else if (type == "System.Drawing.Size")
-            {
-                return "50,50";
-            }
-            else if (type == "System.Int32" || type == "System.Int64" || type == "System.Int")
-            {
-                if (p.Name == "selectedIndex")
-                    return "-1";
-                if (p.Name == "width")
-                    return "50";
-                if (p.Name == "height")
-                    return "20";
-                if (p.Name == "maximum" || p.Name == "max")
-                    return "5";
-                if (p.Name == "value" && part.Class == "ProgressBar")
-                    return "2";
-                if (p.Name == "step")
-                    return "1";
-                if (p.Name == "ticks")
-                    return "3";
-                return "0";
-            }
-            else if (type == "System.Boolean")
-            {
-                if (p.Name == "visible" || p.Name == "enabled")
-                    return "true";
-                if (p.Name == "multiline")
-                    return "true";
-                return "false";
-            }
-            else if (type == "System.Drawing.Color")
-            {
-                if (p.Name == "background" && part.Class == "Container")
-                    return "khaki";
-                if (p.Name == "background")
-                {
-                    //Button button = new Button();
-                    //return "" + button.BackColor.R + "," + button.BackColor.G + "," + button.BackColor.B;
-                    return "226,226,226";
-                }
-                else if (p.Name == "foreground")
-                    return "0,0,0";
-                else
-                    return "255,0,0";
-            }
-            else if (type == "System.Windows.Forms.ScrollBars")
-            {
-                return "None";
-            }
-            else if (type == "System.Windows.Forms.Appearance")
-            {
-                return "Button";
+                Constant constant = new Constant();
+                constant.Model = "list";
+                Constant constant2 = new Constant();
+                constant2.Value = "blaai";
+                constant.Add(constant2);
+                return constant;
             }
             else if (type == "System.Drawing.Image")
             {
@@ -191,11 +137,7 @@ namespace Uiml.Gummy.Serialize.SWF
                 constant2.Value = "blaai";
                 constant.Add(constant2);
                 return constant;
-            }
-            else if (type == "System.Windows.Forms.SelectionMode")
-            {
-                return "MultiSimple";
-            }
+            }           
             else if (type == "System.Windows.Forms.ListViewItem[]")
             {
                 Constant constant = new Constant();
@@ -229,38 +171,35 @@ namespace Uiml.Gummy.Serialize.SWF
                 constant.Add(constant3);
                 return constant;
             }
-            else if (type == "System.Windows.Forms.TreeNode")
-            {
-                return "treeNode";
-            }
-            else if (type == "System.Windows.Forms.TickStyle")
-            {
-                return "Both";
-            }
-            else if (type == "System.Windows.Forms.Orientation")
-            {
-                if (part.Class == "HorizontalRange")
-                    return "Horizontal";
-                else if (part.Class == "VerticalRange")
-                    return "Vertical";
-                else
-                    return "Vertical";
-            }
-            else if (type == "System.Windows.Forms.TabAlignment")
-            {
-                return "Left"; //TODO: Check if the tabPos works
-
-            }
-            else if (type == "System.Double")
-            {
-                return "1.2";
-            }
-            else if (type == "System.DateTime")
-            {
-                return "12/17/1982";
-            }
             else
-                return "";
+            {
+                m_renderer.Render(part, new Style());
+                object value = m_renderer.PropertySetter.GetValue(part, p);
+                if (value is Color)
+                {
+                    Color color = (System.Drawing.Color)value;
+                    return String.Format("{0},{1},{2}", color.R, color.G, color.B);
+                }
+                else if (value is Point)
+                {
+                    Point pnt = (Point)value;
+                    return String.Format("{0},{1}", pnt.X, pnt.Y);
+                }
+                else if (value is Size)
+                {
+                    Size size = (Size)value;
+                    return String.Format("{0},{1}", size.Width, size.Height);
+                }
+                else if (value is DateTime)
+                {
+                    DateTime time = (DateTime)value;
+                    return String.Format("{0}/{1}/{2}", time.Month, time.Day, time.Year);
+                }
+                if (value != null)
+                    return value.ToString();
+                else
+                    return "";
+            }
         }
 
         public const string NAME = "swf-1.1";
