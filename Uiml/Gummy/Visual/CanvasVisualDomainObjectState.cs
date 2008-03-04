@@ -269,6 +269,7 @@ namespace Uiml.Gummy.Visual
                     {
                         addSnapshot();
                     }
+                    m_visDom.FixSize();
                     break;
             }
             m_moveState = MoveState.None;
