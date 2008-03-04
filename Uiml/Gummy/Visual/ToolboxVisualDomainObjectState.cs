@@ -42,6 +42,7 @@ namespace Uiml.Gummy.Visual
             base.Attach(visDom);            
             m_mouseDownHandler = new MouseEventHandler(onMouseDown);
             m_visDom.MouseDown += m_mouseDownHandler;
+            visDom.FixSize();
         }
 
         void onMouseDown(object sender, MouseEventArgs e)

@@ -25,6 +25,8 @@ namespace Uiml.Gummy.Visual
             : this()
         {
             DomainObject = domObject;
+            //AutoSize = true;
+            //this.SizeMode = PictureBoxSizeMode.AutoSize;
         }
 
         ~VisualDomainObject()
@@ -44,8 +46,9 @@ namespace Uiml.Gummy.Visual
                 if (m_domObject != null)
                     m_domObject.DomainObjectUpdated -= m_domUpdated;
                 m_domObject = value;
-                m_domObject.DomainObjectUpdated += m_domUpdated;
+                m_domObject.DomainObjectUpdated += m_domUpdated;                
                 m_domObject.Updated();
+                FixSize();
             }
         }
 
@@ -72,17 +75,13 @@ namespace Uiml.Gummy.Visual
             Refresh();
         }
 
-        void VisualDomainObject_MouseUp(object sender, MouseEventArgs e)
-        {            
-        }
-
-        void VisualDomainObject_MouseClick(object sender, MouseEventArgs e)
-        {           
-            
-        }
-
-        void VisualDomainObject_MouseMove(object sender, MouseEventArgs e)
+        /*
+         * Fix the size between the image and the UIML properties
+         */
+        public void FixSize()
         {
+            if(Image != null)
+                DomainObject.Size = Image.Size;
         }
 
     }
