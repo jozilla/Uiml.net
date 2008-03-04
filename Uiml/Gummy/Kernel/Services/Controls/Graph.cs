@@ -88,6 +88,12 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 }
             //Due to some rounding errors, the max-size needs to be corrected
             m_maxSize = m_pointToSize[m_max];
+            Selected.SelectedDomainObject.Instance.DomainObjectSelected += new Uiml.Gummy.Kernel.Selected.SelectedDomainObject.DomainObjectSelectedHandler(domainObjectSelected);
+        }
+
+        void domainObjectSelected(DomainObject dom, EventArgs e)
+        {
+            Refresh();
         }
 
         private void fireDesignSpaceCursorChanged()
@@ -318,6 +324,16 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                     g.DrawRectangle(Pens.Chocolate, m_examples[i]);                    
                 }
             }
+            /*
+            if (Selected.SelectedDomainObject.Instance.Selected != null)
+            {
+                List<PointF> points = ExampleRepository.Instance.GetZones(Selected.SelectedDomainObject.Instance.Selected);
+                for (int i = 0; i < points.Count; i++)
+                {
+                    PointF pnt = sizeToPoint(new Size(Convert.ToInt32(points[i].X),Convert.ToInt32(points[i].Y)));
+                    g.FillRectangle(Brushes.Pink, pnt.X - 2, pnt.Y - 2, 4, 4);
+                }
+            }*/
 
             SolidBrush semiTransUIBrush = new SolidBrush(Color.FromArgb(50,Color.Gray));
             SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(50, 255, 0, 0));

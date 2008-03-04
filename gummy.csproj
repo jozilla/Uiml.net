@@ -50,6 +50,7 @@
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectCollection.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\ExampleRepository.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\Bezier2DInterpolation.cs" />
+    <Compile Include="Uiml\Gummy\Interpolation\CosineInterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\ExamplePickingAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
@@ -139,8 +140,8 @@
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
     <Compile Include="Uiml\Gummy\Visual\BorderDrawer.cs" />
-    <Compile Include="Uiml\Gummy\Visual\ResizeAndMoveVisualDomainObjectState.cs" />
-    <Compile Include="Uiml\Gummy\Visual\SelectVisualDomainObjectState.cs" />
+    <Compile Include="Uiml\Gummy\Visual\CanvasVisualDomainObjectState.cs" />
+    <Compile Include="Uiml\Gummy\Visual\ToolboxVisualDomainObjectState.cs" />
     <Compile Include="Uiml\Gummy\Visual\VisualDomainObjectState.cs">
     </Compile>
     <Compile Include="Uiml\Gummy\Visual\VisualDomainObject.cs">
@@ -210,6 +211,10 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Controls\Graph.resx">
       <DependentUpon>Graph.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ToolboxService.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolboxService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ToolboxServiceConfiguration.resx">
       <SubType>Designer</SubType>

@@ -129,6 +129,12 @@ namespace Uiml{
 			return null;
 		}
 
+        public void AddProperty(Property property, Part part)
+        {
+            property.PartName = part.Identifier;
+            m_properties.Add(property);
+        }
+
 		public IEnumerator GetClassProperties(string className)
 		{
 			ArrayList props = new ArrayList();
