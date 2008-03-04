@@ -6,15 +6,21 @@ using System.IO;
 using System.Xml;
 
 using Uiml.Gummy.Domain;
+using Uiml.Gummy.Serialize;
+
+using Uiml.Peers;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
     class ReflectionBehaviorGenerator : IBehaviorGenerator
     {
         private Dictionary<Type, List<ReflectionMethodModel>> m_logicTree = new Dictionary<Type, List<ReflectionMethodModel>>();
+        private VocabularyMetadata m_vocMeta;
 
         public ReflectionBehaviorGenerator()
         {
+            Vocabulary voc = ActiveSerializer.Instance.Serializer.Voc;
+            m_vocMeta = new VocabularyMetadata(voc);
         }
 
         private void Init()
@@ -101,42 +107,49 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
             foreach (ConnectedMethod method in ApplicationGlueRegistry.Instance.Methods.Values)
             {
-                xmlw.WriteStartElement("rule");
-                
-                xmlw.WriteStartElement("condition"); // <condition>
-                xmlw.WriteStartElement("event"); // <event>
-                /* Invoke */
-                xmlw.WriteAttributeString("part-name", method.Invoke.Part.Identifier);
-                xmlw.WriteAttributeString("class", "ButtonPressed");
-                xmlw.WriteEndElement(); // </event>
-                xmlw.WriteEndElement(); // </condition>
-
-                xmlw.WriteStartElement("action"); // <action>
-                /* Output */
-                xmlw.WriteStartElement("property"); // <property>
-                xmlw.WriteAttributeString("part-name", method.Output.Part.Identifier);
-                xmlw.WriteAttributeString("name", "text");
-                xmlw.WriteStartElement("call"); // <call>
-                Type t = ((ReflectionMethodModel) method.Method).MethodInfo.ReflectedType;
-                xmlw.WriteAttributeString("name", t + "." + method.Method.Name);
-                /* Inputs */
-                foreach (KeyValuePair<MethodParameterModel, DomainObject> item in method.Inputs)
+                try
                 {
-                    MethodParameterModel param = item.Key;
-                    DomainObject dom = item.Value;
+                    xmlw.WriteStartElement("rule");
 
-                    xmlw.WriteStartElement("param"); // <param>
+                    xmlw.WriteStartElement("condition"); // <condition>
+                    xmlw.WriteStartElement("event"); // <event>
+                    /* Invoke */
+                    xmlw.WriteAttributeString("part-name", method.Invoke.Part.Identifier);
+                    xmlw.WriteAttributeString("class", m_vocMeta.GetEvent(method.Invoke.Part.Class));
+                    xmlw.WriteEndElement(); // </event>
+                    xmlw.WriteEndElement(); // </condition>
+
+                    xmlw.WriteStartElement("action"); // <action>
+                    /* Output */
                     xmlw.WriteStartElement("property"); // <property>
-                    xmlw.WriteAttributeString("part-name", dom.Part.Identifier);
-                    xmlw.WriteAttributeString("name", "text");
-                    xmlw.WriteEndElement(); // </property>
-                    xmlw.WriteEndElement(); // </param>
-                }
-                xmlw.WriteEndElement(); // </call>
-                xmlw.WriteEndElement(); // </property>
-                xmlw.WriteEndElement(); // </action>
+                    xmlw.WriteAttributeString("part-name", method.Output.Part.Identifier);
+                    xmlw.WriteAttributeString("name", m_vocMeta.GetOutputProperty(method.Output.Part.Class, method.Method.Outputs[0].Type));
+                    xmlw.WriteStartElement("call"); // <call>
+                    Type t = ((ReflectionMethodModel)method.Method).MethodInfo.ReflectedType;
+                    xmlw.WriteAttributeString("name", t + "." + method.Method.Name);
+                    /* Inputs */
+                    foreach (KeyValuePair<MethodParameterModel, DomainObject> item in method.Inputs)
+                    {
+                        MethodParameterModel param = item.Key;
+                        DomainObject dom = item.Value;
 
-                xmlw.WriteEndElement(); // </rule>
+                        xmlw.WriteStartElement("param"); // <param>
+                        xmlw.WriteStartElement("property"); // <property>
+                        xmlw.WriteAttributeString("part-name", dom.Part.Identifier);
+                        xmlw.WriteAttributeString("name", m_vocMeta.GetInputProperty(dom.Part.Class, param.Type));
+                        xmlw.WriteEndElement(); // </property>
+                        xmlw.WriteEndElement(); // </param>
+                    }
+                    xmlw.WriteEndElement(); // </call>
+                    xmlw.WriteEndElement(); // </property>
+                    xmlw.WriteEndElement(); // </action>
+
+                    xmlw.WriteEndElement(); // </rule>
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
 
             xmlw.WriteEndElement(); // </behavior>

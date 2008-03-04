@@ -65,7 +65,7 @@ namespace Uiml.Gummy.Kernel.Services {
 
             List<MethodModel> methods = new List<MethodModel>();
 
-            foreach (MethodInfo m in t.GetMethods())
+            foreach (MethodInfo m in t.GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
             {
                 methods.Add(new ReflectionMethodModel(m));
             }
@@ -109,7 +109,14 @@ namespace Uiml.Gummy.Kernel.Services {
 
         public void NotifyConfigurationChanged()
         {
-            DrawService(m_config.Assembly.GetTypes()[0]); // todo: check correct type
+            try
+            {
+                DrawService(m_config.Assembly.GetTypes()[0]); // todo: check correct type
+            }
+            catch
+            {
+                // fail silenty
+            }
         }
     }
 }

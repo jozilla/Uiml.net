@@ -9,6 +9,8 @@ using Uiml.Gummy.Kernel.Services;
 using System.Windows.Forms;
 using System.Drawing;
 
+using System.Diagnostics;
+
 namespace Uiml.Gummy.Kernel
 {
     public class DesignerKernel : Form, IService, IServiceContainer
@@ -76,8 +78,10 @@ namespace Uiml.Gummy.Kernel
             Menu = new MainMenu();
             MenuItem file = Menu.MenuItems.Add("&File");
             file.MenuItems.Add("&New", this.FileNew_Clicked);
+            file.MenuItems.Add("&Open", this.FileOpen_Clicked);
+            file.MenuItems.Add("&Save", this.FileSave_Clicked);
+            file.MenuItems.Add("&Run", this.FileRun_Clicked);
             file.MenuItems.Add("&Quit", this.FileQuit_Clicked);
-            file.MenuItems.Add("&Export", this.FileExport_Clicked);
             MenuItem windows = Menu.MenuItems.Add("&Window");
             windows.MenuItems.Add("&Docked", this.WindowDocked_Clicked);
             windows.MenuItems.Add("&Cascade", this.WindowCascade_Clicked);
@@ -272,8 +276,21 @@ namespace Uiml.Gummy.Kernel
             Close();
         }
 
-        public void FileExport_Clicked(object sender, EventArgs args)
+        public void FileSave_Clicked(object sender, EventArgs args)
         {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.AddExtension = true;
+            sfd.Filter = "UIML files (*.uiml)|*.uiml";
+            sfd.ShowDialog();
+            Stream stream = sfd.OpenFile();
+            Export(stream);
+        }
+
+        public void Export(Stream stream)
+        {
+            XmlTextWriter xmlw = new XmlTextWriter(stream, null);
+            xmlw.Formatting = Formatting.Indented;
+
             List<Part> parts = new List<Part>();
             List<Property> properties = new List<Property>();
             Logic logic;
@@ -310,14 +327,16 @@ namespace Uiml.Gummy.Kernel
             }
 
             // create standard UIML document
-            StringWriter writer = new StringWriter();
-            XmlTextWriter xmlw = new XmlTextWriter(writer);
-
             xmlw.WriteStartDocument();
             xmlw.WriteStartElement("uiml");
             xmlw.WriteStartElement("interface");
-            xmlw.WriteEndElement(); // </interface>
             xmlw.WriteStartElement("structure");
+
+            // canvas
+            string canvasId = Domain.DomainObjectFactory.Instance.AutoID();
+            xmlw.WriteStartElement("part");
+            xmlw.WriteAttributeString("id", canvasId);
+            xmlw.WriteAttributeString("class", "Container");
 
             // parts
             foreach (Part p in parts)
@@ -326,10 +345,20 @@ namespace Uiml.Gummy.Kernel
                 xmlw.WriteRaw(partXml.OuterXml);
             }
 
+            xmlw.WriteEndElement(); // </part> (canvas)
+
             xmlw.WriteEndElement(); // </structure>
             xmlw.WriteStartElement("style");
 
             // properties
+
+            // canvas size
+            xmlw.WriteStartElement("property");
+            xmlw.WriteAttributeString("part-name", canvasId);
+            xmlw.WriteAttributeString("name", "size");
+            Size canvasSize = ((CanvasService)GetService("gummy-canvas")).CanvasSize;
+            xmlw.WriteString(canvasSize.Width.ToString() + "," + canvasSize.Height.ToString());
+            xmlw.WriteEndElement();
 
             foreach (Property p in properties)
             {
@@ -358,9 +387,32 @@ namespace Uiml.Gummy.Kernel
 
             xmlw.WriteEndDocument();
             xmlw.Close();
+        }
 
-            string xml = writer.ToString();
-            string s = xml;
+        public void FileRun_Clicked(object sender, EventArgs args)
+        {
+            // create temporary file for current design
+            string fileName = Path.GetTempFileName();
+            FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
+            Export(stream);
+
+            // run renderer on this file
+            string uimlArgs = string.Format("-uiml {0}", fileName);
+            string libArgs = string.Empty;
+            
+            try
+            {
+                string libFile = ((ApplicationGlueServiceConfiguration) GetService("application-glue").ServiceConfiguration).Assembly.Location;
+                libArgs = string.Format("-libs {0}", Path.ChangeExtension(libFile, null));
+            }
+            catch
+            {
+            }
+
+            string uimldotnetArgs = uimlArgs + " " + libArgs;
+            ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
+            psi.ErrorDialog = true;
+            Process.Start(psi);
         }
 
         public void FileNew_Clicked(object sender, EventArgs args) 
@@ -378,6 +430,11 @@ namespace Uiml.Gummy.Kernel
             wizard.Start();
             wizard.ShowDialog();
             // TODO: notify services that their settings are changed
+        }
+
+        public void FileOpen_Clicked(object sender, EventArgs args)
+        {
+            // TODO: also load assemblies if it has a logic section
         }
 
         public void DesignerKernel_FormClosing(object sender, EventArgs args)
