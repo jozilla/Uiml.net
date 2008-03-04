@@ -32,7 +32,7 @@ namespace Uiml.Gummy.Visual
         Move
     }
 
-    public class ResizeAndMoveVisualDomainObjectState : VisualDomainObjectState
+    public class CanvasVisualDomainObjectState : VisualDomainObjectState
     {        
         int m_boxSize = 8;
         Dictionary<BoxID, Rectangle> m_rectangles = new Dictionary<BoxID, Rectangle>();
@@ -49,14 +49,16 @@ namespace Uiml.Gummy.Visual
 
         SelectedDomainObject.DomainObjectSelectedHandler m_selectedHandler = null;
         MouseEventHandler m_mouseDownHandler = null;
-        //MouseEventHandler m_mouseUpHandler = null;
+        MouseEventHandler m_mouseMoveHandler = null;
+        MouseEventHandler m_mouseUpHandler = null;
+        PaintEventHandler m_paintEventHandler = null;
        
-        public ResizeAndMoveVisualDomainObjectState()
+        public CanvasVisualDomainObjectState()
             : base()
         {
         }
 
-        ~ResizeAndMoveVisualDomainObjectState()
+        ~CanvasVisualDomainObjectState()
         {
             finalize();
         }
@@ -65,10 +67,14 @@ namespace Uiml.Gummy.Visual
         {
             if (m_selectedHandler != null)
                 SelectedDomainObject.Instance.DomainObjectSelected -= m_selectedHandler;
-            //if (m_mouseUpHandler != null)
-            //    m_visDom.MouseUp -= m_mouseUpHandler;
             if (m_mouseDownHandler != null)
                 m_visDom.MouseDown -= m_mouseDownHandler;
+            if (m_mouseMoveHandler != null)
+                m_visDom.MouseMove -= m_mouseMoveHandler;
+            if (m_mouseUpHandler != null)
+                m_visDom.MouseUp -= m_mouseUpHandler;
+            if (m_paintEventHandler != null)
+                m_visDom.Paint -= m_paintEventHandler;
         }
 
         public override void Detach()
@@ -82,8 +88,14 @@ namespace Uiml.Gummy.Visual
             base.Attach(visDom);
             m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
-            m_mouseDownHandler = new MouseEventHandler(onMouseDown);
+            m_mouseDownHandler = new MouseEventHandler(mouseDownEvent);
             m_visDom.MouseDown += m_mouseDownHandler;
+            m_mouseMoveHandler = new System.Windows.Forms.MouseEventHandler(mouseMoveEvent);
+            visDom.MouseMove += m_mouseMoveHandler;
+            m_mouseUpHandler = new System.Windows.Forms.MouseEventHandler(mouseUpEvent);
+            visDom.MouseUp += m_mouseUpHandler;
+            m_paintEventHandler += new PaintEventHandler(paintEvent);
+            visDom.Paint += m_paintEventHandler;
         }    
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
@@ -111,7 +123,7 @@ namespace Uiml.Gummy.Visual
             }
         }
 
-        void onMouseDown(object sender, MouseEventArgs e)
+        void mouseDownEvent(object sender, MouseEventArgs e)
         {
             Console.Out.WriteLine("mousDown");
             clicked = true;
@@ -132,13 +144,9 @@ namespace Uiml.Gummy.Visual
             m_visDom.Refresh();
             m_moveState = MoveState.None;
 
-        }
-        
-        protected override void onMouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
-        {           
-        }
+        }        
 
-        protected override void onMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        protected void mouseMoveEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!clicked)
             {
@@ -243,7 +251,7 @@ namespace Uiml.Gummy.Visual
             }
         }
 
-        protected override void onMouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        void mouseUpEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             Console.WriteLine("mouseUp");
             switch (m_moveState)
@@ -275,13 +283,12 @@ namespace Uiml.Gummy.Visual
                     );
         }
 
-        protected override void onPaint(object sender, System.Windows.Forms.PaintEventArgs e)
+        void paintEvent(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             if (m_visDom.DomainObject.Selected)
             {
                 PaintBoundary(e.Graphics);
             }
-            //e.Graphics.DrawRectangle(new Pen(m_visDom.DomainObject.Color, 2.0f), 0, 0, m_visDom.Width-2f, m_visDom.Height-2f);            
         }
 
         private void initializeBoxes()

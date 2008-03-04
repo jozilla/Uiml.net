@@ -121,14 +121,14 @@ namespace Uiml.Gummy.Kernel.Services
                     for (int i = 0; i < m_domainObjects.Count; i++)
                     {
                         VisualDomainObject visDom = new VisualDomainObject(m_domainObjects[i]);
-                        visDom.State = new ResizeAndMoveVisualDomainObjectState();
+                        visDom.State = new CanvasVisualDomainObjectState();
                         Controls.Add(visDom);
                     }
                     bringLinesToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEADDED:
                     VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
-                    vDom.State = new ResizeAndMoveVisualDomainObjectState();
+                    vDom.State = new CanvasVisualDomainObjectState();
                     Controls.Add(vDom);
                     vDom.BringToFront();
                     bringLinesToFront();
