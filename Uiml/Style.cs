@@ -135,6 +135,7 @@ namespace Uiml{
             m_properties.Add(property);
         }
 
+
 		public IEnumerator GetClassProperties(string className)
 		{
 			ArrayList props = new ArrayList();

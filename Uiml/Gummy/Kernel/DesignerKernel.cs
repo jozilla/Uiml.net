@@ -21,7 +21,7 @@ namespace Uiml.Gummy.Kernel
         private DesignerKernel()
         {
             ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer(m_platform);
-            Application.EnableVisualStyles();
+            Application.EnableVisualStyles(); // visual styles (e.g. Windows Vista, XP, Linux, etc.)
         }
 
         private DesignerKernel(string vocabulary): base()
