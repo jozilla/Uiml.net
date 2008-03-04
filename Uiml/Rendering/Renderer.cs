@@ -113,7 +113,7 @@ namespace Uiml.Rendering
 			//should be provided by another "component" instead of by a function: 
 			//this way the structure can be reused more easily
 
-            AddDefaultProperties(part);
+            AddDefaultProperties(part, style);
 
             if (part.Class == "HBox")
             {
@@ -142,7 +142,7 @@ namespace Uiml.Rendering
 			return uiObject;
 		}
 
-        private void AddDefaultProperties(Part part) 
+        private void AddDefaultProperties(Part part, Style style) 
         {
             // find the part's default properties
             ArrayList defaultProps = new ArrayList();
@@ -150,8 +150,8 @@ namespace Uiml.Rendering
             DClass cls = (DClass) Voc.DClasses[part.Class];
             foreach (DProperty prop in cls.Children) 
             {
-                if (prop.IsDefaultProperty)
-                    part.AddProperty(prop.DefaultProperty);
+                if (prop.IsDefaultProperty && !part.HasProperty(prop.Identifier, style))
+                    style.AddProperty(prop.DefaultProperty, part);
             }
         }
 

@@ -23,6 +23,7 @@ namespace Uiml.Gummy.Kernel.Services
         List<Rectangle> m_modifiers = new List<Rectangle>();
         int m_boxSize = 8;
         BoxID m_clickedBox = BoxID.None;
+        int m_rasterBlockSize = 40;
 
         public event EventHandler CanvasResized;        
         private CanvasServiceConfiguration m_config;
@@ -120,14 +121,14 @@ namespace Uiml.Gummy.Kernel.Services
                     for (int i = 0; i < m_domainObjects.Count; i++)
                     {
                         VisualDomainObject visDom = new VisualDomainObject(m_domainObjects[i]);
-                        visDom.State = new ResizeAndMoveVisualDomainObjectState();
+                        visDom.State = new CanvasVisualDomainObjectState();
                         Controls.Add(visDom);
                     }
                     bringLinesToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEADDED:
                     VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
-                    vDom.State = new ResizeAndMoveVisualDomainObjectState();
+                    vDom.State = new CanvasVisualDomainObjectState();
                     Controls.Add(vDom);
                     vDom.BringToFront();
                     bringLinesToFront();
@@ -196,6 +197,26 @@ namespace Uiml.Gummy.Kernel.Services
             Rectangle doubleBorder0 = new Rectangle(m_uiRectangle.X, m_uiRectangle.Y, m_uiRectangle.Width + 2, m_uiRectangle.Height + 2);
             Rectangle doubleBorder1 = new Rectangle(m_uiRectangle.X, m_uiRectangle.Y, m_uiRectangle.Width - 2, m_uiRectangle.Height - 2);
             g.FillRectangle(Brushes.DarkGray,m_uiRectangle);
+            for (int i = 0; i < m_uiRectangle.Height; i += m_rasterBlockSize/4)
+            {
+                Pen color = Pens.LightGray;                
+                if (i % m_rasterBlockSize / 2 == 0)
+                    color = Pens.LightPink;
+                else if (i % m_rasterBlockSize / 4 == 0)
+                    color = Pens.Yellow;
+                //else
+                //    color = Color.Khaki;
+                g.DrawLine(color, 0, i, m_uiRectangle.Width, i);
+            }
+            for (int i = 0; i < m_uiRectangle.Width; i += m_rasterBlockSize/4)
+            {
+                Pen color = Pens.LightGray;
+                if (i % m_rasterBlockSize / 2 == 0)
+                    color = Pens.LightPink;
+                else if (i % m_rasterBlockSize / 4 == 0)
+                    color = Pens.Yellow;
+                g.DrawLine(color, i, 0, i, m_uiRectangle.Height);
+            }
             g.DrawRectangle(Pens.Black, m_uiRectangle);
             g.DrawRectangle(Pens.Black, doubleBorder0);
             g.DrawRectangle(Pens.Black, doubleBorder1);

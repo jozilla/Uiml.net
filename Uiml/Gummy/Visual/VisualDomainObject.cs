@@ -20,8 +20,7 @@ namespace Uiml.Gummy.Visual
 
         public VisualDomainObject() : base()
         {
-            //this.BorderStyle = BorderStyle.FixedSingle;
-            State = new SelectVisualDomainObjectState();
+            State = new ToolboxVisualDomainObjectState();
             m_domUpdated = new DomainObject.DomainObjectUpdateHandler(domainObjectUpdated);
         }
 
@@ -39,13 +38,7 @@ namespace Uiml.Gummy.Visual
             if (m_domObject != null)
                 m_domObject.DomainObjectUpdated -= m_domUpdated;
         }
-        /*
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-            m_borderDrawer.DrawBorder(ref m, this.Width, this.Height);
-        }*/
-
+        
         public DomainObject DomainObject
         {
             get
