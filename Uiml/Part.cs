@@ -83,7 +83,7 @@ namespace Uiml {
 		private ArrayList m_properties;
 		private ArrayList m_layout;
 		private Hashtable m_componentsByDepth;
-		private string    m_class;
+		private string    m_class = null;
 		private Part      parent = null;
 
 		///<summary>
@@ -135,7 +135,7 @@ namespace Uiml {
 			}
 		}
 
-		private void ProcessSubTree(XmlNode n)
+        private void ProcessSubTree(XmlNode n)
 		{
 			XmlAttributeCollection attr = n.Attributes;
 			if(attr.GetNamedItem(CLASS)!=null)
@@ -197,6 +197,11 @@ namespace Uiml {
 			p.PartName = Identifier;
 			m_properties.Add(p);
 		}
+
+        public void RemoveAllProperties()
+        {
+            m_properties.Clear();
+        }
 
 		public void RemoveProperty(Property p)
 		{
@@ -275,6 +280,16 @@ namespace Uiml {
 			//not found...
 			return null;
 		}
+
+        public bool HasProperty(string prop, Style s)
+        {
+            return HasProperty(prop) || s.SearchProperty(prop, prop) != null;
+        }
+
+        public bool HasProperty(string prop)
+        {
+            return GetProperty(prop) != null;
+        }
 		
 		public Property GetProperty(string name)
 		{
