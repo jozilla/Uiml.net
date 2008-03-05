@@ -5,6 +5,9 @@ using System.Text;
 using Uiml.Peers;
 using System.Collections;
 
+using Uiml.Rendering;
+using Uiml.Gummy.Serialize;
+
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
     public class VocabularyMetadata
@@ -34,6 +37,8 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 m_outputs.Add("Entry", "text");
                 m_inputs.Add("Text", "text");
                 m_outputs.Add("Text", "text");
+                m_outputs.Add("List", "content");
+                m_outputs.Add("Label", "background");// FIXME: just for testing
             }
         }
 
@@ -44,20 +49,68 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
         public string GetInputProperty(string dclass, Type propertyType)
         {
-            // TODO: check for typedecoder
             List<DProperty> props = new List<DProperty>();
             props.AddRange((DProperty[]) (((DClass)m_voc.DClasses[dclass]).Search(typeof(DProperty)).ToArray(typeof(DProperty))));
-            List<DProperty> results = props.FindAll(delegate(DProperty p) { return p.MapsType == DProperty.GET_METHOD && Type.GetType(p.ReturnType) == propertyType && p.Identifier == m_inputs[dclass]; });
+            
+            // check return type
+            List<DProperty> results = new List<DProperty>();
+            foreach (DProperty prop in props)
+            {
+                if (prop.Identifier == m_inputs[dclass])
+                {
+                    if (prop.MapsType == DProperty.GET_METHOD)
+                    {
+                        if (Type.GetType(prop.ReturnType) == propertyType)
+                        {
+                            return m_inputs[dclass];
+                        }
+                        else
+                        {
+                            // TODO: check for typedecoder
+                        }
+                    }
+                }
+            }
 
-            if (results.Count == 1)
-                return m_inputs[dclass];
-            else
-                return null;
+            return null;
         }
 
         public string GetOutputProperty(string dclass, Type propertyType)
         {
-            return m_outputs[dclass];
+            // TODO: check for typedecoder
+            List<DProperty> props = new List<DProperty>();
+            props.AddRange((DProperty[])(((DClass)m_voc.DClasses[dclass]).Search(typeof(DProperty)).ToArray(typeof(DProperty))));
+
+            // check all params 
+            List<DProperty> results = new List<DProperty>();
+            foreach (DProperty prop in props)
+            {
+                if (prop.Identifier == m_inputs[dclass])
+                {
+                    if (prop.MapsType == DProperty.SET_METHOD)
+                    {
+                        if (prop.Children.Count == 1) // only handle single parameter children for now
+                        {
+                            if (Type.GetType(((DParam)prop.Children[0]).Type) == propertyType)
+                            {
+                                return m_outputs[dclass];
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    // get current renderer, and check for type decoder
+                                }
+                                catch
+                                {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
 
         public enum DClassType 
