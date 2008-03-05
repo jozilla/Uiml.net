@@ -86,6 +86,8 @@ namespace Uiml.Gummy.Visual
         public override void Attach(VisualDomainObject visDom)
         {
             base.Attach(visDom);
+            visDom.IconMode = false;
+            visDom.FixSize();
             m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
             m_mouseDownHandler = new MouseEventHandler(mouseDownEvent);

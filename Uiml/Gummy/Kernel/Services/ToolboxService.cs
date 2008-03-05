@@ -45,8 +45,6 @@ namespace Uiml.Gummy.Kernel.Services
                 {
                     DomainObject domObject = DomainObjectFactory.Instance.Create(dclass);                    
                     VisualDomainObject visDomObject = new VisualDomainObject(domObject);
-                    //domObject.Size = size;
-                    //domObject.Location = new Point(x, y);
 
                     // create container for image and label
                     TableLayoutPanel table = new TableLayoutPanel();                    
