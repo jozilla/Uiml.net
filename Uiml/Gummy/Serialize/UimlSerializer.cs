@@ -39,6 +39,8 @@ namespace Uiml.Gummy.Serialize
         }
 
         public abstract DomainObject Create();
+
+        public abstract DomainObject CreateUIContainer();
         
         public abstract bool Accept(DClass dclass);
         

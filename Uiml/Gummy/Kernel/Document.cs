@@ -21,7 +21,11 @@ namespace Uiml.Gummy.Kernel
         }
 
         public Document()
-        {
+        {            
+        }
+
+        void domainObjectCollectionUpdated(object sender, DomainObjectCollectionEventArgs e)
+        {            
         }
 
         /// <summary>

@@ -22,6 +22,8 @@ namespace Uiml.Gummy.Kernel
 
         static DesignerKernel m_kernel = null;
 
+        public event EventHandler CurrentDocumentChanged;
+
         private DesignerKernel()
         {
             ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer(m_platform);
@@ -65,7 +67,11 @@ namespace Uiml.Gummy.Kernel
         public Document CurrentDocument
         {
             get { return m_document; }
-            set { m_document = value; }
+            set { 
+                m_document = value;
+                if (CurrentDocumentChanged != null)
+                    CurrentDocumentChanged(this, null);
+            }
         }
 
         public void Init()
