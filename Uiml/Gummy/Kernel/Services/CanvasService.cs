@@ -60,9 +60,8 @@ namespace Uiml.Gummy.Kernel.Services
 
             m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
-
-            m_commands.Add(new CopyDomainObject());
-            m_commands.Add(new PasteCommand());
+                       
+            m_commands.Add(new PasteDomainObject());
         }
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
@@ -148,7 +147,18 @@ namespace Uiml.Gummy.Kernel.Services
                     bringLinesToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEREMOVED:
-                    //FixMe: Implement removing domain objects
+                    foreach(Control c in Controls)
+                    {
+                        if( c is VisualDomainObject)
+                        {
+                            VisualDomainObject vis = (VisualDomainObject)c;
+                            if (vis.DomainObject == e.DomainObject)
+                            {
+                                Controls.Remove(c);
+                                break;
+                            }
+                        }
+                    }
                     bringLinesToFront();
                     break;
             }
