@@ -76,7 +76,7 @@ namespace Uiml.Gummy.Kernel
             MenuItem file = Menu.MenuItems.Add("&File");
             file.MenuItems.Add("&New", this.FileNew_Clicked);
             file.MenuItems.Add("&Quit", this.FileQuit_Clicked);
-            MenuItem windows = Menu.MenuItems.Add("&Window");
+            MenuItem windows = Menu.MenuItems.Add("&Window"); 
             windows.MenuItems.Add("&Docked", this.WindowDocked_Clicked);
             windows.MenuItems.Add("&Cascade", this.WindowCascade_Clicked);
             windows.MenuItems.Add("Tile &Horizontal", this.WindowTileH_Clicked);

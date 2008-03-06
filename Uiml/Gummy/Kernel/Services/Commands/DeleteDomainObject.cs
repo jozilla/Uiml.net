@@ -18,7 +18,19 @@ namespace Uiml.Gummy.Kernel.Services.Commands
 
         public DeleteDomainObject(DomainObject dom) : this()
         {
-            m_domObject = dom;
+            DomainObject = dom;
+        }
+
+        public DomainObject DomainObject
+        {
+            get
+            {
+                return m_domObject;
+            }
+            set
+            {
+                m_domObject = value;
+            }
         }
 
         public override void Execute()
