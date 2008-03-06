@@ -134,9 +134,13 @@ namespace Uiml.Gummy.Kernel
 
         private void DockMdiChildren()
         {
+            UpdateStatus("Docking ToolBox", 1, 3);
             DockMdiChild(GetService("gummy-toolbox"));
+            UpdateStatus("Docking Properties Panel", 2, 3);
             DockMdiChild(GetService("gummy-propertypanel"));
+            UpdateStatus("Docking Canvas", 2, 3);
             DockMdiChild(GetService("gummy-canvas"));
+            UpdateStatus("Ready");
         }
 
         private void UnDockMdiChild(IService child)
@@ -164,6 +168,7 @@ namespace Uiml.Gummy.Kernel
         {
             for (int i = 0; i < m_services.Count; i++)
             {
+                UpdateStatus(string.Format("Opening {0}", m_services[i].ServiceName), i + 1, m_services.Count);
                 Console.WriteLine("Loading " + m_services[i].ServiceName);
                 if (!m_services[i].Open())
                 {
@@ -171,6 +176,7 @@ namespace Uiml.Gummy.Kernel
                 }
             }
 
+            UpdateStatus("Ready");
             return true;
         }
 
@@ -368,6 +374,32 @@ namespace Uiml.Gummy.Kernel
         {
             UnDockMdiChildren();
             LayoutMdi(MdiLayout.TileVertical);
+        }
+
+        private void UpdateStatus(string text)
+        {
+            toolStripStatusLabel.Text = text; // set text
+            statusStrip.Refresh();
+        }
+
+        private void UpdateStatus(string text, int step, int max)
+        {
+            UpdateStatus(text);
+            toolStripProgressBar.Maximum = max;
+            toolStripProgressBar.Value = step;
+
+            if (toolStripProgressBar.Value == toolStripProgressBar.Maximum)
+            {
+                Timer timer = new System.Windows.Forms.Timer();
+                timer.Interval = 1000;
+                timer.Tick += delegate(object sender, EventArgs e)
+                {
+                    toolStripProgressBar.Visible = false;
+                };
+                timer.Start();
+            }
+            else
+                toolStripProgressBar.Visible = true;
         }
     }
 }
