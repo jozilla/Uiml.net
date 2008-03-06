@@ -306,11 +306,13 @@ namespace Uiml.Gummy.Kernel
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerKernel));
             this.SuspendLayout();
             // 
             // DesignerKernel
             // 
-            this.ClientSize = new System.Drawing.Size(292, 266);
+            this.ClientSize = new System.Drawing.Size(284, 264);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DesignerKernel";
             this.ResumeLayout(false);
 

@@ -143,7 +143,7 @@ namespace Uiml.Gummy.Domain
 
         public void MoveUp(DomainObject dom)
         {
-            if (Contains(dom) && IndexOf(dom) != 0)
+            if (Contains(dom) && IndexOf(dom) > 0)
             {
                 int index = IndexOf(dom);
                 DomainObject tmp = base[index-1];
