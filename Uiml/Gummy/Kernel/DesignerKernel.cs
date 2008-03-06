@@ -70,6 +70,7 @@ namespace Uiml.Gummy.Kernel
 
         public void Init()
         {
+            CurrentDocument = Document.New();
             InitializeComponents();
             LoadServices(null); // initialize all services
         }
@@ -257,12 +258,13 @@ namespace Uiml.Gummy.Kernel
             AttachService(new SpaceService());
             AttachService(new WireFrameService());
             AttachService(new PropertiesService());
+
+            InitializeMdiChildren(); // initialize all services
         }
 
         public void ShowServices()
         {
             // GUI stuff
-            InitializeMdiChildren();
             OpenChildren();
             DockMdiChildren();
         }
