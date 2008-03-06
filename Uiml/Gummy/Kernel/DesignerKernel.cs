@@ -30,7 +30,6 @@ namespace Uiml.Gummy.Kernel
             Application.EnableVisualStyles(); // visual styles (e.g. Windows Vista, XP, Linux, etc.)
             
             InitializeComponent();
-            FormClosing += new FormClosingEventHandler(DesignerKernel_FormClosing);
         }
 
         private DesignerKernel(string vocabulary)
@@ -317,7 +316,7 @@ namespace Uiml.Gummy.Kernel
             Close();
         }
 
-        private void DesignerKernel_FormClosing(object sender, EventArgs args)
+        private void DesignerKernel_FormClosing(object sender, FormClosingEventArgs e)
         {
             Close();
         }
