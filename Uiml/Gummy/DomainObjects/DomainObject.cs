@@ -10,6 +10,7 @@ using Uiml.Gummy.Interpolation;
 
 namespace Uiml.Gummy.Domain
 {
+
 	public class DomainObject : ICloneable
 	{
         private List<Property> m_properties = new List<Property>();        
@@ -20,11 +21,13 @@ namespace Uiml.Gummy.Domain
 
         private InterpolationAlgorithm m_interpolationAlgorithm = null;
         private PositionManipulator m_positionManipulator = null;
+
         private SizeManipulator m_sizeManipulator = null;
 
         private Color m_color = DEFAULT_COLOR;
 
         public delegate void DomainObjectUpdateHandler(object sender, EventArgs e);
+
 
         public event DomainObjectUpdateHandler DomainObjectUpdated;        
         		

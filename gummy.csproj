@@ -138,6 +138,7 @@
     <Compile Include="Uiml\Gummy\Serialize\BaseManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\IUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
+    <Compile Include="Uiml\Gummy\Serialize\UimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
     <Compile Include="Uiml\Gummy\Visual\BorderDrawer.cs" />
     <Compile Include="Uiml\Gummy\Visual\CanvasVisualDomainObjectState.cs" />
@@ -220,6 +221,11 @@
       <SubType>Designer</SubType>
       <DependentUpon>ToolboxServiceConfiguration.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\empty_image.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
