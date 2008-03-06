@@ -99,7 +99,7 @@ namespace Uiml.Gummy.Kernel.Services
                         CanvasSize = new Size(e.X - m_origin.X, e.Y - m_origin.Y);
                         break;
                 }
-            }
+            }            
         }
 
         void onMouseDown(object sender, MouseEventArgs e)
@@ -201,11 +201,8 @@ namespace Uiml.Gummy.Kernel.Services
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
                 m_domainObjects.Add(domCloned);
                 ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
-            }
-          
-        }
-
-       
+            }          
+        }       
 
         void painting(object sender, PaintEventArgs e)
         { 
@@ -359,6 +356,14 @@ namespace Uiml.Gummy.Kernel.Services
                 Controls.AddRange(m_wireFrameLines.ToArray());
                 bringLinesToFront();             
             }
+        }
+        
+        public Point MouseLocation
+        {
+            get
+            {
+                return PointToClient(MousePosition);
+            }           
         }
 
         private List<Line> GetLinesWithLabel(string label)

@@ -9,19 +9,11 @@ using Uiml.Gummy.Kernel.Services;
 namespace Uiml.Gummy.Kernel.Services.Commands
 {
     public class PasteCommand : ACommand
-    {
-        Point m_location = Point.Empty;
-
+    {       
         public PasteCommand()
             : base()
-        {
-            DesignerKernel.Instance.GetService("gummy-canvas").ServiceControl.MouseMove += new System.Windows.Forms.MouseEventHandler(canvasMouseMove);
+        {            
             Label = "paste";
-        }
-
-        void canvasMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            m_location = e.Location;
         }
 
         public override void Execute()
@@ -29,8 +21,8 @@ namespace Uiml.Gummy.Kernel.Services.Commands
             if (Selected.SelectedDomainObject.Instance.ClipBoardDomainObject != null)
             {                
                 DomainObject pasted = (DomainObject)Selected.SelectedDomainObject.Instance.ClipBoardDomainObject.Clone();
-                pasted.Identifier = DomainObjectFactory.Instance.AutoID();
-                pasted.Location = m_location;
+                pasted.Identifier = DomainObjectFactory.Instance.AutoID();               
+                pasted.Location = ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).MouseLocation;
                 ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).DomainObjects.Add(pasted);
                 (DomainObject)Selected.SelectedDomainObject.Instance.Selected = pasted;
             }
