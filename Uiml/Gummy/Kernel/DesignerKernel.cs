@@ -145,8 +145,11 @@ namespace Uiml.Gummy.Kernel
 
         private void UnDockMdiChild(IService child)
         {
-            Form childForm = (Form)child.ServiceControl;
-            childForm.Dock = DockStyle.None;
+            if (child.ServiceControl is Form)
+            {
+                Form childForm = (Form)child.ServiceControl;
+                childForm.Dock = DockStyle.None;
+            }
         }
 
         private void UnDockMdiChildren()
