@@ -28,6 +28,8 @@ namespace Uiml.Gummy.Kernel.Services.Commands
         {
             get
             {
+                if (m_label.Length > 1)
+                    return char.ToUpper(m_label[0]) + m_label.Substring(1);
                 return m_label;
             }
             set
