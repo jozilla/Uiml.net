@@ -47,7 +47,8 @@ namespace Uiml.Gummy.Kernel.Services
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
             BackColor = Color.DarkGray;
-            DomainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+            //DomainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+            DesignerKernel.Instance.CurrentDocumentChanged += new EventHandler(currentDocumentChanged);
             Paint += new PaintEventHandler(painting);
             
             DoubleBuffered = true;
@@ -61,6 +62,11 @@ namespace Uiml.Gummy.Kernel.Services
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
                        
             m_commands.Add(new PasteDomainObject());
+        }
+
+        void currentDocumentChanged(object sender, EventArgs e)
+        {
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
         }
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
@@ -116,7 +122,7 @@ namespace Uiml.Gummy.Kernel.Services
         public void UpdateToNewSize()
         {
             //Update every domainobject to its new properties...
-            DomainObjectCollection.Enumerator domEnum = DomainObjects.GetEnumerator();
+            DomainObjectCollection.Enumerator domEnum = DesignerKernel.Instance.CurrentDocument.DomainObjects.GetEnumerator();
             while (domEnum.MoveNext())
             {
                 domEnum.Current.UpdateToNewSize(CanvasSize);
@@ -130,9 +136,9 @@ namespace Uiml.Gummy.Kernel.Services
                 case DomainObjectCollectionEventArgs.STATE.MOREADDED:
                 case DomainObjectCollectionEventArgs.STATE.MOREREMOVED:
                     Controls.Clear();
-                    for (int i = 0; i < DomainObjects.Count; i++)
+                    for (int i = 0; i < DesignerKernel.Instance.CurrentDocument.DomainObjects.Count; i++)
                     {
-                        VisualDomainObject visDom = new VisualDomainObject(DomainObjects[i]);
+                        VisualDomainObject visDom = new VisualDomainObject(DesignerKernel.Instance.CurrentDocument.DomainObjects[i]);
                         visDom.State = new CanvasVisualDomainObjectState();
                         Controls.Add(visDom);
                     }
@@ -208,7 +214,7 @@ namespace Uiml.Gummy.Kernel.Services
                 DomainObject domCloned = (DomainObject)dom.Clone();
                 domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
-                DomainObjects.Add(domCloned);
+                DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(domCloned);
                 ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
             }          
         }       
@@ -291,13 +297,14 @@ namespace Uiml.Gummy.Kernel.Services
         }        
 
         //Deprecated -> may not be used anymore
+        /*
         public DomainObjectCollection DomainObjects
         {
             get
             {
                 return DesignerKernel.Instance.CurrentDocument.DomainObjects;
             }           
-        }
+        }*/
 
         public Size CanvasSize
         {
@@ -353,8 +360,8 @@ namespace Uiml.Gummy.Kernel.Services
                 //Clean up old lines
                 for (int i = 0; i < m_wireFrameLines.Count; i++)
                     Controls.Remove(m_wireFrameLines[i]);
-                for (int i = 0; i < DomainObjects.Count; i++)
-                    DomainObjects[i].Color = DomainObject.DEFAULT_COLOR;
+                for (int i = 0; i < DesignerKernel.Instance.CurrentDocument.DomainObjects.Count; i++)
+                    DesignerKernel.Instance.CurrentDocument.DomainObjects[i].Color = DomainObject.DEFAULT_COLOR;
                 m_wireFrameLines.Clear();
 
                 //Set up new set of lines

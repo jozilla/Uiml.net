@@ -121,7 +121,7 @@ namespace Uiml.Gummy.Visual
                 {
                     DomainObject domObject = enumerator.Current.Value;
                     //ExampleRepository.Instance.GetDomainObjectExample(domObject.Identifier, service.CanvasSize).Color = randomColors[index];
-                    service.DomainObjects.Get(domObject.Identifier).Color = randomColors[index];
+                    DesignerKernel.Instance.CurrentDocument.DomainObjects.Get(domObject.Identifier).Color = randomColors[index];
                     if(SelectedDomainObject.Instance.Selected != null && SelectedDomainObject.Instance.Selected.Identifier == domObject.Identifier)
                         lines.AddRange(GetWireFrames(domObject, DomainObject.SELECTED_COLOR));
                     else

@@ -31,8 +31,8 @@ namespace Uiml.Gummy.Kernel.Services.Commands
 
         public override void Execute()
         {
-            CanvasService canvasService = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
-            canvasService.DomainObjects.MoveUp(m_dom);
+            //CanvasService canvasService = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.MoveUp(m_dom);
         }
 
         public override void Undo()
