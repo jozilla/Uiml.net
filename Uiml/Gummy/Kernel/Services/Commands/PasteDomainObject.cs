@@ -8,29 +8,44 @@ using Uiml.Gummy.Kernel.Services;
 
 namespace Uiml.Gummy.Kernel.Services.Commands
 {
-    public class PasteCommand : ACommand
+    public class PasteDomainObject : ACommand
     {
-        Point m_location = Point.Empty;
+        private Point m_defaultLocation = Point.Empty;
 
-        public PasteCommand()
+        public PasteDomainObject()
             : base()
-        {
-            DesignerKernel.Instance.GetService("gummy-canvas").ServiceControl.MouseMove += new System.Windows.Forms.MouseEventHandler(canvasMouseMove);
+        {            
             Label = "paste";
         }
 
-        void canvasMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        public PasteDomainObject(Point defaultLocation)
+            : this()
         {
-            m_location = e.Location;
+            DefaultLocation = defaultLocation;
+        }
+
+        public Point DefaultLocation
+        {
+            get
+            {
+                return m_defaultLocation;
+            }
+            set
+            {
+                m_defaultLocation = value;
+            }
         }
 
         public override void Execute()
         {
-            if (Selected.SelectedDomainObject.Instance.ClipBoardDomainObject != null)
+            if (Enabled)
             {                
                 DomainObject pasted = (DomainObject)Selected.SelectedDomainObject.Instance.ClipBoardDomainObject.Clone();
                 pasted.Identifier = DomainObjectFactory.Instance.AutoID();
-                pasted.Location = m_location;
+                if (DefaultLocation == Point.Empty)
+                    pasted.Location = ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).MouseLocation;
+                else
+                    pasted.Location = DefaultLocation;
                 ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).DomainObjects.Add(pasted);
                 (DomainObject)Selected.SelectedDomainObject.Instance.Selected = pasted;
             }
