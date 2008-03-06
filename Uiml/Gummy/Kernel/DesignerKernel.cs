@@ -284,7 +284,6 @@ namespace Uiml.Gummy.Kernel
 
             wizard.Start();
             wizard.ShowDialog();
-            // TODO: notify services that their settings are changed
         }
 
         public void FileOpen_Clicked(object sender, EventArgs args)
