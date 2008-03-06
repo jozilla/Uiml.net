@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 using Uiml.Gummy.Domain;
 
@@ -22,12 +23,22 @@ namespace Uiml.Gummy.Kernel
         {
         }
 
+        /// <summary>
+        /// Reads document from a stream.
+        /// </summary>
+        /// <param name="s">Stream to read from</param>
+        public Document(Stream s)
+        {
+        }
+
         public static Document New()
         {
+            return new Document();
         }
 
         public static Document Open(Stream s)
         {
+            return new Document(s);
         }
 
         public void Save(Stream s)
