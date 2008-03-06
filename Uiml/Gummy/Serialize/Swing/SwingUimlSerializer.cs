@@ -30,6 +30,11 @@ namespace Uiml.Gummy.Serialize.Swing
 
             return domObj;
         }
+
+        public override DomainObject CreateUIContainer()
+        {
+            return DomainObjectFactory.Instance.Create("Container");
+        }
                
         public override Image Serialize(DomainObject dom)
 		{
