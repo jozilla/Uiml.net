@@ -19,6 +19,7 @@ namespace Uiml.Gummy.Kernel.Services.Commands
         private static MenuItem CreateMenuItem(ICommand command)
         {
             MenuItem menuItem = new MenuItem(command.Label);
+            menuItem.Enabled = command.Enabled;
             MenuItemEventHandler handler = new MenuItemEventHandler(command, menuItem);
             foreach (ICommand subCommand in command.SubCommands)
             {

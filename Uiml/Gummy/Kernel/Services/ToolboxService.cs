@@ -76,7 +76,6 @@ namespace Uiml.Gummy.Kernel.Services
                 }
             }
             int k = visualDomainObjects.Count;
-            //Size = new Size(size.Width * 2 + 15, height + size.Height);
         }
 
         public bool Open()
