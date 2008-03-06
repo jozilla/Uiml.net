@@ -9,6 +9,12 @@ namespace Uiml.Gummy.Kernel.Services.Commands
     public class DisableWireFrameExample : ACommand
     {
 
+        public DisableWireFrameExample()
+            : base()
+        {
+            Label = "disable wireframes";
+        }
+
         public override void Execute()
         {
             CanvasService canvasService = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
@@ -21,13 +27,6 @@ namespace Uiml.Gummy.Kernel.Services.Commands
         public override void Undo()
         {            
         }
-
-        public override string Label
-        {
-            get
-            {
-                return "disable wireframes";
-            }
-        }        
+  
     }
 }

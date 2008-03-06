@@ -8,6 +8,8 @@ using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Kernel;
 using Uiml.Gummy.Kernel.Services;
+using Uiml.Gummy.Kernel.Services.Commands;
+using Uiml.Gummy.Kernel.Selected;
 
 namespace Uiml.Gummy.Visual
 {
@@ -52,6 +54,8 @@ namespace Uiml.Gummy.Visual
         MouseEventHandler m_mouseMoveHandler = null;
         MouseEventHandler m_mouseUpHandler = null;
         PaintEventHandler m_paintEventHandler = null;
+
+        List<ICommand> m_commands = new List<ICommand>();
        
         public CanvasVisualDomainObjectState()
             : base()
@@ -98,6 +102,8 @@ namespace Uiml.Gummy.Visual
             visDom.MouseUp += m_mouseUpHandler;
             m_paintEventHandler += new PaintEventHandler(paintEvent);
             visDom.Paint += m_paintEventHandler;
+            m_commands.Add(new CopyDomainObject(visDom.DomainObject));
+            m_commands.Add(new PasteCommand());
         }    
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
@@ -127,24 +133,35 @@ namespace Uiml.Gummy.Visual
 
         void mouseDownEvent(object sender, MouseEventArgs e)
         {
-            Console.Out.WriteLine("mousDown");
-            clicked = true;
-            
-            m_lastClicked = clickedBox(e.X, e.Y);            
-            m_delta = new Point(e.X, e.Y);            
-            m_oldWidth = m_visDom.Width;
-            m_oldHeight = m_visDom.Height;
-            m_oldX = e.X + m_visDom.Location.X;
-            m_oldY = e.Y + m_visDom.Location.Y;
-            m_oldBounds = m_visDom.Bounds;
+            Console.Out.WriteLine("mousDown");            
 
             if (!m_visDom.DomainObject.Selected)
             {
                 SelectedDomainObject.Instance.Selected = m_visDom.DomainObject;
             }
 
-            m_visDom.Refresh();
-            m_moveState = MoveState.None;
+            if (e.Button == MouseButtons.Left)
+            {
+                clicked = true;
+
+                m_lastClicked = clickedBox(e.X, e.Y);
+                m_delta = new Point(e.X, e.Y);
+                m_oldWidth = m_visDom.Width;
+                m_oldHeight = m_visDom.Height;
+                m_oldX = e.X + m_visDom.Location.X;
+                m_oldY = e.Y + m_visDom.Location.Y;
+                m_oldBounds = m_visDom.Bounds;
+
+                m_visDom.Refresh();
+                m_moveState = MoveState.None;
+            }
+            else
+            {
+                ContextMenu cMenu = new ContextMenu();
+                Menu menu = (Menu)cMenu;
+                MenuFactory.CreateMenu(m_commands, ref menu);
+                cMenu.Show(m_visDom, e.Location);
+            }
 
         }        
 

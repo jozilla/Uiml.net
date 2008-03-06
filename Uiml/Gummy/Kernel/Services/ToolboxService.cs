@@ -56,7 +56,7 @@ namespace Uiml.Gummy.Kernel.Services
                     Label l = new Label();
                     l.Text = domObject.Part.Class;
                     l.Dock = DockStyle.Fill;
-                    l.TextAlign = ContentAlignment.MiddleCenter;
+                    l.TextAlign = ContentAlignment.MiddleLeft;
                     table.Controls.Add(l, 1, 0);
                     layout.Controls.Add(table);
 
@@ -76,7 +76,6 @@ namespace Uiml.Gummy.Kernel.Services
                 }
             }
             int k = visualDomainObjects.Count;
-            //Size = new Size(size.Width * 2 + 15, height + size.Height);
         }
 
         public bool Open()

@@ -11,6 +11,7 @@ namespace Uiml.Gummy.Kernel.Selected
 
         private static SelectedDomainObject m_selectedDomObject = null;
         private DomainObject m_domObject = null;
+        private DomainObject m_clipBoardDomainObject = null;
 
         public delegate void DomainObjectSelectedHandler(DomainObject dom, EventArgs e);
 
@@ -27,6 +28,18 @@ namespace Uiml.Gummy.Kernel.Selected
                 if (m_selectedDomObject == null)
                     m_selectedDomObject = new SelectedDomainObject();
                 return m_selectedDomObject;
+            }
+        }
+
+        public DomainObject ClipBoardDomainObject
+        {
+            get
+            {
+                return m_clipBoardDomainObject;
+            }
+            set
+            {
+                m_clipBoardDomainObject = value;
             }
         }
 

@@ -8,6 +8,7 @@ using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Visual;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Kernel.Services.Controls;
+using Uiml.Gummy.Kernel.Services.Commands;
 
 using Shape;
 
@@ -31,6 +32,8 @@ namespace Uiml.Gummy.Kernel.Services
         List<Line> m_wireFrameLines = new List<Line>();
 
         SelectedDomainObject.DomainObjectSelectedHandler m_selectedHandler = null;
+
+        List<ICommand> m_commands = new List<ICommand>();
 
         public CanvasService() : base()
         {
@@ -57,6 +60,9 @@ namespace Uiml.Gummy.Kernel.Services
 
             m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
+
+            m_commands.Add(new CopyDomainObject());
+            m_commands.Add(new PasteCommand());
         }
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
@@ -98,7 +104,15 @@ namespace Uiml.Gummy.Kernel.Services
 
         void onMouseDown(object sender, MouseEventArgs e)
         {
-            m_clickedBox = clickedBox(e.Location);
+            if (e.Button == MouseButtons.Left)
+                m_clickedBox = clickedBox(e.Location);
+            else
+            {
+                ContextMenu contextMenu = new ContextMenu();
+                Menu menu = (Menu)contextMenu;
+                MenuFactory.CreateMenu(m_commands, ref menu);
+                contextMenu.Show(this, e.Location);
+            }
         }
 
         public void UpdateToNewSize()

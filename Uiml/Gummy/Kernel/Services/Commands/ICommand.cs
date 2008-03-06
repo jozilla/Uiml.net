@@ -14,9 +14,16 @@ namespace Uiml.Gummy.Kernel.Services.Commands
         string Label
         {
             get;
+            set;
         }
         //SubCommands
         List<ICommand> SubCommands
+        {
+            get;
+            set;
+        }
+
+        bool Enabled
         {
             get;
             set;
