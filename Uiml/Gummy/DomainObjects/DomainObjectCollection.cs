@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 
 namespace Uiml.Gummy.Domain
 {
@@ -166,6 +167,16 @@ namespace Uiml.Gummy.Domain
                 base[index] = tmp;
                 fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.MOREADDED));
             }
+        }
+
+        public void Serialize(XmlDocument doc)
+        {
+            foreach (DomainObject obj in this)
+            {
+                obj.Part.Serialize(doc);
+            }
+
+            string xml = doc.InnerXml;
         }
     }
 }
