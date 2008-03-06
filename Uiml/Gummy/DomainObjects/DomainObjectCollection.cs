@@ -140,5 +140,21 @@ namespace Uiml.Gummy.Domain
             base.Remove(dom);
             fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.ONEREMOVED,dom));
         }
+
+        public void MoveUp(DomainObject dom)
+        {
+            if (Contains(dom) && IndexOf(dom) > 0)
+            {
+                int index = IndexOf(dom);
+                DomainObject tmp = base[index-1];
+                base[index - 1] = dom;
+                base[index] = tmp;
+                fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.MOREADDED));
+            }
+        }
+
+        public void MoveDown(DomainObject dom)
+        {
+        }
     }
 }

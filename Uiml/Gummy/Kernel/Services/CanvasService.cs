@@ -297,8 +297,7 @@ namespace Uiml.Gummy.Kernel.Services
             get
             {
                 return m_domainObjects;
-            }
-           
+            }           
         }
 
         public Size CanvasSize

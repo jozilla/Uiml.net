@@ -56,7 +56,9 @@
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Document.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ACommand.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\BringDomainObjectForward.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\CopyDomainObject.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\CutDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\DeleteDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\DisableWireFrameExample.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ICommand.cs" />
