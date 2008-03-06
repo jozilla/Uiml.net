@@ -268,32 +268,49 @@ namespace Uiml.Executing.Callers
 					return null;	
 				}
 
-				try { return ExecuteMethod(concreteMethodName, type/*, logic*/, out outputParams); } 
-				    catch(NullReferenceException)//method failed, try property
-				    { try { return ExecuteProperty(concreteMethodName, type); }
-					        //property failed, try field
-					       catch(NullReferenceException)	{ return ExecuteField(concreteMethodName, type); 	}
-				    }
-			   }
-				catch(MappingNotFoundException mnfe) 
-				{
-					Console.WriteLine("Vocabulary error: {0}", mnfe);
-					return null;
-				}
-				catch(TargetInvocationException tie)
-				{
-					Console.WriteLine("Unable to execute call {0} on type {1}", Call.Name, type);
-					Console.WriteLine("Reason:{0}", tie);
-					return null; //replace by exception???
-				}
-				catch(Exception e)
-				{
-					Console.WriteLine("Unable to execute call {0}", Call.Name);
-					Console.WriteLine("Reason:{0}", e);
-					return null; //replace by exception???
-				}
-		}
+                try
+                {
+                    return ExecuteMethod(concreteMethodName, type/*, logic*/, out outputParams);
+                }
+                catch (TargetException)
+                {
+                    // non-static method: try to create default object
+                    object obj = Activator.CreateInstance(type);
+                    Call.Connect(obj);
+                    return ExecuteMethod(concreteMethodName, type, obj, out outputParams);
 
+                }
+                catch (NullReferenceException)//method failed, try property
+                {
+                    try
+                    {
+                        return ExecuteProperty(concreteMethodName, type);
+                    }
+                    //property failed, try field
+                    catch (NullReferenceException)
+                    {
+                        return ExecuteField(concreteMethodName, type);
+                    }
+                }
+            }
+            catch(MappingNotFoundException mnfe) 
+			{
+				Console.WriteLine("Vocabulary error: {0}", mnfe);
+				return null;
+			}
+			catch(TargetInvocationException tie)
+			{
+				Console.WriteLine("Unable to execute call {0} on type {1}", Call.Name, type);
+				Console.WriteLine("Reason:{0}", tie);
+				return null; //replace by exception???
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine("Unable to execute call {0}", Call.Name);
+				Console.WriteLine("Reason:{0}", e);
+				return null; //replace by exception???
+			}
+		}
 	}
 }
 
