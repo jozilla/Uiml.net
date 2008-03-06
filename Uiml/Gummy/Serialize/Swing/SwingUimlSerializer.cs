@@ -12,10 +12,9 @@ using gummy_swing.Java;
 
 namespace Uiml.Gummy.Serialize.Swing
 {
-    public class SwingUimlSerializer : IUimlSerializer
+    public class SwingUimlSerializer : UimlSerializer
     {
         JavaUimlRendererService m_javaUimlRenderer = null;
-        Vocabulary m_voc = null;
 
         public SwingUimlSerializer()
 		{
@@ -23,7 +22,7 @@ namespace Uiml.Gummy.Serialize.Swing
             m_voc = new Vocabulary("idtv-1.0.uiml");
 		}
 
-        public DomainObject Create()
+        public override DomainObject Create()
         {
             DomainObject domObj = new DomainObject();
             domObj.PositionManipulator = new SwingPositionManipulator(domObj);
@@ -32,7 +31,7 @@ namespace Uiml.Gummy.Serialize.Swing
             return domObj;
         }
                
-        public Image Serialize(DomainObject dom)
+        public override Image Serialize(DomainObject dom)
 		{
             string uiml1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             + "<uiml>"
@@ -81,16 +80,7 @@ namespace Uiml.Gummy.Serialize.Swing
             return newImage;
 		}
 
-
-        public Vocabulary Voc
-        {
-            get
-            {
-                return m_voc;
-            }
-        }
-
-        public bool Accept(DClass dclass)
+        public override bool Accept(DClass dclass)
         {
             if (dclass.Identifier == "Checkbox")
             {
@@ -111,7 +101,7 @@ namespace Uiml.Gummy.Serialize.Swing
             return false;
         }
 
-        public bool Accept(DProperty dprop, DClass dclass)
+        public override bool Accept(DProperty dprop, DClass dclass)
         {
             if (dprop.Identifier == "size") { return true; }
             if (dprop.Identifier == "position") { return true; }
@@ -139,7 +129,7 @@ namespace Uiml.Gummy.Serialize.Swing
             return false;
         }
 
-        public object DefaultValue(Property p, Part part, string type)
+        public override object DefaultValue(Property p, Part part, string type)
         {
             if (p.Name == "size") { return "100,50"; }
             if (p.Name == "position") { return "0,0"; }

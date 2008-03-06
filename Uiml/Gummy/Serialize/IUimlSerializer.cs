@@ -14,8 +14,10 @@ namespace Uiml.Gummy.Serialize
 
 	public interface IUimlSerializer
 	{		
-		//Serializes the widgetmodel directly
+		//Serializes the domainobject directly
         Image Serialize(DomainObject dom);
+        //Serializes the domainobject to an icon which can be displayed in the toolbox
+        Image SerializeToIcon(DomainObject dom);
         //Creates an empty domain object
         DomainObject Create();
         //Accept the DClass (may appear in the toolbox)
