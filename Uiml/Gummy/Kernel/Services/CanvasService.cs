@@ -16,7 +16,6 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
     {
-        DomainObjectCollection m_domainObjects = new DomainObjectCollection();
         Size m_canvasSize = new Size(20,20);
         Rectangle m_uiRectangle = new Rectangle(0,0,20,20);
         Point m_origin = new Point(0, 0);        
@@ -47,8 +46,8 @@ namespace Uiml.Gummy.Kernel.Services
             AllowDrop = true;
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
-            BackColor = Color.DarkGray;            
-            m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+            BackColor = Color.DarkGray;
+            DomainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
             Paint += new PaintEventHandler(painting);
             
             DoubleBuffered = true;
@@ -117,7 +116,7 @@ namespace Uiml.Gummy.Kernel.Services
         public void UpdateToNewSize()
         {
             //Update every domainobject to its new properties...
-            DomainObjectCollection.Enumerator domEnum = m_domainObjects.GetEnumerator();
+            DomainObjectCollection.Enumerator domEnum = DomainObjects.GetEnumerator();
             while (domEnum.MoveNext())
             {
                 domEnum.Current.UpdateToNewSize(CanvasSize);
@@ -131,9 +130,9 @@ namespace Uiml.Gummy.Kernel.Services
                 case DomainObjectCollectionEventArgs.STATE.MOREADDED:
                 case DomainObjectCollectionEventArgs.STATE.MOREREMOVED:
                     Controls.Clear();
-                    for (int i = 0; i < m_domainObjects.Count; i++)
+                    for (int i = 0; i < DomainObjects.Count; i++)
                     {
-                        VisualDomainObject visDom = new VisualDomainObject(m_domainObjects[i]);
+                        VisualDomainObject visDom = new VisualDomainObject(DomainObjects[i]);
                         visDom.State = new CanvasVisualDomainObjectState();
                         Controls.Add(visDom);
                     }
@@ -209,7 +208,7 @@ namespace Uiml.Gummy.Kernel.Services
                 DomainObject domCloned = (DomainObject)dom.Clone();
                 domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
-                m_domainObjects.Add(domCloned);
+                DomainObjects.Add(domCloned);
                 ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
             }          
         }       
@@ -296,7 +295,7 @@ namespace Uiml.Gummy.Kernel.Services
         {
             get
             {
-                return m_domainObjects;
+                return DesignerKernel.Instance.CurrentDocument.DomainObjects;
             }           
         }
 
