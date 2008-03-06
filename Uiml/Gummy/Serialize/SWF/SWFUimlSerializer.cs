@@ -59,7 +59,7 @@ namespace Uiml.Gummy.Serialize.SWF
 	            	control.SetBounds(0, 0, control.Width, control.Height);
         	    	control.Visible = true;
 
-	            	Bitmap btmp = new Bitmap(control.Width+1, control.Height+1);
+	            	Bitmap btmp = new Bitmap(control.Width, control.Height);
         	    	control.DrawToBitmap(btmp, control.Bounds);
                     return btmp;
 			#endif

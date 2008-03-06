@@ -28,7 +28,7 @@ namespace Uiml.Gummy.Serialize
             Image.GetThumbnailImageAbort myCallback = new Image.GetThumbnailImageAbort(ThumbnailCallback);
             if (icon.Size.Width > imgSize.Width && icon.Size.Height > imgSize.Height)
             {
-                icon = icon.GetThumbnailImage(30, 30, myCallback, IntPtr.Zero);
+                icon = icon.GetThumbnailImage(imgSize.Width, imgSize.Height, myCallback, IntPtr.Zero);
             }
             return icon;
         }
