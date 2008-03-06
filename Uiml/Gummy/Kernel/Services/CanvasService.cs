@@ -60,9 +60,8 @@ namespace Uiml.Gummy.Kernel.Services
 
             m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
-
-            m_commands.Add(new CopyDomainObject());
-            m_commands.Add(new PasteCommand());
+                       
+            m_commands.Add(new PasteDomainObject());
         }
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
@@ -99,7 +98,7 @@ namespace Uiml.Gummy.Kernel.Services
                         CanvasSize = new Size(e.X - m_origin.X, e.Y - m_origin.Y);
                         break;
                 }
-            }
+            }            
         }
 
         void onMouseDown(object sender, MouseEventArgs e)
@@ -148,7 +147,18 @@ namespace Uiml.Gummy.Kernel.Services
                     bringLinesToFront();
                     break;
                 case DomainObjectCollectionEventArgs.STATE.ONEREMOVED:
-                    //FixMe: Implement removing domain objects
+                    foreach(Control c in Controls)
+                    {
+                        if( c is VisualDomainObject)
+                        {
+                            VisualDomainObject vis = (VisualDomainObject)c;
+                            if (vis.DomainObject == e.DomainObject)
+                            {
+                                Controls.Remove(c);
+                                break;
+                            }
+                        }
+                    }
                     bringLinesToFront();
                     break;
             }
@@ -201,11 +211,8 @@ namespace Uiml.Gummy.Kernel.Services
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
                 m_domainObjects.Add(domCloned);
                 ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
-            }
-          
-        }
-
-       
+            }          
+        }       
 
         void painting(object sender, PaintEventArgs e)
         { 
@@ -359,6 +366,14 @@ namespace Uiml.Gummy.Kernel.Services
                 Controls.AddRange(m_wireFrameLines.ToArray());
                 bringLinesToFront();             
             }
+        }
+        
+        public Point MouseLocation
+        {
+            get
+            {
+                return PointToClient(MousePosition);
+            }           
         }
 
         private List<Line> GetLinesWithLabel(string label)

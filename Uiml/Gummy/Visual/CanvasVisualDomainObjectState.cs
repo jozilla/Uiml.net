@@ -103,7 +103,8 @@ namespace Uiml.Gummy.Visual
             m_paintEventHandler += new PaintEventHandler(paintEvent);
             visDom.Paint += m_paintEventHandler;
             m_commands.Add(new CopyDomainObject(visDom.DomainObject));
-            m_commands.Add(new PasteCommand());
+            m_commands.Add(new PasteDomainObject());
+            m_commands.Add(new DeleteDomainObject(visDom.DomainObject));
         }    
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
