@@ -20,6 +20,8 @@ namespace Uiml.Gummy.Serialize
         Image SerializeToIcon(DomainObject dom);
         //Creates an empty domain object
         DomainObject Create();
+        //Create the master container (The form for example)
+        DomainObject CreateUIContainer();
         //Accept the DClass (may appear in the toolbox)
         bool Accept(DClass dclass);
         //Accept the DProperty

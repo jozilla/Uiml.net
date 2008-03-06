@@ -46,7 +46,7 @@ namespace Uiml.Gummy.Kernel.Services.Commands
                     pasted.Location = ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).MouseLocation;
                 else
                     pasted.Location = DefaultLocation;
-                ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).DomainObjects.Add(pasted);
+                DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(pasted);
                 (DomainObject)Selected.SelectedDomainObject.Instance.Selected = pasted;
             }
         }
