@@ -39,7 +39,8 @@ namespace Uiml.Gummy.Visual
 
         public override void Attach(VisualDomainObject visDom)
         {
-            base.Attach(visDom);            
+            base.Attach(visDom);
+            visDom.IconMode = true;
             m_mouseDownHandler = new MouseEventHandler(onMouseDown);
             m_visDom.MouseDown += m_mouseDownHandler;
             visDom.FixSize();

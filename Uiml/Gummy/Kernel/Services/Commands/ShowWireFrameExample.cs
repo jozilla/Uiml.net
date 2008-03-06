@@ -18,6 +18,7 @@ namespace Uiml.Gummy.Kernel.Services.Commands
         public ShowWireFrameExample(Size size)
         {
             m_size = size;
+            Label = "Show wire-frames";
         }
         
         public override void Execute()
@@ -42,12 +43,5 @@ namespace Uiml.Gummy.Kernel.Services.Commands
             canvasService.WireFrameSize = m_size;
         }
 
-        public override string Label
-        {
-            get
-            {
-                return "Show wire-frames";
-            }
-        }
     }
 }

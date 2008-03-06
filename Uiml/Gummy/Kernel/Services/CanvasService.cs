@@ -9,6 +9,7 @@ using Uiml.Gummy.Kernel.Selected;
 using Uiml.Gummy.Visual;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Kernel.Services.Controls;
+using Uiml.Gummy.Kernel.Services.Commands;
 
 using Shape;
 
@@ -32,6 +33,7 @@ namespace Uiml.Gummy.Kernel.Services
         List<Line> m_wireFrameLines = new List<Line>();
 
         SelectedDomainObject.DomainObjectSelectedHandler m_selectedHandler = null;
+        List<ICommand> m_commands = new List<ICommand>();
         public CanvasService() : base()
         {
             m_config = new CanvasServiceConfiguration(this);
@@ -41,11 +43,11 @@ namespace Uiml.Gummy.Kernel.Services
         {
             Text = "Canvas";
             Size = new Size(400, 400);
-            AllowDrop = true;           
+            AllowDrop = true;
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
             BackColor = Color.DarkGray;
-            //Resize += new EventHandler(onResize);
+
             m_domainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
             Paint += new PaintEventHandler(painting);
             
@@ -56,7 +58,9 @@ namespace Uiml.Gummy.Kernel.Services
             MouseUp += new MouseEventHandler(onMouseUp);
 
             m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
-            SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;            
+            SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
+            m_commands.Add(new CopyDomainObject());
+            m_commands.Add(new PasteCommand());
         }
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
@@ -98,7 +102,15 @@ namespace Uiml.Gummy.Kernel.Services
 
         void onMouseDown(object sender, MouseEventArgs e)
         {
-            m_clickedBox = clickedBox(e.Location);
+            if (e.Button == MouseButtons.Left)
+                m_clickedBox = clickedBox(e.Location);
+            else
+            {
+                ContextMenu contextMenu = new ContextMenu();
+                Menu menu = (Menu)contextMenu;
+                MenuFactory.CreateMenu(m_commands, ref menu);
+                contextMenu.Show(this, e.Location);
+            }
         }
 
         public void UpdateToNewSize()
@@ -191,7 +203,7 @@ namespace Uiml.Gummy.Kernel.Services
         }
 
         void painting(object sender, PaintEventArgs e)
-        {            
+        {
             Graphics g = e.Graphics;
             g.FillRectangle(Brushes.WhiteSmoke,new Rectangle(0,0,Width,Height));
             Rectangle doubleBorder0 = new Rectangle(m_uiRectangle.X, m_uiRectangle.Y, m_uiRectangle.Width + 2, m_uiRectangle.Height + 2);

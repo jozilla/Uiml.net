@@ -56,9 +56,11 @@
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\VocabularyMetadata.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ACommand.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\CopyDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\DisableWireFrameExample.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ICommand.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\MenuFactory.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\PasteCommand.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ShowWireFrameExample.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueService.cs">
       <SubType>Form</SubType>
@@ -185,6 +187,7 @@
     <Compile Include="Uiml\Gummy\Serialize\BaseManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\IUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
+    <Compile Include="Uiml\Gummy\Serialize\UimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
     <Compile Include="Uiml\Gummy\Visual\BorderDrawer.cs" />
     <Compile Include="Uiml\Gummy\Visual\CanvasVisualDomainObjectState.cs" />
@@ -284,6 +287,11 @@
       <DependentUpon>ToolboxServiceConfiguration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\empty_image.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>  
   <ItemGroup>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link.png" />
   </ItemGroup>

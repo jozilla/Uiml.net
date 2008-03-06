@@ -12,7 +12,7 @@ using Uiml.Gummy.Visual;
 namespace Uiml.Gummy.Serialize.SWF
 {
 
-	public class SWFUimlSerializer : IUimlSerializer
+	public class SWFUimlSerializer : UimlSerializer
 	{
 		SWFRenderer m_renderer = null;        
 	
@@ -22,7 +22,7 @@ namespace Uiml.Gummy.Serialize.SWF
 			m_renderer.Voc = new Vocabulary("swf-1.1.uiml");
 		}
 
-        public DomainObject Create()
+        public override DomainObject Create()
         {
             DomainObject domObj = new DomainObject();
             domObj.PositionManipulator = new SWFPositionManipulator(domObj);
@@ -31,7 +31,7 @@ namespace Uiml.Gummy.Serialize.SWF
             return domObj;
         }
                
-        public Image Serialize(DomainObject dom)
+        public override Image Serialize(DomainObject dom)
 		{
             Image controlImage = Serialize(dom.Part, new ArrayList(dom.Properties));
             return controlImage;
@@ -59,13 +59,23 @@ namespace Uiml.Gummy.Serialize.SWF
 	            	control.SetBounds(0, 0, control.Width, control.Height);
         	    	control.Visible = true;
 
-	            	Bitmap btmp = new Bitmap(control.Width+1, control.Height+1);
+	            	Bitmap btmp = new Bitmap(control.Width, control.Height);
         	    	control.DrawToBitmap(btmp, control.Bounds);
                     return btmp;
 			#endif
 		}
 
-        public Vocabulary Voc
+        public override Image SerializeToIcon(DomainObject dom)
+        {
+            if (dom.Part.Class == "List" || dom.Part.Class == "Tree")
+            {
+                return SerializeToIcon(dom, new Size(90, 90), new Size(30, 30));
+            }            
+            else
+                return base.SerializeToIcon(dom);
+        }
+
+        public override Vocabulary Voc
         {
             get
             {
@@ -73,14 +83,14 @@ namespace Uiml.Gummy.Serialize.SWF
             }
         }
 
-        public bool Accept(DClass dclass)
+        public override bool Accept(DClass dclass)
         {
-            if (dclass.Identifier == "TabPage" || dclass.Identifier == "Tabs")
+            if (dclass.Identifier == "TabPage" || dclass.Identifier == "Tabs" || dclass.Identifier == "Entry")
                 return false;
             return true;
         }
 
-        public bool Accept(DProperty dprop, DClass dclass)
+        public override bool Accept(DProperty dprop, DClass dclass)
         {
             if (dclass.Identifier == "TabPage" && dprop.Identifier != "label")
                 return false;
@@ -103,7 +113,7 @@ namespace Uiml.Gummy.Serialize.SWF
             return true;
         }
 
-        public object DefaultValue(Property p, Part part, string type)
+        public override object DefaultValue(Property p, Part part, string type)
         {    
             if (p.Name == "maximum" || p.Name == "max")
                 return "5";
@@ -126,8 +136,7 @@ namespace Uiml.Gummy.Serialize.SWF
             }
             else if (type == "System.Drawing.Image")
             {
-                Console.WriteLine("---- System.Drawing.Image set!");
-                return "uimldotnet.png";
+                return "images/empty_image.png";
             }
             else if (type == "System.String[]")
             {

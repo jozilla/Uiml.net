@@ -58,6 +58,32 @@ namespace Uiml.Gummy.Visual
             }
         }
 
+        private bool m_iconMode = false;
+
+        public bool IconMode
+        {
+            set
+            {
+                m_iconMode = value;                
+                if (m_iconMode)
+                {
+                    SizeMode = PictureBoxSizeMode.CenterImage;
+                    BorderStyle = BorderStyle.FixedSingle;
+                }
+                else
+                {
+                    BorderStyle = BorderStyle.None;
+                    SizeMode = PictureBoxSizeMode.Normal;
+                }
+                if (DomainObject != null)
+                    DomainObject.Updated();
+            }
+            get
+            {
+                return m_iconMode;
+            }
+        }
+
         public VisualDomainObjectState State
         {
             get
@@ -74,11 +100,21 @@ namespace Uiml.Gummy.Visual
         }
 
         protected virtual void domainObjectUpdated(object sender, EventArgs e)
-        {
-            Image = ActiveSerializer.Instance.Serializer.Serialize(DomainObject);
-            this.Size = DomainObject.Size;
-            this.Location = DomainObject.Location;
-            Refresh();
+        {       
+            if (!m_iconMode)
+            {
+                Image = ActiveSerializer.Instance.Serializer.Serialize(DomainObject);
+                this.Size = DomainObject.Size;
+                this.Location = DomainObject.Location;
+                Refresh();
+            }
+            else
+            {
+                Image = ActiveSerializer.Instance.Serializer.SerializeToIcon(DomainObject);
+                //FIXME: Get this size from a property file or something like that
+                Size = new Size(34, 34);      
+               
+            }
         }
         protected override void OnPaint(PaintEventArgs pe)
         {
@@ -189,7 +225,7 @@ namespace Uiml.Gummy.Visual
          */
         public void FixSize()
         {
-            if(Image != null)
+            if(Image != null && !IconMode)
                 DomainObject.Size = Image.Size;
         }
 
