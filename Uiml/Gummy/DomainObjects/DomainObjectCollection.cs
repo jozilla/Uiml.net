@@ -12,6 +12,7 @@ namespace Uiml.Gummy.Domain
             MOREADDED,
             ONEREMOVED,
             MOREREMOVED,
+         //   REARRANGED,
             NONE
         };
 
@@ -58,6 +59,7 @@ namespace Uiml.Gummy.Domain
         }
     }
 
+    //DomainObjectCollection[0] = topElement, DomainObjectCollection[Count-1] = lastElement
     public class DomainObjectCollection : List<DomainObject>
     {
         //Fixme: a
@@ -98,7 +100,8 @@ namespace Uiml.Gummy.Domain
         public new void Add(DomainObject d)
         {
             d.DomainObjectUpdated += m_domainObjectUpdateHandler;
-            base.Add(d);
+            //Small trick to be compatible with a control collection :-)
+            base.Insert(0,d);
             fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.ONEADDED,d));
         }
 
@@ -155,6 +158,14 @@ namespace Uiml.Gummy.Domain
 
         public void MoveDown(DomainObject dom)
         {
+            if (Contains(dom) && IndexOf(dom) < Count-1)
+            {
+                int index = IndexOf(dom);
+                DomainObject tmp = base[index + 1];
+                base[index + 1] = dom;
+                base[index] = tmp;
+                fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.MOREADDED));
+            }
         }
     }
 }
