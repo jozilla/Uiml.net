@@ -106,6 +106,7 @@ namespace Uiml.Gummy.Visual
             m_commands.Add(new PasteDomainObject());
             m_commands.Add(new DeleteDomainObject(visDom.DomainObject));
             m_commands.Add(new CutDomainObject(visDom.DomainObject));
+            m_commands.Add(new BringDomainObjectForward(visDom.DomainObject));
         }    
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
