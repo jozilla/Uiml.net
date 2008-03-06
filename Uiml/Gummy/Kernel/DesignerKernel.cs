@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.IO;
+using System.Diagnostics;
+
 using Uiml.Gummy.Serialize;
 using Uiml.Gummy.Kernel.Services;
 
@@ -15,6 +18,7 @@ namespace Uiml.Gummy.Kernel
         List<IService> m_services = new List<IService>();
         DesignerLoader m_loader = new DesignerLoader();
         string m_platform = "swf-1.1";
+        Document m_document;
 
         static DesignerKernel m_kernel = null;
 
@@ -58,11 +62,16 @@ namespace Uiml.Gummy.Kernel
             }
         }
 
+        public Document CurrentDocument
+        {
+            get { return m_document; }
+            set { m_document = value; }
+        }
+
         public void Init()
         {
-            LoadServices(null);
-            InitializeComponents();            
-            InitializeMdiChildren();
+            InitializeComponents();
+            LoadServices(null); // initialize all services
         }
 
         private void InitializeComponents()
@@ -160,18 +169,22 @@ namespace Uiml.Gummy.Kernel
         public bool Open()
         {
             this.Show();
+            Application.Run();            
+            return true;           
+        }
 
+        protected bool OpenChildren()
+        {
             for (int i = 0; i < m_services.Count; i++)
             {
                 Console.WriteLine("Loading " + m_services[i].ServiceName);
                 if (!m_services[i].Open())
-                {                    
+                {
                     return false;
                 }
             }
-            DockMdiChildren();
-            Application.Run();            
-            return true;           
+
+            return true;
         }
 
         public bool Close()
@@ -243,8 +256,15 @@ namespace Uiml.Gummy.Kernel
             AttachService(new CanvasService());
             AttachService(new SpaceService());
             AttachService(new WireFrameService());
-            AttachService(new PropertiesService());            
-            
+            AttachService(new PropertiesService());
+        }
+
+        public void ShowServices()
+        {
+            // GUI stuff
+            InitializeMdiChildren();
+            OpenChildren();
+            DockMdiChildren();
         }
 
         public void WindowCascade_Clicked(object sender, EventArgs args)
@@ -272,6 +292,8 @@ namespace Uiml.Gummy.Kernel
 
         public void FileNew_Clicked(object sender, EventArgs args) 
         {
+            CurrentDocument = Document.New();
+
             NewWizard wizard = new NewWizard();
 
             foreach (IService s in Services)
@@ -284,18 +306,57 @@ namespace Uiml.Gummy.Kernel
 
             wizard.Start();
             wizard.ShowDialog();
+
+            if (wizard.DialogResult == DialogResult.OK)
+                ShowServices();
         }
 
         public void FileOpen_Clicked(object sender, EventArgs args)
         {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "UIML files (*.uiml)|*.uiml";
+            ofd.ShowDialog();
+            Stream stream = ofd.OpenFile();
+            // TODO: ask for confirmation
+
+            CurrentDocument = Document.Open(stream);
         }
 
         public void FileSave_Clicked(object sender, EventArgs args)
         {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.AddExtension = true;
+            sfd.Filter = "UIML files (*.uiml)|*.uiml";
+            sfd.ShowDialog();
+            Stream stream = sfd.OpenFile();
+
+            CurrentDocument.Save(stream);
         }
 
         public void FileRun_Clicked(object sender, EventArgs args)
         {
+            // create temporary file for current design
+            string fileName = Path.GetTempFileName();
+            FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
+            CurrentDocument.Save(stream);
+
+            // run renderer on this file
+            string uimlArgs = string.Format("-uiml {0}", fileName);
+            /*string libArgs = string.Empty;
+
+            try
+            {
+                string libFile = ((ApplicationGlueServiceConfiguration)GetService("application-glue").ServiceConfiguration).Assembly.Location;
+                libArgs = string.Format("-libs {0}", Path.ChangeExtension(libFile, null));
+            }
+            catch
+            {
+            }*/
+
+            string uimldotnetArgs = uimlArgs/* + " " + libArgs*/;
+            ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
+            psi.ErrorDialog = true;
+            Process.Start(psi);
         }
 
         public void FileQuit_Clicked(object sender, EventArgs args)
