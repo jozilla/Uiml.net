@@ -75,6 +75,12 @@ namespace Uiml.Gummy.Kernel
             Menu = new MainMenu();
             MenuItem file = Menu.MenuItems.Add("&File");
             file.MenuItems.Add("&New", this.FileNew_Clicked);
+            file.MenuItems.Add("&Open", this.FileOpen_Clicked);
+            file.MenuItems.Add("-"); // separator
+            file.MenuItems.Add("&Save", this.FileSave_Clicked);
+            file.MenuItems.Add("-"); // separator
+            file.MenuItems.Add("&Run", this.FileRun_Clicked);
+            file.MenuItems.Add("-"); // separator
             file.MenuItems.Add("&Quit", this.FileQuit_Clicked);
             MenuItem windows = Menu.MenuItems.Add("&Window");
             windows.MenuItems.Add("&Docked", this.WindowDocked_Clicked);
@@ -264,11 +270,6 @@ namespace Uiml.Gummy.Kernel
             DockMdiChildren();
         }
 
-        public void FileQuit_Clicked(object sender, EventArgs args)
-        {
-            Close();
-        }
-
         public void FileNew_Clicked(object sender, EventArgs args) 
         {
             NewWizard wizard = new NewWizard();
@@ -284,6 +285,23 @@ namespace Uiml.Gummy.Kernel
             wizard.Start();
             wizard.ShowDialog();
             // TODO: notify services that their settings are changed
+        }
+
+        public void FileOpen_Clicked(object sender, EventArgs args)
+        {
+        }
+
+        public void FileSave_Clicked(object sender, EventArgs args)
+        {
+        }
+
+        public void FileRun_Clicked(object sender, EventArgs args)
+        {
+        }
+
+        public void FileQuit_Clicked(object sender, EventArgs args)
+        {
+            Close();
         }
 
         public void DesignerKernel_FormClosing(object sender, EventArgs args)
