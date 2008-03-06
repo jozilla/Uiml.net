@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Xml;
 
 using Uiml.Gummy.Domain;
 
@@ -47,6 +48,8 @@ namespace Uiml.Gummy.Kernel
 
         public void Save(Stream s)
         {
+            XmlTextWriter xmlw = new XmlTextWriter(s, null);
+            xmlw.Formatting = Formatting.Indented;
         }
     }
 }

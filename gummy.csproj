@@ -90,6 +90,12 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.Designer.cs">
       <DependentUpon>WireFrameController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\DesignerKernel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\DesignerKernel.Designer.cs">
+      <DependentUpon>DesignerKernel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceConfiguration.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceContainer.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.cs">
@@ -130,9 +136,6 @@
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectAttribute.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectContainer.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectFactory.cs" />
-    <Compile Include="Uiml\Gummy\Kernel\DesignerKernel.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Selected\SelectedDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\CanvasService.cs">
       <SubType>Form</SubType>
@@ -189,8 +192,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\DesignerKernel.resx">
-      <DependentUpon>DesignerKernel.cs</DependentUpon>
       <SubType>Designer</SubType>
+      <DependentUpon>DesignerKernel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\NewWizard.resx">
       <SubType>Designer</SubType>
