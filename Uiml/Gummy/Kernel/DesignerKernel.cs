@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.IO;
-using System.Diagnostics;
 
 using Uiml.Gummy.Serialize;
 using Uiml.Gummy.Kernel.Services;
@@ -336,29 +335,7 @@ namespace Uiml.Gummy.Kernel
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // create temporary file for current design
-            string fileName = Path.GetTempFileName();
-            FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
-            CurrentDocument.Save(stream);
-            stream.Close();
-
-            // run renderer on this file
-            string uimlArgs = string.Format("-uiml \"{0}\"", fileName);
-            /*string libArgs = string.Empty;
-
-            try
-            {
-                string libFile = ((ApplicationGlueServiceConfiguration)GetService("application-glue").ServiceConfiguration).Assembly.Location;
-                libArgs = string.Format("-libs {0}", Path.ChangeExtension(libFile, null));
-            }
-            catch
-            {
-            }*/
-
-            string uimldotnetArgs = uimlArgs/* + " " + libArgs*/;
-            ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
-            psi.ErrorDialog = true;
-            Process.Start(psi);
+            CurrentDocument.Run();
         }
 
         private void dockedToolStripMenuItem_Click(object sender, EventArgs e)
