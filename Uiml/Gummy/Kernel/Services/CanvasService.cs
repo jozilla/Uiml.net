@@ -16,16 +16,14 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
     {
-        Size m_canvasSize = new Size(20,20);
         Rectangle m_uiRectangle = new Rectangle(0,0,20,20);
         Point m_origin = new Point(0, 0);        
         List<Rectangle> m_modifiers = new List<Rectangle>();
         int m_boxSize = 8;
         BoxID m_clickedBox = BoxID.None;
         int m_rasterBlockSize = 40;
-
-        public event EventHandler CanvasResized;        
-        private CanvasServiceConfiguration m_config;
+   
+        CanvasServiceConfiguration m_config;
 
         Size m_wireFrameSize = Size.Empty;
         List<Line> m_wireFrameLines = new List<Line>();
@@ -46,30 +44,90 @@ namespace Uiml.Gummy.Kernel.Services
             AllowDrop = true;
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
-            BackColor = Color.DarkGray;
-            //DomainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+            BackColor = Color.DarkGray;            
             DesignerKernel.Instance.CurrentDocumentChanged += new EventHandler(currentDocumentChanged);
             Paint += new PaintEventHandler(painting);
             
             DoubleBuffered = true;
-            CanvasSize = new Size(100, 100);
+            //CanvasSize = new Size(100, 100);
 
             MouseDown += new MouseEventHandler(onMouseDown);
             MouseMove += new MouseEventHandler(onMouseMove);
             MouseUp += new MouseEventHandler(onMouseUp);
 
-            m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
+            m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(domainObjectSelected);
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
                        
             m_commands.Add(new PasteDomainObject());
         }
 
         void currentDocumentChanged(object sender, EventArgs e)
-        {
-            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+        {            
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectAdded += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectAdded);
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectRemoved += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectRemoved);
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectToBack += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectOrderChanged);
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectToFront += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectOrderChanged);
+            DesignerKernel.Instance.CurrentDocument.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizeUpdated);
         }
 
-        void onDomainObjectSelected(DomainObject dom, EventArgs e)
+        void screenSizeUpdated(object sender, Size newSize)
+        {            
+            m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, newSize.Width, newSize.Height);
+            Refresh();
+            DomainObjectCollection.Enumerator domEnum = DesignerKernel.Instance.CurrentDocument.DomainObjects.GetEnumerator();
+            while (domEnum.MoveNext())
+            {
+                domEnum.Current.UpdateToNewSize(newSize);
+            }
+        }
+
+        
+        void domainObjectOrderChanged(object sender, List<DomainObject> dom)
+        {            
+            foreach (Control c in Controls)
+            {
+                if (c is VisualDomainObject)
+                {
+                    VisualDomainObject visDom = (VisualDomainObject)c;
+                    if (visDom.DomainObject == dom[0])
+                    {
+                        Controls.SetChildIndex(visDom, DesignerKernel.Instance.CurrentDocument.DomainObjects.IndexOf(dom[0]));
+                    }                    
+                }
+            }
+        }
+
+        void domainObjectRemoved(object sender, List<DomainObject> dom)
+        {
+            foreach (DomainObject d in dom)
+            {
+                foreach (Control c in Controls)
+                {
+                    if (c is VisualDomainObject)
+                    {
+                        VisualDomainObject visDom = (VisualDomainObject)c;
+                        if (visDom.DomainObject == d)
+                        {
+                            Controls.Remove(c);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        void domainObjectAdded(object sender, List<DomainObject> dom)
+        {
+            foreach (DomainObject d in dom)
+            {
+                VisualDomainObject visDom = new VisualDomainObject(d);
+                visDom.State = new CanvasVisualDomainObjectState();
+                Controls.Add(visDom);
+                visDom.BringToFront();
+            }
+        }
+
+        void domainObjectSelected(DomainObject dom, EventArgs e)
         {
             if (WireFramed)
             {
@@ -94,13 +152,13 @@ namespace Uiml.Gummy.Kernel.Services
                 switch (m_clickedBox)
                 {
                     case BoxID.MiddleRight:
-                        CanvasSize = new Size(e.X - m_origin.X, CanvasSize.Height);
+                        DesignerKernel.Instance.CurrentDocument.CurrentSize = new Size(e.X - m_origin.X, DesignerKernel.Instance.CurrentDocument.CurrentSize.Height);
                         break;
                     case BoxID.BottomMiddle:
-                        CanvasSize = new Size(CanvasSize.Width,e.Y - m_origin.Y);
+                        DesignerKernel.Instance.CurrentDocument.CurrentSize = new Size(DesignerKernel.Instance.CurrentDocument.CurrentSize.Width, e.Y - m_origin.Y);
                         break;
                     case BoxID.BottomRight:
-                        CanvasSize = new Size(e.X - m_origin.X, e.Y - m_origin.Y);
+                        DesignerKernel.Instance.CurrentDocument.CurrentSize = new Size(e.X - m_origin.X, e.Y - m_origin.Y);
                         break;
                 }
             }            
@@ -117,58 +175,7 @@ namespace Uiml.Gummy.Kernel.Services
                 MenuFactory.CreateMenu(m_commands, ref menu);
                 contextMenu.Show(this, e.Location);
             }
-        }
-
-        public void UpdateToNewSize()
-        {
-            //Update every domainobject to its new properties...
-            DomainObjectCollection.Enumerator domEnum = DesignerKernel.Instance.CurrentDocument.DomainObjects.GetEnumerator();
-            while (domEnum.MoveNext())
-            {
-                domEnum.Current.UpdateToNewSize(CanvasSize);
-            }
-        }
-
-        void onDomainObjectCollectionUpdated(object sender, DomainObjectCollectionEventArgs e)
-        {
-            switch (e.State)
-            {
-                case DomainObjectCollectionEventArgs.STATE.MOREADDED:
-                case DomainObjectCollectionEventArgs.STATE.MOREREMOVED:
-                    Controls.Clear();
-                    for (int i = 0; i < DesignerKernel.Instance.CurrentDocument.DomainObjects.Count; i++)
-                    {
-                        VisualDomainObject visDom = new VisualDomainObject(DesignerKernel.Instance.CurrentDocument.DomainObjects[i]);
-                        visDom.State = new CanvasVisualDomainObjectState();
-                        Controls.Add(visDom);
-                    }
-                    bringLinesToFront();
-                    break;
-                case DomainObjectCollectionEventArgs.STATE.ONEADDED:
-                    VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
-                    vDom.State = new CanvasVisualDomainObjectState();
-                    Controls.Add(vDom);
-                    vDom.BringToFront();
-                    bringLinesToFront();
-                    break;
-                case DomainObjectCollectionEventArgs.STATE.ONEREMOVED:
-                    foreach(Control c in Controls)
-                    {
-                        if( c is VisualDomainObject)
-                        {
-                            VisualDomainObject vis = (VisualDomainObject)c;
-                            if (vis.DomainObject == e.DomainObject)
-                            {
-                                Controls.Remove(c);
-                                break;
-                            }
-                        }
-                    }
-                    bringLinesToFront();
-                    break;
-            }
-           
-        }
+        }    
 
         public bool Open()
         {
@@ -215,7 +222,7 @@ namespace Uiml.Gummy.Kernel.Services
                 domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
                 DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(domCloned);
-                ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
+                ExampleRepository.Instance.AddExampleDomainObject(DesignerKernel.Instance.CurrentDocument.CurrentSize, (DomainObject)domCloned.Clone());
             }          
         }       
 
@@ -274,9 +281,9 @@ namespace Uiml.Gummy.Kernel.Services
         void recalculateModifiers()
         {
             m_modifiers.Clear();
-            m_modifiers.Add(new Rectangle(CanvasSize.Width / 2 - m_boxSize / 2, CanvasSize.Height - m_boxSize/2, m_boxSize, m_boxSize));
-            m_modifiers.Add(new Rectangle(CanvasSize.Width - m_boxSize/2, CanvasSize.Height - m_boxSize/2, m_boxSize, m_boxSize));
-            m_modifiers.Add(new Rectangle(CanvasSize.Width - m_boxSize/2, CanvasSize.Height / 2 - m_boxSize / 2, m_boxSize, m_boxSize));            
+            m_modifiers.Add(new Rectangle(DesignerKernel.Instance.CurrentDocument.CurrentSize.Width / 2 - m_boxSize / 2, DesignerKernel.Instance.CurrentDocument.CurrentSize.Height - m_boxSize / 2, m_boxSize, m_boxSize));
+            m_modifiers.Add(new Rectangle(DesignerKernel.Instance.CurrentDocument.CurrentSize.Width - m_boxSize / 2, DesignerKernel.Instance.CurrentDocument.CurrentSize.Height - m_boxSize / 2, m_boxSize, m_boxSize));
+            m_modifiers.Add(new Rectangle(DesignerKernel.Instance.CurrentDocument.CurrentSize.Width - m_boxSize / 2, DesignerKernel.Instance.CurrentDocument.CurrentSize.Height / 2 - m_boxSize / 2, m_boxSize, m_boxSize));            
         }
 
         private void InitializeComponent()
@@ -294,34 +301,7 @@ namespace Uiml.Gummy.Kernel.Services
         private void CanvasService_Load(object sender, EventArgs e)
         {
 
-        }        
-
-        //Deprecated -> may not be used anymore
-        /*
-        public DomainObjectCollection DomainObjects
-        {
-            get
-            {
-                return DesignerKernel.Instance.CurrentDocument.DomainObjects;
-            }           
-        }*/
-
-        public Size CanvasSize
-        {
-            get
-            {
-                return m_canvasSize;
-            }
-            set
-            {
-                m_canvasSize = value;                
-                m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);                
-                if (CanvasResized != null)
-                    CanvasResized(this, new EventArgs());
-                Refresh();
-            }
         }
-
 
         public IServiceConfiguration ServiceConfiguration
         {
@@ -403,7 +383,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void NotifyConfigurationChanged()
         {
-            this.CanvasSize = m_config.ScreenSize;
+            DesignerKernel.Instance.CurrentDocument.CurrentSize = m_config.ScreenSize;
         }
     }
 }
