@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 using Uiml.Gummy.Serialize;
 using Uiml.Gummy.Kernel.Services;
+using Uiml.Gummy.Kernel.Services.Commands;
 
 using System.Windows.Forms;
 using System.Drawing;
@@ -302,11 +303,13 @@ namespace Uiml.Gummy.Kernel
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "UIML files (*.uiml)|*.uiml";
-            ofd.ShowDialog();
-            Stream stream = ofd.OpenFile();
-            // TODO: ask for confirmation
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Stream stream = ofd.OpenFile();
+                // TODO: ask for confirmation
 
-            CurrentDocument = Document.Open(stream);
+                CurrentDocument = Document.Open(stream);
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -405,6 +408,30 @@ namespace Uiml.Gummy.Kernel
             }
             else
                 toolStripProgressBar.Visible = true;
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CutDomainObject cutDom = new CutDomainObject();
+            cutDom.Execute();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyDomainObject copyDomain = new CopyDomainObject();
+            copyDomain.Execute();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteDomainObject pasteDomain = new PasteDomainObject(new Point(10, 10));
+            pasteDomain.Execute();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            DeleteDomainObject deleteDomain = new DeleteDomainObject();
+            deleteDomain.Execute();
         }
     }
 }

@@ -146,8 +146,10 @@
     </Compile>
     <Compile Include="Uiml\Gummy\Serialize\ActiveSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\BaseManipulator.cs" />
+    <Compile Include="Uiml\Gummy\Serialize\IPropertyControlFactory.cs" />
     <Compile Include="Uiml\Gummy\Serialize\IUimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\PositionManipulator.cs" />
+    <Compile Include="Uiml\Gummy\Serialize\PropertyControlFactory.cs" />
     <Compile Include="Uiml\Gummy\Serialize\UimlSerializer.cs" />
     <Compile Include="Uiml\Gummy\Serialize\SizeManipulator.cs" />
     <Compile Include="Uiml\Gummy\Visual\BorderDrawer.cs" />
@@ -233,6 +235,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="images\delete.ico" />
     <Content Include="images\empty_image.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
