@@ -4,7 +4,9 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Drawing;
+using System.Diagnostics;
 
+using System.Collections;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Serialize;
 
@@ -37,6 +39,28 @@ namespace Uiml.Gummy.Kernel
         public Document()
         {
             m_formContainer = ActiveSerializer.Instance.Serializer.CreateUIContainer();
+        }
+
+        public Document(Stream s) : this()
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.Load(s);
+            UimlDocument uiml = new UimlDocument(xml.DocumentElement);
+
+            ArrayList parts = ((Structure)uiml.UInterface.UStructure[0]).Children;
+
+            if (parts != null && parts.Count > 0)
+            {
+                int i = 0;
+                foreach (Part p in ((Structure)uiml.UInterface.UStructure[0]).Children)
+                {
+                    if (i == 0)
+                    {
+                    }
+
+                    i++;
+                }
+            }
         }
 
         public DomainObject FormContainer
@@ -118,14 +142,40 @@ namespace Uiml.Gummy.Kernel
 
         public static Document Open(Stream s)
         {
-            return null;
-            //return new Document(s);
+            return new Document(s);
         }
 
         public void Save(Stream s)
         {
             XmlDocument doc = Serialize();
             doc.Save(s);
+        }
+
+        public void Run()
+        {
+            // create temporary file
+            string fileName = Path.GetTempFileName();
+            FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
+            Save(stream);
+            stream.Close();
+
+            // run renderer on this file
+            string uimlArgs = string.Format("-uiml \"{0}\"", fileName);
+            /*string libArgs = string.Empty;
+
+            try
+            {
+                string libFile = ((ApplicationGlueServiceConfiguration)GetService("application-glue").ServiceConfiguration).Assembly.Location;
+                libArgs = string.Format("-libs {0}", Path.ChangeExtension(libFile, null));
+            }
+            catch
+            {
+            }*/
+
+            string uimldotnetArgs = uimlArgs/* + " " + libArgs*/;
+            ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
+            psi.ErrorDialog = true;
+            Process.Start(psi);
         }
     }
 }
