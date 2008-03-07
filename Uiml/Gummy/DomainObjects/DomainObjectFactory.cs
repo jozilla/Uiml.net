@@ -133,5 +133,19 @@ namespace Uiml.Gummy.Domain
             }
             return null;
         }
+
+        public DomainObject Create(Part p, List<Property> propList)
+        {
+            DomainObject dom = Create(p.Class, p.Identifier);
+            foreach(Property prop in propList)
+            {
+                Property foundProp = dom.FindProperty(prop.Name);
+                if (foundProp != null)
+                {
+                    foundProp.Value = prop.Value;
+                }
+            }
+            return dom;
+        }
     }
 }

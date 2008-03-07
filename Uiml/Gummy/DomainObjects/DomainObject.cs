@@ -7,6 +7,7 @@ using System.Drawing;
 using Uiml.Gummy.Serialize;
 using Uiml;
 using Uiml.Gummy.Interpolation;
+using Shape;
 
 namespace Uiml.Gummy.Domain
 {
@@ -29,12 +30,19 @@ namespace Uiml.Gummy.Domain
         public delegate void DomainObjectUpdateHandler(object sender, EventArgs e);
 
 
-        public event DomainObjectUpdateHandler DomainObjectUpdated;        
+        public event DomainObjectUpdateHandler DomainObjectUpdated;
+
+        private IShape m_shape = null;
         		
 		public DomainObject()
 		{
             //The default interpolation algorithm
             m_interpolationAlgorithm = new LinearInterpolationAlgorithm(this);
+            Polygon pol = new Polygon();
+            pol.AddPoint(new Point(10, 10));
+            pol.AddPoint(new Point(20, 20));
+            pol.AddPoint(new Point(30, 80));
+            m_shape = pol;
 		}
 
         public object Clone()
@@ -102,6 +110,18 @@ namespace Uiml.Gummy.Domain
             {
                 m_sizeManipulator.Size = value;
                 Updated();
+            }
+        }
+
+        public IShape Shape
+        {
+            get
+            {
+                return m_shape;
+            }
+            set
+            {
+                m_shape = value;
             }
         }
 

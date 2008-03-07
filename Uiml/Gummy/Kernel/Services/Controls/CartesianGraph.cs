@@ -310,7 +310,12 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             g.FillRectangle(Brushes.White, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);  
             drawXAxis(g);
             drawYAxis(g);           
-            g.DrawRectangle(Pens.Black, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);            
+            g.DrawRectangle(Pens.Black, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);
+
+            if (Selected.SelectedDomainObject.Instance.Selected != null)
+            {
+                Selected.SelectedDomainObject.Instance.Selected.Shape.Paint(g, m_origin);
+            }
 
             for (int i = 0; i < m_examples.Count; i++)
             {
@@ -323,6 +328,11 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                     g.FillRectangle(Brushes.YellowGreen, m_examples[i]);
                     g.DrawRectangle(Pens.Chocolate, m_examples[i]);                    
                 }
+            }
+
+            if (Selected.SelectedDomainObject.Instance.Selected != null)
+            {
+                Selected.SelectedDomainObject.Instance.Selected.Shape.Paint(g, m_origin);
             }
 
             SolidBrush semiTransUIBrush = new SolidBrush(Color.FromArgb(50,Color.Gray));

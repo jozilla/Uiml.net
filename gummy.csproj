@@ -41,12 +41,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Shape\IShape.cs" />
     <Compile Include="Shape\Line.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Shape\Line.Designer.cs">
       <DependentUpon>Line.cs</DependentUpon>
     </Compile>
+    <Compile Include="Shape\Polygon.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectCollection.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\ExampleRepository.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\LinearInterpolationAlgorithm.cs" />
