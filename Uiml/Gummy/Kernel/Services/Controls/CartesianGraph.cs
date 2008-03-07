@@ -11,7 +11,7 @@ using Uiml.Gummy.Kernel.Services.Commands;
 
 namespace Uiml.Gummy.Kernel.Services.Controls
 {
-    public delegate void SizeChangeHandler(object sender, Size size);
+    public delegate void SizeChangeHandler(object sender, Size size);    
 
     public partial class CartesianGraph : UserControl
     {        
@@ -29,15 +29,16 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
         private int m_xIncrement = 1;
         private int m_yIncrement = 1;
-        private Dictionary<Size,Point> m_sizeToPoint = new Dictionary<Size,Point>();
+        private Dictionary<Size, Point> m_sizeToPoint = new Dictionary<Size, Point>();
         private Dictionary<Point, Size> m_pointToSize = new Dictionary<Point, Size>();
+        private Mode m_mode = Mode.CURSOR;
 
-        public event SizeChangeHandler DesignSpaceCursorChanged;
+        public event SizeChangeHandler DesignSpaceCursorChanged;        
         //public event SizeChangeHandler WireFrameExampleSelected;
 
         public CartesianGraph()
         {
-            InitializeComponent();
+            InitializeComponent();           
             this.DoubleBuffered = true;
 
             Paint += new PaintEventHandler(onPaintGraph);
@@ -300,6 +301,17 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             }
         }
 
+        public Mode Mode
+        {
+            get
+            {
+                return m_mode;
+            }
+            set
+            {
+                m_mode = value;
+            }
+        }
 
         void onPaintGraph(object sender, PaintEventArgs e)
         {
@@ -411,9 +423,9 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         {
             this.SuspendLayout();
             // 
-            // Graph
+            // CartesianGraph
             // 
-            this.Name = "Graph";
+            this.Name = "CartesianGraph";
             this.Load += new System.EventHandler(this.Graph_Load_1);
             this.ResumeLayout(false);
 

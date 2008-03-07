@@ -359,6 +359,7 @@ namespace Uiml.Gummy.Kernel
             ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
             psi.ErrorDialog = true;
             Process.Start(psi);
+            
         }
 
         private void dockedToolStripMenuItem_Click(object sender, EventArgs e)

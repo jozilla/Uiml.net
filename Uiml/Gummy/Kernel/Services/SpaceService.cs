@@ -16,7 +16,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public SpaceService()
         {
-            InitializeComponent();                        
+            InitializeComponent();            
         }
 
         public void Init()

@@ -34,25 +34,21 @@ namespace Uiml.Gummy.Kernel.Services
             this.m_cartesianGraphControl = new Uiml.Gummy.Kernel.Services.Controls.CartesianGraph();
             this.SuspendLayout();
             // 
-            // graph1
+            // m_cartesianGraphControl
             // 
             this.m_cartesianGraphControl.Cursor = System.Windows.Forms.Cursors.Default;
             this.m_cartesianGraphControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_cartesianGraphControl.Location = new System.Drawing.Point(0, 0);
-            this.m_cartesianGraphControl.Name = "graph1";
+            this.m_cartesianGraphControl.Mode = Uiml.Gummy.Kernel.Services.Controls.Mode.CURSOR;
+            this.m_cartesianGraphControl.Name = "m_cartesianGraphControl";
             this.m_cartesianGraphControl.Size = new System.Drawing.Size(377, 314);
             this.m_cartesianGraphControl.TabIndex = 0;
             // 
             // SpaceService
             // 
-            //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(377, 314);
             this.Controls.Add(this.m_cartesianGraphControl);
-            this.Name = "SpaceService";
-            //this.Opacity = 0.8;
+            this.Size = new System.Drawing.Size(377, 314);
             this.Text = "2D Example Space";
-            //this.TransparencyKey = System.Drawing.Color.Transparent;
             this.ResumeLayout(false);
 
         }
