@@ -34,7 +34,7 @@ namespace Uiml.Gummy.Domain
 		public DomainObject()
 		{
             //The default interpolation algorithm
-            m_interpolationAlgorithm = new CosineInterpolationAlgorithm(this);
+            m_interpolationAlgorithm = new LinearInterpolationAlgorithm(this);
 		}
 
         public object Clone()

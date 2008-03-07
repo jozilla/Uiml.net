@@ -302,7 +302,7 @@ namespace Uiml.Gummy.Visual
         private void addSnapshot()
         {
             ExampleRepository.Instance.AddExampleDomainObject(
-                        ((CanvasService)DesignerKernel.Instance.GetService("gummy-canvas")).CanvasSize,
+                        DesignerKernel.Instance.CurrentDocument.CurrentSize,
                         (DomainObject)m_visDom.DomainObject.Clone()
                     );
         }
