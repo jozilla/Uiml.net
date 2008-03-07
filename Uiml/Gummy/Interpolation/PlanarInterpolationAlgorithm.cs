@@ -56,7 +56,6 @@ namespace Uiml.Gummy.Interpolation
             if (_Z == 0.0d)
                 _Z = 0.1d;
             double z = (_A - x - y) / _Z;
-            //Console.WriteLine("width for {0},{1} = {2}", size.Width, size.Height, z);
             if (z <= 0)
                 z = 1.0d;
 

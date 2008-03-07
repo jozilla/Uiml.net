@@ -38,7 +38,7 @@ namespace Uiml.Gummy.Kernel.Services
             wfController.Dock = DockStyle.Fill;
             if (bottom != null)
             {
-                bottom.Dock = DockStyle.Bottom;
+                bottom.Dock = DockStyle.Bottom;                
                 Controls.Add(bottom);
             }
         }
