@@ -16,16 +16,14 @@ namespace Uiml.Gummy.Kernel.Services
 {
     public class CanvasService : Form, IService
     {
-        Size m_canvasSize = new Size(20,20);
         Rectangle m_uiRectangle = new Rectangle(0,0,20,20);
         Point m_origin = new Point(0, 0);        
         List<Rectangle> m_modifiers = new List<Rectangle>();
         int m_boxSize = 8;
         BoxID m_clickedBox = BoxID.None;
         int m_rasterBlockSize = 40;
-
-        public event EventHandler CanvasResized;        
-        private CanvasServiceConfiguration m_config;
+   
+        CanvasServiceConfiguration m_config;
 
         Size m_wireFrameSize = Size.Empty;
         List<Line> m_wireFrameLines = new List<Line>();
@@ -51,7 +49,7 @@ namespace Uiml.Gummy.Kernel.Services
             Paint += new PaintEventHandler(painting);
             
             DoubleBuffered = true;
-            CanvasSize = new Size(100, 100);
+            //CanvasSize = new Size(100, 100);
 
             MouseDown += new MouseEventHandler(onMouseDown);
             MouseMove += new MouseEventHandler(onMouseMove);
@@ -69,6 +67,18 @@ namespace Uiml.Gummy.Kernel.Services
             DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectRemoved += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectRemoved);
             DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectToBack += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectOrderChanged);
             DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectToFront += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectOrderChanged);
+            DesignerKernel.Instance.CurrentDocument.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizeUpdated);
+        }
+
+        void screenSizeUpdated(object sender, Size newSize)
+        {
+            m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, newSize.Width, newSize.Height);
+            Refresh();
+            DomainObjectCollection.Enumerator domEnum = DesignerKernel.Instance.CurrentDocument.DomainObjects.GetEnumerator();
+            while (domEnum.MoveNext())
+            {
+                domEnum.Current.UpdateToNewSize(newSize);
+            }
         }
 
         
@@ -142,13 +152,13 @@ namespace Uiml.Gummy.Kernel.Services
                 switch (m_clickedBox)
                 {
                     case BoxID.MiddleRight:
-                        CanvasSize = new Size(e.X - m_origin.X, CanvasSize.Height);
+                        DesignerKernel.Instance.CurrentDocument.CurrentSize = new Size(e.X - m_origin.X, DesignerKernel.Instance.CurrentDocument.CurrentSize.Height);
                         break;
                     case BoxID.BottomMiddle:
-                        CanvasSize = new Size(CanvasSize.Width,e.Y - m_origin.Y);
+                        DesignerKernel.Instance.CurrentDocument.CurrentSize = new Size(DesignerKernel.Instance.CurrentDocument.CurrentSize.Width, e.Y - m_origin.Y);
                         break;
                     case BoxID.BottomRight:
-                        CanvasSize = new Size(e.X - m_origin.X, e.Y - m_origin.Y);
+                        DesignerKernel.Instance.CurrentDocument.CurrentSize = new Size(e.X - m_origin.X, e.Y - m_origin.Y);
                         break;
                 }
             }            
@@ -165,17 +175,7 @@ namespace Uiml.Gummy.Kernel.Services
                 MenuFactory.CreateMenu(m_commands, ref menu);
                 contextMenu.Show(this, e.Location);
             }
-        }
-
-        public void UpdateToNewSize()
-        {
-            //Update every domainobject to its new properties...
-            DomainObjectCollection.Enumerator domEnum = DesignerKernel.Instance.CurrentDocument.DomainObjects.GetEnumerator();
-            while (domEnum.MoveNext())
-            {
-                domEnum.Current.UpdateToNewSize(CanvasSize);
-            }
-        }     
+        }    
 
         public bool Open()
         {
@@ -222,7 +222,7 @@ namespace Uiml.Gummy.Kernel.Services
                 domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
                 DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(domCloned);
-                ExampleRepository.Instance.AddExampleDomainObject(CanvasSize, (DomainObject)domCloned.Clone());
+                ExampleRepository.Instance.AddExampleDomainObject(DesignerKernel.Instance.CurrentDocument.CurrentSize, (DomainObject)domCloned.Clone());
             }          
         }       
 
@@ -281,9 +281,9 @@ namespace Uiml.Gummy.Kernel.Services
         void recalculateModifiers()
         {
             m_modifiers.Clear();
-            m_modifiers.Add(new Rectangle(CanvasSize.Width / 2 - m_boxSize / 2, CanvasSize.Height - m_boxSize/2, m_boxSize, m_boxSize));
-            m_modifiers.Add(new Rectangle(CanvasSize.Width - m_boxSize/2, CanvasSize.Height - m_boxSize/2, m_boxSize, m_boxSize));
-            m_modifiers.Add(new Rectangle(CanvasSize.Width - m_boxSize/2, CanvasSize.Height / 2 - m_boxSize / 2, m_boxSize, m_boxSize));            
+            m_modifiers.Add(new Rectangle(DesignerKernel.Instance.CurrentDocument.CurrentSize.Width / 2 - m_boxSize / 2, DesignerKernel.Instance.CurrentDocument.CurrentSize.Height - m_boxSize / 2, m_boxSize, m_boxSize));
+            m_modifiers.Add(new Rectangle(DesignerKernel.Instance.CurrentDocument.CurrentSize.Width - m_boxSize / 2, DesignerKernel.Instance.CurrentDocument.CurrentSize.Height - m_boxSize / 2, m_boxSize, m_boxSize));
+            m_modifiers.Add(new Rectangle(DesignerKernel.Instance.CurrentDocument.CurrentSize.Width - m_boxSize / 2, DesignerKernel.Instance.CurrentDocument.CurrentSize.Height / 2 - m_boxSize / 2, m_boxSize, m_boxSize));            
         }
 
         private void InitializeComponent()
@@ -303,21 +303,19 @@ namespace Uiml.Gummy.Kernel.Services
 
         }        
         
-        public Size CanvasSize
+        /*private Size CanvasSize
         {
             get
             {
-                return m_canvasSize;
+                return DesignerKernel.Instance.CurrentDocument.CurrentSize;
             }
             set
             {
-                m_canvasSize = value;                
-                m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);                
-                if (CanvasResized != null)
-                    CanvasResized(this, new EventArgs());
+                DesignerKernel.Instance.CurrentDocument.CurrentSize =               
+                m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);                               
                 Refresh();
             }
-        }
+        }*/
 
 
         public IServiceConfiguration ServiceConfiguration
@@ -400,7 +398,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public void NotifyConfigurationChanged()
         {
-            this.CanvasSize = m_config.ScreenSize;
+            DesignerKernel.Instance.CurrentDocument.CurrentSize = m_config.ScreenSize;
         }
     }
 }
