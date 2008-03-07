@@ -71,7 +71,7 @@ namespace Uiml.Gummy.Kernel.Services
         }
 
         void screenSizeUpdated(object sender, Size newSize)
-        {
+        {            
             m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, newSize.Width, newSize.Height);
             Refresh();
             DomainObjectCollection.Enumerator domEnum = DesignerKernel.Instance.CurrentDocument.DomainObjects.GetEnumerator();
@@ -301,22 +301,7 @@ namespace Uiml.Gummy.Kernel.Services
         private void CanvasService_Load(object sender, EventArgs e)
         {
 
-        }        
-        
-        /*private Size CanvasSize
-        {
-            get
-            {
-                return DesignerKernel.Instance.CurrentDocument.CurrentSize;
-            }
-            set
-            {
-                DesignerKernel.Instance.CurrentDocument.CurrentSize =               
-                m_uiRectangle = new Rectangle(m_origin.X, m_origin.Y, CanvasSize.Width, CanvasSize.Height);                               
-                Refresh();
-            }
-        }*/
-
+        }
 
         public IServiceConfiguration ServiceConfiguration
         {

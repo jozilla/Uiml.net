@@ -23,6 +23,8 @@ namespace Uiml.Gummy.Kernel
     {
         private DomainObjectCollection m_domObjects = new DomainObjectCollection();
         private DomainObject m_formContainer = null;
+        //TODO: Add the wireframe data to the document
+        private Size m_wireFrameSize = Size.Empty;
 
         public delegate void ScreenSizeUpdateHandler(object sender, Size newSize);
         public event ScreenSizeUpdateHandler ScreenSizeUpdated;
