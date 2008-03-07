@@ -11,7 +11,6 @@ using Uiml.Gummy.Visual;
 
 namespace Uiml.Gummy.Serialize.SWF
 {
-
 	public class SWFUimlSerializer : UimlSerializer
 	{
 		SWFRenderer m_renderer = null;        
@@ -106,6 +105,8 @@ namespace Uiml.Gummy.Serialize.SWF
         public override bool Accept(DProperty dprop, DClass dclass)
         {
             if (dclass.Identifier == "TabPage" && dprop.Identifier != "label")
+                return false;
+            if (dprop.Identifier == "orientation")
                 return false;
             if (dprop.Identifier == "bottom")
                 return false;
