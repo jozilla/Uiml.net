@@ -13,7 +13,7 @@ using System.Drawing;
 
 namespace Uiml.Gummy.Kernel
 {
-    public class DesignerKernel : Form, IService, IServiceContainer
+    public partial class DesignerKernel : Form, IService, IServiceContainer
     {
         List<IService> m_services = new List<IService>();
         DesignerLoader m_loader = new DesignerLoader();
@@ -28,9 +28,12 @@ namespace Uiml.Gummy.Kernel
         {
             ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer(m_platform);
             Application.EnableVisualStyles(); // visual styles (e.g. Windows Vista, XP, Linux, etc.)
+            
+            InitializeComponent();
         }
 
-        private DesignerKernel(string vocabulary): base()
+        private DesignerKernel(string vocabulary)
+            : base()
         {
             //TODO: needs to be loaded from a config file or dialog window
             //ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer("idtv-1.0");
@@ -67,7 +70,8 @@ namespace Uiml.Gummy.Kernel
         public Document CurrentDocument
         {
             get { return m_document; }
-            set { 
+            set
+            {
                 m_document = value;
                 if (CurrentDocumentChanged != null)
                     CurrentDocumentChanged(this, null);
@@ -83,31 +87,7 @@ namespace Uiml.Gummy.Kernel
 
         private void InitializeComponents()
         {
-            Text = "Gummy";
-            IsMdiContainer = true;
-            WindowState = FormWindowState.Maximized;
-            FormClosing += new FormClosingEventHandler(DesignerKernel_FormClosing);
 
-            Menu = new MainMenu();
-            MenuItem file = Menu.MenuItems.Add("&File");
-            file.MenuItems.Add("&New", this.FileNew_Clicked);
-            file.MenuItems.Add("&Open", this.FileOpen_Clicked);
-            file.MenuItems.Add("-"); // separator
-            file.MenuItems.Add("&Save", this.FileSave_Clicked);
-            file.MenuItems.Add("-"); // separator
-            file.MenuItems.Add("&Run", this.FileRun_Clicked);
-            file.MenuItems.Add("-"); // separator
-            file.MenuItems.Add("&Quit", this.FileQuit_Clicked);
-            MenuItem windows = Menu.MenuItems.Add("&Window"); 
-            windows.MenuItems.Add("&Docked", this.WindowDocked_Clicked);
-            windows.MenuItems.Add("&Cascade", this.WindowCascade_Clicked);
-            windows.MenuItems.Add("Tile &Horizontal", this.WindowTileH_Clicked);
-            windows.MenuItems.Add("Tile &Vertical", this.WindowTileV_Clicked);
-            windows.MdiList = true;
-
-            // set icon
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerKernel));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
         }
 
         private void InitializeMdiChildren()
@@ -142,8 +122,8 @@ namespace Uiml.Gummy.Kernel
                         Form properties = (Form)GetService("gummy-propertypanel").ServiceControl;
                         childForm.StartPosition = FormStartPosition.Manual;
                         childForm.Location = new System.Drawing.Point(toolbox.Width + 1, toolbox.Location.Y);
-                        childForm.Size = new System.Drawing.Size(properties.Location.X - toolbox.Width - 1, toolbox.Height);                        
-                        break;                    
+                        childForm.Size = new System.Drawing.Size(properties.Location.X - toolbox.Width - 1, toolbox.Height);
+                        break;
                     case "gummy-propertypanel":
                         childForm.Dock = DockStyle.Right;
                         childForm.Width = 300;
@@ -154,15 +134,22 @@ namespace Uiml.Gummy.Kernel
 
         private void DockMdiChildren()
         {
+            UpdateStatus("Docking ToolBox", 1, 3);
             DockMdiChild(GetService("gummy-toolbox"));
+            UpdateStatus("Docking Properties Panel", 2, 3);
             DockMdiChild(GetService("gummy-propertypanel"));
+            UpdateStatus("Docking Canvas", 2, 3);
             DockMdiChild(GetService("gummy-canvas"));
+            UpdateStatus("Ready");
         }
 
         private void UnDockMdiChild(IService child)
         {
-            Form childForm = (Form)child.ServiceControl;
-            childForm.Dock = DockStyle.None;
+            if (child.ServiceControl is Form)
+            {
+                Form childForm = (Form)child.ServiceControl;
+                childForm.Dock = DockStyle.None;
+            }
         }
 
         private void UnDockMdiChildren()
@@ -176,14 +163,15 @@ namespace Uiml.Gummy.Kernel
         public bool Open()
         {
             this.Show();
-            Application.Run();            
-            return true;           
+            Application.Run();
+            return true;
         }
 
         protected bool OpenChildren()
         {
             for (int i = 0; i < m_services.Count; i++)
             {
+                UpdateStatus(string.Format("Opening {0}", m_services[i].ServiceName), i + 1, m_services.Count);
                 Console.WriteLine("Loading " + m_services[i].ServiceName);
                 if (!m_services[i].Open())
                 {
@@ -191,6 +179,7 @@ namespace Uiml.Gummy.Kernel
                 }
             }
 
+            UpdateStatus("Ready");
             return true;
         }
 
@@ -275,30 +264,20 @@ namespace Uiml.Gummy.Kernel
             DockMdiChildren();
         }
 
-        public void WindowCascade_Clicked(object sender, EventArgs args)
+        public IServiceConfiguration ServiceConfiguration
         {
-            UnDockMdiChildren();
-            LayoutMdi(MdiLayout.Cascade);
+            get
+            {
+                return null; // no configuration
+            }
         }
 
-        public void WindowTileH_Clicked(object sender, EventArgs args)
+        public void NotifyConfigurationChanged()
         {
-            UnDockMdiChildren();
-            LayoutMdi(MdiLayout.TileHorizontal);
+            return;
         }
 
-        public void WindowTileV_Clicked(object sender, EventArgs args)
-        {
-            UnDockMdiChildren();
-            LayoutMdi(MdiLayout.TileVertical);
-        }
-
-        public void WindowDocked_Clicked(object sender, EventArgs args)
-        {
-            DockMdiChildren();
-        }
-
-        public void FileNew_Clicked(object sender, EventArgs args) 
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CurrentDocument = Document.New();
 
@@ -319,7 +298,7 @@ namespace Uiml.Gummy.Kernel
                 ShowServices();
         }
 
-        public void FileOpen_Clicked(object sender, EventArgs args)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "UIML files (*.uiml)|*.uiml";
@@ -330,7 +309,7 @@ namespace Uiml.Gummy.Kernel
             CurrentDocument = Document.Open(stream);
         }
 
-        public void FileSave_Clicked(object sender, EventArgs args)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.AddExtension = true;
@@ -341,7 +320,17 @@ namespace Uiml.Gummy.Kernel
             CurrentDocument.Save(stream);
         }
 
-        public void FileRun_Clicked(object sender, EventArgs args)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void DesignerKernel_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Close();
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // create temporary file for current design
             string fileName = Path.GetTempFileName();
@@ -367,41 +356,53 @@ namespace Uiml.Gummy.Kernel
             Process.Start(psi);
         }
 
-        public void FileQuit_Clicked(object sender, EventArgs args)
+        private void dockedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            DockMdiChildren();
         }
 
-        public void DesignerKernel_FormClosing(object sender, EventArgs args)
+        private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            UnDockMdiChildren();
+            LayoutMdi(MdiLayout.Cascade);
         }
 
-        public IServiceConfiguration ServiceConfiguration
+        private void tileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            get 
+            UnDockMdiChildren();
+            LayoutMdi(MdiLayout.TileHorizontal);
+        }
+
+        private void tileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UnDockMdiChildren();
+            LayoutMdi(MdiLayout.TileVertical);
+        }
+
+        private void UpdateStatus(string text)
+        {
+            toolStripStatusLabel.Text = text; // set text
+            statusStrip.Refresh();
+        }
+
+        private void UpdateStatus(string text, int step, int max)
+        {
+            UpdateStatus(text);
+            toolStripProgressBar.Maximum = max;
+            toolStripProgressBar.Value = step;
+
+            if (toolStripProgressBar.Value == toolStripProgressBar.Maximum)
             {
-                return null; // no configuration
+                Timer timer = new System.Windows.Forms.Timer();
+                timer.Interval = 1000;
+                timer.Tick += delegate(object sender, EventArgs e)
+                {
+                    toolStripProgressBar.Visible = false;
+                };
+                timer.Start();
             }
-        }
-
-        public void NotifyConfigurationChanged()
-        {
-            return;
-        }
-
-        private void InitializeComponent()
-        {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerKernel));
-            this.SuspendLayout();
-            // 
-            // DesignerKernel
-            // 
-            this.ClientSize = new System.Drawing.Size(284, 264);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "DesignerKernel";
-            this.ResumeLayout(false);
-
+            else
+                toolStripProgressBar.Visible = true;
         }
     }
 }

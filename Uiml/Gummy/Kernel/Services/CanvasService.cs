@@ -46,8 +46,7 @@ namespace Uiml.Gummy.Kernel.Services
             AllowDrop = true;
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
-            BackColor = Color.DarkGray;
-            //DomainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+            BackColor = Color.DarkGray;            
             DesignerKernel.Instance.CurrentDocumentChanged += new EventHandler(currentDocumentChanged);
             Paint += new PaintEventHandler(painting);
             
@@ -58,18 +57,67 @@ namespace Uiml.Gummy.Kernel.Services
             MouseMove += new MouseEventHandler(onMouseMove);
             MouseUp += new MouseEventHandler(onMouseUp);
 
-            m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(onDomainObjectSelected);
+            m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(domainObjectSelected);
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
                        
             m_commands.Add(new PasteDomainObject());
         }
 
         void currentDocumentChanged(object sender, EventArgs e)
-        {
-            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectCollectionUpdated += new DomainObjectCollection.DomainObjectCollectionUpdatedHandler(onDomainObjectCollectionUpdated);
+        {            
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectAdded += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectAdded);
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectRemoved += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectRemoved);
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectToBack += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectOrderChanged);
+            DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectToFront += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectOrderChanged);
         }
 
-        void onDomainObjectSelected(DomainObject dom, EventArgs e)
+        
+        void domainObjectOrderChanged(object sender, List<DomainObject> dom)
+        {            
+            foreach (Control c in Controls)
+            {
+                if (c is VisualDomainObject)
+                {
+                    VisualDomainObject visDom = (VisualDomainObject)c;
+                    if (visDom.DomainObject == dom[0])
+                    {
+                        Controls.SetChildIndex(visDom, DesignerKernel.Instance.CurrentDocument.DomainObjects.IndexOf(dom[0]));
+                    }                    
+                }
+            }
+        }
+
+        void domainObjectRemoved(object sender, List<DomainObject> dom)
+        {
+            foreach (DomainObject d in dom)
+            {
+                foreach (Control c in Controls)
+                {
+                    if (c is VisualDomainObject)
+                    {
+                        VisualDomainObject visDom = (VisualDomainObject)c;
+                        if (visDom.DomainObject == d)
+                        {
+                            Controls.Remove(c);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        void domainObjectAdded(object sender, List<DomainObject> dom)
+        {
+            foreach (DomainObject d in dom)
+            {
+                VisualDomainObject visDom = new VisualDomainObject(d);
+                visDom.State = new CanvasVisualDomainObjectState();
+                Controls.Add(visDom);
+                visDom.BringToFront();
+            }
+        }
+
+        void domainObjectSelected(DomainObject dom, EventArgs e)
         {
             if (WireFramed)
             {
@@ -127,48 +175,7 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 domEnum.Current.UpdateToNewSize(CanvasSize);
             }
-        }
-
-        void onDomainObjectCollectionUpdated(object sender, DomainObjectCollectionEventArgs e)
-        {
-            switch (e.State)
-            {
-                case DomainObjectCollectionEventArgs.STATE.MOREADDED:
-                case DomainObjectCollectionEventArgs.STATE.MOREREMOVED:
-                    Controls.Clear();
-                    for (int i = 0; i < DesignerKernel.Instance.CurrentDocument.DomainObjects.Count; i++)
-                    {
-                        VisualDomainObject visDom = new VisualDomainObject(DesignerKernel.Instance.CurrentDocument.DomainObjects[i]);
-                        visDom.State = new CanvasVisualDomainObjectState();
-                        Controls.Add(visDom);
-                    }
-                    bringLinesToFront();
-                    break;
-                case DomainObjectCollectionEventArgs.STATE.ONEADDED:
-                    VisualDomainObject vDom = new VisualDomainObject(e.DomainObject);
-                    vDom.State = new CanvasVisualDomainObjectState();
-                    Controls.Add(vDom);
-                    vDom.BringToFront();
-                    bringLinesToFront();
-                    break;
-                case DomainObjectCollectionEventArgs.STATE.ONEREMOVED:
-                    foreach(Control c in Controls)
-                    {
-                        if( c is VisualDomainObject)
-                        {
-                            VisualDomainObject vis = (VisualDomainObject)c;
-                            if (vis.DomainObject == e.DomainObject)
-                            {
-                                Controls.Remove(c);
-                                break;
-                            }
-                        }
-                    }
-                    bringLinesToFront();
-                    break;
-            }
-           
-        }
+        }     
 
         public bool Open()
         {
@@ -295,17 +302,7 @@ namespace Uiml.Gummy.Kernel.Services
         {
 
         }        
-
-        //Deprecated -> may not be used anymore
-        /*
-        public DomainObjectCollection DomainObjects
-        {
-            get
-            {
-                return DesignerKernel.Instance.CurrentDocument.DomainObjects;
-            }           
-        }*/
-
+        
         public Size CanvasSize
         {
             get
