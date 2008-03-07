@@ -28,6 +28,7 @@ namespace Uiml {
 	using System.Text;
 	using System.Reflection;
 	using System.Collections;
+    using System.Collections.Generic;
 	using System.Globalization;
 	
 	using Uiml.Executing.Binding;
@@ -48,7 +49,7 @@ namespace Uiml {
 	///                 how (union|cascade|replace) "replace" 
 	///                 export (hidden|optional|required) "optional"&gt;
 	///</summary>
-	public class Part : UimlAttributes, IUimlElement
+	public class Part : UimlAttributes, IUimlElement, ICloneable
 	{
 		#if COMPACT
 		public class Connection
@@ -101,6 +102,38 @@ namespace Uiml {
 		private ArrayList m_connections = null;
 		#endif
 
+		public Object Clone()
+		{
+			Part clone = new Part();
+			if(m_children != null)
+			{
+                clone.m_children = new ArrayList();
+				for(int i = 0; i<m_children.Count; i++){
+                    object obj = m_children[i];
+					clone.m_children.Add( (ICloneable) (((ICloneable)obj).Clone()) );
+                    if(obj is Part)
+                        ((Part)obj).Parent = clone;
+                    if(obj is Behavior)
+                        ((Behavior)obj).PartTree = clone;
+                }
+			}
+
+			if(m_properties != null)
+			{
+                clone.m_properties = new ArrayList();
+				for(int i = 0; i<m_properties.Count; i++)
+					clone.m_properties.Add( (Property)  (((Property)m_properties[i]).Clone()));
+			}
+			
+            clone.Class = Class;
+            clone.CopyAttributesFrom(this);
+            clone.m_uiObject = m_uiObject;
+            clone.m_eventArgs = m_eventArgs;
+
+			//TODO : m_componentsByDepth and m_layout
+			return clone;
+		}
+
 		public Part()
 		{
 			m_children   = new ArrayList();
@@ -134,6 +167,43 @@ namespace Uiml {
 				templateResolver.Resolve(t,this);
 			}
 		}
+
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+
+            if (Class != null)
+            {
+                XmlAttribute attr = doc.CreateAttribute(CLASS);
+                attr.Value = Class;
+                attributes.Add(attr);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            serializeArrayList(m_children,doc,ref node);
+            serializeArrayList(m_layout,doc,ref node);
+            if (m_properties.Count > 0)
+            {
+                XmlNode style = doc.CreateElement(STYLE);
+                node.AppendChild(style);
+                serializeArrayList(m_properties, doc, ref style);
+            }
+            return node;
+        }
+
+        private void serializeArrayList(ArrayList toSerialize, XmlDocument doc, ref XmlNode node)
+        {
+            for (int i = 0; i < toSerialize.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)toSerialize[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+        }
 
         private void ProcessSubTree(XmlNode n)
 		{
@@ -235,6 +305,17 @@ namespace Uiml {
 			return m_children.GetEnumerator();
 		}
 
+        public List<Part> GetPartChildren()
+        {
+            List<Part> parts = new List<Part>();
+            foreach (object obj in Children)
+            {
+                if (obj is Part)
+                    parts.Add((Part)obj);
+            }
+
+            return parts;
+        }
 
 		///<value>
 		/// Sets and gets the class of this part. This class identifier still
@@ -260,6 +341,11 @@ namespace Uiml {
 		{
 			get { return m_properties.GetEnumerator(); }
 		}
+
+        public ArrayList PropertiesList
+        {
+            get { return m_properties; } 
+        }
 
 		public Part SearchPart(string checkIdentifier)
 		{
