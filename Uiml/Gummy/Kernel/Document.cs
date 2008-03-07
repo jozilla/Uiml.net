@@ -65,12 +65,50 @@ namespace Uiml.Gummy.Kernel
             }
         }
 
-        /// <summary>
-        /// Reads document from a stream.
-        /// </summary>
-        /// <param name="s">Stream to read from</param>
-        public Document(Stream s)
+        public XmlDocument Serialize()
         {
+            XmlDocument doc = new XmlDocument();
+            XmlNode uiml = doc.CreateElement("uiml");
+            doc.AppendChild(uiml);
+            XmlNode iface = doc.CreateElement("interface");
+            uiml.AppendChild(iface);
+            XmlNode structure = doc.CreateElement("structure");
+            iface.AppendChild(structure);
+            XmlNode style = doc.CreateElement("style");
+            iface.AppendChild(style);
+            
+            // <Fill up structure and style>
+            // start with top container
+            XmlNode topPart = FormContainer.Part.Serialize(doc);
+            structure.AppendChild(topPart);
+            foreach (Property p in FormContainer.Properties)
+            {
+                XmlNode prop = p.Serialize(doc);
+                style.AppendChild(prop);
+            }
+            // now all other domain objects
+            foreach (DomainObject dom in DomainObjects)
+            {
+                XmlNode part = dom.Part.Serialize(doc);
+                topPart.AppendChild(part);
+
+                foreach (Property p in dom.Properties)
+                {
+                    XmlNode prop = p.Serialize(doc);
+                    style.AppendChild(prop);
+                }
+            }
+            // </Fill up structure and style>
+
+            XmlNode peers = doc.CreateElement("peers");
+            uiml.AppendChild(peers);
+            XmlNode presentation = doc.CreateElement("presentation");
+            XmlAttribute baseAttr = doc.CreateAttribute("base");
+            baseAttr.Value = ActiveSerializer.Instance.Serializer.Voc.Identifier + ".uiml";
+            presentation.Attributes.Append(baseAttr);
+            peers.AppendChild(presentation);
+
+            return doc;
         }
 
         public static Document New()
@@ -80,13 +118,14 @@ namespace Uiml.Gummy.Kernel
 
         public static Document Open(Stream s)
         {
-            return new Document(s);
+            return null;
+            //return new Document(s);
         }
 
         public void Save(Stream s)
         {
-            XmlTextWriter xmlw = new XmlTextWriter(s, null);
-            xmlw.Formatting = Formatting.Indented;
+            XmlDocument doc = Serialize();
+            doc.Save(s);
         }
     }
 }
