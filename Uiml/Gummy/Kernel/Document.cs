@@ -12,24 +12,30 @@ using Uiml.Gummy.Serialize;
 
 namespace Uiml.Gummy.Kernel
 {
-    public class DocumentEventArgs : EventArgs
-    {        
-        public DocumentEventArgs() : base()
-        {
-        }
-    }
     /// <summary>
     /// This class represents the current document in Gummy.
     /// </summary>
+
+    public enum Mode
+    {
+        Draw,
+        Delete,
+        Paint,
+        Navigate
+    };
+
     public class Document
     {
         private DomainObjectCollection m_domObjects = new DomainObjectCollection();
         private DomainObject m_formContainer = null;
+        private Mode m_spaceMode = Mode.Navigate;
         //TODO: Add the wireframe data to the document
         private Size m_wireFrameSize = Size.Empty;
 
         public delegate void ScreenSizeUpdateHandler(object sender, Size newSize);
         public event ScreenSizeUpdateHandler ScreenSizeUpdated;
+        public delegate void SpaceModeChangeHandler(object sender, Mode mode);
+        public event SpaceModeChangeHandler SpaceModeChanged;
         
         public DomainObjectCollection DomainObjects
         {
@@ -86,6 +92,20 @@ namespace Uiml.Gummy.Kernel
                 m_formContainer.Size = value;
                 if (ScreenSizeUpdated != null)
                     ScreenSizeUpdated(this, CurrentSize);
+            }
+        }
+
+        public Mode Mode
+        {
+            get
+            {
+                return m_spaceMode;
+            }
+            set
+            {
+                m_spaceMode = value;
+                if (SpaceModeChanged != null)
+                    SpaceModeChanged(this, value);
             }
         }
 

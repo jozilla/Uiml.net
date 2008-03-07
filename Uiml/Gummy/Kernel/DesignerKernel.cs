@@ -247,11 +247,12 @@ namespace Uiml.Gummy.Kernel
 
         //Load the services from an Xml Document
         public void LoadServices(XmlDocument doc)
-        {
+        {            
             AttachService(new ToolboxService());
             AttachService(new CanvasService());
             AttachService(new SpaceService());
             AttachService(new WireFrameService());
+            AttachService(new DrawModeService());
             AttachService(new PropertiesService());
 
             InitializeMdiChildren(); // initialize all services

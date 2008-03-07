@@ -39,7 +39,6 @@ namespace Uiml.Gummy.Kernel.Services
             this.m_cartesianGraphControl.Cursor = System.Windows.Forms.Cursors.Default;
             this.m_cartesianGraphControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_cartesianGraphControl.Location = new System.Drawing.Point(0, 0);
-            this.m_cartesianGraphControl.Mode = Uiml.Gummy.Kernel.Services.Controls.Mode.CURSOR;
             this.m_cartesianGraphControl.Name = "m_cartesianGraphControl";
             this.m_cartesianGraphControl.Size = new System.Drawing.Size(377, 314);
             this.m_cartesianGraphControl.TabIndex = 0;
