@@ -321,6 +321,7 @@ namespace Uiml.Gummy.Kernel
             Stream stream = sfd.OpenFile();
 
             CurrentDocument.Save(stream);
+            stream.Close();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -339,6 +340,7 @@ namespace Uiml.Gummy.Kernel
             string fileName = Path.GetTempFileName();
             FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
             CurrentDocument.Save(stream);
+            stream.Close();
 
             // run renderer on this file
             string uimlArgs = string.Format("-uiml {0}", fileName);
