@@ -343,7 +343,7 @@ namespace Uiml.Gummy.Kernel
             stream.Close();
 
             // run renderer on this file
-            string uimlArgs = string.Format("-uiml {0}", fileName);
+            string uimlArgs = string.Format("-uiml \"{0}\"", fileName);
             /*string libArgs = string.Empty;
 
             try
