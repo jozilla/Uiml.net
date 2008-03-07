@@ -19,6 +19,7 @@ namespace Uiml.Gummy.Kernel
         DesignerLoader m_loader = new DesignerLoader();
         string m_platform = "swf-1.1";
         Document m_document;
+        bool m_servicesOpen = false;
 
         static DesignerKernel m_kernel = null;
 
@@ -81,13 +82,7 @@ namespace Uiml.Gummy.Kernel
         public void Init()
         {
             CurrentDocument = Document.New();
-            InitializeComponents();
             LoadServices(null); // initialize all services
-        }
-
-        private void InitializeComponents()
-        {
-
         }
 
         private void InitializeMdiChildren()
@@ -259,9 +254,14 @@ namespace Uiml.Gummy.Kernel
 
         public void ShowServices()
         {
-            // GUI stuff
-            OpenChildren();
-            DockMdiChildren();
+            if (!m_servicesOpen)
+            {
+                // GUI stuff
+                OpenChildren();
+                DockMdiChildren();
+            }
+            else
+                m_servicesOpen = true;
         }
 
         public IServiceConfiguration ServiceConfiguration
@@ -308,6 +308,7 @@ namespace Uiml.Gummy.Kernel
                 // TODO: ask for confirmation
 
                 CurrentDocument = Document.Open(stream);
+                ShowServices();
             }
         }
 
