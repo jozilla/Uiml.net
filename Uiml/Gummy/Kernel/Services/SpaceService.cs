@@ -16,7 +16,7 @@ namespace Uiml.Gummy.Kernel.Services
 
         public SpaceService()
         {
-            InitializeComponent();                        
+            InitializeComponent();            
         }
 
         public void Init()
@@ -29,6 +29,7 @@ namespace Uiml.Gummy.Kernel.Services
         void currentDocumentChanged(object sender, EventArgs e)
         {
             DesignerKernel.Instance.CurrentDocument.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizeUpdated);
+            DesignerKernel.Instance.CurrentDocument.SpaceModeChanged += new Document.SpaceModeChangeHandler(m_cartesianGraphControl.SpaceModeChanged);
         }
 
         void screenSizeUpdated(object sender, Size newSize)

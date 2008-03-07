@@ -49,7 +49,16 @@ namespace Shape
             {
                 drawPoints.Add(new Point(m_points[i].X + offset.X, m_points[i].Y + offset.Y));
             }
-            g.DrawPolygon(Pens.DarkBlue, drawPoints.ToArray());         
+            if (m_points.Count > 2)
+            {
+                
+                g.DrawPolygon(Pens.Plum, drawPoints.ToArray());
+                g.FillPolygon(Brushes.Orchid, drawPoints.ToArray());
+            }
+            else if (m_points.Count == 2)
+            {
+                g.DrawLine(Pens.DarkBlue, drawPoints[0], drawPoints[1]);
+            }
         }
 
         public virtual bool PointInShape(Point p)

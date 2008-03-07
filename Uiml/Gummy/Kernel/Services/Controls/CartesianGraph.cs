@@ -11,7 +11,7 @@ using Uiml.Gummy.Kernel.Services.Commands;
 
 namespace Uiml.Gummy.Kernel.Services.Controls
 {
-    public delegate void SizeChangeHandler(object sender, Size size);
+    public delegate void SizeChangeHandler(object sender, Size size);    
 
     public partial class CartesianGraph : UserControl
     {        
@@ -29,17 +29,22 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
         private int m_xIncrement = 1;
         private int m_yIncrement = 1;
-        private Dictionary<Size,Point> m_sizeToPoint = new Dictionary<Size,Point>();
+        private Dictionary<Size, Point> m_sizeToPoint = new Dictionary<Size, Point>();
         private Dictionary<Point, Size> m_pointToSize = new Dictionary<Point, Size>();
+        //private Mode m_mode = Mode.CURSOR;
 
-        public event SizeChangeHandler DesignSpaceCursorChanged;
+        public event SizeChangeHandler DesignSpaceCursorChanged;        
         //public event SizeChangeHandler WireFrameExampleSelected;
+        private Point m_lastMovePosition = Point.Empty;
+        private Shape.ShapUpdateHandler m_shapeUpdateHandler = null;
+        private DomainObject m_selected = null;
+        private bool m_clicked = false;
 
         public CartesianGraph()
         {
-            InitializeComponent();
+            InitializeComponent();           
             this.DoubleBuffered = true;
-
+            m_shapeUpdateHandler = new Shape.ShapUpdateHandler(onShapeUpdated);
             Paint += new PaintEventHandler(onPaintGraph);
             MouseDown += new MouseEventHandler(onMouseDownGraph);
             MouseMove += new MouseEventHandler(onMouseMoveGraph);
@@ -92,6 +97,17 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         }
 
         void domainObjectSelected(DomainObject dom, EventArgs e)
+        {
+            if (m_selected != null)
+            {
+                m_selected.Shape.ShapeUpdated -= m_shapeUpdateHandler;
+            }
+            dom.Shape.ShapeUpdated += m_shapeUpdateHandler;
+            m_selected = dom;
+            Refresh();
+        }
+
+        void onShapeUpdated(Shape.IShape shape)
         {
             Refresh();
         }
@@ -157,29 +173,101 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             return m_sizeToPoint[size];
         }
 
+        void onMouseDownGraph(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Navigate)
+                {
+                    m_cursorClicked = true;
+                    CursorPosition = e.Location;
+                    updateSelectedExample();
+                    Refresh();
+                    fireDesignSpaceCursorChanged();
+                }
+                else if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Draw)
+                {
+                    if (Selected.SelectedDomainObject.Instance.Selected != null)
+                    {
+                        //m_clicked = true;
+                        DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
+                        Point pnt = new Point(e.Location.X - m_origin.X, e.Location.Y - m_origin.Y);
+                        ((Shape.Polygon)dom.Shape).AddPoint(pnt);
+                        m_lastMovePosition = Point.Empty;                        
+                    }
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                Rectangle rect = detectSelectedExample(e.Location);
+                if (rect != Rectangle.Empty)
+                {
+                    if (m_selectedExample == -1 || m_examples[m_selectedExample] != rect)
+                    {
+                        ContextMenu cMenu = new ContextMenu();
+                        List<ICommand> commands = new List<ICommand>();                        
+                        commands.Add(new ShowWireFrameExample(pointToSize(new Point(rect.Location.X + rect.Width / 2, rect.Location.Y + rect.Height / 2))));
+                        Menu menu = (Menu)cMenu;
+                        MenuFactory.CreateMenu(commands, ref menu);
+                        cMenu.Show(this, e.Location);
+                    }
+                }
+            }
+        }
+
         void onMouseUpGraph(object sender, MouseEventArgs e)
         {
-            m_cursorClicked = false;
+            if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Navigate)
+            {
+                m_cursorClicked = false;
+            }
+            else if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Draw)
+            {
+                /*if (Selected.SelectedDomainObject.Instance.Selected != null && m_clicked)
+                {
+                    DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
+                    ((Shape.Polygon)dom.Shape).RemovePoint(m_lastMovePosition);
+                    m_lastMovePosition = Point.Empty;
+                    m_clicked = false;
+                }*/
+            }
         }
 
         void onMouseMoveGraph(object sender, MouseEventArgs e)
         {
-            if (m_cursorClicked)
+            if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Navigate)
             {
-                int x = e.Location.X - m_cursor.Width / 2;
-                int y = e.Location.Y - m_cursor.Height / 2;
-                if (x > m_max.X - m_cursor.Width / 2)
-                    x = m_max.X - m_cursor.Width / 2;
-                else if (x < m_origin.X - m_cursor.Width / 2)
-                    x = m_origin.X - m_cursor.Width / 2;
-                if (y > m_max.Y - m_cursor.Height / 2)
-                    y = m_max.Y - m_cursor.Height / 2;
-                else if (y < m_origin.Y - m_cursor.Height / 2)
-                    y = m_origin.Y - m_cursor.Height / 2;
-                m_cursor.Location = new Point( x, y );
-                updateSelectedExample();
-                fireDesignSpaceCursorChanged();
-                Refresh();
+                if (m_cursorClicked)
+                {
+                    int x = e.Location.X - m_cursor.Width / 2;
+                    int y = e.Location.Y - m_cursor.Height / 2;
+                    if (x > m_max.X - m_cursor.Width / 2)
+                        x = m_max.X - m_cursor.Width / 2;
+                    else if (x < m_origin.X - m_cursor.Width / 2)
+                        x = m_origin.X - m_cursor.Width / 2;
+                    if (y > m_max.Y - m_cursor.Height / 2)
+                        y = m_max.Y - m_cursor.Height / 2;
+                    else if (y < m_origin.Y - m_cursor.Height / 2)
+                        y = m_origin.Y - m_cursor.Height / 2;
+                    m_cursor.Location = new Point(x, y);
+                    updateSelectedExample();
+                    fireDesignSpaceCursorChanged();
+                    Refresh();
+                }
+            }
+            else if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Draw)
+            {
+                if (Selected.SelectedDomainObject.Instance.Selected != null/* && m_clicked*/)
+                {
+                    DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
+                    if (m_lastMovePosition != Point.Empty)
+                    {
+                        ((Shape.Polygon)dom.Shape).RemovePoint(m_lastMovePosition);
+                    }
+                    Point pnt = new Point(e.Location.X - m_origin.X, e.Location.Y - m_origin.Y);
+                    m_lastMovePosition = pnt;
+                    ((Shape.Polygon)dom.Shape).AddPoint(m_lastMovePosition);                    
+                }
             }
         }
 
@@ -258,34 +346,6 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             m_selectedExample = -1;
         }
         
-        void onMouseDownGraph(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                m_cursorClicked = true;
-                CursorPosition = e.Location;
-                updateSelectedExample();
-                Refresh();
-                fireDesignSpaceCursorChanged();
-            }
-            else if(e.Button == MouseButtons.Right)
-            {
-                Rectangle rect = detectSelectedExample(e.Location);
-                if (rect != Rectangle.Empty)
-                {
-                    if (m_selectedExample == -1 || m_examples[m_selectedExample] != rect)
-                    {
-                        ContextMenu cMenu = new ContextMenu();
-                        List<ICommand> commands = new List<ICommand>();
-                        commands.Add( new ShowWireFrameExample( pointToSize(new Point(rect.Location.X + rect.Width/2, rect.Location.Y + rect.Height / 2) ) ) );
-                        Menu menu = (Menu)cMenu;
-                        MenuFactory.CreateMenu(commands, ref menu );
-                        cMenu.Show(this, e.Location);
-                    }
-                }
-            }
-        }
-
         Point CursorPosition
         {
             get
@@ -298,8 +358,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 Point position = new Point(value.X - m_cursor.Width / 2, value.Y - m_cursor.Height / 2);               
                 m_cursor.Location = position;
             }
-        }
-
+        }        
 
         void onPaintGraph(object sender, PaintEventArgs e)
         {
@@ -411,12 +470,16 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         {
             this.SuspendLayout();
             // 
-            // Graph
+            // CartesianGraph
             // 
-            this.Name = "Graph";
+            this.Name = "CartesianGraph";
             this.Load += new System.EventHandler(this.Graph_Load_1);
             this.ResumeLayout(false);
 
+        }
+
+        public void SpaceModeChanged(object sender, Mode mode)
+        {
         }
 
         private void Graph_Load_1(object sender, EventArgs e)

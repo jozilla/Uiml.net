@@ -32,17 +32,13 @@ namespace Uiml.Gummy.Domain
 
         public event DomainObjectUpdateHandler DomainObjectUpdated;
 
-        private IShape m_shape = null;
+        private IShape m_shape = new Polygon();
         		
 		public DomainObject()
 		{
             //The default interpolation algorithm
-            m_interpolationAlgorithm = new LinearInterpolationAlgorithm(this);
-            Polygon pol = new Polygon();
-            pol.AddPoint(new Point(10, 10));
-            pol.AddPoint(new Point(20, 20));
-            pol.AddPoint(new Point(30, 80));
-            m_shape = pol;
+            m_interpolationAlgorithm = new LinearInterpolationAlgorithm(this);           
+            
 		}
 
         public object Clone()
@@ -66,6 +62,8 @@ namespace Uiml.Gummy.Domain
                 clone.m_sizeManipulator = (SizeManipulator)m_sizeManipulator.Clone();
                 clone.m_sizeManipulator.DomainObject = clone;
             }
+            //Tmp
+            clone.m_shape = m_shape;
 
             return clone;
         }

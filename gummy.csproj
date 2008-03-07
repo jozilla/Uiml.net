@@ -86,6 +86,12 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.Designer.cs">
       <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\DrawModes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\DrawModes.Designer.cs">
+      <DependentUpon>DrawModes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +104,7 @@
     <Compile Include="Uiml\Gummy\Kernel\DesignerKernel.Designer.cs">
       <DependentUpon>DesignerKernel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\DrawModeService.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceConfiguration.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\IServiceContainer.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\SpaceService.cs">
@@ -214,6 +221,10 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Controls\DrawModes.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DrawModes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.resx">
       <SubType>Designer</SubType>
