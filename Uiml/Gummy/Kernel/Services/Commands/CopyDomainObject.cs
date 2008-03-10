@@ -18,7 +18,19 @@ namespace Uiml.Gummy.Kernel.Services.Commands
 
         public CopyDomainObject(DomainObject dom) : this()
         {
-            m_dom = dom;
+            DomainObject = dom;
+        }
+
+        public DomainObject DomainObject
+        {
+            get
+            {
+                return m_dom;
+            }
+            set
+            {
+                m_dom = value;
+            }
         }
 
         public override void Execute()

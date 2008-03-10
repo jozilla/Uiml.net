@@ -7,6 +7,7 @@ using System.Drawing;
 using Uiml.Gummy.Serialize;
 using Uiml;
 using Uiml.Gummy.Interpolation;
+using Shape;
 using Uiml.Gummy.Kernel.Services.ApplicationGlue;
 
 namespace Uiml.Gummy.Domain
@@ -31,6 +32,8 @@ namespace Uiml.Gummy.Domain
 
         public event DomainObjectUpdateHandler DomainObjectUpdated;
 
+        private IShape m_shape = new Polygon();
+
         private MethodModel m_methodLink = null;
         private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
         private List<MethodParameterModel> m_methodInParamLinks = new List<MethodParameterModel>();
@@ -38,7 +41,7 @@ namespace Uiml.Gummy.Domain
 		public DomainObject()
 		{
             //The default interpolation algorithm
-            m_interpolationAlgorithm = new CosineInterpolationAlgorithm(this);
+            m_interpolationAlgorithm = new LinearInterpolationAlgorithm(this);
 		}
 
         public object Clone()
@@ -62,6 +65,8 @@ namespace Uiml.Gummy.Domain
                 clone.m_sizeManipulator = (SizeManipulator)m_sizeManipulator.Clone();
                 clone.m_sizeManipulator.DomainObject = clone;
             }
+            //Tmp
+            clone.m_shape = m_shape;
 
             return clone;
         }
@@ -126,6 +131,18 @@ namespace Uiml.Gummy.Domain
             {
                 m_sizeManipulator.Size = value;
                 Updated();
+            }
+        }
+
+        public IShape Shape
+        {
+            get
+            {
+                return m_shape;
+            }
+            set
+            {
+                m_shape = value;
             }
         }
 

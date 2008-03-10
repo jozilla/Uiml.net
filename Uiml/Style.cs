@@ -100,19 +100,24 @@ namespace Uiml{
 
         public IEnumerator GetNamedProperties(string identifier)
 		{
-			ArrayList props = new ArrayList();
-
-			IEnumerator enumAll = m_properties.GetEnumerator();
-			while(enumAll.MoveNext())
-			{			
-				if( ((Property)enumAll.Current).PartName == identifier)
-				{
-					props.Add(enumAll.Current);
-				}
-			}
-
-			return props.GetEnumerator();
+			return GetNamedPropertiesList(identifier).GetEnumerator();
 		}
+
+        public ArrayList GetNamedPropertiesList(string identifier)
+        {
+            ArrayList props = new ArrayList();
+
+            IEnumerator enumAll = m_properties.GetEnumerator();
+            while (enumAll.MoveNext())
+            {
+                if (((Property)enumAll.Current).PartName == identifier)
+                {
+                    props.Add(enumAll.Current);
+                }
+            }
+
+            return props;
+        }
 
 		///<summary>
 		/// Searches for a specific property of a given part

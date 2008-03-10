@@ -1,33 +1,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.IO;
 using System.Xml;
+using System.IO;
+
 using Uiml.Gummy.Serialize;
 using Uiml.Gummy.Kernel.Services;
+using Uiml.Gummy.Kernel.Services.Commands;
 
 using System.Windows.Forms;
 using System.Drawing;
 
-using System.Diagnostics;
-
 namespace Uiml.Gummy.Kernel
 {
-    public class DesignerKernel : Form, IService, IServiceContainer
+    public partial class DesignerKernel : Form, IService, IServiceContainer
     {
         List<IService> m_services = new List<IService>();
         DesignerLoader m_loader = new DesignerLoader();
         string m_platform = "swf-1.1";
+        Document m_document;
+        bool m_servicesOpen = false;
 
         static DesignerKernel m_kernel = null;
+
+        public event EventHandler CurrentDocumentChanged;
 
         private DesignerKernel()
         {
             ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer(m_platform);
             Application.EnableVisualStyles(); // visual styles (e.g. Windows Vista, XP, Linux, etc.)
+            
+            InitializeComponent();
         }
 
-        private DesignerKernel(string vocabulary): base()
+        private DesignerKernel(string vocabulary)
+            : base()
         {
             //TODO: needs to be loaded from a config file or dialog window
             //ActiveSerializer.Instance.Serializer = m_loader.CreateSerializer("idtv-1.0");
@@ -61,37 +68,21 @@ namespace Uiml.Gummy.Kernel
             }
         }
 
-        public void Init()
+        public Document CurrentDocument
         {
-            LoadServices(null);
-            InitializeComponents();
-            InitializeMdiChildren();
+            get { return m_document; }
+            set
+            {
+                m_document = value;
+                if (CurrentDocumentChanged != null)
+                    CurrentDocumentChanged(this, null);
+            }
         }
 
-        private void InitializeComponents()
+        public void Init()
         {
-            Text = "CROSLOCiS Service Creation Environment";
-            IsMdiContainer = true;
-            WindowState = FormWindowState.Maximized;
-            FormClosing += new FormClosingEventHandler(DesignerKernel_FormClosing);
-
-            Menu = new MainMenu();
-            MenuItem file = Menu.MenuItems.Add("&File");
-            file.MenuItems.Add("&New", this.FileNew_Clicked);
-            file.MenuItems.Add("&Open", this.FileOpen_Clicked);
-            file.MenuItems.Add("&Save", this.FileSave_Clicked);
-            file.MenuItems.Add("&Run", this.FileRun_Clicked);
-            file.MenuItems.Add("&Quit", this.FileQuit_Clicked);
-            MenuItem windows = Menu.MenuItems.Add("&Window");
-            windows.MenuItems.Add("&Docked", this.WindowDocked_Clicked);
-            windows.MenuItems.Add("&Cascade", this.WindowCascade_Clicked);
-            windows.MenuItems.Add("Tile &Horizontal", this.WindowTileH_Clicked);
-            windows.MenuItems.Add("Tile &Vertical", this.WindowTileV_Clicked);
-            windows.MdiList = true;
-
-            // set icon
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DesignerKernel));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            CurrentDocument = Document.New();
+            LoadServices(null); // initialize all services
         }
 
         private void InitializeMdiChildren()
@@ -126,8 +117,8 @@ namespace Uiml.Gummy.Kernel
                         Form properties = (Form)GetService("gummy-propertypanel").ServiceControl;
                         childForm.StartPosition = FormStartPosition.Manual;
                         childForm.Location = new System.Drawing.Point(toolbox.Width + 1, toolbox.Location.Y);
-                        childForm.Size = new System.Drawing.Size(properties.Location.X - toolbox.Width - 1, toolbox.Height);                        
-                        break;                    
+                        childForm.Size = new System.Drawing.Size(properties.Location.X - toolbox.Width - 1, toolbox.Height);
+                        break;
                     case "gummy-propertypanel":
                         childForm.Dock = DockStyle.Right;
                         childForm.Width = 300;
@@ -138,16 +129,22 @@ namespace Uiml.Gummy.Kernel
 
         private void DockMdiChildren()
         {
+            UpdateStatus("Docking ToolBox", 1, 3);
             DockMdiChild(GetService("gummy-toolbox"));
+            UpdateStatus("Docking Properties Panel", 2, 3);
             DockMdiChild(GetService("gummy-propertypanel"));
+            UpdateStatus("Docking Canvas", 2, 3);
             DockMdiChild(GetService("gummy-canvas"));
-            DockMdiChild(GetService("application-glue"));
+            UpdateStatus("Ready");
         }
 
         private void UnDockMdiChild(IService child)
         {
-            Form childForm = (Form)child.ServiceControl;
-            childForm.Dock = DockStyle.None;
+            if (child.ServiceControl is Form)
+            {
+                Form childForm = (Form)child.ServiceControl;
+                childForm.Dock = DockStyle.None;
+            }
         }
 
         private void UnDockMdiChildren()
@@ -161,18 +158,24 @@ namespace Uiml.Gummy.Kernel
         public bool Open()
         {
             this.Show();
+            Application.Run();
+            return true;
+        }
 
+        protected bool OpenChildren()
+        {
             for (int i = 0; i < m_services.Count; i++)
             {
+                UpdateStatus(string.Format("Opening {0}", m_services[i].ServiceName), i + 1, m_services.Count);
                 Console.WriteLine("Loading " + m_services[i].ServiceName);
                 if (!m_services[i].Open())
-                {                    
+                {
                     return false;
                 }
             }
-            DockMdiChildren();
-            Application.Run();            
-            return true;           
+
+            UpdateStatus("Ready");
+            return true;
         }
 
         public bool Close()
@@ -243,180 +246,43 @@ namespace Uiml.Gummy.Kernel
             AttachService(new ToolboxService());
             AttachService(new CanvasService());
             AttachService(new SpaceService());
-            AttachService(new WireFrameService());                        
+            AttachService(new WireFrameService());
+            AttachService(new DrawModeService());
             AttachService(new PropertiesService());
             AttachService(new ApplicationGlueService());
+
+            InitializeMdiChildren(); // initialize all services            
         }
 
-        public void WindowCascade_Clicked(object sender, EventArgs args)
+        public void ShowServices()
         {
-            UnDockMdiChildren();
-            LayoutMdi(MdiLayout.Cascade);
-        }
-
-        public void WindowTileH_Clicked(object sender, EventArgs args)
-        {
-            UnDockMdiChildren();
-            LayoutMdi(MdiLayout.TileHorizontal);
-        }
-
-        public void WindowTileV_Clicked(object sender, EventArgs args)
-        {
-            UnDockMdiChildren();
-            LayoutMdi(MdiLayout.TileVertical);
-        }
-
-        public void WindowDocked_Clicked(object sender, EventArgs args)
-        {
-            DockMdiChildren();
-        }
-
-        public void FileQuit_Clicked(object sender, EventArgs args)
-        {
-            Close();
-        }
-
-        public void FileSave_Clicked(object sender, EventArgs args)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.AddExtension = true;
-            sfd.Filter = "UIML files (*.uiml)|*.uiml";
-            sfd.ShowDialog();
-            Stream stream = sfd.OpenFile();
-            Export(stream);
-        }
-
-        public void Export(Stream stream)
-        {
-            XmlTextWriter xmlw = new XmlTextWriter(stream, null);
-            xmlw.Formatting = Formatting.Indented;
-
-            List<Part> parts = new List<Part>();
-            List<Property> properties = new List<Property>();
-            Logic logic;
-            Behavior behavior;
-            string logicXml = "";
-            string behaviorXml = "";
-
-            // collect all the UIML pieces
-            foreach (IService service in m_services)
+            if (!m_servicesOpen)
             {
-                if (service is IUimlProvider)
-                {
-                    foreach (IUimlElement item in ((IUimlProvider)service).GetUimlElements())
-                    {
-                        if (item is Part)
-                            parts.Add((Part)item);
-                        else if (item is Property)
-                            properties.Add((Property)item);
-                        else if (item is Behavior)
-                            behavior = (Behavior)item; // FIXME: should only happen once
-                        else if (item is Logic)
-                            logic = (Logic)item; // FIXME: should only happen once
-                    }
-
-                    List<string> xmlStrings = ((IUimlProvider)service).GetUimlElementsXml();
-
-                    if (xmlStrings.Count > 0)
-                    {
-                        // FIXME: hard-coded now
-                        logicXml = xmlStrings[0];
-                        behaviorXml = xmlStrings[1];
-                    }
-                }
+                // GUI stuff
+                OpenChildren();
+                DockMdiChildren();
             }
-
-            // create standard UIML document
-            xmlw.WriteStartDocument();
-            xmlw.WriteStartElement("uiml");
-            xmlw.WriteStartElement("interface");
-            xmlw.WriteStartElement("structure");
-
-            // canvas
-            string canvasId = Domain.DomainObjectFactory.Instance.AutoID();
-            xmlw.WriteStartElement("part");
-            xmlw.WriteAttributeString("id", canvasId);
-            xmlw.WriteAttributeString("class", "Container");
-
-            // parts
-            foreach (Part p in parts)
-            {
-                XmlNode partXml = p.Serialize(new XmlDocument());
-                xmlw.WriteRaw(partXml.OuterXml);
-            }
-
-            xmlw.WriteEndElement(); // </part> (canvas)
-
-            xmlw.WriteEndElement(); // </structure>
-            xmlw.WriteStartElement("style");
-
-            // properties
-
-            // canvas size
-            xmlw.WriteStartElement("property");
-            xmlw.WriteAttributeString("part-name", canvasId);
-            xmlw.WriteAttributeString("name", "size");
-            Size canvasSize = ((CanvasService)GetService("gummy-canvas")).CanvasSize;
-            xmlw.WriteString(canvasSize.Width.ToString() + "," + canvasSize.Height.ToString());
-            xmlw.WriteEndElement();
-
-            foreach (Property p in properties)
-            {
-                XmlNode propXml = p.Serialize(new XmlDocument());
-                xmlw.WriteRaw(propXml.OuterXml);
-            }
-
-            xmlw.WriteEndElement(); // </style>
-
-            // behavior
-            xmlw.WriteRaw(behaviorXml);
-
-            xmlw.WriteEndElement(); // </interface>
-
-            xmlw.WriteStartElement("peers");
-            xmlw.WriteStartElement("presentation");
-            xmlw.WriteAttributeString("base", "swf-1.1.uiml");
-            xmlw.WriteEndElement(); // </presentation>
-
-            // logic
-            xmlw.WriteRaw(logicXml);
-
-            xmlw.WriteEndElement(); // </peers>
-
-            xmlw.WriteEndElement(); // </uiml>
-
-            xmlw.WriteEndDocument();
-            xmlw.Close();
+            else
+                m_servicesOpen = true;
         }
 
-        public void FileRun_Clicked(object sender, EventArgs args)
+        public IServiceConfiguration ServiceConfiguration
         {
-            // create temporary file for current design
-            string fileName = Path.GetTempFileName();
-            FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
-            Export(stream);
-
-            // run renderer on this file
-            string uimlArgs = string.Format("-uiml {0}", fileName);
-            string libArgs = string.Empty;
-            
-            try
+            get
             {
-                string libFile = ((ApplicationGlueServiceConfiguration) GetService("application-glue").ServiceConfiguration).Assembly.Location;
-                libArgs = string.Format("-libs {0}", Path.ChangeExtension(libFile, null));
+                return null; // no configuration
             }
-            catch
-            {
-            }
-
-            string uimldotnetArgs = uimlArgs + " " + libArgs;
-            ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
-            psi.ErrorDialog = true;
-            Process.Start(psi);
         }
 
-        public void FileNew_Clicked(object sender, EventArgs args) 
+        public void NotifyConfigurationChanged()
         {
+            return;
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrentDocument = Document.New();
+
             NewWizard wizard = new NewWizard();
 
             foreach (IService s in Services)
@@ -429,34 +295,123 @@ namespace Uiml.Gummy.Kernel
 
             wizard.Start();
             wizard.ShowDialog();
-            // TODO: notify services that their settings are changed
+
+            if (wizard.DialogResult == DialogResult.OK)
+                ShowServices();
         }
 
-        public void FileOpen_Clicked(object sender, EventArgs args)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: also load assemblies if it has a logic section
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "UIML files (*.uiml)|*.uiml";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Stream stream = ofd.OpenFile();
+                // TODO: ask for confirmation
+
+                CurrentDocument = Document.Open(stream);
+                ShowServices();
+            }
         }
 
-        public void DesignerKernel_FormClosing(object sender, EventArgs args)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.AddExtension = true;
+            sfd.Filter = "UIML files (*.uiml)|*.uiml";
+            sfd.ShowDialog();
+            Stream stream = sfd.OpenFile();
+
+            CurrentDocument.Save(stream);
+            stream.Close();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        public IServiceConfiguration ServiceConfiguration
+        private void DesignerKernel_FormClosing(object sender, FormClosingEventArgs e)
         {
-            get 
+            Close();
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrentDocument.Run();
+        }
+
+        private void dockedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DockMdiChildren();
+        }
+
+        private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UnDockMdiChildren();
+            LayoutMdi(MdiLayout.Cascade);
+        }
+
+        private void tileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UnDockMdiChildren();
+            LayoutMdi(MdiLayout.TileHorizontal);
+        }
+
+        private void tileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UnDockMdiChildren();
+            LayoutMdi(MdiLayout.TileVertical);
+        }
+
+        private void UpdateStatus(string text)
+        {
+            toolStripStatusLabel.Text = text; // set text
+            statusStrip.Refresh();
+        }
+
+        private void UpdateStatus(string text, int step, int max)
+        {
+            UpdateStatus(text);
+            toolStripProgressBar.Maximum = max;
+            toolStripProgressBar.Value = step;
+
+            if (toolStripProgressBar.Value == toolStripProgressBar.Maximum)
             {
-                return null; // no configuration
+                Timer timer = new System.Windows.Forms.Timer();
+                timer.Interval = 1000;
+                timer.Tick += delegate(object sender, EventArgs e)
+                {
+                    toolStripProgressBar.Visible = false;
+                };
+                timer.Start();
             }
+            else
+                toolStripProgressBar.Visible = true;
         }
 
-        public void NotifyConfigurationChanged()
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            return;
+            CutDomainObject cutDom = new CutDomainObject();
+            cutDom.Execute();
         }
 
-        private void InitializeComponent()
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CopyDomainObject copyDomain = new CopyDomainObject();
+            copyDomain.Execute();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteDomainObject pasteDomain = new PasteDomainObject(new Point(10, 10));
+            pasteDomain.Execute();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            DeleteDomainObject deleteDomain = new DeleteDomainObject();
+            deleteDomain.Execute();
         }
     }
 }

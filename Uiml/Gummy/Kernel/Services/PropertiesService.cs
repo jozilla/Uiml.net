@@ -31,14 +31,15 @@ namespace Uiml.Gummy.Kernel.Services
             //TODO: this kind of attachments should be done by service dependencys
             Control spaceService = DesignerKernel.Instance.GetService("gummy-designspace").ServiceControl;
             bottom.Controls.Add(spaceService);
-            Control wfController = DesignerKernel.Instance.GetService("gummy-wireframes").ServiceControl;
+            Control wfController = DesignerKernel.Instance.GetService("gummy-drawmodes").ServiceControl;
             bottom.Controls.Add(wfController);
+
             bottom.Height = spaceService.Height + wfController.Height + 10;
             spaceService.Dock = DockStyle.Bottom;
             wfController.Dock = DockStyle.Fill;
             if (bottom != null)
             {
-                bottom.Dock = DockStyle.Bottom;
+                bottom.Dock = DockStyle.Bottom;                
                 Controls.Add(bottom);
             }
         }

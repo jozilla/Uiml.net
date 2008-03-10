@@ -44,11 +44,13 @@ namespace Uiml.Gummy.Kernel {
             if (Index == Configurations.Count - 1)
             {
                 next.Text = "Finish";
+                next.DialogResult = DialogResult.OK;
                 this.AcceptButton = next;
             }
             else
             {
                 this.AcceptButton = null;
+                next.DialogResult = DialogResult.None;
                 next.Text = "Next";
             }
 

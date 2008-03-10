@@ -11,7 +11,6 @@ using Uiml.Gummy.Visual;
 
 namespace Uiml.Gummy.Serialize.SWF
 {
-
 	public class SWFUimlSerializer : UimlSerializer
 	{
 		SWFRenderer m_renderer = null;        
@@ -29,6 +28,11 @@ namespace Uiml.Gummy.Serialize.SWF
             domObj.SizeManipulator = new SWFSizeManipulator(domObj);
 
             return domObj;
+        }
+
+        public override DomainObject CreateUIContainer()
+        {
+            return DomainObjectFactory.Instance.Create("Container");
         }
                
         public override Image Serialize(DomainObject dom)
@@ -70,7 +74,15 @@ namespace Uiml.Gummy.Serialize.SWF
             if (dom.Part.Class == "List" || dom.Part.Class == "Tree")
             {
                 return SerializeToIcon(dom, new Size(90, 90), new Size(30, 30));
-            }            
+            }
+            else if (dom.Part.Class == "Label")
+            {
+                return SerializeToIcon(dom, new Size(30, 20), new Size(30, 20));
+            }
+            else if (dom.Part.Class == "Button" || dom.Part.Class == "ToggleButton")
+            {
+                return SerializeToIcon(dom, new Size(45, 20), new Size(30, 25));
+            }
             else
                 return base.SerializeToIcon(dom);
         }
@@ -93,6 +105,8 @@ namespace Uiml.Gummy.Serialize.SWF
         public override bool Accept(DProperty dprop, DClass dclass)
         {
             if (dclass.Identifier == "TabPage" && dprop.Identifier != "label")
+                return false;
+            if (dprop.Identifier == "orientation")
                 return false;
             if (dprop.Identifier == "bottom")
                 return false;
@@ -179,6 +193,18 @@ namespace Uiml.Gummy.Serialize.SWF
                 constant3.Value = "blaai";
                 constant.Add(constant3);
                 return constant;
+            }
+            else if (part.Class == "Label" && p.Name == "text")
+            {
+                return "label";
+            }
+            else if (part.Class == "Button" && p.Name == "label")
+            {
+                return "button";
+            }
+            else if (part.Class == "ToggleButton" && p.Name == "label")
+            {
+                return "toggle";
             }
             else
             {

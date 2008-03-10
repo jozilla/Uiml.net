@@ -117,97 +117,7 @@ namespace Uiml.Gummy.Domain
             }
             Console.Out.WriteLine("[/RepositoryContent]");
         }
-        /*
-        public Size[] GetShortestSizesByWidth(Size size, DomainObject dom, int number_of_examples)
-        {
-            //Get all the examples of this domain object
-            Dictionary<Size, DomainObject> examples = GetDomainObjectExamples(dom.Identifier);
-            //Check if there are enough examples
-            if (examples.Count < number_of_examples)
-            {
-                return null;
-            }
-            Dictionary<Size, DomainObject>.Enumerator enumerator = examples.GetEnumerator();
-            //Sort the distances...
-            SortedDictionary<int, List<Size>> distances = new SortedDictionary<int, List<Size>>();
-            while (enumerator.MoveNext())
-            {
-                Size exampleSize = enumerator.Current.Key;
-                int dist = Math.Abs(exampleSize.Width - size.Width);
-                if (!distances.ContainsKey(dist))
-                {
-                    List<Size> sizeList = new List<Size>();
-                    sizeList.Add(exampleSize);
-                    distances.Add(dist, sizeList);
-                }
-                else
-                {
-                    distances[dist].Add(exampleSize);
-                }
-            }
-            //Pick the right distances from the temporal datastructure
-            Size[] shortest_examples = new Size[number_of_examples];
 
-            SortedDictionary<int, List<Size>>.Enumerator sortedDictEnumerator = distances.GetEnumerator();
-            int counter = 0;
-            while (sortedDictEnumerator.MoveNext() && counter < number_of_examples)
-            {
-                List<Size> tmpSizes = sortedDictEnumerator.Current.Value;
-                for (int i = 0; i < tmpSizes.Count && counter < number_of_examples; i++)
-                {
-                    shortest_examples[counter] = tmpSizes[i];
-                    counter++;
-                }
-            }
-
-            return shortest_examples;
-        }
-
-        public Size[] GetShortestSizesByHeight(Size size, DomainObject dom, int number_of_examples)
-        {
-            //Get all the examples of this domain object
-            Dictionary<Size, DomainObject> examples = GetDomainObjectExamples(dom.Identifier);
-            //Check if there are enough examples
-            if (examples.Count < number_of_examples)
-            {
-                return null;
-            }
-            Dictionary<Size, DomainObject>.Enumerator enumerator = examples.GetEnumerator();
-            //Sort the distances...
-            SortedDictionary<int, List<Size>> distances = new SortedDictionary<int, List<Size>>();
-            while (enumerator.MoveNext())
-            {
-                Size exampleSize = enumerator.Current.Key;
-                int dist = Math.Abs(exampleSize.Height - size.Height);
-                if (!distances.ContainsKey(dist))
-                {
-                    List<Size> sizeList = new List<Size>();
-                    sizeList.Add(exampleSize);
-                    distances.Add(dist, sizeList);
-                }
-                else
-                {
-                    distances[dist].Add(exampleSize);
-                }
-            }
-            //Pick the right distances from the temporal datastructure
-            Size[] shortest_examples = new Size[number_of_examples];
-
-            SortedDictionary<int, List<Size>>.Enumerator sortedDictEnumerator = distances.GetEnumerator();
-            int counter = 0;
-            while (sortedDictEnumerator.MoveNext() && counter < number_of_examples)
-            {
-                List<Size> tmpSizes = sortedDictEnumerator.Current.Value;
-                for (int i = 0; i < tmpSizes.Count && counter < number_of_examples; i++)
-                {
-                    shortest_examples[counter] = tmpSizes[i];
-                    counter++;
-                }
-            }
-
-            return shortest_examples;
-        }
-        */
         public Size[] GetShortestSizes(Size size, DomainObject dom, int number_of_examples)
         {
             //Get all the examples of this domain object
@@ -265,7 +175,7 @@ namespace Uiml.Gummy.Domain
         {
             double distance = Math.Sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
             return distance;
-        }
+        }        
 
         public List<PointF> GetZones(DomainObject dom)
         {

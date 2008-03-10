@@ -18,16 +18,27 @@ namespace Uiml.Gummy.Kernel.Services.Commands
 
         public DeleteDomainObject(DomainObject dom) : this()
         {
-            m_domObject = dom;
+            DomainObject = dom;
+        }
+
+        public DomainObject DomainObject
+        {
+            get
+            {
+                return m_domObject;
+            }
+            set
+            {
+                m_domObject = value;
+            }
         }
 
         public override void Execute()
-        {
-            CanvasService service = (CanvasService)DesignerKernel.Instance.GetService("gummy-canvas");
-            if (m_domObject != null)                         
-                service.DomainObjects.Remove(m_domObject);            
+        {            
+            if (m_domObject != null)
+                DesignerKernel.Instance.CurrentDocument.DomainObjects.Remove(m_domObject);            
             else if(Selected.SelectedDomainObject.Instance.Selected != null)
-                service.DomainObjects.Remove(Selected.SelectedDomainObject.Instance.Selected);
+                DesignerKernel.Instance.CurrentDocument.DomainObjects.Remove(Selected.SelectedDomainObject.Instance.Selected);
         }
 
         public override void Undo()

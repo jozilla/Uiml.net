@@ -1,76 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 
 namespace Uiml.Gummy.Domain
 {
-    public class DomainObjectCollectionEventArgs : EventArgs
-    {
-        public enum STATE
-        {
-            ONEADDED,
-            MOREADDED,
-            ONEREMOVED,
-            MOREREMOVED,
-            NONE
-        };
-
-        DomainObject m_domObject = null;
-        STATE m_state = STATE.NONE;
-
-        public DomainObjectCollectionEventArgs()
-            : base()
-        {
-        }
-
-        public DomainObjectCollectionEventArgs(STATE state) : this()
-        {
-            State = state;
-        }
-
-        public DomainObjectCollectionEventArgs(STATE state, DomainObject dom) : this(state)
-        {            
-            DomainObject = dom;
-        }
-
-        public STATE State
-        {
-            get
-            {
-                return m_state;
-            }
-            set
-            {
-                m_state = value;
-            }
-        }
-
-        public DomainObject DomainObject
-        {
-            get
-            {
-                return m_domObject;
-            }
-            set
-            {
-                m_domObject = value;
-            }
-        }
-    }
-
     public class DomainObjectCollection : List<DomainObject>
     {
-        //Fixme: a
-        public delegate void DomainObjectCollectionUpdatedHandler(object sender, DomainObjectCollectionEventArgs e);
-        public event DomainObjectCollectionUpdatedHandler DomainObjectCollectionUpdated;
-        public event DomainObject.DomainObjectUpdateHandler DomainObjectUpdated;
+        public delegate void DomainObjectCollectionHandler(object sender, List<DomainObject> dom);
 
-        private DomainObject.DomainObjectUpdateHandler m_domainObjectUpdateHandler = null;
+        public event DomainObjectCollectionHandler DomainObjectAdded;
+        public event DomainObjectCollectionHandler DomainObjectRemoved;
+        public event DomainObjectCollectionHandler DomainObjectToFront;
+        public event DomainObjectCollectionHandler DomainObjectToBack;
 
         public DomainObjectCollection()
             : base()
-        {
-            m_domainObjectUpdateHandler = new DomainObject.DomainObjectUpdateHandler(domObjUpdated);
+        {            
         }
 
         ~DomainObjectCollection()
@@ -82,45 +28,37 @@ namespace Uiml.Gummy.Domain
             catch { }
         }
 
-        private void domObjUpdated(object sender, EventArgs e) 
-        {
-            /*if (DomainObjectCollectionUpdated != null)
-            {
-                DomainObjectCollectionUpdated(this, (DomainObject)sender);
-            }*/
-        }
-
-        private void fireDomainObjectCollectionUpdated(DomainObjectCollectionEventArgs e)
-        {
-            DomainObjectCollectionUpdated(this, e);
-        }
-
         public new void Add(DomainObject d)
         {
-            d.DomainObjectUpdated += m_domainObjectUpdateHandler;
-            base.Add(d);
-            fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.ONEADDED,d));
+            //Small trick to be compatible with a control collection :-)
+            base.Insert(0,d);
+            if (DomainObjectAdded != null)
+            {
+                List<DomainObject> domObjects = new List<DomainObject>();
+                domObjects.Add(d);
+                DomainObjectAdded(this, domObjects);
+            }
         }
 
         public new void AddRange(IEnumerable<DomainObject> dom)
         {
-            IEnumerator<DomainObject> enumerator = dom.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                enumerator.Current.DomainObjectUpdated += m_domainObjectUpdateHandler;
-            }
+            IEnumerator<DomainObject> enumerator = dom.GetEnumerator();            
             base.AddRange(dom);
-            fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.MOREADDED));
+            if (DomainObjectAdded != null)
+            {
+                List<DomainObject> domObjects = new List<DomainObject>();
+                domObjects.AddRange(dom);
+                DomainObjectAdded(this, domObjects);
+            }
         }
 
         public new void Clear()
         {
-            for (int i = 0; i < Count; i++)
+            if (DomainObjectRemoved != null)
             {
-                base[i].DomainObjectUpdated -= m_domainObjectUpdateHandler;
+                DomainObjectRemoved(this, new List<DomainObject>(this));
             }
             base.Clear();
-            fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.MOREREMOVED));
         }
 
         public DomainObject Get(string label)
@@ -135,10 +73,57 @@ namespace Uiml.Gummy.Domain
 
         public new void Remove(DomainObject dom)
         {
-            if (Contains(dom))
-                dom.DomainObjectUpdated -= m_domainObjectUpdateHandler;
-            base.Remove(dom);
-            fireDomainObjectCollectionUpdated(new DomainObjectCollectionEventArgs(DomainObjectCollectionEventArgs.STATE.ONEREMOVED,dom));
+            base.Remove(dom);            
+            if (DomainObjectRemoved != null)
+            {
+                List<DomainObject> domObjects = new List<DomainObject>();
+                domObjects.Add(dom);
+                DomainObjectRemoved(this, domObjects);
+            }
+        }
+
+        public void BringForward(DomainObject dom)
+        {
+            if (Contains(dom) && IndexOf(dom) > 0)
+            {
+                int index = IndexOf(dom);
+                DomainObject tmp = base[index-1];
+                base[index - 1] = dom;
+                base[index] = tmp;
+                if (DomainObjectToFront != null)
+                {
+                    List<DomainObject> domObjects = new List<DomainObject>();
+                    domObjects.Add(dom);
+                    DomainObjectToFront(this, domObjects);
+                }
+            }
+        }
+
+        public void SendBackward(DomainObject dom)
+        {
+            if (Contains(dom) && IndexOf(dom) < Count-1)
+            {
+                int index = IndexOf(dom);
+                DomainObject tmp = base[index + 1];
+                base[index + 1] = dom;
+                base[index] = tmp;                
+                if (DomainObjectToBack != null)
+                {
+                    List<DomainObject> domObjects = new List<DomainObject>();
+                    domObjects.Add(dom);
+                    DomainObjectToBack(this, domObjects);
+                }
+            }
+        }
+
+        public void Serialize(XmlDocument doc)
+        {
+            foreach (DomainObject obj in this)
+            {
+                obj.Part.Serialize(doc);
+            }
+
+            string xml = doc.InnerXml;
         }
     }
 }

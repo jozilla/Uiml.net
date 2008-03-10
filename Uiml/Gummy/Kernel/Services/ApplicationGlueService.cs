@@ -29,9 +29,6 @@ namespace Uiml.Gummy.Kernel.Services {
 
         public void Init()
         {
-            Menu = new MainMenu();
-            MenuItem service = Menu.MenuItems.Add("Logic");
-            service.MenuItems.Add("Select", this.LogicSelect_Clicked);
         }
 
         public bool Open()
@@ -70,10 +67,6 @@ namespace Uiml.Gummy.Kernel.Services {
                 methods.Add(new ReflectionMethodModel(m));
             }
             layout.Controls.Add(new MethodsView(new MethodsModel(methods.ToArray())));
-        }
-
-        public void LogicSelect_Clicked(object sender, EventArgs args)
-        {
         }
 
         public List<IUimlElement> GetUimlElements()
