@@ -111,7 +111,6 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.Designer.cs">
       <DependentUpon>MethodView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionBehaviorGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionMethodModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionMethodParameterModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\Arrow.cs">

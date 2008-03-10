@@ -11,18 +11,10 @@ using Uiml.Gummy.Kernel.Services.ApplicationGlue;
 
 namespace Uiml.Gummy.Kernel.Services {
     public partial class ApplicationGlueService : Form, IService {
-        private List<ConnectedMethod> m_methods;
-        private IBehaviorGenerator m_gen;
-        private Logic m_logic;
-        private string m_logicXmlString;
-        private Behavior m_behavior;
-        private string m_behaviorXmlString;
-
         private ApplicationGlueServiceConfiguration m_config;
 
         public ApplicationGlueService() {
             InitializeComponent();
-            m_gen = new ReflectionBehaviorGenerator();
 
             m_config = new ApplicationGlueServiceConfiguration(this);
         }

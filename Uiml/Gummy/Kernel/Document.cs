@@ -10,6 +10,8 @@ using System.Collections;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Serialize;
 
+using Uiml.Gummy.Kernel.Services.ApplicationGlue;
+
 namespace Uiml.Gummy.Kernel
 {
     /// <summary>
@@ -32,6 +34,8 @@ namespace Uiml.Gummy.Kernel
         //TODO: Add the wireframe data to the document
         private Size m_wireFrameSize = Size.Empty;
 
+        private ApplicationGlueRegistry m_behavior = new ApplicationGlueRegistry();
+
         public delegate void ScreenSizeUpdateHandler(object sender, Size newSize);
         public event ScreenSizeUpdateHandler ScreenSizeUpdated;
         public delegate void SpaceModeChangeHandler(object sender, Mode mode);
@@ -40,6 +44,11 @@ namespace Uiml.Gummy.Kernel
         public DomainObjectCollection DomainObjects
         {
             get { return m_domObjects; }
+        }
+
+        public ApplicationGlueRegistry Behavior
+        {
+            get { return m_behavior; }
         }
 
         public Document()

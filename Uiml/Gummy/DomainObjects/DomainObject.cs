@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
+using Uiml.Gummy.Kernel;
 using Uiml.Gummy.Serialize;
 using Uiml;
 using Uiml.Gummy.Interpolation;
@@ -229,12 +230,12 @@ namespace Uiml.Gummy.Domain
             if (mpm.IsOutput)
             {
                 m_methodOutParamLinks.Add(mpm);
-                ApplicationGlueRegistry.Instance.RegisterOutput(mpm, this);
+                DesignerKernel.Instance.CurrentDocument.Behavior.RegisterOutput(mpm, this);
             }
             else
             {
                 m_methodInParamLinks.Add(mpm);
-                ApplicationGlueRegistry.Instance.RegisterInput(mpm, this);
+                DesignerKernel.Instance.CurrentDocument.Behavior.RegisterInput(mpm, this);
             }
 
             Updated();
@@ -243,7 +244,7 @@ namespace Uiml.Gummy.Domain
         public void LinkMethod(MethodModel mm) 
         {
             m_methodLink = mm;
-            ApplicationGlueRegistry.Instance.RegisterInvoke(mm, this);
+            DesignerKernel.Instance.CurrentDocument.Behavior.RegisterInvoke(mm, this);
             Updated();
         }
 
