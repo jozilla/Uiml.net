@@ -81,7 +81,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.Designer.cs">
       <DependentUpon>ApplicationGlueServiceConfiguration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ApplicationGlueRegistry.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\BehaviorRegistry.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethod.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IBehaviorGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodModel.cs" />

@@ -34,7 +34,7 @@ namespace Uiml.Gummy.Kernel
         //TODO: Add the wireframe data to the document
         private Size m_wireFrameSize = Size.Empty;
 
-        private ApplicationGlueRegistry m_behavior = new ApplicationGlueRegistry();
+        private BehaviorRegistry m_behavior = new BehaviorRegistry();
 
         public delegate void ScreenSizeUpdateHandler(object sender, Size newSize);
         public event ScreenSizeUpdateHandler ScreenSizeUpdated;
@@ -46,7 +46,7 @@ namespace Uiml.Gummy.Kernel
             get { return m_domObjects; }
         }
 
-        public ApplicationGlueRegistry Behavior
+        public BehaviorRegistry Behavior
         {
             get { return m_behavior; }
         }

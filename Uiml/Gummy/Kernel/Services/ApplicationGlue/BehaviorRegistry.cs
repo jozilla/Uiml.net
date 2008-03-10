@@ -10,7 +10,7 @@ using Uiml.Peers;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    public class ApplicationGlueRegistry : IBehaviorGenerator
+    public class BehaviorRegistry : IBehaviorGenerator
     {
         private Dictionary<MethodModel, ConnectedMethod> m_methods = new Dictionary<MethodModel, ConnectedMethod>();
         private Dictionary<Type, List<ReflectionMethodModel>> m_logicTree = new Dictionary<Type, List<ReflectionMethodModel>>();
@@ -21,6 +21,12 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             get { return m_methods; }
         }
 
+        public BehaviorRegistry()
+        {
+            Vocabulary voc = ActiveSerializer.Instance.Serializer.Voc;
+            m_vocMeta = new VocabularyMetadata(voc);
+        }
+
         private void UpdateLogicTree(ReflectionMethodModel method)
         {
             Type type = method.MethodInfo.ReflectedType;
@@ -29,12 +35,6 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 m_logicTree[type] = new List<ReflectionMethodModel>();
 
             m_logicTree[type].Add(method);
-        }
-
-        public ApplicationGlueRegistry()
-        {
-            Vocabulary voc = ActiveSerializer.Instance.Serializer.Voc;
-            m_vocMeta = new VocabularyMetadata(voc);
         }
 
         public void RegisterInput(MethodParameterModel param, DomainObject dom)
