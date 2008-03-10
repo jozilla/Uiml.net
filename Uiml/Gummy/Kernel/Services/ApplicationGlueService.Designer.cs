@@ -34,7 +34,7 @@ namespace Uiml.Gummy.Kernel.Services {
             this.layout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.layout.Location = new System.Drawing.Point(0, 0);
             this.layout.Name = "layout";
-            this.layout.Size = new System.Drawing.Size(284, 264);
+            this.layout.Size = new System.Drawing.Size(284, 238);
             this.layout.TabIndex = 0;
             // 
             // ApplicationGlueService
@@ -42,7 +42,7 @@ namespace Uiml.Gummy.Kernel.Services {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(284, 264);
+            this.ClientSize = new System.Drawing.Size(284, 238);
             this.Controls.Add(this.layout);
             this.Name = "ApplicationGlueService";
             this.Text = "Application Glue";

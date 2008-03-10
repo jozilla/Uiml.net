@@ -37,7 +37,7 @@ namespace Uiml.Gummy.Kernel.Services {
 
         public string ServiceName
         {
-            get { return "application-glue"; }
+            get { return "gummy-application-glue"; }
         }
 
         public bool IsEssential
