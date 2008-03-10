@@ -260,7 +260,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 int centerX = rect.X + rect.Width / 2;
                 int centerY = rect.Y + rect.Height / 2;                
                 m_selectedExample = m_examples.IndexOf(rect);
-                m_cursor.Location = new Point(centerX + m_cursor.Width / 2, centerY + m_cursor.Height / 2);
+                m_cursor.Location = new Point(centerX - m_cursor.Width / 2, centerY - m_cursor.Height / 2);
                 Refresh();
                 return;
             }
