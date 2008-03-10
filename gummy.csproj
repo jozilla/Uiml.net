@@ -56,6 +56,7 @@
     <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\PlanarInterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\VocabularyMetadata.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Document.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ACommand.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\BringDomainObjectForward.cs" />
@@ -68,6 +69,50 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\PasteDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\SendDomainObjectBackward.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ShowWireFrameExample.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueService.Designer.cs">
+      <DependentUpon>ApplicationGlueService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.Designer.cs">
+      <DependentUpon>ApplicationGlueServiceConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\BehaviorRegistry.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethod.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IBehaviorGenerator.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodModel.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.Designer.cs">
+      <DependentUpon>MethodNameView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterModel.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterView.Designer.cs">
+      <DependentUpon>MethodParameterView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsModel.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.Designer.cs">
+      <DependentUpon>MethodsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.Designer.cs">
+      <DependentUpon>MethodView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionMethodModel.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionMethodParameterModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\Arrow.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -200,6 +245,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlueService.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ApplicationGlueService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterView.resx">
+      <DependentUpon>MethodParameterView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.resx">
+      <DependentUpon>MethodsView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.resx">
+      <DependentUpon>MethodView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -255,6 +316,22 @@
     <Content Include="images\empty_image.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ApplicationGlueServiceConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_input.png" />
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_method.png" />
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_output.png" />
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MethodNameView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

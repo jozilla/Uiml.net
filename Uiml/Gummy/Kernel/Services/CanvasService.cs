@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -22,16 +23,14 @@ namespace Uiml.Gummy.Kernel.Services
         int m_boxSize = 8;
         BoxID m_clickedBox = BoxID.None;
         int m_rasterBlockSize = 40;
-   
+
         CanvasServiceConfiguration m_config;
 
         Size m_wireFrameSize = Size.Empty;
         List<Line> m_wireFrameLines = new List<Line>();
 
         SelectedDomainObject.DomainObjectSelectedHandler m_selectedHandler = null;
-
         List<ICommand> m_commands = new List<ICommand>();
-
         public CanvasService() : base()
         {
             m_config = new CanvasServiceConfiguration(this);
@@ -44,20 +43,19 @@ namespace Uiml.Gummy.Kernel.Services
             AllowDrop = true;
             DragDrop += new DragEventHandler(onDragDrop);
             DragEnter += new DragEventHandler(onDragEnter);
-            BackColor = Color.DarkGray;            
+            BackColor = Color.DarkGray;
             DesignerKernel.Instance.CurrentDocumentChanged += new EventHandler(currentDocumentChanged);
+
             Paint += new PaintEventHandler(painting);
             
             DoubleBuffered = true;
             //CanvasSize = new Size(100, 100);
-
             MouseDown += new MouseEventHandler(onMouseDown);
             MouseMove += new MouseEventHandler(onMouseMove);
             MouseUp += new MouseEventHandler(onMouseUp);
 
             m_selectedHandler = new SelectedDomainObject.DomainObjectSelectedHandler(domainObjectSelected);
             SelectedDomainObject.Instance.DomainObjectSelected += m_selectedHandler;
-                       
             m_commands.Add(new PasteDomainObject());
         }
 
@@ -169,7 +167,7 @@ namespace Uiml.Gummy.Kernel.Services
                         DesignerKernel.Instance.CurrentDocument.CurrentSize = new Size(e.X - m_origin.X, e.Y - m_origin.Y);
                         break;
                 }
-            }            
+            }
         }
 
         void onMouseDown(object sender, MouseEventArgs e)
@@ -183,11 +181,11 @@ namespace Uiml.Gummy.Kernel.Services
                 MenuFactory.CreateMenu(m_commands, ref menu);
                 contextMenu.Show(this, e.Location);
             }
-        }    
+        }
 
         public bool Open()
         {
-            this.Visible = true;           
+            this.Visible = true;
             return true;
         }
 
@@ -235,7 +233,7 @@ namespace Uiml.Gummy.Kernel.Services
         }       
 
         void painting(object sender, PaintEventArgs e)
-        { 
+        {
             Graphics g = e.Graphics;
             g.FillRectangle(Brushes.WhiteSmoke,new Rectangle(0,0,Width,Height));
             Rectangle doubleBorder0 = new Rectangle(m_uiRectangle.X, m_uiRectangle.Y, m_uiRectangle.Width + 2, m_uiRectangle.Height + 2);
@@ -264,7 +262,7 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 g.FillRectangle(Brushes.DarkGray, r);
                 g.DrawRectangle(Pens.Black, r);
-            }            
+            }
         }
 
 

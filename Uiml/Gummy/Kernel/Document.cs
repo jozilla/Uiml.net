@@ -10,6 +10,9 @@ using System.Collections;
 using Uiml.Gummy.Domain;
 using Uiml.Gummy.Serialize;
 
+using Uiml.Gummy.Kernel.Services.ApplicationGlue;
+using System.Reflection;
+
 namespace Uiml.Gummy.Kernel
 {
     /// <summary>
@@ -32,6 +35,9 @@ namespace Uiml.Gummy.Kernel
         //TODO: Add the wireframe data to the document
         private Size m_wireFrameSize = Size.Empty;
 
+        private BehaviorRegistry m_behavior = new BehaviorRegistry();
+        private List<Assembly> m_libraries = new List<Assembly>();
+
         public delegate void ScreenSizeUpdateHandler(object sender, Size newSize);
         public event ScreenSizeUpdateHandler ScreenSizeUpdated;
         public delegate void SpaceModeChangeHandler(object sender, Mode mode);
@@ -40,6 +46,16 @@ namespace Uiml.Gummy.Kernel
         public DomainObjectCollection DomainObjects
         {
             get { return m_domObjects; }
+        }
+
+        public BehaviorRegistry Behavior
+        {
+            get { return m_behavior; }
+        }
+
+        public List<Assembly> Libraries
+        {
+            get { return m_libraries; }
         }
 
         public Document()
@@ -162,13 +178,23 @@ namespace Uiml.Gummy.Kernel
             }
             // </Fill up structure and style>
 
+            // <behavior>
+            XmlNode behavior = Behavior.GenerateBehavior(doc);
+            iface.AppendChild(behavior);
+
             XmlNode peers = doc.CreateElement("peers");
             uiml.AppendChild(peers);
+
+            // presentation
             XmlNode presentation = doc.CreateElement("presentation");
             XmlAttribute baseAttr = doc.CreateAttribute("base");
             baseAttr.Value = ActiveSerializer.Instance.Serializer.Voc.Identifier + ".uiml";
             presentation.Attributes.Append(baseAttr);
             peers.AppendChild(presentation);
+
+            // logic
+            XmlNode logic = Behavior.GenerateLogic(doc);
+            peers.AppendChild(logic);
 
             return doc;
         }
@@ -199,18 +225,15 @@ namespace Uiml.Gummy.Kernel
 
             // run renderer on this file
             string uimlArgs = string.Format("-uiml \"{0}\"", fileName);
-            /*string libArgs = string.Empty;
+            string libArgs = "-libs";
 
-            try
+            foreach (Assembly a in Libraries)
             {
-                string libFile = ((ApplicationGlueServiceConfiguration)GetService("application-glue").ServiceConfiguration).Assembly.Location;
-                libArgs = string.Format("-libs {0}", Path.ChangeExtension(libFile, null));
+                string libFile = a.Location;
+                libArgs += " " + Path.ChangeExtension(libFile, null);
             }
-            catch
-            {
-            }*/
 
-            string uimldotnetArgs = uimlArgs/* + " " + libArgs*/;
+            string uimldotnetArgs = uimlArgs + " " + libArgs;
             ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
             psi.ErrorDialog = true;
             Process.Start(psi);

@@ -123,19 +123,29 @@ namespace Uiml.Gummy.Kernel
                         childForm.Dock = DockStyle.Right;
                         childForm.Width = 300;
                         break;
+                    case "gummy-application-glue":
+                        Form canvas = (Form)GetService("gummy-canvas").ServiceControl;
+                        int preferredHeight = childForm.Controls[0].Height;
+                        canvas.Height = canvas.Height - preferredHeight;
+                        childForm.StartPosition = FormStartPosition.Manual;
+                        childForm.Location = new Point(canvas.Location.X, canvas.Location.Y + canvas.Height);
+                        childForm.Size = new Size(canvas.Width, preferredHeight);
+                        break;
                 }
             }
         }
 
         private void DockMdiChildren()
         {
-            UpdateStatus("Docking ToolBox", 1, 3);
+            UpdateStatus("Docking ToolBox", 1, 4);
             DockMdiChild(GetService("gummy-toolbox"));
-            UpdateStatus("Docking Properties Panel", 2, 3);
+            UpdateStatus("Docking Properties Panel", 2, 4);
             DockMdiChild(GetService("gummy-propertypanel"));
-            UpdateStatus("Docking Canvas", 2, 3);
+            UpdateStatus("Docking Canvas", 2, 4);
             DockMdiChild(GetService("gummy-canvas"));
-            UpdateStatus("Ready");
+            UpdateStatus("Docking Application Glue", 3, 4);
+            DockMdiChild(GetService("gummy-application-glue"));
+            UpdateStatus("Ready", 4, 4);
         }
 
         private void UnDockMdiChild(IService child)
@@ -242,15 +252,16 @@ namespace Uiml.Gummy.Kernel
 
         //Load the services from an Xml Document
         public void LoadServices(XmlDocument doc)
-        {            
+        {
             AttachService(new ToolboxService());
             AttachService(new CanvasService());
             AttachService(new SpaceService());
             AttachService(new WireFrameService());
             AttachService(new DrawModeService());
             AttachService(new PropertiesService());
+            AttachService(new ApplicationGlueService());
 
-            InitializeMdiChildren(); // initialize all services
+            InitializeMdiChildren(); // initialize all services            
         }
 
         public void ShowServices()

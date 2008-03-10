@@ -26,7 +26,7 @@ namespace Uiml.Gummy.Visual
         {
             DomainObject = domObject;
             //AutoSize = true;
-            //this.SizeMode = PictureBoxSizeMode.AutoSize;
+            //this.SizeMode = PictureBoxSizeMode.AutoSize;            
         }
 
         ~VisualDomainObject()
@@ -34,7 +34,7 @@ namespace Uiml.Gummy.Visual
             if (m_domObject != null)
                 m_domObject.DomainObjectUpdated -= m_domUpdated;
         }
-
+        
         public DomainObject DomainObject
         {
             get
@@ -46,7 +46,7 @@ namespace Uiml.Gummy.Visual
                 if (m_domObject != null)
                     m_domObject.DomainObjectUpdated -= m_domUpdated;
                 m_domObject = value;
-                m_domObject.DomainObjectUpdated += m_domUpdated;                
+                m_domObject.DomainObjectUpdated += m_domUpdated;
                 m_domObject.Updated();
                 FixSize();
             }
@@ -109,6 +109,26 @@ namespace Uiml.Gummy.Visual
                 Size = new Size(34, 34);      
                
             }
+        }
+        protected override void OnPaint(PaintEventArgs pe)
+        {
+            base.OnPaint(pe);
+
+            //Graphics g = pe.Graphics;
+            //g.DrawRectangle(new Pen(DomainObject.Color,2.0f), 0, 0, Bounds.Width - 2.0f, Bounds.Height - 2.0f);
+        }
+
+        void VisualDomainObject_MouseUp(object sender, MouseEventArgs e)
+        {            
+        }
+
+        void VisualDomainObject_MouseClick(object sender, MouseEventArgs e)
+        {           
+            
+        }
+
+        void VisualDomainObject_MouseMove(object sender, MouseEventArgs e)
+        {
         }
 
         /*

@@ -123,7 +123,7 @@ namespace Uiml.Gummy.Kernel.Services
                     VisualProperty visProp = (VisualProperty)Controls[i];
                     visProp.RefreshMe();
                 }
-            }            
+            }
         }
 
         public IServiceConfiguration ServiceConfiguration
