@@ -49,22 +49,36 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             Inputs.Add(param, dom);
         }
 
-        public bool IsComplete()
+        public bool IsComplete(out List<MethodParameterModel> missingInputParams, out bool missingOutput, out bool missingInvoke)
         {
+            // initialization
+            missingInputParams = new List<MethodParameterModel>();
+            missingOutput = false;
+            missingInvoke = false;
+
             bool invoke;
             bool output;
             bool inputs;
 
             invoke = Invoke != null;
 
+            if (!invoke)
+                missingInvoke = true;
+
             inputs = true;
             foreach (MethodParameterModel input in Inputs.Keys)
             {
                 if (!Method.Inputs.Contains(input))
+                {
                     inputs = false;
+                    missingInputParams.Add(input);
+                }
             }
 
             output = (Method.Outputs.Count > 0) ? Output != null: Output == null;
+
+            if (!output)
+                missingOutput = true;
 
             return output && invoke && inputs;
         }
