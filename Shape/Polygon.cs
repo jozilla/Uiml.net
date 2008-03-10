@@ -51,13 +51,18 @@ namespace Shape
             }
             if (m_points.Count > 2)
             {
-                
-                g.DrawPolygon(Pens.Plum, drawPoints.ToArray());
-                g.FillPolygon(Brushes.Orchid, drawPoints.ToArray());
+
+                SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(50, 0, 255, 0));
+                g.FillPolygon(semiTransBrush, drawPoints.ToArray());
+                g.DrawPolygon(Pens.DarkBlue, drawPoints.ToArray());
             }
             else if (m_points.Count == 2)
             {
                 g.DrawLine(Pens.DarkBlue, drawPoints[0], drawPoints[1]);
+            }
+            foreach (Point pnt in drawPoints)
+            {
+                g.DrawRectangle(Pens.Coral, pnt.X - 2, pnt.Y - 2, 4, 4);
             }
         }
 

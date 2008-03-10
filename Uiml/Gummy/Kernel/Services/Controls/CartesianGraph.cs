@@ -38,7 +38,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         private Point m_lastMovePosition = Point.Empty;
         private Shape.ShapUpdateHandler m_shapeUpdateHandler = null;
         private DomainObject m_selected = null;
-        private bool m_clicked = false;
+        private bool m_finished = false;
 
         public CartesianGraph()
         {
@@ -49,7 +49,26 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             MouseDown += new MouseEventHandler(onMouseDownGraph);
             MouseMove += new MouseEventHandler(onMouseMoveGraph);
             MouseUp += new MouseEventHandler(onMouseUpGraph);
+            MouseDoubleClick += new MouseEventHandler(onMouseDoubleClick);
             ExampleRepository.Instance.ExampleDesignAdded += new ExampleRepository.ExampleDesignAddedHandler(onExampleDesignAdded);            
+        }
+
+        void onMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Draw)
+            {
+                if (Selected.SelectedDomainObject.Instance.Selected != null)
+                {
+                    m_finished = !m_finished;
+                    if (!m_finished)
+                    {
+                        DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
+                        Point pnt = new Point(e.Location.X - m_origin.X, e.Location.Y - m_origin.Y);
+                        ((Shape.Polygon)dom.Shape).AddPoint(pnt);
+                        m_lastMovePosition = pnt;
+                    }
+                }
+            }
         }
 
         private void onExampleDesignAdded(object sender, Size s)
@@ -104,6 +123,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             }
             dom.Shape.ShapeUpdated += m_shapeUpdateHandler;
             m_selected = dom;
+            m_finished = true;
             Refresh();
         }
 
@@ -187,7 +207,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 }
                 else if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Draw)
                 {
-                    if (Selected.SelectedDomainObject.Instance.Selected != null)
+                    if (Selected.SelectedDomainObject.Instance.Selected != null && !m_finished)
                     {
                         //m_clicked = true;
                         DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
@@ -257,7 +277,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             }
             else if (DesignerKernel.Instance.CurrentDocument.Mode == Mode.Draw)
             {
-                if (Selected.SelectedDomainObject.Instance.Selected != null/* && m_clicked*/)
+                if (Selected.SelectedDomainObject.Instance.Selected != null && !m_finished)
                 {
                     DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
                     if (m_lastMovePosition != Point.Empty)
