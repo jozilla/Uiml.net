@@ -56,7 +56,7 @@
     <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\PlanarInterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\VocabularyMetadata.cs" />    
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\VocabularyMetadata.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Document.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ACommand.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\BringDomainObjectForward.cs" />
@@ -84,7 +84,6 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ApplicationGlueRegistry.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethod.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IBehaviorGenerator.cs" />
-    <Compile Include="Uiml\Gummy\Kernel\Services\IUimlProvider.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.cs">
       <SubType>UserControl</SubType>
@@ -315,7 +314,7 @@
     <Content Include="images\empty_image.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link.png" />
   </ItemGroup>

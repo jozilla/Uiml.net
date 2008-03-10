@@ -39,112 +39,130 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             }
         }
 
-        public Logic GenerateLogic(out string logicXml)
+        public XmlNode GenerateLogic(XmlDocument doc)
         {
             Init(); //FIXME: efficiency
 
-            StringWriter writer = new StringWriter();
-            XmlTextWriter xmlw = new XmlTextWriter(writer);
-
-            xmlw.WriteStartDocument();
-
             // <logic>
-            xmlw.WriteStartElement("logic"); 
+            XmlElement logic = doc.CreateElement("logic");
 
             foreach (Type t in m_logicTree.Keys)
             {
                 // <d-component>
-                xmlw.WriteStartElement("d-component");
-                xmlw.WriteAttributeString("id", t.Name);
-                xmlw.WriteAttributeString("maps-to", t.FullName);
+                XmlElement comp = doc.CreateElement("d-component");
+                XmlAttribute id = doc.CreateAttribute("id");
+                id.Value = t.Name;
+                comp.Attributes.Append(id);
+                XmlAttribute mapsTo = doc.CreateAttribute("maps-to");
+                mapsTo.Value = t.FullName;
+                comp.Attributes.Append(mapsTo);
+                logic.AppendChild(comp);
 
                 foreach (ReflectionMethodModel method in m_logicTree[t])
                 {
                     // <d-method>
-                    xmlw.WriteStartElement("d-method");
-                    xmlw.WriteAttributeString("id", method.Name);
+                    XmlElement dmethod = doc.CreateElement("d-method");
+                    XmlAttribute methId = doc.CreateAttribute("id");
+                    methId.Value = method.Name;
+                    dmethod.Attributes.Append(methId);
                     if (method.Outputs.Count > 0)
-                        xmlw.WriteAttributeString("return-type", method.Outputs[0].Type.ToString());
-                    xmlw.WriteAttributeString("maps-to", method.Name);
+                    {
+                        XmlAttribute returnType = doc.CreateAttribute("return-type");
+                        returnType.Value = method.Outputs[0].Type.ToString();
+                        dmethod.Attributes.Append(returnType);
+                    }
+                    XmlAttribute methMapsTo = doc.CreateAttribute("maps-to");
+                    methMapsTo.Value = method.Name;
+                    dmethod.Attributes.Append(methMapsTo);
+                    comp.AppendChild(dmethod);
 
                     foreach (ReflectionMethodParameterModel param in method.Inputs)
                     {
                         // <d-param>
-                        xmlw.WriteStartElement("d-param");
-                        xmlw.WriteAttributeString("id", param.Name);
-                        xmlw.WriteAttributeString("type", param.Type.ToString());
-                        xmlw.WriteEndElement(); // </d-param>
+                        XmlElement dparam = doc.CreateElement("d-param");
+                        XmlAttribute paramId = doc.CreateAttribute("id");
+                        paramId.Value = param.Name;
+                        dparam.Attributes.Append(paramId);
+                        XmlAttribute type = doc.CreateAttribute("type");
+                        type.Value = param.Type.ToString();
+                        dparam.Attributes.Append(type);
+                        dmethod.AppendChild(dparam);
                     }
-
-                    xmlw.WriteEndElement(); // </d-method>
                 }
-
-                xmlw.WriteEndElement(); // </d-component>
             }
 
-            xmlw.WriteEndElement(); // </logic>
-            xmlw.WriteEndDocument();
-            xmlw.Close();
-
-            string xml = writer.ToString();
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            logicXml = doc.DocumentElement.OuterXml;
-            return new Logic(doc.DocumentElement);
+            return logic;
         }
 
-        public Behavior GenerateBehavior(out string behaviorXml)
+        public XmlNode GenerateBehavior(XmlDocument doc)
         {
             Init(); //FIXME: efficiency
-
-            StringWriter writer = new StringWriter();
-            XmlTextWriter xmlw = new XmlTextWriter(writer);
-
-            xmlw.WriteStartDocument();
             
             // <behavior>
-            xmlw.WriteStartElement("behavior");
+            XmlElement behavior = doc.CreateElement("behavior");
 
             foreach (ConnectedMethod method in ApplicationGlueRegistry.Instance.Methods.Values)
             {
                 try
                 {
-                    xmlw.WriteStartElement("rule");
+                    // rule
+                    XmlElement rule = doc.CreateElement("rule");
+                    behavior.AppendChild(rule);
 
-                    xmlw.WriteStartElement("condition"); // <condition>
-                    xmlw.WriteStartElement("event"); // <event>
+                    // <condition>
+                    XmlElement condition = doc.CreateElement("condition");
+                    rule.AppendChild(condition);
+                    // <event>
+                    XmlElement evnt = doc.CreateElement("event");
+                    condition.AppendChild(evnt);
+
                     /* Invoke */
-                    xmlw.WriteAttributeString("part-name", method.Invoke.Part.Identifier);
-                    xmlw.WriteAttributeString("class", m_vocMeta.GetEvent(method.Invoke.Part.Class));
-                    xmlw.WriteEndElement(); // </event>
-                    xmlw.WriteEndElement(); // </condition>
+                    XmlAttribute partName = doc.CreateAttribute("part-name");
+                    partName.Value = method.Invoke.Part.Identifier;
+                    evnt.Attributes.Append(partName);
+                    XmlAttribute clss = doc.CreateAttribute("class");
+                    clss.Value = m_vocMeta.GetEvent(method.Invoke.Part.Class);
+                    evnt.Attributes.Append(clss);
 
-                    xmlw.WriteStartElement("action"); // <action>
+                    // <action>
+                    XmlElement action = doc.CreateElement("action");
+                    rule.AppendChild(action);
                     /* Output */
-                    xmlw.WriteStartElement("property"); // <property>
-                    xmlw.WriteAttributeString("part-name", method.Output.Part.Identifier);
-                    xmlw.WriteAttributeString("name", m_vocMeta.GetOutputProperty(method.Output.Part.Class, method.Method.Outputs[0].Type));
-                    xmlw.WriteStartElement("call"); // <call>
+                    // <property>
+                    XmlElement prop = doc.CreateElement("property");
+                    XmlAttribute propPartName = doc.CreateAttribute("part-name");
+                    propPartName.Value = method.Output.Part.Identifier;
+                    prop.Attributes.Append(propPartName);
+                    XmlAttribute propName = doc.CreateAttribute("name");
+                    propName.Value = m_vocMeta.GetOutputProperty(method.Output.Part.Class, method.Method.Outputs[0].Type);
+                    prop.Attributes.Append(propName);
+                    action.AppendChild(prop);
+                    // <call>
+                    XmlElement call = doc.CreateElement("call");
                     Type t = ((ReflectionMethodModel)method.Method).MethodInfo.ReflectedType;
-                    xmlw.WriteAttributeString("name", t + "." + method.Method.Name);
+                    XmlAttribute callName = doc.CreateAttribute("name");
+                    callName.Value = t + "." + method.Method.Name;
+                    call.Attributes.Append(callName);
+                    prop.AppendChild(call);
                     /* Inputs */
                     foreach (KeyValuePair<MethodParameterModel, DomainObject> item in method.Inputs)
                     {
                         MethodParameterModel param = item.Key;
                         DomainObject dom = item.Value;
 
-                        xmlw.WriteStartElement("param"); // <param>
-                        xmlw.WriteStartElement("property"); // <property>
-                        xmlw.WriteAttributeString("part-name", dom.Part.Identifier);
-                        xmlw.WriteAttributeString("name", m_vocMeta.GetInputProperty(dom.Part.Class, param.Type));
-                        xmlw.WriteEndElement(); // </property>
-                        xmlw.WriteEndElement(); // </param>
+                        // <param>
+                        XmlElement callParam = doc.CreateElement("param");
+                        call.AppendChild(callParam);
+                        // <property>
+                        XmlElement paramProp = doc.CreateElement("property");
+                        callParam.AppendChild(paramProp);
+                        XmlAttribute paramPropPartName = doc.CreateAttribute("part-name");
+                        paramPropPartName.Value = dom.Part.Identifier;
+                        paramProp.Attributes.Append(paramPropPartName);
+                        XmlAttribute paramPropName = doc.CreateAttribute("name");
+                        paramPropName.Value = m_vocMeta.GetInputProperty(dom.Part.Class, param.Type);
+                        paramProp.Attributes.Append(paramPropName);
                     }
-                    xmlw.WriteEndElement(); // </call>
-                    xmlw.WriteEndElement(); // </property>
-                    xmlw.WriteEndElement(); // </action>
-
-                    xmlw.WriteEndElement(); // </rule>
                 }
                 catch(Exception e)
                 {
@@ -152,15 +170,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 }
             }
 
-            xmlw.WriteEndElement(); // </behavior>
-            xmlw.WriteEndDocument();
-            xmlw.Close();
-
-            string xml = writer.ToString();
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            behaviorXml = doc.DocumentElement.OuterXml;
-            return new Behavior(doc); // todo
+            return behavior;
         }
     }
 }

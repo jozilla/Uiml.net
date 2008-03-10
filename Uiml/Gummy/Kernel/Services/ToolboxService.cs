@@ -13,7 +13,7 @@ using System.Drawing;
 
 namespace Uiml.Gummy.Kernel.Services
 {
-    public class ToolboxService : Form, IService, IUimlProvider
+    public class ToolboxService : Form, IService
     {
         private List<DomainObject> m_domainObjects = new List<DomainObject>();
         private FlowLayoutPanel layout;
@@ -96,24 +96,6 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 return "gummy-toolbox";
             }
-        }
-
-        public List<IUimlElement> GetUimlElements()
-        {
-            List<IUimlElement> elements = new List<IUimlElement>();
-
-            // TODO: return presentation with correct vocabulary
-
-            return elements;
-        }
-
-        public List<string> GetUimlElementsXml()
-        {
-            List<string> xmlStrings = new List<string>();
-
-            // TODO: return presentation with voc XML string
-
-            return xmlStrings;
         }
 
         public System.Windows.Forms.Control ServiceControl

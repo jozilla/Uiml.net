@@ -10,7 +10,7 @@ using System.Reflection;
 using Uiml.Gummy.Kernel.Services.ApplicationGlue;
 
 namespace Uiml.Gummy.Kernel.Services {
-    public partial class ApplicationGlueService : Form, IService, IUimlProvider {
+    public partial class ApplicationGlueService : Form, IService {
         private List<ConnectedMethod> m_methods;
         private IBehaviorGenerator m_gen;
         private Logic m_logic;
@@ -67,27 +67,6 @@ namespace Uiml.Gummy.Kernel.Services {
                 methods.Add(new ReflectionMethodModel(m));
             }
             layout.Controls.Add(new MethodsView(new MethodsModel(methods.ToArray())));
-        }
-
-        public List<IUimlElement> GetUimlElements()
-        {
-            m_logic = m_gen.GenerateLogic(out m_logicXmlString);
-            m_behavior = m_gen.GenerateBehavior(out m_behaviorXmlString);
-
-            List<IUimlElement> elements = new List<IUimlElement>();
-            elements.Add(m_logic);
-            elements.Add(m_behavior);
-            return elements;
-        }
-
-        public List<string> GetUimlElementsXml()
-        {
-            List<string> xmlStrings = new List<string>();
-
-            xmlStrings.Add(m_logicXmlString);
-            xmlStrings.Add(m_behaviorXmlString);
-
-            return xmlStrings;
         }
 
         public Control ServiceControl

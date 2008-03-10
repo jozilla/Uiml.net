@@ -162,13 +162,22 @@ namespace Uiml.Gummy.Kernel
             }
             // </Fill up structure and style>
 
+            // <behavior>
+
+            // </behavior>
+
             XmlNode peers = doc.CreateElement("peers");
             uiml.AppendChild(peers);
+
+            // presentation
             XmlNode presentation = doc.CreateElement("presentation");
             XmlAttribute baseAttr = doc.CreateAttribute("base");
             baseAttr.Value = ActiveSerializer.Instance.Serializer.Voc.Identifier + ".uiml";
             presentation.Attributes.Append(baseAttr);
             peers.AppendChild(presentation);
+
+            // logic
+
 
             return doc;
         }

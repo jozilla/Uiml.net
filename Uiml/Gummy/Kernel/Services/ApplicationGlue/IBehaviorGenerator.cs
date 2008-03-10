@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
     public interface IBehaviorGenerator
     {
-        Logic GenerateLogic(out string logicXml);
-        Behavior GenerateBehavior(out string behaviorXml);
+        XmlNode GenerateLogic(XmlDocument doc);
+        XmlNode GenerateBehavior(XmlDocument doc);
     }
 }
