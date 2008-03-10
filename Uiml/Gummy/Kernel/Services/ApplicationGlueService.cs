@@ -76,6 +76,8 @@ namespace Uiml.Gummy.Kernel.Services {
             try
             {
                 DrawService(m_config.Assembly.GetTypes()[0]); // todo: check correct type
+                // add to document
+                DesignerKernel.Instance.CurrentDocument.Libraries.Add(m_config.Assembly);
             }
             catch
             {
