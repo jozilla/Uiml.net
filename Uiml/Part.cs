@@ -305,6 +305,17 @@ namespace Uiml {
 			return m_children.GetEnumerator();
 		}
 
+        public List<Part> GetPartChildren()
+        {
+            List<Part> parts = new List<Part>();
+            foreach (object obj in Children)
+            {
+                if (obj is Part)
+                    parts.Add((Part)obj);
+            }
+
+            return parts;
+        }
 
 		///<value>
 		/// Sets and gets the class of this part. This class identifier still
@@ -330,6 +341,11 @@ namespace Uiml {
 		{
 			get { return m_properties.GetEnumerator(); }
 		}
+
+        public ArrayList PropertiesList
+        {
+            get { return m_properties; } 
+        }
 
 		public Part SearchPart(string checkIdentifier)
 		{

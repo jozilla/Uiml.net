@@ -62,12 +62,20 @@ namespace Uiml.Gummy.Kernel.Services
         }
 
         void currentDocumentChanged(object sender, EventArgs e)
-        {            
+        {
+            // initialize events
             DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectAdded += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectAdded);
             DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectRemoved += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectRemoved);
             DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectToBack += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectOrderChanged);
             DesignerKernel.Instance.CurrentDocument.DomainObjects.DomainObjectToFront += new DomainObjectCollection.DomainObjectCollectionHandler(domainObjectOrderChanged);
             DesignerKernel.Instance.CurrentDocument.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizeUpdated);
+
+            // clear everything from previous document
+            Controls.Clear();
+            // add new domainobjects
+            domainObjectAdded(this, DesignerKernel.Instance.CurrentDocument.DomainObjects);
+            // update screen size
+            screenSizeUpdated(this, DesignerKernel.Instance.CurrentDocument.CurrentSize);
         }
 
         void screenSizeUpdated(object sender, Size newSize)

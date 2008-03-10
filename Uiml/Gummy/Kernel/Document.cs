@@ -49,22 +49,37 @@ namespace Uiml.Gummy.Kernel
 
         public Document(Stream s) : this()
         {
+            // FIXME: use reverse type decoders!
             XmlDocument xml = new XmlDocument();
             xml.Load(s);
             UimlDocument uiml = new UimlDocument(xml.DocumentElement);
 
-            ArrayList parts = ((Structure)uiml.UInterface.UStructure[0]).Children;
+            Structure structure = (Structure)uiml.UInterface.UStructure[0];
+            Style style = (Style)uiml.UInterface.UStyle[0];
+            ArrayList parts = structure.Children;
 
-            if (parts != null && parts.Count > 0)
+            if (structure.Top != null)
             {
-                int i = 0;
-                foreach (Part p in ((Structure)uiml.UInterface.UStructure[0]).Children)
-                {
-                    if (i == 0)
-                    {
-                    }
+                List<Property> props = new List<Property>();
+                foreach (Property prop in style.GetNamedPropertiesList(structure.Top.Identifier))
+                    props.Add(prop);
+                foreach (Property prop in structure.Top.PropertiesList)
+                    props.Add(prop);
 
-                    i++;
+                DomainObject dom = DomainObjectFactory.Instance.Create(structure.Top, props);
+                FormContainer = dom;
+
+                // add its children
+                foreach (Part p in structure.Top.GetPartChildren())
+                {
+                    props.Clear();
+                    foreach (Property prop in style.GetNamedPropertiesList(p.Identifier))
+                        props.Add(prop);
+                    foreach (Property prop in p.PropertiesList)
+                        props.Add(prop);
+
+                    dom = DomainObjectFactory.Instance.Create(p, props);
+                    DomainObjects.Add(dom);
                 }
             }
         }
@@ -78,6 +93,9 @@ namespace Uiml.Gummy.Kernel
             set
             {
                 m_formContainer = value;
+                // screen size is updated as well
+                if (ScreenSizeUpdated != null)
+                    ScreenSizeUpdated(this, CurrentSize);
             }
         }
 
