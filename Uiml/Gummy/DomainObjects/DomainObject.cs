@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
+using Uiml.Gummy.Kernel;
 using Uiml.Gummy.Serialize;
 using Uiml;
 using Uiml.Gummy.Interpolation;
 using Shape;
+using Uiml.Gummy.Kernel.Services.ApplicationGlue;
 
 namespace Uiml.Gummy.Domain
 {
@@ -21,24 +23,26 @@ namespace Uiml.Gummy.Domain
         private bool m_selected = false;
 
         private InterpolationAlgorithm m_interpolationAlgorithm = null;
-        private PositionManipulator m_positionManipulator = null;
 
+        private PositionManipulator m_positionManipulator = null;
         private SizeManipulator m_sizeManipulator = null;
 
         private Color m_color = DEFAULT_COLOR;
 
-        public delegate void DomainObjectUpdateHandler(object sender, EventArgs e);
-
+        public delegate void DomainObjectUpdateHandler (object sender, EventArgs e);
 
         public event DomainObjectUpdateHandler DomainObjectUpdated;
 
-        private IShape m_shape = new Polygon();
+        private Polygon m_shape = new Polygon();
+
+        private MethodModel m_methodLink = null;
+        private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
+        private List<MethodParameterModel> m_methodInParamLinks = new List<MethodParameterModel>();
         		
 		public DomainObject()
 		{
             //The default interpolation algorithm
-            m_interpolationAlgorithm = new LinearInterpolationAlgorithm(this);           
-            
+            m_interpolationAlgorithm = new LinearInterpolationAlgorithm(this);
 		}
 
         public object Clone()
@@ -80,6 +84,26 @@ namespace Uiml.Gummy.Domain
             }
         }
 
+        public MethodModel MethodLink 
+        {
+            get { return m_methodLink; }
+        }
+
+        public List<MethodParameterModel> MethodOutputParameterLinks 
+        {
+            get { return m_methodOutParamLinks; } 
+        }
+
+        public List<MethodParameterModel> MethodInputParameterLinks
+        {
+            get { return m_methodInParamLinks; }
+        }
+
+        public bool Linked 
+        {
+            get { return m_methodInParamLinks.Count > 0 || m_methodOutParamLinks.Count > 0 || m_methodLink != null; }
+        }
+
         public String Identifier
         {
             get
@@ -111,7 +135,7 @@ namespace Uiml.Gummy.Domain
             }
         }
 
-        public IShape Shape
+        public Polygon Polygon
         {
             get
             {
@@ -199,6 +223,45 @@ namespace Uiml.Gummy.Domain
         {
             if(DomainObjectUpdated != null)
                 DomainObjectUpdated(this, new EventArgs());
+        }
+
+        public void LinkMethodParameter(MethodParameterModel mpm)
+        {
+            if (mpm.IsOutput)
+            {
+                m_methodOutParamLinks.Add(mpm);
+                DesignerKernel.Instance.CurrentDocument.Behavior.RegisterOutput(mpm, this);
+            }
+            else
+            {
+                m_methodInParamLinks.Add(mpm);
+                DesignerKernel.Instance.CurrentDocument.Behavior.RegisterInput(mpm, this);
+            }
+
+            Updated();
+        }
+
+        public void LinkMethod(MethodModel mm) 
+        {
+            m_methodLink = mm;
+            DesignerKernel.Instance.CurrentDocument.Behavior.RegisterInvoke(mm, this);
+            Updated();
+        }
+
+        public void UnlinkMethod() 
+        {
+            m_methodLink = null;
+            Updated();
+        }
+
+        public void UnlinkMethodParameter(MethodParameterModel mpm) 
+        {
+            if (mpm.IsOutput)
+                m_methodOutParamLinks.Remove(mpm);
+            else
+                m_methodInParamLinks.Remove(mpm);
+
+            Updated();
         }
 
         public Property FindProperty(string propertyName)

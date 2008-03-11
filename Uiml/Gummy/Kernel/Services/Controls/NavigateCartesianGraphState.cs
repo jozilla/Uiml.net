@@ -9,7 +9,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         bool m_cursorClicked = false;
         System.Windows.Forms.MouseEventHandler m_mouseDownHandler = null;
         System.Windows.Forms.MouseEventHandler m_mouseUpHandler = null;
-        System.Windows.Forms.MouseEventHandler m_mouseMoveHandler = null;
+        System.Windows.Forms.MouseEventHandler m_mouseMoveHandler = null;        
 
         public NavigateCartesianGraphState(CartesianGraph cart)
             : base(cart)
@@ -31,7 +31,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 m_mouseMoveHandler = new System.Windows.Forms.MouseEventHandler(onMouseMove);
                 m_graph.MouseMove += m_mouseMoveHandler;
                 m_mouseUpHandler = new System.Windows.Forms.MouseEventHandler(onMouseUp);
-                m_graph.MouseUp += m_mouseUpHandler;                
+                m_graph.MouseUp += m_mouseUpHandler;          
             }
         }
 

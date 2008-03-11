@@ -16,6 +16,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
     public partial class CartesianGraph : UserControl
     {        
         private List<Rectangle> m_examples = new List<Rectangle>();
+        private List<Rectangle> m_highlightedExamples = new List<Rectangle>();
         private int m_selectedExample = -1;
         private Rectangle m_cursor = new Rectangle(12, 12, 16, 16);
 
@@ -35,8 +36,8 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         private Shape.ShapUpdateHandler m_shapeUpdateHandler = null;
         private DomainObject m_selected = null;
 
-
         private CartesianGraphState m_graphState = null;
+        public PaintEventHandler CartesianGraphPaint;
 
         public CartesianGraph()
         {
@@ -55,6 +56,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             Point p = SizeToPoint(s);
             m_examples.Add(new Rectangle(p.X - 3, p.Y - 3, 6, 6));
             snapCursorToTheSelectedExample();
+            updateHighlightedExamples();
             Refresh();
         }
 
@@ -98,11 +100,31 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         {
             if (m_selected != null)
             {
-                m_selected.Shape.ShapeUpdated -= m_shapeUpdateHandler;
+                m_selected.Polygon.ShapeUpdated -= m_shapeUpdateHandler;
             }
-            dom.Shape.ShapeUpdated += m_shapeUpdateHandler;
+            dom.Polygon.ShapeUpdated += m_shapeUpdateHandler;
             m_selected = dom;
+            updateHighlightedExamples();
             Refresh();
+        }
+
+        void updateHighlightedExamples()
+        {
+            //Build up the highlighted examples
+            if (m_selected == null)
+                return;
+            m_highlightedExamples.Clear();
+            Dictionary<Size, DomainObject> dict = ExampleRepository.Instance.GetDomainObjectExamples(m_selected.Identifier);
+            if (dict != null)
+            {
+                Dictionary<Size, DomainObject>.Enumerator dictEnumerator = dict.GetEnumerator();
+                while (dictEnumerator.MoveNext())
+                {
+                    Point rectLocation = SizeToPoint(dictEnumerator.Current.Key);
+                    Rectangle rect = new Rectangle(rectLocation.X - 15, rectLocation.Y - 15, 30, 30);
+                    m_highlightedExamples.Add(rect);
+                }
+            }
         }
 
         void onShapeUpdated(Shape.IShape shape)
@@ -306,7 +328,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
             if (Selected.SelectedDomainObject.Instance.Selected != null)
             {
-                Selected.SelectedDomainObject.Instance.Selected.Shape.Paint(g, m_origin);
+                Selected.SelectedDomainObject.Instance.Selected.Polygon.Paint(g, m_origin);
             }
 
             for (int i = 0; i < m_examples.Count; i++)
@@ -321,18 +343,28 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                     g.DrawRectangle(Pens.Chocolate, m_examples[i]);                    
                 }
             }
+            SolidBrush semiTransHighlightedBrush = new SolidBrush(Color.FromArgb(30, Color.Yellow));
+            for (int i = 0; i < m_highlightedExamples.Count; i++)
+            {
+                Rectangle current = m_highlightedExamples[i];
+                g.FillEllipse(semiTransHighlightedBrush, current);
+                g.DrawEllipse(Pens.Peru, current);                
+            }
+
+            if (CartesianGraphPaint != null)
+                CartesianGraphPaint(this, e);
 
             if (Selected.SelectedDomainObject.Instance.Selected != null)
             {
-                Selected.SelectedDomainObject.Instance.Selected.Shape.Paint(g, m_origin);
+                Selected.SelectedDomainObject.Instance.Selected.Polygon.Paint(g, m_origin);
             }
 
-            SolidBrush semiTransUIBrush = new SolidBrush(Color.FromArgb(50,Color.Gray));
+            //SolidBrush semiTransUIBrush = new SolidBrush(Color.FromArgb(50,Color.Gray));
             SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(50, 255, 0, 0));
 
             g.FillRectangle(semiTransBrush, m_cursor);
 
-            g.FillRectangle(semiTransUIBrush, m_origin.X, m_origin.Y, CursorPosition.X - m_origin.X, CursorPosition.Y - m_origin.Y);
+            //g.FillRectangle(semiTransUIBrush, m_origin.X, m_origin.Y, CursorPosition.X - m_origin.X, CursorPosition.Y - m_origin.Y);
             g.DrawRectangle(Pens.Black, m_origin.X, m_origin.Y, CursorPosition.X - m_origin.X, CursorPosition.Y - m_origin.Y);
             g.DrawRectangle(Pens.Black, m_cursor);
             g.DrawLine(Pens.Black, m_cursor.X + m_cursor.Width / 2, m_cursor.Y, m_cursor.X + m_cursor.Width / 2, m_cursor.Y + m_cursor.Height);
@@ -421,7 +453,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                     m_graphState = new DrawCartesianGraphState(this);
                     break;
                 case Mode.Navigate:
-                    m_graphState = new NavigateCartesianGraphState(this);
+                    m_graphState = new NavigateCartesianGraphState(this);                    
                     break;
             }
         }

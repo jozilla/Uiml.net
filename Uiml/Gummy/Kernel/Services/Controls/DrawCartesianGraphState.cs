@@ -14,9 +14,11 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         System.Windows.Forms.MouseEventHandler m_mouseMoveHandler = null;
         System.Windows.Forms.MouseEventHandler m_doubleClickHandler = null;
 
-        bool m_finished = false;
-        Point m_lastMovePosition = Point.Empty;
+        private bool m_draw = false;
+        private bool m_first = true;
 
+        //A substate of this state is the manipulation...
+        ManipulateCartesianGraphState m_manipulateState = null;
 
         public DrawCartesianGraphState(CartesianGraph graph)
             : base(graph)
@@ -38,9 +40,10 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 m_mouseMoveHandler = new System.Windows.Forms.MouseEventHandler(onMouseMove);
                 m_graph.MouseMove += m_mouseMoveHandler;
                 m_mouseUpHandler = new System.Windows.Forms.MouseEventHandler(onMouseUp);
-                m_graph.MouseUp += m_mouseUpHandler;               
+                m_graph.MouseUp += m_mouseUpHandler;
                 m_doubleClickHandler = new System.Windows.Forms.MouseEventHandler(onDoubleClick);
-                m_graph.MouseDoubleClick += m_doubleClickHandler;
+                m_graph.MouseDoubleClick += m_doubleClickHandler;                
+                m_manipulateState = new ManipulateCartesianGraphState(value);
             }
         }
 
@@ -48,29 +51,24 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         {
             if (Selected.SelectedDomainObject.Instance.Selected != null)
             {
-                m_finished = !m_finished;
-                if (!m_finished)
-                {
-                    DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
-                    Point pnt = new Point(e.Location.X - m_graph.Origin.X, e.Location.Y - m_graph.Origin.Y);
-                    ((Shape.Polygon)dom.Shape).AddPointSorted(pnt);
-                    m_lastMovePosition = pnt;
+                DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
+                Point pnt = new Point(e.Location.X - m_graph.Origin.X, e.Location.Y - m_graph.Origin.Y);
+                dom.Polygon.TmpPoint = pnt;
+                if (m_draw)
+                {                    
+                    dom.Polygon.AddTmpPoint();
                 }
+                m_draw = !m_draw;
             }
         }
 
         void onMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (Selected.SelectedDomainObject.Instance.Selected != null && !m_finished)
+            if (Selected.SelectedDomainObject.Instance.Selected != null && m_draw)
             {
                 DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
-                if (m_lastMovePosition != Point.Empty)
-                {
-                    ((Shape.Polygon)dom.Shape).RemovePoint(m_lastMovePosition);
-                }
                 Point pnt = new Point(e.Location.X - m_graph.Origin.X, e.Location.Y - m_graph.Origin.Y);
-                m_lastMovePosition = pnt;
-                ((Shape.Polygon)dom.Shape).AddPointSorted(m_lastMovePosition);
+                dom.Polygon.TmpPoint = pnt;                
             }
         }
 
@@ -80,12 +78,21 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
         void onMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (Selected.SelectedDomainObject.Instance.Selected != null && !m_finished)
+            if (Selected.SelectedDomainObject.Instance.Selected != null)
             {
                 DomainObject dom = Selected.SelectedDomainObject.Instance.Selected;
-                Point pnt = new Point(e.Location.X - m_graph.Origin.X, e.Location.Y - m_graph.Origin.Y);
-                ((Shape.Polygon)dom.Shape).AddPointSorted(pnt);
-                m_lastMovePosition = Point.Empty;
+                if (m_first)
+                {
+                    Point pnt = new Point(e.Location.X - m_graph.Origin.X, e.Location.Y - m_graph.Origin.Y);
+                    dom.Polygon.TmpPoint = pnt;
+                    m_draw = true;
+                    m_first = false;
+                }                
+                if (m_draw)
+                {
+                    dom.Polygon.AddTmpPoint();
+                    //((Shape.Polygon)dom.Shape).AddPointSorted();
+                }
             }
         }
 
@@ -98,6 +105,8 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 m_graph.MouseDown -= m_mouseDownHandler;
                 m_graph.MouseDoubleClick -= m_doubleClickHandler;
             }
+            if (m_manipulateState != null)
+                m_manipulateState.DestroyEvents();
         }
 
         ~DrawCartesianGraphState()

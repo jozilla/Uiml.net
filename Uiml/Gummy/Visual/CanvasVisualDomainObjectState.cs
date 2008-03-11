@@ -11,6 +11,9 @@ using Uiml.Gummy.Kernel.Services;
 using Uiml.Gummy.Kernel.Services.Commands;
 using Uiml.Gummy.Kernel.Selected;
 
+using Uiml.Gummy.Kernel.Services.ApplicationGlue;
+using System.Reflection;
+
 namespace Uiml.Gummy.Visual
 {
     public enum BoxID
@@ -108,6 +111,10 @@ namespace Uiml.Gummy.Visual
             m_commands.Add(new CutDomainObject(visDom.DomainObject));
             m_commands.Add(new BringDomainObjectForward(visDom.DomainObject));
             m_commands.Add(new SendDomainObjectBackward(visDom.DomainObject));
+
+            visDom.AllowDrop = true;
+            visDom.DragDrop += new DragEventHandler(OnDragDrop);
+            visDom.DragEnter += new DragEventHandler(OnDragEnter);
         }    
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
@@ -299,6 +306,32 @@ namespace Uiml.Gummy.Visual
             clicked = false;
         }
 
+        void OnDragEnter(object sender, DragEventArgs e)
+        {
+            Console.WriteLine("onDragEnter");
+
+            if (e.Data.GetDataPresent(typeof(ReflectionMethodParameterModel)) || e.Data.GetDataPresent(typeof(ReflectionMethodModel)))
+                e.Effect = DragDropEffects.Link;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        void OnDragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(ReflectionMethodParameterModel)))
+            {
+                // link a parameter
+                m_visDom.DomainObject.LinkMethodParameter((MethodParameterModel)e.Data.GetData(typeof(ReflectionMethodParameterModel)));
+            }
+            else if (e.Data.GetDataPresent(typeof(ReflectionMethodModel)))
+            {
+                // link a method
+                m_visDom.DomainObject.LinkMethod((MethodModel)e.Data.GetData(typeof(ReflectionMethodModel)));
+            }
+
+            // otherwise, do nothing
+        }
+
         private void addSnapshot()
         {
             ExampleRepository.Instance.AddExampleDomainObject(
@@ -309,6 +342,9 @@ namespace Uiml.Gummy.Visual
 
         void paintEvent(object sender, System.Windows.Forms.PaintEventArgs e)
         {
+            // always draw application glue annotations
+            DrawAnnotation(e.Graphics);
+
             if (m_visDom.DomainObject.Selected)
             {
                 PaintBoundary(e.Graphics);
@@ -346,6 +382,64 @@ namespace Uiml.Gummy.Visual
             while (enumerator.MoveNext())
             {
                 g.FillRectangle(Brushes.Black, enumerator.Current.Value);
+            }
+        }
+
+        protected void DrawAnnotation(Graphics g)
+        {
+            /*
+            // draw link icon
+            string connIcon = "";
+
+            if (m_domObject.MethodLink != null)
+                connIcon = "method";
+            else if (m_domObject.MethodParameterLink != null)
+            {
+                if (m_domObject.MethodParameterLink.IsOutput)
+                    connIcon = "output";
+                else
+                    connIcon = "input";
+            }
+
+            Bitmap icon = new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream(string.Format("gummy.Uiml.Gummy.Kernel.Services.ApplicationGlue.link_{0}.png", connIcon)));
+
+            //int padding = (int) ( ((icon.Width + icon.Height) / 2.0) / 4.0);
+            int padding = 15;
+            // todo: center the bastard
+            Point location = new Point(this.Width - icon.Width - padding, this.Height - icon.Height - padding);
+            pe.Graphics.DrawImage(icon, location);*/
+
+            if (m_visDom.DomainObject.Linked)
+            {
+                int width = 15;
+                int height = m_visDom.Height;
+                Size s = new Size(width, height);
+                Point p;
+                int i = 1;
+
+                foreach (MethodParameterModel mpm in m_visDom.DomainObject.MethodOutputParameterLinks)
+                {
+                    p = new Point(m_visDom.Width - i * width, 0);
+                    g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
+                    g.FillRectangle(new Pen(Color.LightCoral).Brush, new Rectangle(p, s));
+                    i++;
+                }
+
+                if (m_visDom.DomainObject.MethodLink != null)
+                {
+                    p = new Point(m_visDom.Width - i * width, 0);
+                    g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
+                    g.FillRectangle(new Pen(Color.DarkOrange).Brush, new Rectangle(p, s));
+                    i++;
+                }
+
+                foreach (MethodParameterModel mpm in m_visDom.DomainObject.MethodInputParameterLinks)
+                {
+                    p = new Point(m_visDom.Width - i * width, 0);
+                    g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
+                    g.FillRectangle(new Pen(Color.LightGreen).Brush, new Rectangle(p, s));
+                    i++;
+                }
             }
         }
     }
