@@ -52,13 +52,11 @@ namespace Uiml.Gummy.Kernel.Services {
                 layout.Controls.Clear();
             }
 
-            List<ConnectedMethod> methods = new List<ConnectedMethod>();
-
             foreach (MethodInfo m in t.GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
             {
-                methods.Add(new ConnectedMethod(new ReflectionMethodModel(m)));
+                DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(new ReflectionMethodModel(m));
             }
-            layout.Controls.Add(new ConnectedMethodsView(new ConnectedMethodsModel(methods.ToArray())));
+            layout.Controls.Add(new ConnectedMethodsView(DesignerKernel.Instance.CurrentDocument.Methods));
         }
 
         public Control ServiceControl

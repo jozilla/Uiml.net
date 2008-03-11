@@ -2,26 +2,93 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Uiml.Gummy.Domain;
+using System.Xml;
 using System.Reflection;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
     public class ConnectedMethodsModel
     {
-        protected List<ConnectedMethod> methods = new List<ConnectedMethod>();
+        protected Dictionary<MethodModel, ConnectedMethod> m_methods = new Dictionary<MethodModel, ConnectedMethod>();
+        protected ReflectionBehaviorGenerator m_behaviorGen;
 
-        public List<ConnectedMethod> Methods
+        public Dictionary<MethodModel, ConnectedMethod>.ValueCollection Methods
         {
-            get { return methods; }
-            set { methods = value; }
+            get { return m_methods.Values; }
+        }
+
+        public event EventHandler Updated;
+
+        public ConnectedMethodsModel()
+        {
+            m_behaviorGen = new ReflectionBehaviorGenerator(this);
         }
 
         public ConnectedMethodsModel(ConnectedMethod[] methods)
         {
             foreach (ConnectedMethod m in methods)
             {
-                Methods.Add(m);
+                AddIfNotExists(m.Method);
             }
+        }
+
+        public void OnUpdate(EventArgs e)
+        {
+            if (Updated != null)
+            {
+                Updated(this, e);
+            }
+        }
+
+        void ChildUpdated(object sender, EventArgs e)
+        {
+            OnUpdate(e);
+        }
+
+        public void AddMethod(MethodModel m)
+        {
+            AddIfNotExists(m);
+        }
+
+        public void RegisterInput(MethodParameterModel param, DomainObject dom)
+        {
+            AddIfNotExists(param.Parent);
+            m_methods[param.Parent].AddInput(param, dom);
+        }
+
+        public void RegisterInvoke(MethodModel method, DomainObject dom)
+        {
+            AddIfNotExists(method);
+            m_methods[method].Invoke = dom;
+        }
+
+        public void RegisterOutput(MethodParameterModel param, DomainObject dom)
+        {
+            AddIfNotExists(param.Parent);
+            m_methods[param.Parent].Output = dom;
+        }
+
+        private void AddIfNotExists(MethodModel m)
+        {
+            if (!m_methods.ContainsKey(m))
+            {
+                ConnectedMethod conn = new ConnectedMethod(m);
+                conn.Updated += new EventHandler(ChildUpdated);
+                m_methods.Add(m, conn);
+
+                m_behaviorGen.Update(m);
+            }
+        }
+
+        public XmlNode GenerateBehavior(XmlDocument doc)
+        {
+            return m_behaviorGen.GenerateBehavior(doc);
+        }
+
+        public XmlNode GenerateLogic(XmlDocument doc)
+        {
+            return m_behaviorGen.GenerateLogic(doc);
         }
     }
 }

@@ -22,7 +22,21 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         {
             InitializeComponent();
             Model = model;
+            Model.Updated += new EventHandler(ModelUpdated);
             Draw();
+        }
+
+        void ModelUpdated(object sender, EventArgs e)
+        {
+            int row = 1; 
+            foreach (ConnectedMethod connMethod in Model.Methods)
+            {
+                PictureBox icon = (PictureBox) layout.GetControlFromPosition(3, row);
+                if (connMethod.IsComplete())
+                    icon.Image = global::gummy.Properties.Resources.connection_ok;
+                else
+                    icon.Image = global::gummy.Properties.Resources.connection_not_ok;
+            }
         }
 
         protected void Draw ()
@@ -121,6 +135,16 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                     outputs.RowCount = outputs.RowCount + 1;
                     outRow++;
                 }
+
+                // set icon
+                PictureBox icon = new PictureBox();
+                icon.Dock = DockStyle.Fill;
+                icon.SizeMode = PictureBoxSizeMode.AutoSize;
+                layout.Controls.Add(icon, 3, row);
+                if (connMethod.IsComplete())
+                    icon.Image = global::gummy.Properties.Resources.connection_ok;
+                else
+                    icon.Image = global::gummy.Properties.Resources.connection_not_ok;
 
                 row++;
             }

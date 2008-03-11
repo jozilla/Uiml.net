@@ -230,12 +230,12 @@ namespace Uiml.Gummy.Domain
             if (mpm.IsOutput)
             {
                 m_methodOutParamLinks.Add(mpm);
-                DesignerKernel.Instance.CurrentDocument.Behavior.RegisterOutput(mpm, this);
+                DesignerKernel.Instance.CurrentDocument.Methods.RegisterOutput(mpm, this);
             }
             else
             {
                 m_methodInParamLinks.Add(mpm);
-                DesignerKernel.Instance.CurrentDocument.Behavior.RegisterInput(mpm, this);
+                DesignerKernel.Instance.CurrentDocument.Methods.RegisterInput(mpm, this);
             }
 
             Updated();
@@ -244,7 +244,7 @@ namespace Uiml.Gummy.Domain
         public void LinkMethod(MethodModel mm) 
         {
             m_methodLink = mm;
-            DesignerKernel.Instance.CurrentDocument.Behavior.RegisterInvoke(mm, this);
+            DesignerKernel.Instance.CurrentDocument.Methods.RegisterInvoke(mm, this);
             Updated();
         }
 

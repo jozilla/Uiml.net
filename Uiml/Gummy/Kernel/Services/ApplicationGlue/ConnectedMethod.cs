@@ -16,6 +16,8 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             set { m_method = value; } 
         }
 
+        public event EventHandler Updated;
+
         private Dictionary<MethodParameterModel, DomainObject> m_inputs = new Dictionary<MethodParameterModel, DomainObject>();
 
         public Dictionary<MethodParameterModel, DomainObject> Inputs
@@ -28,7 +30,11 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         public DomainObject Invoke
         {
             get { return m_invoke; }
-            set { m_invoke = value; }
+            set 
+            { 
+                m_invoke = value;
+                OnUpdate(null);
+            }
         }
 
         private DomainObject m_output;
@@ -36,7 +42,11 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         public DomainObject Output
         {
             get { return m_output; }
-            set { m_output = value; }
+            set 
+            { 
+                m_output = value;
+                OnUpdate(null);
+            }
         }
 
         public ConnectedMethod(MethodModel method)
@@ -47,6 +57,23 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         public void AddInput(MethodParameterModel param, DomainObject dom)
         {
             Inputs.Add(param, dom);
+            OnUpdate(null);
+        }
+
+        public void OnUpdate(EventArgs e)
+        {
+            if (Updated != null)
+            {
+                Updated(this, e);
+            }
+        }
+
+        public bool IsComplete()
+        {
+            List<MethodParameterModel> missingInputParams = null;
+            bool missingOutput = false;
+            bool missingInvoke = false;
+            return IsComplete(out missingInputParams, out missingOutput, out missingInvoke);
         }
 
         public bool IsComplete(out List<MethodParameterModel> missingInputParams, out bool missingOutput, out bool missingInvoke)

@@ -37,7 +37,7 @@ namespace Uiml.Gummy.Kernel
         //DesignSpace data (a foo class for now :-))
         private DesignSpaceData m_designSpaceData = new DesignSpaceData();
 
-        private BehaviorRegistry m_behavior = new BehaviorRegistry();
+        private ConnectedMethodsModel m_methods = new ConnectedMethodsModel();
         private List<Assembly> m_libraries = new List<Assembly>();
 
         public delegate void ScreenSizeUpdateHandler(object sender, Size newSize);
@@ -50,9 +50,9 @@ namespace Uiml.Gummy.Kernel
             get { return m_domObjects; }
         }
 
-        public BehaviorRegistry Behavior
+        public ConnectedMethodsModel Methods
         {
-            get { return m_behavior; }
+            get { return m_methods; }
         }
 
         public List<Assembly> Libraries
@@ -181,7 +181,7 @@ namespace Uiml.Gummy.Kernel
             // </Fill up structure and style>
 
             // <behavior>
-            XmlNode behavior = Behavior.GenerateBehavior(doc);
+            XmlNode behavior = Methods.GenerateBehavior(doc);
             iface.AppendChild(behavior);
 
             XmlNode peers = doc.CreateElement("peers");
@@ -195,7 +195,7 @@ namespace Uiml.Gummy.Kernel
             peers.AppendChild(presentation);
 
             // logic
-            XmlNode logic = Behavior.GenerateLogic(doc);
+            XmlNode logic = Methods.GenerateLogic(doc);
             peers.AppendChild(logic);
 
             return doc;
