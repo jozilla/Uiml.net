@@ -105,6 +105,7 @@ namespace Uiml.Gummy.Visual
             visDom.MouseUp += m_mouseUpHandler;
             m_paintEventHandler += new PaintEventHandler(paintEvent);
             visDom.Paint += m_paintEventHandler;
+
             m_commands.Add(new CopyDomainObject(visDom.DomainObject));
             m_commands.Add(new PasteDomainObject());
             m_commands.Add(new DeleteDomainObject(visDom.DomainObject));
@@ -115,11 +116,11 @@ namespace Uiml.Gummy.Visual
             visDom.AllowDrop = true;
             visDom.DragDrop += new DragEventHandler(OnDragDrop);
             visDom.DragEnter += new DragEventHandler(OnDragEnter);
-        }    
+        }
 
         void onDomainObjectSelected(DomainObject dom, EventArgs e)
         {
-            if (m_visDom.DomainObject == dom)
+            if (SelectedDomainObject.Instance.SelectedDomainObjects.Contains(m_visDom.DomainObject))
             {
                 m_visDom.DomainObject.Selected = true;
             }
@@ -144,9 +145,14 @@ namespace Uiml.Gummy.Visual
 
         void mouseDownEvent(object sender, MouseEventArgs e)
         {
-            Console.Out.WriteLine("mousDown");            
 
-            if (!m_visDom.DomainObject.Selected)
+            //Console.Out.WriteLine("mousDown : "+(Control.ModifierKeys == Keys.Control));            
+
+            if (Control.ModifierKeys == Keys.Control)
+            {
+                SelectedDomainObject.Instance.AddSelectedDomainObject(m_visDom.DomainObject);
+            }
+            else
             {
                 SelectedDomainObject.Instance.Selected = m_visDom.DomainObject;
             }

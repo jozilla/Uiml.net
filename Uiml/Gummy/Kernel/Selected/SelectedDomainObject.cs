@@ -10,12 +10,12 @@ namespace Uiml.Gummy.Kernel.Selected
     {
 
         private static SelectedDomainObject m_selectedDomObject = null;
-        private DomainObject m_domObject = null;
+        private List<DomainObject> m_domObjects = new List<DomainObject>();
         private DomainObject m_clipBoardDomainObject = null;
 
-        public delegate void DomainObjectSelectedHandler(DomainObject dom, EventArgs e);
+        public delegate void DomainObjectSelectedHandler(DomainObject dom, EventArgs e);        
 
-        public event DomainObjectSelectedHandler DomainObjectSelected;
+        public event DomainObjectSelectedHandler DomainObjectSelected;        
 
         private SelectedDomainObject()
         {
@@ -43,17 +43,57 @@ namespace Uiml.Gummy.Kernel.Selected
             }
         }
 
+        private void fireSelectEvents()
+        {
+            foreach (DomainObject dom in m_domObjects)
+            {
+                if (DomainObjectSelected != null)
+                    DomainObjectSelected(dom, new EventArgs());
+            }
+        }
+
+        public void AddSelectedDomainObject(DomainObject dom)
+        {
+            m_domObjects.Add(dom);
+            fireSelectEvents();
+        }
+
+        public void RemoveSelectedDomainObjects(DomainObject dom)
+        {
+            m_domObjects.Remove(dom);
+            fireSelectEvents();
+        }
+
+        public List<DomainObject> SelectedDomainObjects
+        {
+            get
+            {
+                return m_domObjects;
+            }
+        }
+
         public DomainObject Selected
         {
             get
             {
-                return m_domObject;
+                if (m_domObjects.Count > 0)
+                    return m_domObjects[0];
+                else
+                    return null;
             }
             set
             {
-                m_domObject = value;
-                if (DomainObjectSelected != null)
-                    DomainObjectSelected(m_domObject, new EventArgs());
+                m_domObjects.Clear();
+                m_domObjects.Add(value);
+                fireSelectEvents();
+            }
+        }
+
+        public bool MultipleSelected
+        {
+            get
+            {
+                return m_domObjects.Count > 1;
             }
         }
     }

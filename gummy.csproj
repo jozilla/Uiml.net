@@ -65,6 +65,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\CutDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\DeleteDomainObject.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\DisableWireFrameExample.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Commands\GroupDomainObjecs.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ICommand.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\MenuFactory.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\PasteDomainObject.cs" />
