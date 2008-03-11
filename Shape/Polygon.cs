@@ -35,6 +35,39 @@ namespace Shape
                 ShapeUpdated(this);
         }
 
+        public void AddPointSorted(Point pnt)
+        {
+            if (Points.Count >= 2)
+            {
+                Point before = Point.Empty;
+                Point after = Point.Empty;
+                double minDistance = double.MaxValue;
+                for (int i = 1; i < Points.Count; i++)
+                {
+                    double d = distance((double)Points[i - 1].X, (double)Points[i - 1].Y, (double)Points[i].X, (double)Points[i].Y);
+                    if (d < minDistance)
+                    {
+                        minDistance = d;
+                        before = Points[i - 1];
+                        after = Points[i];
+                    }
+                }
+                m_points.Insert(m_points.IndexOf(after), pnt);
+                if (ShapeUpdated != null)
+                    ShapeUpdated(this);
+            }
+            else
+            {
+                AddPoint(pnt);
+            }
+        }
+
+        private double distance(double x1, double y1, double x2, double y2)
+        {
+            double distance = Math.Sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
+            return distance;
+        }        
+
         public void RemovePoint(Point pnt)
         {
             m_points.Remove(pnt);
@@ -51,13 +84,18 @@ namespace Shape
             }
             if (m_points.Count > 2)
             {
-                
-                g.DrawPolygon(Pens.Plum, drawPoints.ToArray());
-                g.FillPolygon(Brushes.Orchid, drawPoints.ToArray());
+
+                SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(50, 0, 255, 0));
+                g.FillPolygon(semiTransBrush, drawPoints.ToArray());
+                g.DrawPolygon(Pens.DarkBlue, drawPoints.ToArray());
             }
             else if (m_points.Count == 2)
             {
                 g.DrawLine(Pens.DarkBlue, drawPoints[0], drawPoints[1]);
+            }
+            foreach (Point pnt in drawPoints)
+            {
+                g.DrawRectangle(Pens.Coral, pnt.X - 2, pnt.Y - 2, 4, 4);
             }
         }
 

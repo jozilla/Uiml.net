@@ -131,12 +131,15 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\CanvasServiceConfiguration.Designer.cs">
       <DependentUpon>CanvasServiceConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\CartesianGraphState.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\DrawCartesianGraphState.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\DrawModes.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\DrawModes.Designer.cs">
       <DependentUpon>DrawModes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\NavigateCartesianGraphState.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.cs">
       <SubType>UserControl</SubType>
     </Compile>
