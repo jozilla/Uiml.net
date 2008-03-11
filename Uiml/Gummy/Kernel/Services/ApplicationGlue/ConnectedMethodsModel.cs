@@ -6,19 +6,19 @@ using System.Reflection;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    public class MethodsModel
+    public class ConnectedMethodsModel
     {
-        protected List<MethodModel> methods = new List<MethodModel>();
+        protected List<ConnectedMethod> methods = new List<ConnectedMethod>();
 
-        public List<MethodModel> Methods
+        public List<ConnectedMethod> Methods
         {
             get { return methods; }
             set { methods = value; }
         }
 
-        public MethodsModel (MethodModel[] methods)
+        public ConnectedMethodsModel(ConnectedMethod[] methods)
         {
-            foreach (MethodModel m in methods)
+            foreach (ConnectedMethod m in methods)
             {
                 Methods.Add(m);
             }

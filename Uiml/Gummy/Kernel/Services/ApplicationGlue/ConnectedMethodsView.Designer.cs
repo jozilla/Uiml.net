@@ -1,6 +1,6 @@
 ﻿namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    partial class MethodsView
+    partial class ConnectedMethodsView
     {
         /// <summary> 
         /// Required designer variable.

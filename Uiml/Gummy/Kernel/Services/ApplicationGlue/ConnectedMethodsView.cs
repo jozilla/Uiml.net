@@ -8,17 +8,17 @@ using System.Windows.Forms;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    public partial class MethodsView : UserControl
+    public partial class ConnectedMethodsView : UserControl
     {
-        private MethodsModel model;
+        private ConnectedMethodsModel model;
 
-        public MethodsModel Model
+        public ConnectedMethodsModel Model
         {
             get { return model; }
             set { model = value; }
         }
 
-        public MethodsView (MethodsModel model)
+        public ConnectedMethodsView (ConnectedMethodsModel model)
         {
             InitializeComponent();
             Model = model;
@@ -53,8 +53,10 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
             // add the methods, starting from the second row
             int row = 1; 
-            foreach (MethodModel method in Model.Methods)
+            foreach (ConnectedMethod connMethod in Model.Methods)
             {
+                MethodModel method = connMethod.Method;
+
                 // create input container
                 TableLayoutPanel inputs = new TableLayoutPanel();
                 inputs.AutoSize = true;
