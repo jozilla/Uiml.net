@@ -26,13 +26,16 @@ namespace Uiml.Gummy.Kernel
         Navigate
     };
 
+
     public class Document
     {
         private DomainObjectCollection m_domObjects = new DomainObjectCollection();
         private DomainObject m_formContainer = null;
         private Mode m_spaceMode = Mode.Navigate;
         //TODO: Add the wireframe data to the document
-        private Size m_wireFrameSize = Size.Empty;
+        private Size m_wireFrameSize = Size.Empty;       
+        //DesignSpace data (a foo class for now :-))
+        private DesignSpaceData m_designSpaceData = new DesignSpaceData();
 
         private BehaviorRegistry m_behavior = new BehaviorRegistry();
         private List<Assembly> m_libraries = new List<Assembly>();
@@ -236,6 +239,14 @@ namespace Uiml.Gummy.Kernel
             ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
             psi.ErrorDialog = true;
             Process.Start(psi);
+        }
+
+        public DesignSpaceData DesignSpaceData
+        {
+            get
+            {
+                return m_designSpaceData;
+            }
         }
     }
 }
