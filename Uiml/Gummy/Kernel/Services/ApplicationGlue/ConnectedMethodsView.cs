@@ -31,11 +31,11 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             int row = 1; 
             foreach (ConnectedMethod connMethod in Model.Methods)
             {
-                PictureBox icon = (PictureBox) layout.GetControlFromPosition(3, row);
+                PictureBox statusIcon = (PictureBox) layout.GetControlFromPosition(3, row);
                 if (connMethod.IsComplete())
-                    icon.Image = global::gummy.Properties.Resources.connection_ok;
+                    statusIcon.Image = global::gummy.Properties.Resources.connection_ok;
                 else
-                    icon.Image = global::gummy.Properties.Resources.connection_not_ok;
+                    statusIcon.Image = global::gummy.Properties.Resources.connection_not_ok;
             }
         }
 
@@ -101,7 +101,8 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 methodName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 
                 methodName.Text = method.Name;*/
-                MethodNameView methodName = new MethodNameView(method);
+                //MethodNameView methodName = new MethodNameView(method);
+                MethodParameterView methodName = new MethodParameterView(method.Invoke);
                 layout.Controls.Add(methodName, 1, row);
 
                 // create output container
@@ -139,12 +140,9 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 // set icon
                 PictureBox icon = new PictureBox();
                 icon.Dock = DockStyle.Fill;
-                icon.SizeMode = PictureBoxSizeMode.AutoSize;
+                icon.SizeMode = PictureBoxSizeMode.CenterImage;
                 layout.Controls.Add(icon, 3, row);
-                if (connMethod.IsComplete())
-                    icon.Image = global::gummy.Properties.Resources.connection_ok;
-                else
-                    icon.Image = global::gummy.Properties.Resources.connection_not_ok;
+                icon.Image = global::gummy.Properties.Resources.no_connection;
 
                 row++;
             }

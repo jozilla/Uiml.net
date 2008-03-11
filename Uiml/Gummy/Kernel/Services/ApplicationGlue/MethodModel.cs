@@ -28,5 +28,22 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         {
             get { return outputs; }
         }
+
+        protected MethodParameterModel invoke;
+
+        public MethodParameterModel Invoke
+        {
+            get { return invoke; }
+        }
+
+        public event EventHandler Updated;
+
+        public void OnUpdate(EventArgs e)
+        {
+            if (Updated != null)
+            {
+                Updated(this, e);
+            }
+        }
     }
 }
