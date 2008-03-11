@@ -56,6 +56,7 @@
     <Compile Include="Uiml\Gummy\Interpolation\InterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\PlanarInterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\DesignSpaceData.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\VocabularyMetadata.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Document.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Commands\ACommand.cs" />

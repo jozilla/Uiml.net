@@ -31,7 +31,8 @@ namespace Uiml.Gummy.Kernel.Services
         /// </summary>
         private void InitializeComponent()
         {
-            this.m_cartesianGraphControl = new Uiml.Gummy.Kernel.Services.Controls.CartesianGraph();
+            this.m_cartesianGraphControl = new Uiml.Gummy.Kernel.Services.Controls.CartesianGraph(DesignerKernel.Instance.CurrentDocument.DesignSpaceData);
+            this.Controls.Clear();
             this.SuspendLayout();
             // 
             // m_cartesianGraphControl
@@ -45,9 +46,7 @@ namespace Uiml.Gummy.Kernel.Services
             // 
             // SpaceService
             // 
-            this.Controls.Add(this.m_cartesianGraphControl);
-            this.Size = new System.Drawing.Size(377, 314);
-            this.Text = "2D Example Space";
+            this.Controls.Add(this.m_cartesianGraphControl);            
             this.ResumeLayout(false);
 
         }

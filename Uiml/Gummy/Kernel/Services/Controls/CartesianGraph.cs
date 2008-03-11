@@ -17,19 +17,9 @@ namespace Uiml.Gummy.Kernel.Services.Controls
     {        
         private List<Rectangle> m_examples = new List<Rectangle>();
         private List<Rectangle> m_highlightedExamples = new List<Rectangle>();
+        DesignSpaceData m_designSpaceData = null;
         private int m_selectedExample = -1;
         private Rectangle m_cursor = new Rectangle(12, 12, 16, 16);
-
-        private Point m_origin = new Point(30,36);
-        private Point m_max = new Point(100, 100);        
-
-        private Size m_minSize = new Size(0, 0);
-        private Size m_maxSize = new Size(1100, 820);
-
-        private int m_xIncrement = 1;
-        private int m_yIncrement = 1;
-        private Dictionary<Size, Point> m_sizeToPoint = new Dictionary<Size, Point>();
-        private Dictionary<Point, Size> m_pointToSize = new Dictionary<Point, Size>();
 
         public event SizeChangeHandler DesignSpaceCursorChanged;        
         
@@ -39,8 +29,9 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         private CartesianGraphState m_graphState = null;
         public PaintEventHandler CartesianGraphPaint;
 
-        public CartesianGraph()
+        public CartesianGraph(DesignSpaceData spaceData)
         {
+            m_designSpaceData = spaceData;
             InitializeComponent();            
             this.DoubleBuffered = true;
             m_shapeUpdateHandler = new Shape.ShapUpdateHandler(onShapeUpdated);
@@ -65,34 +56,9 @@ namespace Uiml.Gummy.Kernel.Services.Controls
          * -> The internal datastructures will be preprocessed
          */
         public void InitGraph()
-        {
-            //Set up the max point
-            m_max = new Point(Width - 20, Height - 20);
-            //Clean the old values in the hashtables
-            m_pointToSize.Clear();
-            m_sizeToPoint.Clear();
-            //Get the right size steps such that there is a good point-size relationship possible (minsize = 0,0)
-            m_xIncrement = (int)Math.Ceiling( (float) (m_maxSize.Width)  / (float)(Width - m_origin.X - (Width - m_max.X) ) );
-            m_yIncrement = (int)Math.Ceiling( (float) (m_maxSize.Height) / (float)(Height - m_origin.Y - (Height - m_max.Y) ) );
-            //Round the minimal and maximal edges
-            m_minSize.Width = m_minSize.Width - (m_minSize.Width % m_xIncrement);
-            m_maxSize.Width = m_maxSize.Width - (m_maxSize.Width % m_xIncrement);
-            m_minSize.Height = m_minSize.Height - (m_minSize.Height % m_yIncrement);
-            m_maxSize.Height = m_maxSize.Height - (m_maxSize.Height % m_yIncrement);
-
-            //Initialize the hashtables
-            for (int y = m_origin.Y; y <= m_max.Y; y++)
-                for (int x = m_origin.X; x <= m_max.X; x++)
-                {
-                    Point pnt = new Point(x, y);
-                    int width = m_minSize.Width + ( (x - m_origin.X) * m_xIncrement);
-                    int height = m_minSize.Height + ( (y - m_origin.Y) * m_yIncrement);
-                    Size size = new Size(width, height);
-                    m_pointToSize.Add(pnt, size);
-                    m_sizeToPoint.Add(size, pnt);
-                }
-            //Due to some rounding errors, the max-size needs to be corrected
-            m_maxSize = m_pointToSize[m_max];
+        {            
+            m_designSpaceData.MaximumPoint = new Point(Width - 90, Height - 20);
+            m_designSpaceData.InitDesignSpace(Width, Height);            
             Selected.SelectedDomainObject.Instance.DomainObjectSelected += new Uiml.Gummy.Kernel.Selected.SelectedDomainObject.DomainObjectSelectedHandler(domainObjectSelected);
         }
 
@@ -142,55 +108,12 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
         public Size PointToSize(Point pnt)
         {
-            /*
-             * Check if it's a valid point
-             */
-            if (pnt.X >= m_max.X)
-            {
-                pnt.X = m_max.X;
-            }
-            else if (pnt.X < m_origin.X)
-            {
-                pnt.X = m_origin.X;
-            }
-            if (pnt.Y >= m_max.Y)
-            {
-                pnt.Y = m_max.Y;
-            }
-            else if (pnt.Y < m_origin.Y)
-            {
-                pnt.Y = m_origin.Y;
-            }
-            //Get the right point           
-            return m_pointToSize[pnt];
+            return m_designSpaceData.PointToSize(pnt);
         }
 
         public Point SizeToPoint(Size size)
         {
-            //Check if the requested size is within the boundaries --> HERE IS AN ERROR !!    
-            Console.WriteLine("START sizeToPoint ({0}) ",size);
-            if (size.Width < m_minSize.Width)
-            {
-                size.Width = m_minSize.Width;
-            }
-            else if (size.Width > m_maxSize.Width)
-            {
-                size.Width = m_maxSize.Width;
-            }            
-            if (size.Height > m_maxSize.Height)
-            {
-                size.Height = m_maxSize.Height;
-            }
-            else if (size.Height < m_minSize.Height)
-            {
-                size.Height = m_minSize.Height;
-            }
-            
-            size.Width = size.Width - (size.Width % m_xIncrement);
-            size.Height = size.Height - (size.Height % m_yIncrement);
-            Console.WriteLine("END sizeToPoint ({0}) ", size);
-
-            return m_sizeToPoint[size];
+            return m_designSpaceData.SizeToPoint(size);
         }
 
         void onMouseDownGraph(object sender, MouseEventArgs e)
@@ -213,22 +136,6 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 }
             }
         }
-
-        public Size MaximumCanvasSize
-        {
-            get
-            {
-                return m_maxSize;
-            }
-        }
-
-        public Size MinimumCanvasSize
-        {
-            get
-            {
-                return m_minSize;
-            }
-        }
         
         public Size FocussedSize
         {
@@ -249,7 +156,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         {
             get
             {
-                return m_xIncrement;
+                return m_designSpaceData.XIncrement;
             }
         }
 
@@ -257,7 +164,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         {
             get
             {
-                return m_yIncrement;
+                return m_designSpaceData.YIncrement;
             }
         }
 
@@ -299,15 +206,15 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             set
             {
                 Point position = new Point(value.X - m_cursor.Width / 2, value.Y - m_cursor.Height / 2);
-                //Check if this position is not out of the boundaries                
-                if (position.X > m_max.X - m_cursor.Width / 2)
-                    position.X = m_max.X - m_cursor.Width / 2;
-                else if (position.X < m_origin.X - m_cursor.Width / 2)
-                    position.X = m_origin.X - m_cursor.Width / 2;
-                if (position.Y > m_max.Y - m_cursor.Height / 2)
-                    position.Y = m_max.Y - m_cursor.Height / 2;
-                else if (position.Y < m_origin.Y - m_cursor.Height / 2)
-                    position.Y = m_origin.Y - m_cursor.Height / 2;               
+                //Check if this position is not out of the boundaries                                
+                if (position.X > m_designSpaceData.MaximumPoint.X - m_cursor.Width / 2)
+                    position.X = m_designSpaceData.MaximumPoint.X - m_cursor.Width / 2;
+                else if (position.X < m_designSpaceData.OriginPoint.X - m_cursor.Width / 2)
+                    position.X = m_designSpaceData.OriginPoint.X - m_cursor.Width / 2;
+                if (position.Y > m_designSpaceData.MaximumPoint.Y - m_cursor.Height / 2)
+                    position.Y = m_designSpaceData.MaximumPoint.Y - m_cursor.Height / 2;
+                else if (position.Y < m_designSpaceData.OriginPoint.Y - m_cursor.Height / 2)
+                    position.Y = m_designSpaceData.OriginPoint.Y - m_cursor.Height / 2;               
                 m_cursor.Location = position;
                 //snap the cursor to the undelying example
                 snapCursorToTheSelectedExample();                
@@ -321,14 +228,16 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             
             g.FillRectangle(new SolidBrush(BackColor), new Rectangle(0, 0, this.Bounds.Width, Bounds.Height));
 
-            g.FillRectangle(Brushes.White, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);  
+            g.FillRectangle(Brushes.White, m_designSpaceData.OriginPoint.X, m_designSpaceData.OriginPoint.Y, 
+                m_designSpaceData.MaximumPoint.X - m_designSpaceData.MaximumPoint.X,
+                m_designSpaceData.MaximumPoint.Y - m_designSpaceData.OriginPoint.Y);  
             drawXAxis(g);
-            drawYAxis(g);           
-            g.DrawRectangle(Pens.Black, m_origin.X, m_origin.Y, m_max.X - m_origin.X, m_max.Y - m_origin.Y);
+            drawYAxis(g);
+            g.DrawRectangle(Pens.Black, m_designSpaceData.OriginPoint.X, m_designSpaceData.OriginPoint.Y, m_designSpaceData.MaximumPoint.X - m_designSpaceData.OriginPoint.X, m_designSpaceData.MaximumPoint.Y - m_designSpaceData.OriginPoint.Y);
 
             if (Selected.SelectedDomainObject.Instance.Selected != null)
             {
-                Selected.SelectedDomainObject.Instance.Selected.Polygon.Paint(g, m_origin);
+                Selected.SelectedDomainObject.Instance.Selected.Polygon.Paint(g, m_designSpaceData.OriginPoint);
             }
 
             for (int i = 0; i < m_examples.Count; i++)
@@ -356,7 +265,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
             if (Selected.SelectedDomainObject.Instance.Selected != null)
             {
-                Selected.SelectedDomainObject.Instance.Selected.Polygon.Paint(g, m_origin);
+                Selected.SelectedDomainObject.Instance.Selected.Polygon.Paint(g, m_designSpaceData.OriginPoint);
             }
 
             //SolidBrush semiTransUIBrush = new SolidBrush(Color.FromArgb(50,Color.Gray));
@@ -364,8 +273,8 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
             g.FillRectangle(semiTransBrush, m_cursor);
 
-            //g.FillRectangle(semiTransUIBrush, m_origin.X, m_origin.Y, CursorPosition.X - m_origin.X, CursorPosition.Y - m_origin.Y);
-            g.DrawRectangle(Pens.Black, m_origin.X, m_origin.Y, CursorPosition.X - m_origin.X, CursorPosition.Y - m_origin.Y);
+            //g.FillRectangle(semiTransUIBrush, m_designSpaceData.OriginPoint.X, m_designSpaceData.OriginPoint.Y, CursorPosition.X - m_designSpaceData.OriginPoint.X, CursorPosition.Y - m_designSpaceData.OriginPoint.Y);
+            g.DrawRectangle(Pens.Black, m_designSpaceData.OriginPoint.X, m_designSpaceData.OriginPoint.Y, CursorPosition.X - m_designSpaceData.OriginPoint.X, CursorPosition.Y - m_designSpaceData.OriginPoint.Y);
             g.DrawRectangle(Pens.Black, m_cursor);
             g.DrawLine(Pens.Black, m_cursor.X + m_cursor.Width / 2, m_cursor.Y, m_cursor.X + m_cursor.Width / 2, m_cursor.Y + m_cursor.Height);
             g.DrawLine(Pens.Black, m_cursor.X, m_cursor.Y + m_cursor.Height / 2, m_cursor.X + m_cursor.Width, m_cursor.Y + m_cursor.Height / 2);
@@ -374,45 +283,45 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
         private void drawYAxis(Graphics g)
         {
-            float x1 = (float)m_origin.X * ((float)3 / (float)5);
-            float x2 = (float)m_origin.X * ((float)4 / (float)5);
-            float x3 = (float)m_origin.X * ((float)2 / (float)4);
+            float x1 = (float)m_designSpaceData.OriginPoint.X * ((float)3 / (float)5);
+            float x2 = (float)m_designSpaceData.OriginPoint.X * ((float)4 / (float)5);
+            float x3 = (float)m_designSpaceData.OriginPoint.X * ((float)2 / (float)4);
 
             Font fnt = new Font("Arial", 7);
             int counter = 0;
-            for (int y = m_origin.Y; y <= m_max.Y; y++)
+            for (int y = m_designSpaceData.OriginPoint.Y; y <= m_designSpaceData.MaximumPoint.Y; y++)
             {
-                Point pnt = new Point(m_origin.X,y);
+                Point pnt = new Point(m_designSpaceData.OriginPoint.X,y);
                 Size size = PointToSize(pnt);
                 if (counter % 30 == 0)
                 {
-                    g.DrawLine(Pens.Black, x1, y, m_origin.X, y);
-                    g.DrawLine(Pens.LightGray, m_origin.X, y, m_max.X, y);
+                    g.DrawLine(Pens.Black, x1, y, m_designSpaceData.OriginPoint.X, y);
+                    g.DrawLine(Pens.LightGray, m_designSpaceData.OriginPoint.X, y, m_designSpaceData.MaximumPoint.X, y);
                     Rectangle rect = new Rectangle(0,y - 5, 25, 10);
                     g.DrawString(size.Height.ToString(), fnt, Brushes.Black, rect);
                 }
                 else if (counter % 2 == 0)
-                    g.DrawLine(Pens.Black, x2, y, m_origin.X, y);                    
+                    g.DrawLine(Pens.Black, x2, y, m_designSpaceData.OriginPoint.X, y);                    
                 counter++;
             }
         }
 
         private void drawXAxis(Graphics g)
         {
-            float y1 = (float)m_origin.Y * ((float)3 /(float)5);
-            float y2 = (float)m_origin.Y * ((float)4 / (float)5);
-            float y3 = (float)m_origin.Y * ((float)2 / (float)4);
+            float y1 = (float)m_designSpaceData.OriginPoint.Y * ((float)3 /(float)5);
+            float y2 = (float)m_designSpaceData.OriginPoint.Y * ((float)4 / (float)5);
+            float y3 = (float)m_designSpaceData.OriginPoint.Y * ((float)2 / (float)4);
             Font fnt = new Font("Arial", 7);
             int counter = 0;
-            for (int x = m_origin.X; x <= m_max.X; x+=1)
+            for (int x = m_designSpaceData.OriginPoint.X; x <= m_designSpaceData.MaximumPoint.X; x+=1)
             {
-                Point pnt = new Point(x, m_origin.Y);
+                Point pnt = new Point(x, m_designSpaceData.OriginPoint.Y);
                 Size size = PointToSize(pnt);
                 //g.DrawString(size.Width.ToString(),new Font(
                 if (counter % 30 == 0)
                 {
-                    g.DrawLine(Pens.Black, x, y1, x, m_origin.Y);
-                    g.DrawLine(Pens.LightGray, x, m_origin.Y, x, m_max.Y);
+                    g.DrawLine(Pens.Black, x, y1, x, m_designSpaceData.OriginPoint.Y);
+                    g.DrawLine(Pens.LightGray, x, m_designSpaceData.OriginPoint.Y, x, m_designSpaceData.MaximumPoint.Y);
                     int l = 20;
                     if (size.Width.ToString().Length == 1)
                         l = 10;
@@ -426,7 +335,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                     g.DrawString(size.Width.ToString(), fnt, Brushes.Black, rect);
                 }
                 else if (counter % 2 == 0)
-                    g.DrawLine(Pens.Black, x, y2, x, m_origin.Y);
+                    g.DrawLine(Pens.Black, x, y2, x, m_designSpaceData.OriginPoint.Y);
                 counter++;
             }
         }
@@ -471,7 +380,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         {
             get
             {
-                return m_origin;
+                return m_designSpaceData.OriginPoint;
             }
         }
 
