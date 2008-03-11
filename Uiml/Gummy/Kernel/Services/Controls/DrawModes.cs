@@ -27,11 +27,17 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             DesignerKernel.Instance.CurrentDocument.Mode = Mode.Draw;
         }
 
+        private void m_erase_Click(object sender, EventArgs e)
+        {
+            DesignerKernel.Instance.CurrentDocument.Mode = Mode.Erase;
+        }
+
         public void SpaceModeChanged(object sender, Mode mode)
         {
             Button btn = new Button();
             m_cursorButton.BackColor = btn.BackColor;
             m_paintButton.BackColor = btn.BackColor;
+            m_erase.BackColor = btn.BackColor;
 
             switch (mode)
             {
@@ -40,6 +46,11 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                     break;
                 case Mode.Navigate:
                     m_cursorButton.BackColor = Color.Yellow;
+                    break;
+                case Mode.Erase:
+                    m_erase.BackColor = Color.Yellow;
+                    break;
+                default:
                     break;
             }
         }
@@ -66,7 +77,6 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             {
                 m_cursorButton.Enabled = value;
             }
-        }
-        
+        }        
     }
 }

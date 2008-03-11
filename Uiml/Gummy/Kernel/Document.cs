@@ -22,8 +22,7 @@ namespace Uiml.Gummy.Kernel
     public enum Mode
     {
         Draw,
-        Delete,
-        Paint,
+        Erase,        
         Navigate
     };
 
