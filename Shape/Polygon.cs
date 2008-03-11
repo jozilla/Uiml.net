@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Shape
 {
-    public class Polygon : IShape
+    public class Polygon : IShape, ICloneable
     {
         List<Point> m_points = new List<Point>();
         Point m_tmpPoint = Point.Empty;
@@ -16,6 +16,16 @@ namespace Shape
 
         public Polygon()
         {
+        }
+               
+        public object Clone()
+        {
+            Polygon cloned = new Polygon();
+            foreach (Point pnt in m_points)
+            {
+                cloned.m_points.Add(new Point(pnt.X, pnt.Y));
+            }
+            return cloned;
         }
 
         public List<Point> Points
@@ -141,9 +151,9 @@ namespace Shape
             drawPoints.Remove(offsetTmpPoint);
         }
 
-        public virtual bool PointInShape(Point p)
+        public virtual bool PointInShape(Point pt)
         {
-            Point p1, p2;
+           /* Point p1, p2;
 
             bool inside = false;
 
@@ -180,7 +190,59 @@ namespace Shape
 
                 oldPoint = newPoint;
             }
-            return inside;
+            return inside;*/
+            bool isIn = false;
+
+
+            int i, j = 0;
+
+            // The following code is converted from a C version found at 
+            // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+            for (i = 0, j = m_points.Count - 1; i < m_points.Count; j = i++)
+            {
+                if (
+                    (
+                     ((m_points[i].Y <= pt.Y) && (pt.Y < m_points[j].Y)) || ((m_points[j].Y <= pt.Y) && (pt.Y < m_points[i].Y))
+                    ) &&
+                    (pt.X < (m_points[j].X - m_points[i].X) * (pt.Y - m_points[i].Y) / (m_points[j].Y - m_points[i].Y) + m_points[i].X)
+                   )
+                {
+                    isIn = !isIn;
+                }
+            }
+        
+
+            return isIn;
+        }
+
+        public void CreateUpperEdge(Point edge)
+        {
+            for (int i = 0; i <m_points.Count; i++)
+            {
+                Point pnt = m_points[i];
+                if (pnt.X > edge.X)
+                    pnt.X = edge.X;
+                if (pnt.Y > edge.Y)
+                    pnt.Y = edge.Y;
+                m_points[i] = pnt;
+            }
+            if (ShapeUpdated != null)
+                ShapeUpdated(this);
+        }
+
+        public void CreateUnderEdge(Point edge)
+        {
+            for (int i = 0; i < m_points.Count; i++)
+            {
+                Point pnt = m_points[i];
+                if (pnt.X < edge.X)
+                    pnt.X = edge.X;
+                if (pnt.Y < edge.Y)
+                    pnt.Y = edge.Y;
+                m_points[i] = pnt;
+            }
+            if (ShapeUpdated != null)
+                ShapeUpdated(this);
         }
     }
 }

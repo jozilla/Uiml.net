@@ -29,7 +29,7 @@ namespace Uiml.Gummy.Kernel
 
     public class Document
     {
-        private DomainObjectCollection m_domObjects = new DomainObjectCollection();
+        private DomainObjectCollection m_domObjects = null;
         private DomainObject m_formContainer = null;
         private Mode m_spaceMode = Mode.Navigate;
         //TODO: Add the wireframe data to the document
@@ -62,6 +62,7 @@ namespace Uiml.Gummy.Kernel
 
         public Document()
         {
+            m_domObjects = new DomainObjectCollection(this);
             m_formContainer = ActiveSerializer.Instance.Serializer.CreateUIContainer();
         }
 
