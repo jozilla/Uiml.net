@@ -310,7 +310,7 @@ namespace Uiml.Gummy.Visual
         {
             Console.WriteLine("onDragEnter");
 
-            if (e.Data.GetDataPresent(typeof(ReflectionMethodParameterModel)) || e.Data.GetDataPresent(typeof(ReflectionMethodModel)))
+            if (e.Data.GetDataPresent(typeof(ReflectionMethodParameterModel)))
                 e.Effect = DragDropEffects.Link;
             else
                 e.Effect = DragDropEffects.None;
@@ -322,11 +322,6 @@ namespace Uiml.Gummy.Visual
             {
                 // link a parameter
                 m_visDom.DomainObject.LinkMethodParameter((MethodParameterModel)e.Data.GetData(typeof(ReflectionMethodParameterModel)));
-            }
-            else if (e.Data.GetDataPresent(typeof(ReflectionMethodModel)))
-            {
-                // link a method
-                m_visDom.DomainObject.LinkMethod((MethodModel)e.Data.GetData(typeof(ReflectionMethodModel)));
             }
 
             // otherwise, do nothing

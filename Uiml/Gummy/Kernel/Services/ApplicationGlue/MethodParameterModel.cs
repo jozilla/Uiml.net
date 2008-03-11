@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.Reflection;
+using Uiml.Gummy.Domain;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
@@ -22,11 +23,11 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             get { return name; }
         }
 
-        protected bool isOutput;
+        protected MethodParameterType paramType;
 
-        public bool IsOutput
+        public MethodParameterType ParameterType
         {
-            get { return isOutput; }
+            get { return paramType; }
         }
 
         protected MethodModel parent;
@@ -35,5 +36,39 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         {
             get { return parent; }
         }
+
+        protected DomainObject link;
+
+        public DomainObject Link
+        {
+            get { return link; }
+            set 
+            { 
+                link = value;
+                Updated(this, null);
+            }
+        }
+
+        public bool Linked
+        {
+            get { return Link != null; }
+        }
+
+        public event EventHandler Updated;
+
+        public void OnUpdate(EventArgs e)
+        {
+            if (Updated != null)
+            {
+                Updated(this, e);
+            }
+        }
+    }
+
+    public enum MethodParameterType
+    {
+        Input,
+        Invoke,
+        Output,
     }
 }

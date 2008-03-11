@@ -13,40 +13,56 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         public MethodModel Method
         {
             get { return m_method; }
-            set { m_method = value; } 
         }
 
-        private Dictionary<MethodParameterModel, DomainObject> m_inputs = new Dictionary<MethodParameterModel, DomainObject>();
+        public event EventHandler Updated;
 
-        public Dictionary<MethodParameterModel, DomainObject> Inputs
+        public List<MethodParameterModel> Inputs
         {
-            get { return m_inputs; }
+            get { return m_method.Inputs; }
         }
-
-        private DomainObject m_invoke;
 
         public DomainObject Invoke
         {
-            get { return m_invoke; }
-            set { m_invoke = value; }
+            get { return m_method.Invoke.Link; }
         }
-
-        private DomainObject m_output;
 
         public DomainObject Output
         {
-            get { return m_output; }
-            set { m_output = value; }
+            get { return m_method.Outputs[0].Link; }
         }
 
         public ConnectedMethod(MethodModel method)
         {
-            Method = method;
+            m_method = method;
+            m_method.Updated += new EventHandler(ModelUpdated);
         }
 
-        public void AddInput(MethodParameterModel param, DomainObject dom)
+        void ModelUpdated(object sender, EventArgs e)
+        {
+            OnUpdate(e);
+        }
+
+        /*public void AddInput(MethodParameterModel param, DomainObject dom)
         {
             Inputs.Add(param, dom);
+            OnUpdate(null);
+        }*/
+
+        public void OnUpdate(EventArgs e)
+        {
+            if (Updated != null)
+            {
+                Updated(this, e);
+            }
+        }
+
+        public bool IsComplete()
+        {
+            List<MethodParameterModel> missingInputParams = null;
+            bool missingOutput = false;
+            bool missingInvoke = false;
+            return IsComplete(out missingInputParams, out missingOutput, out missingInvoke);
         }
 
         public bool IsComplete(out List<MethodParameterModel> missingInputParams, out bool missingOutput, out bool missingInvoke)
@@ -66,7 +82,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 missingInvoke = true;
 
             inputs = true;
-            foreach (MethodParameterModel input in Inputs.Keys)
+            foreach (MethodParameterModel input in Inputs)
             {
                 if (!Method.Inputs.Contains(input))
                 {

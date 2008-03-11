@@ -60,9 +60,44 @@ namespace gummy.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap connection_not_ok {
+            get {
+                object obj = ResourceManager.GetObject("connection_not_ok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap connection_ok {
+            get {
+                object obj = ResourceManager.GetObject("connection_ok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap linked {
+            get {
+                object obj = ResourceManager.GetObject("linked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap no_connection {
+            get {
+                object obj = ResourceManager.GetObject("no_connection", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap not_linked {
+            get {
+                object obj = ResourceManager.GetObject("not_linked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

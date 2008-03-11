@@ -1,6 +1,6 @@
 ﻿namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    partial class MethodsView
+    partial class ConnectedMethodsView
     {
         /// <summary> 
         /// Required designer variable.
@@ -36,26 +36,28 @@
             this.layout.AutoSize = true;
             this.layout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.layout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.layout.ColumnCount = 3;
+            this.layout.ColumnCount = 4;
+            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.Location = new System.Drawing.Point(0, 0);
             this.layout.Name = "layout";
-            this.layout.RowCount = 1;
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layout.Size = new System.Drawing.Size(4, 2);
+            this.layout.RowCount = 2;
+            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layout.Size = new System.Drawing.Size(5, 3);
             this.layout.TabIndex = 0;
             // 
-            // MethodsView
+            // ConnectedMethodsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.layout);
-            this.Name = "MethodsView";
-            this.Size = new System.Drawing.Size(7, 5);
+            this.Name = "ConnectedMethodsView";
+            this.Size = new System.Drawing.Size(8, 6);
             this.ResumeLayout(false);
             this.PerformLayout();
 

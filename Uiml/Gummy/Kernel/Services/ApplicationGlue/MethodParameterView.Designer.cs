@@ -30,7 +30,9 @@
         {
             this.layout = new System.Windows.Forms.TableLayoutPanel();
             this.param = new System.Windows.Forms.Label();
+            this.linkIcon = new System.Windows.Forms.PictureBox();
             this.layout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.linkIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // layout
@@ -38,13 +40,15 @@
             this.layout.AutoSize = true;
             this.layout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.layout.ColumnCount = 1;
-            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.Controls.Add(this.param, 0, 0);
+            this.layout.Controls.Add(this.linkIcon, 0, 1);
             this.layout.Location = new System.Drawing.Point(3, 3);
             this.layout.Name = "layout";
-            this.layout.RowCount = 1;
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layout.Size = new System.Drawing.Size(44, 15);
+            this.layout.RowCount = 2;
+            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layout.Size = new System.Drawing.Size(47, 34);
             this.layout.TabIndex = 1;
             // 
             // param
@@ -54,10 +58,21 @@
             this.param.Dock = System.Windows.Forms.DockStyle.Fill;
             this.param.Location = new System.Drawing.Point(3, 0);
             this.param.Name = "param";
-            this.param.Size = new System.Drawing.Size(38, 15);
+            this.param.Size = new System.Drawing.Size(41, 15);
             this.param.TabIndex = 0;
             this.param.Text = "param";
             this.param.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // linkIcon
+            // 
+            this.linkIcon.Dock = System.Windows.Forms.DockStyle.Top;
+            this.linkIcon.Image = global::gummy.Properties.Resources.not_linked;
+            this.linkIcon.Location = new System.Drawing.Point(3, 18);
+            this.linkIcon.Name = "linkIcon";
+            this.linkIcon.Size = new System.Drawing.Size(41, 13);
+            this.linkIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.linkIcon.TabIndex = 1;
+            this.linkIcon.TabStop = false;
             // 
             // MethodParameterView
             // 
@@ -67,9 +82,10 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.layout);
             this.Name = "MethodParameterView";
-            this.Size = new System.Drawing.Size(50, 21);
+            this.Size = new System.Drawing.Size(53, 40);
             this.layout.ResumeLayout(false);
             this.layout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.linkIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -79,6 +95,7 @@
 
         private System.Windows.Forms.TableLayoutPanel layout;
         private System.Windows.Forms.Label param;
+        private System.Windows.Forms.PictureBox linkIcon;
 
     }
 }

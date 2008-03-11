@@ -227,40 +227,36 @@ namespace Uiml.Gummy.Domain
 
         public void LinkMethodParameter(MethodParameterModel mpm)
         {
-            if (mpm.IsOutput)
+            if (mpm.ParameterType == MethodParameterType.Output)
             {
                 m_methodOutParamLinks.Add(mpm);
-                DesignerKernel.Instance.CurrentDocument.Behavior.RegisterOutput(mpm, this);
+                mpm.Link = this;
+                DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(mpm.Parent);
             }
-            else
+            else if (mpm.ParameterType == MethodParameterType.Input)
             {
                 m_methodInParamLinks.Add(mpm);
-                DesignerKernel.Instance.CurrentDocument.Behavior.RegisterInput(mpm, this);
+                mpm.Link = this;
+                DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(mpm.Parent);
+            }
+            else if (mpm.ParameterType == MethodParameterType.Invoke)
+            {
+                m_methodLink = mpm.Parent;
+                mpm.Link = this;
+                DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(mpm.Parent);
             }
 
-            Updated();
-        }
-
-        public void LinkMethod(MethodModel mm) 
-        {
-            m_methodLink = mm;
-            DesignerKernel.Instance.CurrentDocument.Behavior.RegisterInvoke(mm, this);
-            Updated();
-        }
-
-        public void UnlinkMethod() 
-        {
-            m_methodLink = null;
             Updated();
         }
 
         public void UnlinkMethodParameter(MethodParameterModel mpm) 
         {
-            if (mpm.IsOutput)
+            if (mpm.ParameterType == MethodParameterType.Output)
                 m_methodOutParamLinks.Remove(mpm);
-            else
+            else if (mpm.ParameterType == MethodParameterType.Input)
                 m_methodInParamLinks.Remove(mpm);
-
+            else if (mpm.ParameterType == MethodParameterType.Invoke)
+                m_methodLink = null;
             Updated();
         }
 

@@ -19,14 +19,30 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             name = m.Name;
             methodInfo = m;
 
+            // inputs
             foreach (ParameterInfo pi in m.GetParameters())
             {
-                inputs.Add(new ReflectionMethodParameterModel(pi, false, this));
+                ReflectionMethodParameterModel input = new ReflectionMethodParameterModel(pi, false, this);
+                input.Updated += new EventHandler(ParameterUpdated);
+                inputs.Add(input);
             }
 
-            // ignore void parameters
+            // invoke
+            invoke = new ReflectionMethodParameterModel(this);
+            invoke.Updated += new EventHandler(ParameterUpdated);
+
+            // output (ignore void parameters)
             if (!m.ReturnType.Equals(typeof(void)))
-                outputs.Add(new ReflectionMethodParameterModel(m.ReturnParameter, true, this));
+            {
+                ReflectionMethodParameterModel output = new ReflectionMethodParameterModel(m.ReturnParameter, true, this);
+                output.Updated += new EventHandler(ParameterUpdated);
+                outputs.Add(output);
+            }
+        }
+
+        void ParameterUpdated(object sender, EventArgs e)
+        {
+            OnUpdate(e);
         }
     }
 }

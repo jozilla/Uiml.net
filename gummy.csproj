@@ -82,16 +82,10 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.Designer.cs">
       <DependentUpon>ApplicationGlueServiceConfiguration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\BehaviorRegistry.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionBehaviorGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethod.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IBehaviorGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodModel.cs" />
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.Designer.cs">
-      <DependentUpon>MethodNameView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterModel.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterView.cs">
       <SubType>UserControl</SubType>
@@ -99,12 +93,12 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterView.Designer.cs">
       <DependentUpon>MethodParameterView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsModel.cs" />
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.cs">
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethodsModel.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethodsView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.Designer.cs">
-      <DependentUpon>MethodsView.cs</DependentUpon>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethodsView.Designer.cs">
+      <DependentUpon>ConnectedMethodsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.cs">
       <SubType>UserControl</SubType>
@@ -256,8 +250,8 @@
       <DependentUpon>MethodParameterView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.resx">
-      <DependentUpon>MethodsView.cs</DependentUpon>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethodsView.resx">
+      <DependentUpon>ConnectedMethodsView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.resx">
@@ -316,9 +310,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="images\delete.ico" />
+    <None Include="images\connection_not_ok.png" />
+    <None Include="images\connection_ok.png" />
     <Content Include="images\empty_image.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="images\no_connection.png" />
+    <None Include="images\linked.png" />
+    <None Include="images\not_linked.png" />
     <Content Include="images\stock-tool-eraser-22.png" />
     <Content Include="images\stock-tool-path-22.png" />
     <Content Include="images\stock-tool-scale-22.png" />
@@ -334,10 +333,6 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_input.png" />
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_method.png" />
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_output.png" />
-    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodNameView.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>MethodNameView.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

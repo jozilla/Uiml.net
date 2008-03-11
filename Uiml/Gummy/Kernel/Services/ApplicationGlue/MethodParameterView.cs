@@ -22,8 +22,17 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         {
             InitializeComponent();
             Model = model;
-            Draw();
+            Model.Updated += new EventHandler(ModelUpdated);
             param.MouseDown += new MouseEventHandler(OnMouseDown);
+            Draw();
+        }
+
+        void ModelUpdated(object sender, EventArgs e)
+        {
+            if (Model.Linked)
+                linkIcon.Image = global::gummy.Properties.Resources.linked;
+            else
+                linkIcon.Image = global::gummy.Properties.Resources.not_linked;
         }
 
         void OnMouseDown(object sender, MouseEventArgs e) 
@@ -34,17 +43,25 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         protected void Draw ()
         {
             // set text and color
-            if (Model.IsOutput)
+            if (Model.ParameterType == MethodParameterType.Output)
             {
                 param.Text = Model.Type.ToString();
                 param.BackColor = Color.LightCoral;
                 param.ForeColor = Color.White;
             }
-            else
+            else if (Model.ParameterType == MethodParameterType.Input)
             {
                 param.Text = string.Format("{0} [{1}]", Model.Type, Model.Name);
                 param.BackColor = Color.LightGreen;
                 param.ForeColor = Color.Black;
+            }
+            else if (Model.ParameterType == MethodParameterType.Invoke)
+            {
+                param.Text = Model.Name;
+                param.BackColor = Color.DarkOrange;
+                param.ForeColor = Color.White;
+                // bold
+                param.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             }
         }
     }
