@@ -13,11 +13,24 @@ namespace Uiml.Gummy.Kernel.Services
         public DrawModeService()
         {
             DesignerKernel.Instance.CurrentDocumentChanged += new EventHandler(documentChanged);
+            Selected.SelectedDomainObject.Instance.DomainObjectSelected += new Uiml.Gummy.Kernel.Selected.SelectedDomainObject.DomainObjectSelectedHandler(domainObjectSelected);
+        }
+
+        void domainObjectSelected(Uiml.Gummy.Domain.DomainObject dom, EventArgs e)
+        {
+            if (m_drawModes != null)
+            {
+                if (dom != null)
+                {
+                    m_drawModes.DrawModeEnabled = true;                    
+                }
+            }
         }
 
         void documentChanged(object sender, EventArgs e)
         {
             DesignerKernel.Instance.CurrentDocument.SpaceModeChanged += new Document.SpaceModeChangeHandler(m_drawModes.SpaceModeChanged);
+            m_drawModes.SpaceModeChanged(this, DesignerKernel.Instance.CurrentDocument.Mode);
         }        
 
         public void Init()
