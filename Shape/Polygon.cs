@@ -9,6 +9,8 @@ namespace Shape
     public class Polygon : IShape
     {
         List<Point> m_points = new List<Point>();
+        Point m_tmpPoint = Point.Empty;
+        Point m_tmpPointSorted = Point.Empty;
 
         public event ShapUpdateHandler ShapeUpdated;
 
@@ -28,38 +30,71 @@ namespace Shape
             }
         }
 
+        //Temporary point that is added to the polygon, this needs to be confirmed later
+        public Point TmpPoint
+        {
+            get
+            {
+                return m_tmpPoint;
+            }
+            set
+            {
+                m_tmpPoint = value;
+                if (ShapeUpdated != null)
+                    ShapeUpdated(this);
+            }
+        }
+       
+
+        public void AddTmpPoint()
+        {
+            AddPoint(m_tmpPoint);
+            m_tmpPoint = Point.Empty;
+        }
+
         public void AddPoint(Point pnt)
         {
-            m_points.Add(pnt);
+            if (!m_points.Contains(pnt))
+            {
+                m_points.Add(pnt);
+                if (ShapeUpdated != null)
+                    ShapeUpdated(this);
+            }
+        }
+
+        public int ClickedPoint(Point clickCoordinates)
+        {
+            foreach(Point pnt in Points)
+            {
+                Rectangle rect = new Rectangle(pnt.X - 2, pnt.Y - 2, 4, 4);
+                if (rect.Contains(clickCoordinates))
+                {
+                    return Points.IndexOf(pnt);
+                }
+            }
+            return -1;
+        }
+
+        public void ReplacePoint(int index, Point replacer)
+        {
+            if (index == -1)
+                return;
+            Points[index] = replacer;
             if (ShapeUpdated != null)
                 ShapeUpdated(this);
         }
 
-        public void AddPointSorted(Point pnt)
+        public List<Point> PointsInRectangle(Rectangle rect)
         {
-            if (Points.Count >= 2)
+            List<Point> points = new List<Point>();
+            foreach(Point pnt in Points)
             {
-                Point before = Point.Empty;
-                Point after = Point.Empty;
-                double minDistance = double.MaxValue;
-                for (int i = 1; i < Points.Count; i++)
+                if (rect.Contains(pnt))
                 {
-                    double d = distance((double)Points[i - 1].X, (double)Points[i - 1].Y, (double)Points[i].X, (double)Points[i].Y);
-                    if (d < minDistance)
-                    {
-                        minDistance = d;
-                        before = Points[i - 1];
-                        after = Points[i];
-                    }
+                    points.Add(pnt);
                 }
-                m_points.Insert(m_points.IndexOf(after), pnt);
-                if (ShapeUpdated != null)
-                    ShapeUpdated(this);
             }
-            else
-            {
-                AddPoint(pnt);
-            }
+            return points;
         }
 
         private double distance(double x1, double y1, double x2, double y2)
@@ -82,14 +117,20 @@ namespace Shape
             {
                 drawPoints.Add(new Point(m_points[i].X + offset.X, m_points[i].Y + offset.Y));
             }
-            if (m_points.Count > 2)
+            //Add the temporary point...
+            Point offsetTmpPoint = Point.Empty;
+            if (m_tmpPoint != Point.Empty)
             {
-
+                offsetTmpPoint = new Point(m_tmpPoint.X + offset.X, m_tmpPoint.Y + offset.Y);
+                drawPoints.Add(offsetTmpPoint);
+            }           
+            if (drawPoints.Count > 2)
+            {
                 SolidBrush semiTransBrush = new SolidBrush(Color.FromArgb(50, 0, 255, 0));
                 g.FillPolygon(semiTransBrush, drawPoints.ToArray());
-                g.DrawPolygon(Pens.DarkBlue, drawPoints.ToArray());
+                g.DrawPolygon(Pens.DarkBlue, drawPoints.ToArray());                
             }
-            else if (m_points.Count == 2)
+            else if (drawPoints.Count == 2)
             {
                 g.DrawLine(Pens.DarkBlue, drawPoints[0], drawPoints[1]);
             }
@@ -97,6 +138,7 @@ namespace Shape
             {
                 g.DrawRectangle(Pens.Coral, pnt.X - 2, pnt.Y - 2, 4, 4);
             }
+            drawPoints.Remove(offsetTmpPoint);
         }
 
         public virtual bool PointInShape(Point p)

@@ -14,6 +14,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         public DrawModes()
         {
             InitializeComponent();
+            //DesignerKernel.Instance.CurrentDocument.SpaceModeChanged += new Document.SpaceModeChangeHandler(spaceModeChanged);
         }
 
         private void cursor_Click(object sender, EventArgs e)
@@ -40,6 +41,30 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 case Mode.Navigate:
                     m_cursorButton.BackColor = Color.Yellow;
                     break;
+            }
+        }
+
+        public bool DrawModeEnabled
+        {
+            get
+            {
+                return m_paintButton.Enabled;
+            }
+            set
+            {
+                m_paintButton.Enabled = value;
+            }
+        }
+
+        public bool NavigateModeEnabled
+        {
+            get
+            {
+                return m_cursorButton.Enabled;
+            }
+            set
+            {
+                m_cursorButton.Enabled = value;
             }
         }
         

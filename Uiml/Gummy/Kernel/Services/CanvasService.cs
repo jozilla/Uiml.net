@@ -154,7 +154,7 @@ namespace Uiml.Gummy.Kernel.Services
         {
 
             if (m_clickedBox != BoxID.None)
-            {
+            {                
                 switch (m_clickedBox)
                 {
                     case BoxID.MiddleRight:
@@ -173,7 +173,11 @@ namespace Uiml.Gummy.Kernel.Services
         void onMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
+            {
                 m_clickedBox = clickedBox(e.Location);
+                if(m_clickedBox != BoxID.None)
+                    DesignerKernel.Instance.CurrentDocument.Mode = Mode.Navigate;
+            }
             else
             {
                 ContextMenu contextMenu = new ContextMenu();

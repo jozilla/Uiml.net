@@ -33,7 +33,7 @@ namespace Uiml.Gummy.Domain
 
         public event DomainObjectUpdateHandler DomainObjectUpdated;
 
-        private IShape m_shape = new Polygon();
+        private Polygon m_shape = new Polygon();
 
         private MethodModel m_methodLink = null;
         private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
@@ -135,7 +135,7 @@ namespace Uiml.Gummy.Domain
             }
         }
 
-        public IShape Shape
+        public Polygon Polygon
         {
             get
             {
