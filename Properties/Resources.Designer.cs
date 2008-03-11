@@ -60,6 +60,20 @@ namespace gummy.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap connection_not_ok {
+            get {
+                object obj = ResourceManager.GetObject("connection_not_ok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap connection_ok {
+            get {
+                object obj = ResourceManager.GetObject("connection_ok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);

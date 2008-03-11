@@ -315,6 +315,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="images\delete.ico" />
+    <None Include="images\connection_not_ok.png" />
+    <None Include="images\connection_ok.png" />
     <Content Include="images\empty_image.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

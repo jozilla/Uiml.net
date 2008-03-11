@@ -46,10 +46,17 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             loutputs.Dock = System.Windows.Forms.DockStyle.Fill;
             loutputs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
+            Label lstatus = new Label();
+            lstatus.Text = "Connection status";
+            lstatus.AutoSize = true;
+            lstatus.Dock = DockStyle.Fill;
+            lstatus.TextAlign = ContentAlignment.MiddleCenter;
+
             // add them
             layout.Controls.Add(linputs, 0, 0);
             layout.Controls.Add(lname, 1, 0);
             layout.Controls.Add(loutputs, 2, 0);
+            layout.Controls.Add(lstatus, 3, 0);
 
             // add the methods, starting from the second row
             int row = 1; 
