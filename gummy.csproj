@@ -139,6 +139,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\DrawModes.Designer.cs">
       <DependentUpon>DrawModes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\Controls\EraseCartesianGraphState.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\ManipulateCartesianGraphState.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\NavigateCartesianGraphState.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\Controls\WireFrameController.cs">

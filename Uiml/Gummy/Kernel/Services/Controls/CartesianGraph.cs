@@ -455,7 +455,11 @@ namespace Uiml.Gummy.Kernel.Services.Controls
                 case Mode.Navigate:
                     m_graphState = new NavigateCartesianGraphState(this);                    
                     break;
+                case Mode.Erase:
+                    m_graphState = new EraseCartesianGraphState(this);
+                    break;
             }
+            Refresh();
         }
 
         private void Graph_Load_1(object sender, EventArgs e)

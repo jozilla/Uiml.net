@@ -63,6 +63,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             this.m_erase.Size = new System.Drawing.Size(44, 44);
             this.m_erase.TabIndex = 2;
             this.m_erase.UseVisualStyleBackColor = true;
+            this.m_erase.Click += new System.EventHandler(this.m_erase_Click);
             // 
             // m_paintButton
             // 
