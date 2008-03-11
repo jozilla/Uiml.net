@@ -51,23 +51,23 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             AddIfNotExists(m);
         }
 
-        public void RegisterInput(MethodParameterModel param, DomainObject dom)
+        /*public void RegisterInput(MethodParameterModel param, DomainObject dom)
         {
             AddIfNotExists(param.Parent);
             m_methods[param.Parent].AddInput(param, dom);
         }
 
-        public void RegisterInvoke(MethodModel method, DomainObject dom)
+        public void RegisterInvoke(MethodParameterModel param, DomainObject dom)
         {
-            AddIfNotExists(method);
-            m_methods[method].Invoke = dom;
+            AddIfNotExists(param.Parent);
+            m_methods[param.Parent].Invoke = dom;
         }
 
         public void RegisterOutput(MethodParameterModel param, DomainObject dom)
         {
             AddIfNotExists(param.Parent);
             m_methods[param.Parent].Output = dom;
-        }
+        }*/
 
         private void AddIfNotExists(MethodModel m)
         {

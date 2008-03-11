@@ -141,10 +141,9 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                     call.Attributes.Append(callName);
                     prop.AppendChild(call);
                     /* Inputs */
-                    foreach (KeyValuePair<MethodParameterModel, DomainObject> item in method.Inputs)
+                    foreach (MethodParameterModel param in method.Inputs)
                     {
-                        MethodParameterModel param = item.Key;
-                        DomainObject dom = item.Value;
+                        DomainObject dom = param.Link;
 
                         // <param>
                         XmlElement callParam = doc.CreateElement("param");
