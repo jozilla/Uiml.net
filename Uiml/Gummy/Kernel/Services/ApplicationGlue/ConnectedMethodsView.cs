@@ -8,21 +8,35 @@ using System.Windows.Forms;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    public partial class MethodsView : UserControl
+    public partial class ConnectedMethodsView : UserControl
     {
-        private MethodsModel model;
+        private ConnectedMethodsModel model;
 
-        public MethodsModel Model
+        public ConnectedMethodsModel Model
         {
             get { return model; }
             set { model = value; }
         }
 
-        public MethodsView (MethodsModel model)
+        public ConnectedMethodsView (ConnectedMethodsModel model)
         {
             InitializeComponent();
             Model = model;
+            Model.Updated += new EventHandler(ModelUpdated);
             Draw();
+        }
+
+        void ModelUpdated(object sender, EventArgs e)
+        {
+            int row = 1; 
+            foreach (ConnectedMethod connMethod in Model.Methods)
+            {
+                PictureBox icon = (PictureBox) layout.GetControlFromPosition(3, row);
+                if (connMethod.IsComplete())
+                    icon.Image = global::gummy.Properties.Resources.connection_ok;
+                else
+                    icon.Image = global::gummy.Properties.Resources.connection_not_ok;
+            }
         }
 
         protected void Draw ()
@@ -46,15 +60,24 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             loutputs.Dock = System.Windows.Forms.DockStyle.Fill;
             loutputs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
+            Label lstatus = new Label();
+            lstatus.Text = "Connection status";
+            lstatus.AutoSize = true;
+            lstatus.Dock = DockStyle.Fill;
+            lstatus.TextAlign = ContentAlignment.MiddleCenter;
+
             // add them
             layout.Controls.Add(linputs, 0, 0);
             layout.Controls.Add(lname, 1, 0);
             layout.Controls.Add(loutputs, 2, 0);
+            layout.Controls.Add(lstatus, 3, 0);
 
             // add the methods, starting from the second row
             int row = 1; 
-            foreach (MethodModel method in Model.Methods)
+            foreach (ConnectedMethod connMethod in Model.Methods)
             {
+                MethodModel method = connMethod.Method;
+
                 // create input container
                 TableLayoutPanel inputs = new TableLayoutPanel();
                 inputs.AutoSize = true;
@@ -112,6 +135,16 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                     outputs.RowCount = outputs.RowCount + 1;
                     outRow++;
                 }
+
+                // set icon
+                PictureBox icon = new PictureBox();
+                icon.Dock = DockStyle.Fill;
+                icon.SizeMode = PictureBoxSizeMode.AutoSize;
+                layout.Controls.Add(icon, 3, row);
+                if (connMethod.IsComplete())
+                    icon.Image = global::gummy.Properties.Resources.connection_ok;
+                else
+                    icon.Image = global::gummy.Properties.Resources.connection_not_ok;
 
                 row++;
             }

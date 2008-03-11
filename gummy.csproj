@@ -82,7 +82,7 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.Designer.cs">
       <DependentUpon>ApplicationGlueServiceConfiguration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\BehaviorRegistry.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ReflectionBehaviorGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethod.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IBehaviorGenerator.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodModel.cs" />
@@ -99,12 +99,12 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterView.Designer.cs">
       <DependentUpon>MethodParameterView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsModel.cs" />
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.cs">
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethodsModel.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethodsView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.Designer.cs">
-      <DependentUpon>MethodsView.cs</DependentUpon>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethodsView.Designer.cs">
+      <DependentUpon>ConnectedMethodsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.cs">
       <SubType>UserControl</SubType>
@@ -256,8 +256,8 @@
       <DependentUpon>MethodParameterView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodsView.resx">
-      <DependentUpon>MethodsView.cs</DependentUpon>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\ConnectedMethodsView.resx">
+      <DependentUpon>ConnectedMethodsView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodView.resx">
@@ -316,6 +316,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="images\delete.ico" />
+    <None Include="images\connection_not_ok.png" />
+    <None Include="images\connection_ok.png" />
     <Content Include="images\empty_image.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

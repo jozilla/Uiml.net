@@ -9,5 +9,6 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
     {
         XmlNode GenerateLogic(XmlDocument doc);
         XmlNode GenerateBehavior(XmlDocument doc);
+        void Update(MethodModel m);
     }
 }

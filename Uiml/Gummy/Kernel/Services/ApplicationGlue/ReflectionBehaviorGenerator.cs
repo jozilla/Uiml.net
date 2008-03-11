@@ -10,58 +10,33 @@ using Uiml.Peers;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    public class BehaviorRegistry : IBehaviorGenerator
+    public class ReflectionBehaviorGenerator : IBehaviorGenerator
     {
-        private Dictionary<MethodModel, ConnectedMethod> m_methods = new Dictionary<MethodModel, ConnectedMethod>();
+        private ConnectedMethodsModel m_model;
         private Dictionary<Type, List<ReflectionMethodModel>> m_logicTree = new Dictionary<Type, List<ReflectionMethodModel>>();
         private VocabularyMetadata m_vocMeta;
 
-        public Dictionary<MethodModel, ConnectedMethod> Methods
+        public ConnectedMethodsModel Model
         {
-            get { return m_methods; }
+            get { return m_model; }
         }
 
-        public BehaviorRegistry()
+        public ReflectionBehaviorGenerator(ConnectedMethodsModel model)
         {
             Vocabulary voc = ActiveSerializer.Instance.Serializer.Voc;
             m_vocMeta = new VocabularyMetadata(voc);
+            m_model = model;
         }
 
-        private void UpdateLogicTree(ReflectionMethodModel method)
+        public void Update(MethodModel m)
         {
+            ReflectionMethodModel method = (ReflectionMethodModel) m;
             Type type = method.MethodInfo.ReflectedType;
 
             if (!m_logicTree.ContainsKey(type))
                 m_logicTree[type] = new List<ReflectionMethodModel>();
 
             m_logicTree[type].Add(method);
-        }
-
-        public void RegisterInput(MethodParameterModel param, DomainObject dom)
-        {
-            AddIfNotExists(param.Parent);
-            Methods[param.Parent].AddInput(param, dom);
-        }
-
-        public void RegisterInvoke(MethodModel method, DomainObject dom)
-        {
-            AddIfNotExists(method);
-            Methods[method].Invoke = dom;
-        }
-
-        public void RegisterOutput(MethodParameterModel param, DomainObject dom)
-        {
-            AddIfNotExists(param.Parent);
-            Methods[param.Parent].Output = dom;
-        }
-
-        private void AddIfNotExists(MethodModel m)
-        {
-            if (!Methods.ContainsKey(m))
-            {
-                Methods.Add(m, new ConnectedMethod(m));
-                UpdateLogicTree((ReflectionMethodModel) m);
-            }
         }
 
         public XmlNode GenerateLogic(XmlDocument doc)
@@ -122,7 +97,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             // <behavior>
             XmlElement behavior = doc.CreateElement("behavior");
 
-            foreach (ConnectedMethod method in Methods.Values)
+            foreach (ConnectedMethod method in Model.Methods)
             {
                 try
                 {
