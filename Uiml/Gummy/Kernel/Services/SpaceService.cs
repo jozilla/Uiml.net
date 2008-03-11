@@ -15,21 +15,23 @@ namespace Uiml.Gummy.Kernel.Services
     {
 
         public SpaceService()
-        {
-            InitializeComponent();            
+        {            
         }
 
         public void Init()
-        {                     
-            m_cartesianGraphControl.InitGraph();
-            m_cartesianGraphControl.DesignSpaceCursorChanged += new SizeChangeHandler(designSpaceCursorChanged);   
-            DesignerKernel.Instance.CurrentDocumentChanged += new EventHandler(currentDocumentChanged);            
+        {                
+            DesignerKernel.Instance.CurrentDocumentChanged += new EventHandler(currentDocumentChanged);
+            this.Size = new System.Drawing.Size(460, 340);
+            this.Text = "2D Example Space";
         }
 
         void currentDocumentChanged(object sender, EventArgs e)
         {
+            InitializeComponent();
+            m_cartesianGraphControl.InitGraph();
+            m_cartesianGraphControl.DesignSpaceCursorChanged += new SizeChangeHandler(designSpaceCursorChanged); 
             DesignerKernel.Instance.CurrentDocument.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizeUpdated);
-            DesignerKernel.Instance.CurrentDocument.SpaceModeChanged += new Document.SpaceModeChangeHandler(m_cartesianGraphControl.SpaceModeChanged);
+            DesignerKernel.Instance.CurrentDocument.SpaceModeChanged += new Document.SpaceModeChangeHandler(m_cartesianGraphControl.SpaceModeChanged);            
         }
 
         void screenSizeUpdated(object sender, Size newSize)
