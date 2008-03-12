@@ -68,18 +68,21 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             {
                 m_selected.Polygon.ShapeUpdated -= m_shapeUpdateHandler;
             }
-            dom.Polygon.ShapeUpdated += m_shapeUpdateHandler;
+            if (dom != null)
+            {
+                dom.Polygon.ShapeUpdated += m_shapeUpdateHandler;
+            }
             m_selected = dom;
-            updateHighlightedExamples();
+            updateHighlightedExamples();            
             Refresh();
         }
 
         void updateHighlightedExamples()
         {
-            //Build up the highlighted examples
+            //Build up the highlighted examples            
+            m_highlightedExamples.Clear();
             if (m_selected == null)
                 return;
-            m_highlightedExamples.Clear();
             Dictionary<Size, DomainObject> dict = ExampleRepository.Instance.GetDomainObjectExamples(m_selected.Identifier);
             if (dict != null)
             {
@@ -263,9 +266,9 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             if (CartesianGraphPaint != null)
                 CartesianGraphPaint(this, e);
 
-            if (Selected.SelectedDomainObject.Instance.Selected != null)
+            foreach (DomainObject domObj in Selected.SelectedDomainObject.Instance.SelectedDomainObjects)
             {
-                Selected.SelectedDomainObject.Instance.Selected.Polygon.Paint(g, m_designSpaceData.OriginPoint);
+                domObj.Polygon.Paint(g, m_designSpaceData.OriginPoint);
             }
 
             //SolidBrush semiTransUIBrush = new SolidBrush(Color.FromArgb(50,Color.Gray));

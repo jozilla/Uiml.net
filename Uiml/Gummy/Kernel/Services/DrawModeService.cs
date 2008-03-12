@@ -22,7 +22,20 @@ namespace Uiml.Gummy.Kernel.Services
             {
                 if (dom != null)
                 {
-                    m_drawModes.DrawModeEnabled = true;                    
+                    m_drawModes.DrawModeEnabled = true;
+                }
+                else
+                {
+                    m_drawModes.DrawModeEnabled = false;
+                }
+
+                if (Selected.SelectedDomainObject.Instance.MultipleSelected)
+                {
+                    m_drawModes.GroupingEnabled = true;
+                }
+                else
+                {
+                    m_drawModes.GroupingEnabled = false;
                 }
             }
         }
