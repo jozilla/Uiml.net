@@ -398,5 +398,9 @@ namespace Uiml.Gummy.Kernel.Services
         {
             DesignerKernel.Instance.CurrentDocument.CurrentSize = m_config.ScreenSize;
         }
+
+        public void DocumentUpdated(object sender, EventArgs e)
+        {
+        }
     }
 }

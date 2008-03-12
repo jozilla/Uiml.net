@@ -26,5 +26,6 @@ namespace Uiml.Gummy.Kernel.Services
         }
 
         void NotifyConfigurationChanged();
+        void DocumentUpdated(object sender, EventArgs e);
     }
 }

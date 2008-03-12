@@ -74,6 +74,10 @@ namespace Uiml.Gummy.Kernel
             set
             {
                 m_document = value;
+
+                foreach (IService s in Services)
+                    m_document.Updated += new Document.DocumentUpdateHandler(s.DocumentUpdated);
+
                 if (CurrentDocumentChanged != null)
                     CurrentDocumentChanged(this, null);
             }
@@ -286,7 +290,10 @@ namespace Uiml.Gummy.Kernel
 
         public void NotifyConfigurationChanged()
         {
-            return;
+        }
+
+        public void DocumentUpdated(object sender, EventArgs e)
+        {
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)

@@ -79,6 +79,7 @@ namespace Uiml.Gummy.Kernel
         public void UpdateSelectedMethod(MethodModel m)
         {
             m_selectedMethod = Methods.GetMethod(m);
+            OnUpdate(null);
         }
 
         public Document()
