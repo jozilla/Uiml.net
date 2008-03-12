@@ -156,6 +156,7 @@ namespace Uiml.Gummy.Kernel {
             this.Controls.Add(this.mainTable);
             this.Name = "NewWizard";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New design";
             this.mainTable.ResumeLayout(false);
             this.mainTable.PerformLayout();

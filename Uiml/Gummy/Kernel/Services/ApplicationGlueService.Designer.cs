@@ -30,6 +30,7 @@ namespace Uiml.Gummy.Kernel.Services {
             // 
             this.layout.AutoScroll = true;
             this.layout.AutoSize = true;
+            this.layout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.layout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.layout.Location = new System.Drawing.Point(0, 0);
