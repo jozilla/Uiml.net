@@ -6,6 +6,20 @@ using Uiml.Gummy.Domain;
 
 namespace Uiml.Gummy.Kernel.Selected
 {
+    public class SelectedDomainObjectEventArgs : EventArgs
+    {
+        public bool MultipleSelected = false;
+
+        public SelectedDomainObjectEventArgs()
+        {
+        }
+
+        public SelectedDomainObjectEventArgs(bool multiple)
+        {
+            MultipleSelected = multiple;
+        }
+    }
+
     public class SelectedDomainObject
     {
 
@@ -50,17 +64,29 @@ namespace Uiml.Gummy.Kernel.Selected
                 if (DomainObjectSelected != null)
                     DomainObjectSelected(dom, new EventArgs());
             }
+            if (m_domObjects.Count == 0)
+            {
+                if (DomainObjectSelected != null)
+                    DomainObjectSelected(null, new EventArgs());
+            }
         }
 
         public void AddSelectedDomainObject(DomainObject dom)
         {
-            m_domObjects.Add(dom);
+            if( !m_domObjects.Contains(dom))
+                m_domObjects.Add(dom);
             fireSelectEvents();
         }
 
         public void RemoveSelectedDomainObjects(DomainObject dom)
         {
             m_domObjects.Remove(dom);
+            fireSelectEvents();
+        }
+
+        public void ClearSelection()
+        {
+            m_domObjects.Clear();
             fireSelectEvents();
         }
 

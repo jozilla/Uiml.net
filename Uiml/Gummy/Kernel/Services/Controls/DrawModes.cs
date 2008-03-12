@@ -77,6 +77,18 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             {
                 m_cursorButton.Enabled = value;
             }
-        }        
+        }
+
+        public bool GroupingEnabled
+        {
+            get
+            {
+                return m_groupZones.Enabled;
+            }
+            set
+            {
+                m_groupZones.Enabled = value;
+            }
+        }
     }
 }
