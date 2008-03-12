@@ -33,6 +33,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             this.m_erase = new System.Windows.Forms.Button();
             this.m_paintButton = new System.Windows.Forms.Button();
             this.m_cursorButton = new System.Windows.Forms.Button();
+            this.m_groupZones = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +49,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             this.tableLayoutPanel1.Controls.Add(this.m_erase, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.m_paintButton, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.m_cursorButton, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.m_groupZones, 3, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
@@ -89,6 +91,16 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             this.m_cursorButton.UseVisualStyleBackColor = true;
             this.m_cursorButton.Click += new System.EventHandler(this.cursor_Click);
             // 
+            // m_groupZones
+            // 
+            this.m_groupZones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_groupZones.Image = ((System.Drawing.Image)(resources.GetObject("m_groupZones.Image")));
+            this.m_groupZones.Location = new System.Drawing.Point(153, 3);
+            this.m_groupZones.Name = "m_groupZones";
+            this.m_groupZones.Size = new System.Drawing.Size(44, 44);
+            this.m_groupZones.TabIndex = 3;
+            this.m_groupZones.UseVisualStyleBackColor = true;
+            // 
             // DrawModes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -108,5 +120,6 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         private System.Windows.Forms.Button m_cursorButton;
         private System.Windows.Forms.Button m_erase;
         private System.Windows.Forms.Button m_paintButton;
+        private System.Windows.Forms.Button m_groupZones;
     }
 }

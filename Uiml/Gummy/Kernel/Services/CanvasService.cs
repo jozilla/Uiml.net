@@ -175,8 +175,10 @@ namespace Uiml.Gummy.Kernel.Services
             if (e.Button == MouseButtons.Left)
             {
                 m_clickedBox = clickedBox(e.Location);
-                if(m_clickedBox != BoxID.None)
+                if (m_clickedBox != BoxID.None)
                     DesignerKernel.Instance.CurrentDocument.Mode = Mode.Navigate;
+                else
+                    SelectedDomainObject.Instance.ClearSelection();
             }
             else
             {

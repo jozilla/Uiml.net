@@ -74,31 +74,40 @@ namespace Uiml.Gummy.Kernel.Services
 
         void onDomainObjectSelected(Domain.DomainObject dom, EventArgs e)
         {
-            if (m_dom != dom)
+            if (dom != null && !Selected.SelectedDomainObject.Instance.MultipleSelected)
             {
-                if (m_domUpdateHandler != null)
-                    m_dom.DomainObjectUpdated -= m_domUpdateHandler;
-                m_domUpdateHandler = new Uiml.Gummy.Domain.DomainObject.DomainObjectUpdateHandler(onDomainObjectUpdate);
-                m_dom = dom;
-                m_dom.DomainObjectUpdated += m_domUpdateHandler;
-                for (int i = 0; i < m_propertyControls.Count; i++)
-                    Controls.Remove(m_propertyControls[i]);
-                m_propertyControls.Clear();
-                int y = 0;
-                int x = 5;
-                for (int i = 0; i < dom.Properties.Count; i++)
+                if (m_dom != dom)
                 {
-                    VisualProperty prop = new VisualProperty(dom.Properties[i]);
-                    prop.Location = new Point(x, y);
-                    y += prop.Size.Height;
-                    Controls.Add(prop);
-                    m_propertyControls.Add(prop);
+                    if (m_domUpdateHandler != null)
+                        m_dom.DomainObjectUpdated -= m_domUpdateHandler;
+                    m_domUpdateHandler = new Uiml.Gummy.Domain.DomainObject.DomainObjectUpdateHandler(onDomainObjectUpdate);
+                    m_dom = dom;
+                    m_dom.DomainObjectUpdated += m_domUpdateHandler;
+                    for (int i = 0; i < m_propertyControls.Count; i++)
+                        Controls.Remove(m_propertyControls[i]);
+                    m_propertyControls.Clear();
+                    int y = 0;
+                    int x = 5;
+                    for (int i = 0; i < dom.Properties.Count; i++)
+                    {
+                        VisualProperty prop = new VisualProperty(dom.Properties[i]);
+                        prop.Location = new Point(x, y);
+                        y += prop.Size.Height;
+                        Controls.Add(prop);
+                        m_propertyControls.Add(prop);
+                    }
+                    //Size = new Size(200, y + 100);                
                 }
-                //Size = new Size(200, y + 100);                
+                else
+                {
+                    updateAll();
+                }
             }
             else
             {
-                updateAll();
+                for (int i = 0; i < m_propertyControls.Count; i++)
+                    Controls.Remove(m_propertyControls[i]);
+                m_propertyControls.Clear();
             }
         }
 
