@@ -38,6 +38,7 @@ namespace Uiml.Gummy.Kernel
         private DesignSpaceData m_designSpaceData = new DesignSpaceData();
 
         private ConnectedMethodsModel m_methods = new ConnectedMethodsModel();
+        private ConnectedMethod m_selectedMethod;
         private List<Assembly> m_libraries = new List<Assembly>();
 
         public delegate void ScreenSizeUpdateHandler(object sender, Size newSize);
@@ -58,6 +59,21 @@ namespace Uiml.Gummy.Kernel
         public List<Assembly> Libraries
         {
             get { return m_libraries; }
+        }
+
+        public bool HasSelectedMethod
+        {
+            get { return m_selectedMethod != null; }
+        }
+
+        public ConnectedMethod SelectedMethod
+        {
+            get { return m_selectedMethod; }
+        }
+
+        public void UpdateSelectedMethod(MethodModel m)
+        {
+            m_selectedMethod = Methods.GetMethod(m);
         }
 
         public Document()

@@ -51,6 +51,14 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             AddIfNotExists(m);
         }
 
+        public ConnectedMethod GetMethod(MethodModel m)
+        {
+            if (m_methods.ContainsKey(m))
+                return m_methods[m];
+            else
+                return null;
+        }
+
         /*public void RegisterInput(MethodParameterModel param, DomainObject dom)
         {
             AddIfNotExists(param.Parent);
