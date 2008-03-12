@@ -217,37 +217,37 @@ namespace Uiml.Gummy.Kernel
             XmlDocument doc = Serialize();
             doc.Save(s);
         }
-
+        
         public void Run()
         {
             // create temporary file
-            //string fileName = Path.GetTempFileName();
-            string fileName = "c:\\\\bla.uiml";
+            string fileName = Path.GetTempFileName();
             FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
             Save(stream);
             stream.Close();
 
-            // run renderer on this file
-            string uimlArgs = string.Format("-uiml \"{0}\"", fileName);
+            // format the -uiml argument
+            fileName = string.Format(@"""{0}""", fileName);
+            string uimlArgs = string.Format("-uiml {0}", fileName); 
             string libArgs = string.Empty;
 
+            // format the -libs argument
             int i = 0;
             foreach (Assembly a in Libraries)
             {
                 if (i == 0)
                     libArgs = "-libs";
 
-                //string libFile = a.Location;
-                string libFile = "\"c:\\\\Dictionary\"";
-                //libArgs += " " + Path.ChangeExtension(libFile, null);
+                string libFile = string.Format(@"""{0}""", Path.ChangeExtension(a.Location, null));
                 libArgs += " " + libFile;
                 i++;
             }
 
+            // combine both (if necessary)
             string uimldotnetArgs = (libArgs == string.Empty) ? uimlArgs : uimlArgs + " " + libArgs;
-            
-           //ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
-            ProcessStartInfo psi = new ProcessStartInfo(@"uiml.net.exe", uimldotnetArgs);
+
+            // run renderer with these arguments
+            ProcessStartInfo psi = new ProcessStartInfo(@"""uiml.net.exe""", uimldotnetArgs);
             psi.ErrorDialog = true;
             Process.Start(psi);
         }
