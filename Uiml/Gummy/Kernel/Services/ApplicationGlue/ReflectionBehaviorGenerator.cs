@@ -99,69 +99,72 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
             foreach (ConnectedMethod method in Model.Methods)
             {
-                try
+                if (method.IsComplete())
                 {
-                    // rule
-                    XmlElement rule = doc.CreateElement("rule");
-                    behavior.AppendChild(rule);
-
-                    // <condition>
-                    XmlElement condition = doc.CreateElement("condition");
-                    rule.AppendChild(condition);
-                    // <event>
-                    XmlElement evnt = doc.CreateElement("event");
-                    condition.AppendChild(evnt);
-
-                    /* Invoke */
-                    XmlAttribute partName = doc.CreateAttribute("part-name");
-                    partName.Value = method.Invoke.Part.Identifier;
-                    evnt.Attributes.Append(partName);
-                    XmlAttribute clss = doc.CreateAttribute("class");
-                    clss.Value = m_vocMeta.GetEvent(method.Invoke.Part.Class);
-                    evnt.Attributes.Append(clss);
-
-                    // <action>
-                    XmlElement action = doc.CreateElement("action");
-                    rule.AppendChild(action);
-                    /* Output */
-                    // <property>
-                    XmlElement prop = doc.CreateElement("property");
-                    XmlAttribute propPartName = doc.CreateAttribute("part-name");
-                    propPartName.Value = method.Output.Part.Identifier;
-                    prop.Attributes.Append(propPartName);
-                    XmlAttribute propName = doc.CreateAttribute("name");
-                    propName.Value = m_vocMeta.GetOutputProperty(method.Output.Part.Class, method.Method.Outputs[0].Type);
-                    prop.Attributes.Append(propName);
-                    action.AppendChild(prop);
-                    // <call>
-                    XmlElement call = doc.CreateElement("call");
-                    Type t = ((ReflectionMethodModel)method.Method).MethodInfo.ReflectedType;
-                    XmlAttribute callName = doc.CreateAttribute("name");
-                    callName.Value = t + "." + method.Method.Name;
-                    call.Attributes.Append(callName);
-                    prop.AppendChild(call);
-                    /* Inputs */
-                    foreach (MethodParameterModel param in method.Inputs)
+                    try
                     {
-                        DomainObject dom = param.Link;
+                        // rule
+                        XmlElement rule = doc.CreateElement("rule");
+                        behavior.AppendChild(rule);
 
-                        // <param>
-                        XmlElement callParam = doc.CreateElement("param");
-                        call.AppendChild(callParam);
+                        // <condition>
+                        XmlElement condition = doc.CreateElement("condition");
+                        rule.AppendChild(condition);
+                        // <event>
+                        XmlElement evnt = doc.CreateElement("event");
+                        condition.AppendChild(evnt);
+
+                        /* Invoke */
+                        XmlAttribute partName = doc.CreateAttribute("part-name");
+                        partName.Value = method.Invoke.Part.Identifier;
+                        evnt.Attributes.Append(partName);
+                        XmlAttribute clss = doc.CreateAttribute("class");
+                        clss.Value = m_vocMeta.GetEvent(method.Invoke.Part.Class);
+                        evnt.Attributes.Append(clss);
+
+                        // <action>
+                        XmlElement action = doc.CreateElement("action");
+                        rule.AppendChild(action);
+                        /* Output */
                         // <property>
-                        XmlElement paramProp = doc.CreateElement("property");
-                        callParam.AppendChild(paramProp);
-                        XmlAttribute paramPropPartName = doc.CreateAttribute("part-name");
-                        paramPropPartName.Value = dom.Part.Identifier;
-                        paramProp.Attributes.Append(paramPropPartName);
-                        XmlAttribute paramPropName = doc.CreateAttribute("name");
-                        paramPropName.Value = m_vocMeta.GetInputProperty(dom.Part.Class, param.Type);
-                        paramProp.Attributes.Append(paramPropName);
+                        XmlElement prop = doc.CreateElement("property");
+                        XmlAttribute propPartName = doc.CreateAttribute("part-name");
+                        propPartName.Value = method.Output.Part.Identifier;
+                        prop.Attributes.Append(propPartName);
+                        XmlAttribute propName = doc.CreateAttribute("name");
+                        propName.Value = m_vocMeta.GetOutputProperty(method.Output.Part.Class, method.Method.Outputs[0].Type);
+                        prop.Attributes.Append(propName);
+                        action.AppendChild(prop);
+                        // <call>
+                        XmlElement call = doc.CreateElement("call");
+                        Type t = ((ReflectionMethodModel)method.Method).MethodInfo.ReflectedType;
+                        XmlAttribute callName = doc.CreateAttribute("name");
+                        callName.Value = t + "." + method.Method.Name;
+                        call.Attributes.Append(callName);
+                        prop.AppendChild(call);
+                        /* Inputs */
+                        foreach (MethodParameterModel param in method.Inputs)
+                        {
+                            DomainObject dom = param.Link;
+
+                            // <param>
+                            XmlElement callParam = doc.CreateElement("param");
+                            call.AppendChild(callParam);
+                            // <property>
+                            XmlElement paramProp = doc.CreateElement("property");
+                            callParam.AppendChild(paramProp);
+                            XmlAttribute paramPropPartName = doc.CreateAttribute("part-name");
+                            paramPropPartName.Value = dom.Part.Identifier;
+                            paramProp.Attributes.Append(paramPropPartName);
+                            XmlAttribute paramPropName = doc.CreateAttribute("name");
+                            paramPropName.Value = m_vocMeta.GetInputProperty(dom.Part.Class, param.Type);
+                            paramProp.Attributes.Append(paramPropName);
+                        }
                     }
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e);
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
             }
 

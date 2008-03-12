@@ -226,18 +226,28 @@ namespace Uiml.Gummy.Kernel
             Save(stream);
             stream.Close();
 
-            // run renderer on this file
-            string uimlArgs = string.Format("-uiml \"{0}\"", fileName);
-            string libArgs = "-libs";
+            // format the -uiml argument
+            fileName = string.Format(@"""{0}""", fileName);
+            string uimlArgs = string.Format("-uiml {0}", fileName); 
+            string libArgs = string.Empty;
 
+            // format the -libs argument
+            int i = 0;
             foreach (Assembly a in Libraries)
             {
-                string libFile = a.Location;
-                libArgs += " " + Path.ChangeExtension(libFile, null);
+                if (i == 0)
+                    libArgs = "-libs";
+
+                string libFile = string.Format(@"""{0}""", Path.ChangeExtension(a.Location, null));
+                libArgs += " " + libFile;
+                i++;
             }
 
-            string uimldotnetArgs = uimlArgs + " " + libArgs;
-            ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
+            // combine both (if necessary)
+            string uimldotnetArgs = (libArgs == string.Empty) ? uimlArgs : uimlArgs + " " + libArgs;
+
+            // run renderer with these arguments
+            ProcessStartInfo psi = new ProcessStartInfo(@"""uiml.net.exe""", uimldotnetArgs);
             psi.ErrorDialog = true;
             Process.Start(psi);
         }
