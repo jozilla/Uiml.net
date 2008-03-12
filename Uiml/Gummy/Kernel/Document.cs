@@ -221,26 +221,37 @@ namespace Uiml.Gummy.Kernel
         public void Run()
         {
             // create temporary file
-            string fileName = Path.GetTempFileName();
+            //string fileName = Path.GetTempFileName();
+            string fileName = "c:\\\\bla.uiml";
             FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
             Save(stream);
             stream.Close();
 
             // run renderer on this file
             string uimlArgs = string.Format("-uiml \"{0}\"", fileName);
-            string libArgs = "-libs";
+            string libArgs = string.Empty;
 
+            int i = 0;
             foreach (Assembly a in Libraries)
             {
-                string libFile = a.Location;
-                libArgs += " " + Path.ChangeExtension(libFile, null);
+                if (i == 0)
+                    libArgs = "-libs";
+
+                //string libFile = a.Location;
+                string libFile = "\"c:\\\\Dictionary\"";
+                //libArgs += " " + Path.ChangeExtension(libFile, null);
+                libArgs += " " + libFile;
+                i++;
             }
 
-            string uimldotnetArgs = uimlArgs + " " + libArgs;
-            ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
+            string uimldotnetArgs = (libArgs == string.Empty) ? uimlArgs : uimlArgs + " " + libArgs;
+            
+           //ProcessStartInfo psi = new ProcessStartInfo(@"..\..\Uiml.net\Debug\uiml.net.exe", uimldotnetArgs);
+            ProcessStartInfo psi = new ProcessStartInfo(@"uiml.net.exe", uimldotnetArgs);
             psi.ErrorDialog = true;
             Process.Start(psi);
         }
+
 
         public DesignSpaceData DesignSpaceData
         {

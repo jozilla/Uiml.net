@@ -94,11 +94,12 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Uiml\Gummy\Serialize\app.config" />
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Uiml\Gummy\Serialize\app.config" />
     <None Include="Web References\Java\JavaUimlRenderer.wsdl" />
     <None Include="Web References\Java\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

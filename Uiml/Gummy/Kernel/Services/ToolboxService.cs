@@ -28,6 +28,7 @@ namespace Uiml.Gummy.Kernel.Services
         public void Init()
         {
             Text = "Toolbox";
+            layout.Controls.Clear();            
             List<VisualDomainObject> visualDomainObjects = new List<VisualDomainObject>();
             Hashtable dclasses = ActiveSerializer.Instance.Serializer.Voc.DClasses;
             IDictionaryEnumerator enumerator = dclasses.GetEnumerator();
@@ -132,6 +133,7 @@ namespace Uiml.Gummy.Kernel.Services
                     DesignerKernel.Instance.Platform = "swf-1.1";
                     break;
             }
+            Init();
         }
 
         private void InitializeComponent()

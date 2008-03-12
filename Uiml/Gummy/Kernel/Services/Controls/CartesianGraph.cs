@@ -24,7 +24,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         public event SizeChangeHandler DesignSpaceCursorChanged;        
         
         private Shape.ShapUpdateHandler m_shapeUpdateHandler = null;
-        private DomainObject m_selected = null;
+        //private DomainObject m_selected = null;
 
         private CartesianGraphState m_graphState = null;
         public PaintEventHandler CartesianGraphPaint;
@@ -47,7 +47,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
             Point p = SizeToPoint(s);
             m_examples.Add(new Rectangle(p.X - 3, p.Y - 3, 6, 6));
             snapCursorToTheSelectedExample();
-            updateHighlightedExamples();
+            //updateHighlightedExamples();
             Refresh();
         }
 
@@ -64,26 +64,26 @@ namespace Uiml.Gummy.Kernel.Services.Controls
 
         void domainObjectSelected(DomainObject dom, EventArgs e)
         {
-            if (m_selected != null)
+            /*if (m_selected != null)
             {
                 m_selected.Polygon.ShapeUpdated -= m_shapeUpdateHandler;
-            }
+            }*/
             if (dom != null)
-            {
+            {               
                 dom.Polygon.ShapeUpdated += m_shapeUpdateHandler;
             }
-            m_selected = dom;
-            updateHighlightedExamples();            
+            //m_selected = dom;
+            updateHighlightedExamples(dom);            
             Refresh();
         }
 
-        void updateHighlightedExamples()
+        void updateHighlightedExamples(DomainObject selected)
         {
             //Build up the highlighted examples            
             m_highlightedExamples.Clear();
-            if (m_selected == null)
+            if (selected == null || Selected.SelectedDomainObject.Instance.MultipleSelected)
                 return;
-            Dictionary<Size, DomainObject> dict = ExampleRepository.Instance.GetDomainObjectExamples(m_selected.Identifier);
+            Dictionary<Size, DomainObject> dict = ExampleRepository.Instance.GetDomainObjectExamples(selected.Identifier);
             if (dict != null)
             {
                 Dictionary<Size, DomainObject>.Enumerator dictEnumerator = dict.GetEnumerator();
@@ -102,7 +102,7 @@ namespace Uiml.Gummy.Kernel.Services.Controls
         }
 
         private void fireDesignSpaceCursorChanged()
-        {            
+        {
             if (this.DesignSpaceCursorChanged != null)
             {
                 DesignSpaceCursorChanged(this, PointToSize(CursorPosition));
