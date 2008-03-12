@@ -2,21 +2,56 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Drawing;
+
+using Uiml.Gummy.Kernel;
 
 namespace Uiml.Gummy.Domain
 {
     public class DomainObjectCollection : List<DomainObject>
     {
-        public delegate void DomainObjectCollectionHandler(object sender, List<DomainObject> dom);
+        public delegate void DomainObjectCollectionHandler(object sender, List<DomainObject> dom);       
 
         public event DomainObjectCollectionHandler DomainObjectAdded;
         public event DomainObjectCollectionHandler DomainObjectRemoved;
         public event DomainObjectCollectionHandler DomainObjectToFront;
         public event DomainObjectCollectionHandler DomainObjectToBack;
 
-        public DomainObjectCollection()
+        //All the domainobjects
+        private List<DomainObject> m_allDomainObjects = new List<DomainObject>();
+        private Document m_document = null;
+
+        public DomainObjectCollection(Document doc)
             : base()
-        {            
+        {
+            doc.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizUpdated);
+            m_document = doc;
+        }
+
+        void screenSizUpdated(object sender, System.Drawing.Size newSize)
+        {
+            Point pnt = m_document.DesignSpaceData.SizeToPoint(newSize);
+            pnt = new Point(pnt.X - m_document.DesignSpaceData.OriginPoint.X, pnt.Y - m_document.DesignSpaceData.OriginPoint.Y);
+            List<DomainObject> objectsAdded = new List<DomainObject>();
+            List<DomainObject> objectsRemoved = new List<DomainObject>();
+            int w = this.Count;
+            foreach (DomainObject dom in m_allDomainObjects)
+            {
+                if (dom.Polygon.PointInShape(pnt) && !Contains(dom))
+                {
+                    base.Add(dom);
+                    objectsAdded.Add(dom);
+                }
+                else if (!dom.Polygon.PointInShape(pnt) && Contains(dom))
+                {
+                    base.Remove(dom);
+                    objectsRemoved.Add(dom);
+                }
+            }
+            if (DomainObjectRemoved != null)
+                DomainObjectRemoved(this, objectsRemoved);
+            if (DomainObjectAdded != null)
+                DomainObjectAdded(this, objectsAdded);
         }
 
         ~DomainObjectCollection()
@@ -32,6 +67,7 @@ namespace Uiml.Gummy.Domain
         {
             //Small trick to be compatible with a control collection :-)
             base.Insert(0,d);
+            m_allDomainObjects.Insert(0,d);
             if (DomainObjectAdded != null)
             {
                 List<DomainObject> domObjects = new List<DomainObject>();
@@ -58,7 +94,7 @@ namespace Uiml.Gummy.Domain
             {
                 DomainObjectRemoved(this, new List<DomainObject>(this));
             }
-            base.Clear();
+            base.Clear();            
         }
 
         public DomainObject Get(string label)
@@ -71,9 +107,47 @@ namespace Uiml.Gummy.Domain
             return null;
         }
 
+        public void adaptPolygon(DomainObject dom, Size size)
+        {
+            //Convert to point
+            Point point = m_document.DesignSpaceData.SizeToPoint(m_document.CurrentSize);
+            Point pnt = new Point(point.X - m_document.DesignSpaceData.OriginPoint.X, point.Y - m_document.DesignSpaceData.OriginPoint.Y);
+            //Request the examples
+            Dictionary<Size,DomainObject> dict = ExampleRepository.Instance.GetDomainObjectExamples(dom.Identifier);
+            Dictionary<Size, DomainObject>.Enumerator dictEnum = dict.GetEnumerator();
+            //If all sizes are higher then the current one : Upper bound
+            //If all sizes are lower then the current one: Under bound
+            //Otherwise: we could not guess how
+            int allLower = 0;
+            int allHigher = 0;
+            while (dictEnum.MoveNext())
+            {
+                Size tmp = dictEnum.Current.Key;
+                if (size.Width > tmp.Width && size.Height > tmp.Height)
+                {
+                    allHigher++;
+                }
+                else if (size.Width < tmp.Width && size.Height < tmp.Height)
+                {
+                    allLower++;
+                }
+            }
+            if (allHigher == dict.Count)
+            {
+                dom.Polygon.CreateUpperEdge(pnt);
+            }
+            else if (allLower == dict.Count)
+            {
+                dom.Polygon.CreateUnderEdge(pnt);
+            }
+        }
+
         public new void Remove(DomainObject dom)
         {
-            base.Remove(dom);            
+            //Remove it out of the current list, but not out of the total one
+            base.Remove(dom);    
+            //Adapt the polygon
+            adaptPolygon(dom, m_document.CurrentSize);
             if (DomainObjectRemoved != null)
             {
                 List<DomainObject> domObjects = new List<DomainObject>();

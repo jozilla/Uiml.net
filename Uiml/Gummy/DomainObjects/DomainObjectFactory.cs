@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 using Uiml.Gummy.Serialize;
+using Uiml.Gummy.Kernel;
+using Shape;
 
 namespace Uiml.Gummy.Domain
 {
@@ -51,7 +53,7 @@ namespace Uiml.Gummy.Domain
 
         public DomainObject Create(DClass dclass, string id)
         {
-            DomainObject domObject = ActiveSerializer.Instance.Serializer.Create();
+            DomainObject domObject = ActiveSerializer.Instance.Serializer.Create();            
                         
             Part p = new Part();
             p.Class = dclass.Identifier;
@@ -146,6 +148,21 @@ namespace Uiml.Gummy.Domain
                 }
             }
             return dom;
+        }
+
+        public Polygon DefaultPolygon()
+        {
+            Polygon pol = new Polygon();            
+            if (DesignerKernel.Instance.CurrentDocument.DesignSpaceData != null)
+            {
+                Point max = DesignerKernel.Instance.CurrentDocument.DesignSpaceData.MaximumPoint;
+                Point origin = DesignerKernel.Instance.CurrentDocument.DesignSpaceData.OriginPoint;
+                pol.AddPoint(new Point(0, 0));
+                pol.AddPoint(new Point(max.X - origin.X, 0));
+                pol.AddPoint(new Point(max.X-origin.X,max.Y - origin.Y));
+                pol.AddPoint(new Point(0, max.Y-origin.Y));
+            }
+            return pol;
         }
     }
 }

@@ -229,6 +229,7 @@ namespace Uiml.Gummy.Kernel.Services
                 DomainObject tmp = new DomainObject();            
                 DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());
                 DomainObject domCloned = (DomainObject)dom.Clone();
+                domCloned.Polygon = DomainObjectFactory.Instance.DefaultPolygon();
                 domCloned.Location = this.PointToClient(new Point(e.X, e.Y));
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
                 DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(domCloned);
