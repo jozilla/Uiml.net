@@ -82,5 +82,10 @@ namespace Uiml.Gummy.Kernel.Services {
                 // fail silenty
             }
         }
+
+        public void DocumentUpdated(object sender, EventArgs e)
+        {
+            ServiceControl.Refresh();
+        }
     }
 }

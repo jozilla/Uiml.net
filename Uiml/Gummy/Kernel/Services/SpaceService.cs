@@ -89,5 +89,9 @@ namespace Uiml.Gummy.Kernel.Services
         {
             return;
         }
+        
+        public void DocumentUpdated(object sender, EventArgs e)
+        {
+        }
     }
 }

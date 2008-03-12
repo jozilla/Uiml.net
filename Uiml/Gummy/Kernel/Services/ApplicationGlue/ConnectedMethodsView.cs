@@ -6,6 +6,9 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
+using Uiml.Gummy.Kernel.Selected;
+using Uiml.Gummy.Domain;
+
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
     public partial class ConnectedMethodsView : UserControl
@@ -23,7 +26,14 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             InitializeComponent();
             Model = model;
             Model.Updated += new EventHandler(ModelUpdated);
+            SelectedDomainObject.Instance.DomainObjectSelected += new SelectedDomainObject.DomainObjectSelectedHandler(DomainObjectSelected);
             Draw();
+        }
+
+        void DomainObjectSelected(DomainObject dom, EventArgs e)
+        {
+            if (dom.Linked)
+                DesignerKernel.Instance.CurrentDocument.UpdateSelectedMethod(dom.MethodLink);
         }
 
         void ModelUpdated(object sender, EventArgs e)
@@ -31,6 +41,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             int row = 1; 
             foreach (ConnectedMethod connMethod in Model.Methods)
             {
+                // connected icons
                 PictureBox statusIcon = (PictureBox) layout.GetControlFromPosition(3, row);
                 if (connMethod.IsComplete())
                     statusIcon.Image = global::gummy.Properties.Resources.connection_ok;

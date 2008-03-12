@@ -157,5 +157,9 @@ namespace Uiml.Gummy.Kernel.Services
             this.ResumeLayout(false);
 
         }
+
+        public void DocumentUpdated(object sender, EventArgs e)
+        {
+        }
     }
 }

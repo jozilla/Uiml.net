@@ -45,7 +45,12 @@ namespace Uiml.Gummy.Kernel
         public event ScreenSizeUpdateHandler ScreenSizeUpdated;
         public delegate void SpaceModeChangeHandler(object sender, Mode mode);
         public event SpaceModeChangeHandler SpaceModeChanged;
-        
+
+        // TODO: provide better event arguments
+        public delegate void DocumentUpdateHandler(object sender, EventArgs e);
+        public event DocumentUpdateHandler Updated;
+
+
         public DomainObjectCollection DomainObjects
         {
             get { return m_domObjects; }
@@ -74,6 +79,7 @@ namespace Uiml.Gummy.Kernel
         public void UpdateSelectedMethod(MethodModel m)
         {
             m_selectedMethod = Methods.GetMethod(m);
+            OnUpdate(null);
         }
 
         public Document()
@@ -160,6 +166,12 @@ namespace Uiml.Gummy.Kernel
                 if (SpaceModeChanged != null)
                     SpaceModeChanged(this, value);
             }
+        }
+
+        public void OnUpdate(EventArgs e)
+        {
+            if (Updated != null)
+                Updated(this, null);
         }
 
         public XmlDocument Serialize()
