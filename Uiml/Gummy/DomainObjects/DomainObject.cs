@@ -67,7 +67,7 @@ namespace Uiml.Gummy.Domain
                 clone.m_sizeManipulator.DomainObject = clone;
             }
             //Tmp
-            clone.m_shape = m_shape;
+            clone.m_shape = (Polygon)m_shape.Clone();
 
             return clone;
         }

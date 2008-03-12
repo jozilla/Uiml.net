@@ -14,9 +14,9 @@ namespace Uiml.Gummy.Visual
         VisualDomainObjectState m_state = null;
         DomainObject.DomainObjectUpdateHandler m_domUpdated = null;
         BorderDrawer m_borderDrawer = new BorderDrawer();
-
+        
         public VisualDomainObject() : base()
-        {
+        {            
             State = new ToolboxVisualDomainObjectState();
             m_domUpdated = new DomainObject.DomainObjectUpdateHandler(domainObjectUpdated);
         }
