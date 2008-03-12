@@ -35,19 +35,22 @@
             // 
             this.layout.AutoSize = true;
             this.layout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.layout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.layout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.layout.ColumnCount = 4;
             this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.layout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layout.Location = new System.Drawing.Point(0, 0);
             this.layout.Name = "layout";
             this.layout.RowCount = 2;
             this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layout.Size = new System.Drawing.Size(5, 3);
+            this.layout.Size = new System.Drawing.Size(10, 6);
             this.layout.TabIndex = 0;
+            this.layout.CellPaint += new System.Windows.Forms.TableLayoutCellPaintEventHandler(this.layout_CellPaint);
+            this.layout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.layout_MouseClick);
             // 
             // ConnectedMethodsView
             // 
@@ -57,7 +60,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.layout);
             this.Name = "ConnectedMethodsView";
-            this.Size = new System.Drawing.Size(8, 6);
+            this.Size = new System.Drawing.Size(10, 6);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ConnectedMethodsView_MouseClick);
             this.ResumeLayout(false);
             this.PerformLayout();
 

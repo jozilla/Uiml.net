@@ -39,6 +39,7 @@
             // 
             this.layout.AutoSize = true;
             this.layout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.layout.BackColor = System.Drawing.Color.Transparent;
             this.layout.ColumnCount = 1;
             this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.layout.Controls.Add(this.param, 0, 0);
@@ -50,6 +51,7 @@
             this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.layout.Size = new System.Drawing.Size(47, 34);
             this.layout.TabIndex = 1;
+            this.layout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.layout_MouseClick);
             // 
             // param
             // 
@@ -62,6 +64,7 @@
             this.param.TabIndex = 0;
             this.param.Text = "param";
             this.param.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.param.MouseClick += new System.Windows.Forms.MouseEventHandler(this.param_MouseClick);
             // 
             // linkIcon
             // 
@@ -73,6 +76,8 @@
             this.linkIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.linkIcon.TabIndex = 1;
             this.linkIcon.TabStop = false;
+            this.linkIcon.DoubleClick += new System.EventHandler(this.linkIcon_DoubleClick);
+            this.linkIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkIcon_MouseClick);
             // 
             // MethodParameterView
             // 
@@ -80,9 +85,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.layout);
             this.Name = "MethodParameterView";
             this.Size = new System.Drawing.Size(53, 40);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MethodParameterView_MouseClick);
             this.layout.ResumeLayout(false);
             this.layout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.linkIcon)).EndInit();

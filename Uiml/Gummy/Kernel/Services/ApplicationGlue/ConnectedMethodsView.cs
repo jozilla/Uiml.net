@@ -34,8 +34,10 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 PictureBox statusIcon = (PictureBox) layout.GetControlFromPosition(3, row);
                 if (connMethod.IsComplete())
                     statusIcon.Image = global::gummy.Properties.Resources.connection_ok;
-                else
+                else if (connMethod.IsLinked)
                     statusIcon.Image = global::gummy.Properties.Resources.connection_not_ok;
+                else
+                    statusIcon.Image = global::gummy.Properties.Resources.no_connection;
             }
         }
 
@@ -141,11 +143,38 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 PictureBox icon = new PictureBox();
                 icon.Dock = DockStyle.Fill;
                 icon.SizeMode = PictureBoxSizeMode.CenterImage;
+                icon.BackColor = Color.Transparent;
                 layout.Controls.Add(icon, 3, row);
                 icon.Image = global::gummy.Properties.Resources.no_connection;
 
                 row++;
             }
+        }
+
+        private void layout_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle cell = e.CellBounds;
+
+            if (e.Row != 0)
+            {
+                MethodParameterView invoke = (MethodParameterView)layout.GetControlFromPosition(1, e.Row);
+                bool selected = (DesignerKernel.Instance.CurrentDocument.HasSelectedMethod) ? invoke.Model.Parent == DesignerKernel.Instance.CurrentDocument.SelectedMethod.Method : false;
+
+                if (selected)
+                    g.FillRectangle(new SolidBrush(Color.CornflowerBlue), cell);
+            }
+        }
+
+        private void ConnectedMethodsView_MouseClick(object sender, MouseEventArgs e)
+        {
+            // test for coordinates
+            //DesignerKernel.Instance.CurrentDocument.UpdateSelectedMethod(null);
+        }
+
+        private void layout_MouseClick(object sender, MouseEventArgs e)
+        {
+            OnMouseClick(e);
         }
     }
 }

@@ -57,6 +57,16 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             }
         }
 
+        public bool IsLinked
+        {
+            get 
+            { 
+                return m_method.Invoke.Linked || 
+                    m_method.Outputs.Exists(delegate(MethodParameterModel m) { return m.Linked; }) || 
+                    m_method.Inputs.Exists(delegate(MethodParameterModel m) { return m.Linked; }); 
+            }
+        }
+
         public bool IsComplete()
         {
             List<MethodParameterModel> missingInputParams = null;
@@ -84,7 +94,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             inputs = true;
             foreach (MethodParameterModel input in Inputs)
             {
-                if (!Method.Inputs.Contains(input))
+                if (!input.Linked)
                 {
                     inputs = false;
                     missingInputParams.Add(input);

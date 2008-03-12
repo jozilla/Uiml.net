@@ -64,5 +64,34 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 param.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             }
         }
+
+        private void linkIcon_DoubleClick(object sender, EventArgs e)
+        {
+            if (Model.Linked)
+            {
+                Model.Link.UnlinkMethodParameter(Model);
+                Model.Link = null;
+            }
+        }
+
+        private void linkIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            OnMouseClick(e);
+        }
+
+        private void param_MouseClick(object sender, MouseEventArgs e)
+        {
+            OnMouseClick(e);
+        }
+
+        private void layout_MouseClick(object sender, MouseEventArgs e)
+        {
+            OnMouseClick(e);
+        }
+
+        private void MethodParameterView_MouseClick(object sender, MouseEventArgs e)
+        {
+            DesignerKernel.Instance.CurrentDocument.UpdateSelectedMethod(Model.Parent);
+        }
     }
 }
