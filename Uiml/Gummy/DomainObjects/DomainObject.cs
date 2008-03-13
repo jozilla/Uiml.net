@@ -38,37 +38,45 @@ namespace Uiml.Gummy.Domain
         private MethodModel m_methodLink = null;
         private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
         private List<MethodParameterModel> m_methodInParamLinks = new List<MethodParameterModel>();
-        		
+
+        private DomainObjectGroup m_domObjectGroup = null;
+              
 		public DomainObject()
 		{
             //The default interpolation algorithm
             m_interpolationAlgorithm = new LinearInterpolationAlgorithm(this);
 		}
 
-        public object Clone()
+        protected void copyInto(DomainObject dom)
+        {
+            for (int i = 0; i < dom.m_properties.Count; i++)
+            {
+                Property prop = dom.m_properties[i];
+                m_properties.Add((Property)prop.Clone());
+            }
+            if (dom.m_part != null)
+                m_part = (Part)dom.m_part.Clone();
+            m_selected = dom.m_selected;
+            m_color = dom.m_color;
+            if (dom.m_positionManipulator != null)
+            {
+                m_positionManipulator = (PositionManipulator)dom.m_positionManipulator.Clone();
+                m_positionManipulator.DomainObject = this;
+            }
+            if (dom.m_sizeManipulator != null)
+            {
+                m_sizeManipulator = (SizeManipulator)dom.m_sizeManipulator.Clone();
+                m_sizeManipulator.DomainObject = this;
+            }
+            if (dom.m_shape != null)
+                m_shape = (Polygon)dom.m_shape.Clone();
+
+        }
+
+        public virtual object Clone()
         {
             DomainObject clone = new DomainObject();
-            for (int i = 0; i < m_properties.Count; i++)
-            {
-                Property prop = m_properties[i];
-                clone.m_properties.Add((Property)prop.Clone());
-            }
-            clone.m_part = (Part)m_part.Clone();
-            clone.m_selected = m_selected;
-            clone.m_color = m_color;
-            if (m_positionManipulator != null)
-            {
-                clone.m_positionManipulator = (PositionManipulator)m_positionManipulator.Clone();
-                clone.m_positionManipulator.DomainObject = clone;
-            }
-            if (m_sizeManipulator != null)
-            {
-                clone.m_sizeManipulator = (SizeManipulator)m_sizeManipulator.Clone();
-                clone.m_sizeManipulator.DomainObject = clone;
-            }
-            //Tmp
-            clone.m_shape = (Polygon)m_shape.Clone();
-
+            clone.copyInto(this);
             return clone;
         }
 
@@ -122,7 +130,7 @@ namespace Uiml.Gummy.Domain
             }
         }
 
-        public Size Size
+        public virtual Size Size
         {
             get
             {
@@ -135,7 +143,7 @@ namespace Uiml.Gummy.Domain
             }
         }
 
-        public Polygon Polygon
+        public virtual Polygon Polygon
         {
             get
             {
@@ -147,7 +155,7 @@ namespace Uiml.Gummy.Domain
             }
         }
 
-        public Point Location
+        public virtual Point Location
         {
             get
             {
@@ -317,6 +325,18 @@ namespace Uiml.Gummy.Domain
         {
             Console.Out.WriteLine("Update [{0}] to the new size [{1}]",Identifier,size);
             m_interpolationAlgorithm.Update(size);
+        }
+
+        public DomainObjectGroup DomainObjectGroup
+        {
+            get
+            {
+                return m_domObjectGroup;
+            }
+            set
+            {
+                m_domObjectGroup = value;
+            }
         }
 
         public static Color DEFAULT_COLOR = Color.Black;

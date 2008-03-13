@@ -23,6 +23,8 @@ namespace Uiml.Gummy.Kernel.Services
         int m_boxSize = 8;
         BoxID m_clickedBox = BoxID.None;
         int m_rasterBlockSize = 40;
+        int counter = 1;
+        DomainObjectGroup group = new DomainObjectGroup();
 
         CanvasServiceConfiguration m_config;
 
@@ -73,7 +75,7 @@ namespace Uiml.Gummy.Kernel.Services
             // add new domainobjects
             domainObjectAdded(this, DesignerKernel.Instance.CurrentDocument.DomainObjects);
             // update screen size
-            screenSizeUpdated(this, DesignerKernel.Instance.CurrentDocument.CurrentSize);
+            screenSizeUpdated(this, DesignerKernel.Instance.CurrentDocument.CurrentSize);            
         }
 
         void screenSizeUpdated(object sender, Size newSize)
@@ -126,8 +128,8 @@ namespace Uiml.Gummy.Kernel.Services
         {
             foreach (DomainObject d in dom)
             {
-                VisualDomainObject visDom = new VisualDomainObject(d);
-                visDom.State = new CanvasVisualDomainObjectState();
+                VisualDomainObject visDom = new VisualDomainObject(d,false,new CanvasVisualDomainObjectState());
+                //visDom.State = new CanvasVisualDomainObjectState();
                 Controls.Add(visDom);
                 visDom.BringToFront();
             }
@@ -224,7 +226,7 @@ namespace Uiml.Gummy.Kernel.Services
         }
 
         void onDragDrop(object sender, DragEventArgs e)
-        {
+        {            
             //Fixme: isn't there a better way to visualize the drag and drop?
             if (m_uiRectangle.Contains(this.PointToClient(new Point(e.X, e.Y))))
             {
@@ -236,7 +238,14 @@ namespace Uiml.Gummy.Kernel.Services
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
                 DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(domCloned);
                 ExampleRepository.Instance.AddExampleDomainObject(DesignerKernel.Instance.CurrentDocument.CurrentSize, (DomainObject)domCloned.Clone());
-            }          
+                if (counter % 2 == 0)
+                {                   
+                    group.AddDomainObjectToGroup(domCloned);
+                    if (counter == 2)
+                        DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(group);
+                }
+            }
+            counter++;
         }       
 
         void painting(object sender, PaintEventArgs e)

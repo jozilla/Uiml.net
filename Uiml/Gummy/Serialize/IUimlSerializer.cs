@@ -34,5 +34,11 @@ namespace Uiml.Gummy.Serialize
 		{
 			get;
 		}
+        //A container (for domainobject groups)
+        String Container
+        {
+            get;
+        }
+
     }
 }

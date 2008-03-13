@@ -11,9 +11,11 @@ namespace Uiml.Gummy.Serialize
 {
     public abstract class UimlSerializer : IUimlSerializer
     {
-        protected Vocabulary m_voc = null; 
+        protected Vocabulary m_voc = null;
+        protected string m_container = "Container";
 
         public abstract Image Serialize(DomainObject dom);
+
 
         public bool ThumbnailCallback()
         {
@@ -53,6 +55,18 @@ namespace Uiml.Gummy.Serialize
             get
             {
                 return m_voc;
+            }
+        }
+
+        public virtual String Container
+        {
+            get
+            {
+                return m_container;
+            }
+            set
+            {
+                m_container = value;
             }
         }
     }

@@ -104,18 +104,14 @@ namespace Uiml.Gummy.Domain
 
         public void PrintRepositoryContent()
         {
-            Console.Out.WriteLine("[RepositoryContent]");
+            //Console.Out.WriteLine("[RepositoryContent]");
             Dictionary<Size, Dictionary<string, DomainObject>>.Enumerator dictEnum = m_examples.GetEnumerator();
             while (dictEnum.MoveNext())
             {
                 Dictionary<string,DomainObject>.Enumerator enumerator = dictEnum.Current.Value.GetEnumerator();
-                Console.Out.WriteLine("Examples given for size {0}",dictEnum.Current.Key);
-                while (enumerator.MoveNext())
-                {
-                    Console.Out.WriteLine("\t Part.Identifier = {0}, Size = {1}, Location = {2}", enumerator.Current.Value.Identifier, enumerator.Current.Value.Size, enumerator.Current.Value.Location);
-                }
+                //Console.Out.WriteLine("Examples given for size {0}",dictEnum.Current.Key);                
             }
-            Console.Out.WriteLine("[/RepositoryContent]");
+            //Console.Out.WriteLine("[/RepositoryContent]");
         }
 
         public Size[] GetShortestSizes(Size size, DomainObject dom, int number_of_examples)
