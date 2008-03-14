@@ -230,6 +230,7 @@ namespace Uiml.Gummy.Kernel.Services
             //Fixme: isn't there a better way to visualize the drag and drop?
             if (m_uiRectangle.Contains(this.PointToClient(new Point(e.X, e.Y))))
             {
+                            
                 DomainObject tmp = new DomainObject();            
                 DomainObject dom = (DomainObject)e.Data.GetData(tmp.GetType());
                 DomainObject domCloned = (DomainObject)dom.Clone();
@@ -238,12 +239,13 @@ namespace Uiml.Gummy.Kernel.Services
                 domCloned.Identifier = DomainObjectFactory.Instance.AutoID();
                 DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(domCloned);
                 ExampleRepository.Instance.AddExampleDomainObject(DesignerKernel.Instance.CurrentDocument.CurrentSize, (DomainObject)domCloned.Clone());
-                if (counter % 2 == 0)
-                {                   
+                /*if (counter % 2 == 0)
+                {
                     group.AddDomainObjectToGroup(domCloned);
+
                     if (counter == 2)
-                        DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(group);
-                }
+                        DesignerKernel.Instance.CurrentDocument.DomainObjects.Add(group);    
+                }*/
             }
             counter++;
         }       

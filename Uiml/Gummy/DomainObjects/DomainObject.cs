@@ -168,6 +168,20 @@ namespace Uiml.Gummy.Domain
             }
         }
 
+        public virtual Rectangle Bounds
+        {
+            get
+            {
+                Rectangle rect = new Rectangle(Location, Size);
+                return rect;
+            }
+            set
+            {
+                Size = value.Size;
+                Location = value.Location;
+            }
+        }
+
         public Color Color
         {
             get

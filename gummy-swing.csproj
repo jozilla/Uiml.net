@@ -71,11 +71,6 @@
     <Compile Include="Uiml\Gummy\Serialize\Swing\SwingPositionManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\Swing\SwingSizeManipulator.cs" />
     <Compile Include="Uiml\Gummy\Serialize\Swing\SwingUimlSerializer.cs" />
-    <Compile Include="Web References\Java\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
@@ -103,7 +98,6 @@
     <None Include="Web References\Java\JavaUimlRenderer.wsdl" />
     <None Include="Web References\Java\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
 </Project>

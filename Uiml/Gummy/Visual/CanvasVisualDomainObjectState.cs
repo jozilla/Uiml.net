@@ -199,6 +199,7 @@ namespace Uiml.Gummy.Visual
             int height = 0;
             
             Point loc = new Point(m_oldBounds.X, m_oldBounds.Y);
+            Rectangle rect = new Rectangle();
 
             switch (m_lastClicked)
             {
@@ -217,22 +218,25 @@ namespace Uiml.Gummy.Visual
                     loc = new Point(m_oldBounds.X + dX, m_oldBounds.Y);
                     if (m_visDom.Location.X + m_visDom.DomainObject.Size.Width - loc.X > (2 * BoxSize))
                     {
-                        m_visDom.DomainObject.Location = loc;
-                        m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                        rect.Location = loc;
+                        rect.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                        m_visDom.DomainObject.Bounds = rect;
                     }
                     m_moveState = MoveState.Resize;
                     break;
                 case BoxID.BottomMiddle:
                     height = m_oldBounds.Height + dY;
-                    m_visDom.DomainObject.Location = new Point(m_oldBounds.X, m_oldBounds.Y);
-                    m_visDom.DomainObject.Size = new Size(m_oldBounds.Width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                    rect.Location = new Point(m_oldBounds.X, m_oldBounds.Y); ;
+                    rect.Size = new Size(m_oldBounds.Width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                    m_visDom.DomainObject.Bounds = rect;
                     m_moveState = MoveState.Resize;
                     break;
                 case BoxID.BottomRight:
                     height = m_oldBounds.Height + dY;
 					width =	m_oldBounds.Width + dX ;
-					m_visDom.DomainObject.Location = new Point(m_oldBounds.X, m_oldBounds.Y);
-                    m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                    rect.Location = new Point(m_oldBounds.X, m_oldBounds.Y);
+                    rect.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                    m_visDom.DomainObject.Bounds = rect;
                     m_moveState = MoveState.Resize;
                     break;
                 case BoxID.MiddleLeft:
@@ -240,15 +244,17 @@ namespace Uiml.Gummy.Visual
                     loc = new Point(m_oldBounds.X + dX, m_oldBounds.Y);
                     if (m_visDom.Location.X + m_visDom.DomainObject.Size.Width - loc.X > (2 * BoxSize))
                     {
-                        m_visDom.DomainObject.Location = loc;
-                        m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, m_oldBounds.Height);
+                        rect.Location = loc;
+                        rect.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, m_oldBounds.Height);
+                        m_visDom.DomainObject.Bounds = rect;
                     }
                     m_moveState = MoveState.Resize;
                     break;
                 case BoxID.MiddleRight:
                     width = m_oldBounds.Width + dX;
-                    m_visDom.DomainObject.Location = new Point(m_oldBounds.X, m_oldBounds.Y);
-                    m_visDom.DomainObject.Size = new Size(width <=( 2*BoxSize) ?( 2*BoxSize) : width, m_oldBounds.Height);
+                    rect.Location = new Point(m_oldBounds.X, m_oldBounds.Y);
+                    rect.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, m_oldBounds.Height);
+                    m_visDom.DomainObject.Bounds = rect;
                     m_moveState = MoveState.Resize;
                     break;
                 case BoxID.TopLeft:
@@ -258,8 +264,9 @@ namespace Uiml.Gummy.Visual
                     if (m_visDom.Location.X + m_visDom.DomainObject.Size.Width - loc.X > (2 * BoxSize) &&
                         m_visDom.Location.Y + m_visDom.DomainObject.Size.Height - loc.Y > (2 * BoxSize))
                     {
-                        m_visDom.DomainObject.Location = loc;
-                        m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                        rect.Location = loc;
+                        rect.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                        m_visDom.DomainObject.Bounds = rect;
                     }
                     m_moveState = MoveState.Resize;
                     break;
@@ -268,8 +275,9 @@ namespace Uiml.Gummy.Visual
                     loc = new Point(m_oldBounds.X, m_oldBounds.Y + dY);
                     if (m_visDom.Location.Y + m_visDom.DomainObject.Size.Height - loc.Y > (2 * BoxSize))
                     {
-                        m_visDom.DomainObject.Location = loc;
-                        m_visDom.DomainObject.Size = new Size(m_oldBounds.Width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                        rect.Location = loc;
+                        rect.Size = new Size(m_oldBounds.Width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                        m_visDom.DomainObject.Bounds = rect;
                     }
                     m_moveState = MoveState.Resize;
                     break;
@@ -279,8 +287,9 @@ namespace Uiml.Gummy.Visual
                     loc = new Point(m_oldBounds.X, m_oldBounds.Y + dY);
                     if (m_visDom.Location.Y + m_visDom.DomainObject.Size.Height - loc.Y > (2 * BoxSize))
                     {
-                        m_visDom.DomainObject.Location = loc;
-                        m_visDom.DomainObject.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                        rect.Location = loc;
+                        rect.Size = new Size(width <= (2 * BoxSize) ? (2 * BoxSize) : width, height <= (2 * BoxSize) ? (2 * BoxSize) : height);
+                        m_visDom.DomainObject.Bounds = rect;
                     }
                     m_moveState = MoveState.Resize;
                     break;                    
