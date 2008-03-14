@@ -149,6 +149,9 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
                             // <param>
                             XmlElement callParam = doc.CreateElement("param");
+                            XmlAttribute paramId = doc.CreateAttribute("id");
+                            paramId.Value = param.Name;
+                            callParam.Attributes.Append(paramId);
                             call.AppendChild(callParam);
                             // <property>
                             XmlElement paramProp = doc.CreateElement("property");
