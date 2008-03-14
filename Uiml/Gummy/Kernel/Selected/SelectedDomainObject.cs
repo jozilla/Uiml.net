@@ -115,6 +115,14 @@ namespace Uiml.Gummy.Kernel.Selected
             }
         }
 
+        public bool IsSelected
+        {
+            get
+            {
+                return m_domObjects.Count > 0;
+            }
+        }
+
         public bool MultipleSelected
         {
             get

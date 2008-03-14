@@ -22,15 +22,5 @@ namespace gummy_swing.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8080/JavaUiml/services/JavaUimlRenderer")]
-        public string gummy_swing_Java_JavaUimlRendererService {
-            get {
-                return ((string)(this["gummy_swing_Java_JavaUimlRendererService"]));
-            }
-        }
     }
 }

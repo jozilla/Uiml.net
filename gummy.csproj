@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="Shape\Polygon.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectCollection.cs" />
+    <Compile Include="Uiml\Gummy\DomainObjects\DomainObjectGroup.cs" />
     <Compile Include="Uiml\Gummy\DomainObjects\ExampleRepository.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\LinearInterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Interpolation\ExamplePickingAlgorithm.cs" />

@@ -13,6 +13,7 @@ namespace Uiml.Gummy.Visual
         DomainObject m_domObject = null;
         VisualDomainObjectState m_state = null;
         DomainObject.DomainObjectUpdateHandler m_domUpdated = null;
+        bool m_iconMode = false; 
         BorderDrawer m_borderDrawer = new BorderDrawer();
         
         public VisualDomainObject() : base()
@@ -27,6 +28,14 @@ namespace Uiml.Gummy.Visual
             DomainObject = domObject;
             //AutoSize = true;
             //this.SizeMode = PictureBoxSizeMode.AutoSize;            
+        }
+
+        public VisualDomainObject(DomainObject domObject, bool iconMode, VisualDomainObjectState state)
+        {
+            m_domUpdated = new DomainObject.DomainObjectUpdateHandler(domainObjectUpdated);
+            DomainObject = domObject;
+            IconMode = iconMode;            
+            State = state;            
         }
 
         ~VisualDomainObject()
@@ -51,8 +60,6 @@ namespace Uiml.Gummy.Visual
                 FixSize();
             }
         }
-
-        private bool m_iconMode = false;
 
         public bool IconMode
         {

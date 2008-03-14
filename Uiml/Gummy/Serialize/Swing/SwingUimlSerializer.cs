@@ -143,8 +143,8 @@ namespace Uiml.Gummy.Serialize.Swing
             if (part.Class == "Checkbox")
             {
                 if (p.Name == "text") { return "check me"; }
-                if (p.Name == "imageChecked") { return "c:\\images\\checked.jpg"; }
-                if (p.Name == "imageUnchecked") { return "c:\\images\\unchecked.jpg"; }
+                if (p.Name == "imageChecked") { return "C:\\\\images\\\\checked.jpg"; }
+                if (p.Name == "imageUnchecked") { return "C:\\\\images\\\\unchecked.jpg"; }
                 if (p.Name == "setChecked") { return "true"; }                
                 if (p.Name == "visible") { return "true"; }
             }

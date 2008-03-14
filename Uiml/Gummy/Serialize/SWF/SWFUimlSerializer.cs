@@ -37,6 +37,11 @@ namespace Uiml.Gummy.Serialize.SWF
                
         public override Image Serialize(DomainObject dom)
 		{
+            if (dom is DomainObjectGroup)
+            {
+                Image img = ((DomainObjectGroup)dom).Image;
+                return img;
+            }
             Image controlImage = Serialize(dom.Part, new ArrayList(dom.Properties));
             return controlImage;
 		}
