@@ -94,14 +94,14 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             inputs = true;
             foreach (MethodParameterModel input in Inputs)
             {
-                if (!input.Linked)
+                if (!(input.Linked || input.Bound))
                 {
                     inputs = false;
                     missingInputParams.Add(input);
                 }
             }
 
-            output = (Method.Outputs.Count > 0) ? Output != null: Output == null;
+            output = (Method.Outputs.Count > 0) ? Output != null : Output == null;
 
             if (!output)
                 missingOutput = true;
