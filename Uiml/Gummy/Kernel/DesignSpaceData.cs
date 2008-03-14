@@ -17,13 +17,15 @@ namespace Uiml.Gummy.Kernel
         //The origin of the designspace
         private Point m_origin = new Point(30, 36);
         //The maximal point of the designspace
-        private Point m_max = new Point(300, 300);
+        private Point m_max = new Point(280, 300);
         //The x and y steps the user interface may resize
         private int m_xIncrement = 1;
         private int m_yIncrement = 1;
 
         public DesignSpaceData()
         {
+            //Fixme : Get size and width from config file
+            InitDesignSpace(260, 280);
         }
 
         public void InitDesignSpace(int _width, int _height)

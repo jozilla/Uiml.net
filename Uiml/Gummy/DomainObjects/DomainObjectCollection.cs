@@ -21,11 +21,28 @@ namespace Uiml.Gummy.Domain
         private List<DomainObject> m_allDomainObjects = new List<DomainObject>();
         private Document m_document = null;
 
-        public DomainObjectCollection(Document doc)
-            : base()
+        public DomainObjectCollection() : base()
         {
-            doc.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizUpdated);
-            m_document = doc;
+        }
+
+        public DomainObjectCollection(Document doc)
+            : this()
+        {
+            Document = doc;
+        }
+
+        public Document Document
+        {
+            get
+            {
+                return m_document;
+            }
+            set
+            {
+                //Fixme: clear previous event                
+                m_document = value;
+                m_document.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizUpdated);
+            }
         }
 
         void screenSizUpdated(object sender, System.Drawing.Size newSize)

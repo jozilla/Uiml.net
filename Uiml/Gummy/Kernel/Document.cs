@@ -83,13 +83,13 @@ namespace Uiml.Gummy.Kernel
         }
 
         public Document()
-        {
+        {            
             m_domObjects = new DomainObjectCollection(this);
             m_formContainer = ActiveSerializer.Instance.Serializer.CreateUIContainer();
         }
 
         public Document(Stream s) : this()
-        {
+        {            
             // FIXME: use reverse type decoders!
             XmlDocument xml = new XmlDocument();
             xml.Load(s);
@@ -108,6 +108,7 @@ namespace Uiml.Gummy.Kernel
                     props.Add(prop);
 
                 DomainObject dom = DomainObjectFactory.Instance.Create(structure.Top, props);
+                dom.Polygon = DomainObjectFactory.Instance.DefaultPolygon();
                 FormContainer = dom;
 
                 // add its children
@@ -120,6 +121,7 @@ namespace Uiml.Gummy.Kernel
                         props.Add(prop);
 
                     dom = DomainObjectFactory.Instance.Create(p, props);
+                    dom.Polygon = DomainObjectFactory.Instance.DefaultPolygon();
                     DomainObjects.Add(dom);
                 }
             }

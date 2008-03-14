@@ -31,7 +31,8 @@ namespace Uiml.Gummy.Kernel.Services
             m_cartesianGraphControl.InitGraph();
             m_cartesianGraphControl.DesignSpaceCursorChanged += new SizeChangeHandler(designSpaceCursorChanged); 
             DesignerKernel.Instance.CurrentDocument.ScreenSizeUpdated += new Document.ScreenSizeUpdateHandler(screenSizeUpdated);
-            DesignerKernel.Instance.CurrentDocument.SpaceModeChanged += new Document.SpaceModeChangeHandler(m_cartesianGraphControl.SpaceModeChanged);            
+            DesignerKernel.Instance.CurrentDocument.SpaceModeChanged += new Document.SpaceModeChangeHandler(m_cartesianGraphControl.SpaceModeChanged);
+            screenSizeUpdated(DesignerKernel.Instance.CurrentDocument, DesignerKernel.Instance.CurrentDocument.CurrentSize);
         }
 
         void screenSizeUpdated(object sender, Size newSize)
