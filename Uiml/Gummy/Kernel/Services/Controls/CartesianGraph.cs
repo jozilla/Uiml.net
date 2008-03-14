@@ -57,8 +57,6 @@ namespace Uiml.Gummy.Kernel.Services.Controls
          */
         public void InitGraph()
         {            
-            m_designSpaceData.MaximumPoint = new Point(Width - 90, Height - 20);
-            m_designSpaceData.InitDesignSpace(Width, Height);            
             Selected.SelectedDomainObject.Instance.DomainObjectSelected += new Uiml.Gummy.Kernel.Selected.SelectedDomainObject.DomainObjectSelectedHandler(domainObjectSelected);
         }
 
