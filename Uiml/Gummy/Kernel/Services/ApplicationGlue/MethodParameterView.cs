@@ -72,6 +72,12 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 Model.Link.UnlinkMethodParameter(Model);
                 Model.Link = null;
             }
+            else
+            {
+                // create default value
+                // FIXME: make generic
+                Model.Binding = new MethodParameterInputValueBinding(Model, "JdiuciRQFHIzogpsgXSTjvsA0JDPjoyx");
+            }
         }
 
         private void linkIcon_MouseClick(object sender, MouseEventArgs e)

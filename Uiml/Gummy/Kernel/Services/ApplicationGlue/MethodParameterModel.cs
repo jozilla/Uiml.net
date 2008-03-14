@@ -54,6 +54,24 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             get { return Link != null; }
         }
 
+        protected IMethodParameterBinding binding;
+
+        public IMethodParameterBinding Binding
+        {
+            get { return binding; }
+            set
+            {
+                binding = value;
+                Updated(this, null);
+            }
+        }
+
+        public bool Bound
+        {
+            get { return Binding != null; }
+        }
+
+
         public event EventHandler Updated;
 
         public void OnUpdate(EventArgs e)

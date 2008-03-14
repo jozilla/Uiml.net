@@ -147,21 +147,29 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                         {
                             DomainObject dom = param.Link;
 
-                            // <param>
-                            XmlElement callParam = doc.CreateElement("param");
-                            XmlAttribute paramId = doc.CreateAttribute("id");
-                            paramId.Value = param.Name;
-                            callParam.Attributes.Append(paramId);
-                            call.AppendChild(callParam);
-                            // <property>
-                            XmlElement paramProp = doc.CreateElement("property");
-                            callParam.AppendChild(paramProp);
-                            XmlAttribute paramPropPartName = doc.CreateAttribute("part-name");
-                            paramPropPartName.Value = dom.Part.Identifier;
-                            paramProp.Attributes.Append(paramPropPartName);
-                            XmlAttribute paramPropName = doc.CreateAttribute("name");
-                            paramPropName.Value = m_vocMeta.GetInputProperty(dom.Part.Class, param.Type);
-                            paramProp.Attributes.Append(paramPropName);
+                            if (param.Bound)
+                            {
+                                XmlNode callParam = param.Binding.GetUiml(doc);
+                                call.AppendChild(callParam);
+                            }
+                            else
+                            {
+                                // <param>
+                                XmlElement callParam = doc.CreateElement("param");
+                                XmlAttribute paramId = doc.CreateAttribute("id");
+                                paramId.Value = param.Name;
+                                callParam.Attributes.Append(paramId);
+                                call.AppendChild(callParam);
+                                // <property>
+                                XmlElement paramProp = doc.CreateElement("property");
+                                callParam.AppendChild(paramProp);
+                                XmlAttribute paramPropPartName = doc.CreateAttribute("part-name");
+                                paramPropPartName.Value = dom.Part.Identifier;
+                                paramProp.Attributes.Append(paramPropPartName);
+                                XmlAttribute paramPropName = doc.CreateAttribute("name");
+                                paramPropName.Value = m_vocMeta.GetInputProperty(dom.Part.Class, param.Type);
+                                paramProp.Attributes.Append(paramPropName);
+                            }
                         }
                     }
                     catch (Exception e)
