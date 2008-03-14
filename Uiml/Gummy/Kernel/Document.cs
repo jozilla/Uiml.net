@@ -247,7 +247,7 @@ namespace Uiml.Gummy.Kernel
             XmlDocument doc = Serialize();
             doc.Save(s);
         }
-
+        
         public void Run()
         {
             // create temporary file
@@ -281,6 +281,7 @@ namespace Uiml.Gummy.Kernel
             psi.ErrorDialog = true;
             Process.Start(psi);
         }
+
 
         public DesignSpaceData DesignSpaceData
         {

@@ -18,15 +18,11 @@ namespace Uiml.Gummy.Domain
     public class DomainObjectFactory
     {
         static DomainObjectFactory m_factory = null;
-        Vocabulary m_vocabulary = null;
-        IUimlSerializer m_serializer = null;
 
         static int autoId = 1;
 
         protected DomainObjectFactory()
         {
-            m_vocabulary = ActiveSerializer.Instance.Serializer.Voc;
-            m_serializer = ActiveSerializer.Instance.Serializer;
         }
 
         public static DomainObjectFactory Instance
@@ -53,6 +49,10 @@ namespace Uiml.Gummy.Domain
 
         public DomainObject Create(DClass dclass, string id)
         {
+            //Get the necessary properties
+            IUimlSerializer serializer = ActiveSerializer.Instance.Serializer;
+            Vocabulary voc = ActiveSerializer.Instance.Serializer.Voc;
+            //OK :)
             DomainObject domObject = ActiveSerializer.Instance.Serializer.Create();            
                         
             Part p = new Part();
@@ -76,7 +76,7 @@ namespace Uiml.Gummy.Domain
                         DProperty dprop = (DProperty)child;
                         
                         if (dprop.MapsType == "setMethod" && dprop.Identifier != "daySelected"
-                            && m_serializer.Accept(dprop, dclass))
+                            && serializer.Accept(dprop, dclass))
                         {   
                             domObject.AddAttribute(Create(dprop,p));
                         }
@@ -94,7 +94,11 @@ namespace Uiml.Gummy.Domain
         }
 
         public Property Create(DProperty dprop, Part p)
-        {            
+        {
+            //Get the necessary properties
+            IUimlSerializer serializer = ActiveSerializer.Instance.Serializer;
+            Vocabulary voc = ActiveSerializer.Instance.Serializer.Voc;
+            //OK :)
             Property prop = new Property();
             prop.PartName = p.Identifier;
             prop.Name = dprop.Identifier; //The property name
@@ -106,7 +110,7 @@ namespace Uiml.Gummy.Domain
                     if (dprop.Children[j] is DParam)
                     {
                         DParam dparam = (DParam)dprop.Children[j];                        
-                        prop.Value = m_serializer.DefaultValue(prop, p, dparam.Type);
+                        prop.Value = serializer.DefaultValue(prop, p, dparam.Type);
                     }
                 }
             }
@@ -121,7 +125,11 @@ namespace Uiml.Gummy.Domain
 
         public DomainObject Create(String classtype, string id)
         {
-            Hashtable dclasses = m_vocabulary.DClasses;
+            //Get the necessary properties
+            IUimlSerializer serializer = ActiveSerializer.Instance.Serializer;
+            Vocabulary voc = ActiveSerializer.Instance.Serializer.Voc;
+            //OK :)
+            Hashtable dclasses = voc.DClasses;
 
             IDictionaryEnumerator en = dclasses.GetEnumerator();
             while (en.MoveNext())
@@ -138,6 +146,10 @@ namespace Uiml.Gummy.Domain
 
         public DomainObject Create(Part p, List<Property> propList)
         {
+            //Get the necessary properties
+            IUimlSerializer serializer = ActiveSerializer.Instance.Serializer;
+            Vocabulary voc = ActiveSerializer.Instance.Serializer.Voc;
+            //OK :)
             DomainObject dom = Create(p.Class, p.Identifier);
             foreach(Property prop in propList)
             {
