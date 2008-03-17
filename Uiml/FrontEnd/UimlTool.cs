@@ -74,7 +74,8 @@ namespace Uiml.FrontEnd{
 			else
 			{
 				uef = new CommandLine(opt);
-			}		
+			}
+            Console.In.ReadLine();
 		}
 	}
 }

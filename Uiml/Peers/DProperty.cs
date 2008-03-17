@@ -65,6 +65,29 @@ namespace Uiml.Peers
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            DProperty clone = new DProperty();
+            clone.m_identifier = m_identifier;
+            clone.m_mapsType = m_mapsType;
+            clone.m_mapsTo = m_mapsTo;
+            clone.m_returnType = m_returnType;
+            if(m_defaultProp != null)
+                clone.m_defaultProp = (Property)m_defaultProp.Clone();
+
+            if(m_children != null)
+            {
+                clone.m_children = new ArrayList();
+                for(int i = 0; i < m_children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)m_children[i];
+                    clone.m_children.Add(element.Clone());
+                }
+            }
+
+            return clone;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != IAM)
@@ -110,6 +133,47 @@ namespace Uiml.Peers
 				}
 			}
 		}
+
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+
+            if (Identifier.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(ID);
+                attr.Value = Identifier;
+                node.Attributes.Append(attr);
+            }
+            if (MapsType.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TYPE);
+                attr.Value = MapsType;
+                node.Attributes.Append(attr);
+            }
+            if (MapsTo.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TO);
+                attr.Value = MapsTo;
+                node.Attributes.Append(attr);
+            }
+            if (ReturnType.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(RETURN_TYPE);
+                attr.Value = ReturnType;
+                node.Attributes.Append(attr);
+            }
+
+            if (HasChildren)
+            {
+                for (int i = 0; i < Children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)Children[i];
+                    node.AppendChild(element.Serialize(doc));
+                }
+            }
+
+            return node;
+        }
 
         public bool IsDefaultProperty 
         {

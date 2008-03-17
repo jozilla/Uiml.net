@@ -26,9 +26,10 @@ namespace Uiml {
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Xml.Serialization;
 
 	using Uiml.LayoutManagement;
-	
+
 	public class UimlDocument : IUimlElement, IUimlComponent, ICloneable {
 		private Interface m_interface;
 		private ArrayList m_peers;
@@ -42,16 +43,16 @@ namespace Uiml {
 		///</summary>
 		public UimlDocument(String fName)
 		{
-			try
-			{
+			//try
+			//{
 				XmlDocument doc = new XmlDocument();
 				doc.Load(fName);
 				Load(doc);
-			}
-			catch(Exception e)
-			{					
-				Console.WriteLine("Error loading {0} ({1})", fName, e);
-			}
+			//}
+			//catch(Exception e)
+			//{					
+			//	Console.WriteLine("Error loading {0} ({1})", fName, e);
+			//}
 		}
 
 		public UimlDocument(XmlNode uimlTopNode)
@@ -91,7 +92,35 @@ namespace Uiml {
 			}
 		}
 
-		public Interface UInterface 
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(UIML);
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] != null)
+                {
+                    if (Children[i] is IUimlElement)
+                    {
+                        IUimlElement element = (IUimlElement)Children[i];
+                        node.AppendChild(element.Serialize(doc));
+                    }
+                    else if (Children[i] is ArrayList)
+                    {
+                        ArrayList peers = (ArrayList)Children[i];
+                        for (int j = 0; j < peers.Count; j++)
+                        {
+                            IUimlElement element = (IUimlElement)m_peers[j];
+                            node.AppendChild(element.Serialize(doc));
+                        }
+                    }
+                }
+            }
+
+            return node;
+        }
+
+        public Interface UInterface 
 		{
 			get { return m_interface; }
 			set {	m_interface = value; }
@@ -255,7 +284,7 @@ namespace Uiml {
 				Solver.Resolve();
 			}
 		}
-		
+
 		public ArrayList Children
 		{
 			get 
@@ -276,28 +305,43 @@ namespace Uiml {
 		//ICloneable methods:
 		public object Clone()
 		{
-			UimlDocument iamclone = new UimlDocument();
-			if (UHead == null)
-				iamclone.UHead = null;
-			else 
-				iamclone.UHead = (Head)UHead.Clone();
-			iamclone.UInterface  = (Interface)UInterface.Clone(); 
-			return iamclone;
+			UimlDocument clone = new UimlDocument();
+            if(m_peers != null)
+            {
+                clone.m_peers = new ArrayList();
+                for(int i = 0; i < m_peers.Count; i++)
+                {
+                    clone.AddPeer((Peer)((Peer)m_peers[i]).Clone());
+                }
+            }
+            if(m_interface != null)
+                clone.m_interface = (Interface)m_interface.Clone();
+            if(m_head != null)
+                clone.m_head = (Head)m_head.Clone();
+            clone.m_hasLayout = m_hasLayout;
+            clone.m_solver = m_solver;
+            //attach peers....
+            if(clone.m_interface != null)
+                clone.m_interface.AttachPeers(clone.m_peers);
+			return clone;
 		}
 		
 		// IUimlComponent methods:
 		//public ArrayList Children { get ; } //This method already exist to return a "complete" UIML document in an ArrayList
 		public void Add(string pattern, IUimlComponent component) { /* do nothing */ }
-		public void Remove(IUimlComponent component) { /* do nothing */ }		
+		public void Remove(IUimlComponent component) { /* do nothing */ }
+
 		public UimlComposite Composite 
 		{ 
 			get { return null; } 
-		}		
+		}
+
 		public Hashtable CompChildren
 		{
 			get {return null; }
-		} 
-		
+		}
+
+
 		public ConstraintSystem Solver
 		{
 			get { return m_solver; }

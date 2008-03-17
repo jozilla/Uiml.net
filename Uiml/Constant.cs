@@ -26,6 +26,7 @@ namespace Uiml
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	using Uiml.Rendering;
 
@@ -41,13 +42,41 @@ namespace Uiml
 	///
 	/// Valid model attributes are : list | tree
 	///</summary>
-	public class Constant : UimlAttributes, IUimlElement {
+	public class Constant : UimlAttributes, IUimlElement,	ICloneable{
 
-		private string m_model;
+		private string m_model = "";
 		//Generics would be nice here :-)
-		private Object m_data;
-		private ArrayList m_children;
+		private Object m_data = null;
+		private ArrayList m_children = new ArrayList();
 		private Constant parent;
+
+		public object Clone()
+		{
+			Constant clone = new Constant();
+            clone.CopyAttributesFrom(this);
+
+            /*if(m_data != null)
+            {
+                if(m_data is ICloneable)
+        			clone.m_data = ((ICloneable)m_data).Clone();
+                else
+                    clone.m_data = m_data;
+            }*/
+            Console.WriteLine("Debug data = "+m_data);
+            clone.m_data = m_data;
+            clone.m_model = m_model;
+
+			if(m_children != null)
+			{                
+				for(int i = 0; i<m_children.Count; i++){
+				    Constant cons = (Constant)((Constant)m_children[i]).Clone();
+                    cons.parent = this;
+                    clone.Add(cons);
+                }
+			}
+            clone.parent = parent;
+			return clone;
+		}
 
 		public Constant()
 		{
@@ -78,7 +107,38 @@ namespace Uiml
 			}
 		}
 
-		public void Add(Constant c)
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            if (m_model.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MODEL);
+                attr.Value = Model;
+                attributes.Add(attr);
+            }
+            if (Value != null)
+            {
+                XmlAttribute attr = doc.CreateAttribute(VALUE);
+                attr.Value = Value.ToString();
+                attributes.Add(attr);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)Children[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+
+            return node;
+        }
+
+        public void Add(Constant c)
 		{
 			if(Children == null)
 				Children = new ArrayList();
@@ -89,7 +149,7 @@ namespace Uiml
 		{
 			get
 			{
-				return Children != null;
+                return Children.Count > 0;
 			}			
 		}
 
@@ -97,10 +157,7 @@ namespace Uiml
 		{
 			get
 			{
-				if(Children == null)
-					return 0;
-				else
-					return Children.Count;
+				return Children.Count;
 			}			
 		}
 

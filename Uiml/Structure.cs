@@ -27,6 +27,10 @@ namespace Uiml{
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
+
+    using System.Xml.Serialization;
+    using System.Xml;
 
 	///<summary>
 	/// Implements the structure element of Uiml. Instead of allowing several parts as "top"-elements
@@ -51,6 +55,17 @@ namespace Uiml{
 		{
 			Process(n);
 		}
+
+        public virtual object Clone()
+        {
+            Structure structure = new Structure();
+            if(m_top != null)
+            {
+                structure.m_top = (Part)m_top.Clone();
+            }
+
+            return structure;
+        }
 
 		///<summary>
 		///Processes the structure subtree
@@ -78,6 +93,25 @@ namespace Uiml{
 			}
 		}
 
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> list = CreateAttributes(doc);
+
+            foreach (XmlAttribute attr in list)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            if (m_top != null)
+            {
+                XmlNode xmlTop = m_top.Serialize(doc);
+                node.AppendChild(xmlTop);
+            }
+
+            return node;
+        }
+
 		public Part Top
 		{
 			get
@@ -98,6 +132,7 @@ namespace Uiml{
 			return Top.SearchPart(partName);
 		}
 
+        [XmlIgnore]
 		public ArrayList Children
 		{
 			get { return null; }

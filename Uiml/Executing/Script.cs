@@ -51,6 +51,7 @@ namespace Uiml.Executing
 		private bool m_preCompiled = false;
 		private Assembly m_compiledAssembly;
 		private Object m_retValue = null;
+        private Part m_partTree = null;
 
 		public Script()
 		{
@@ -75,6 +76,18 @@ namespace Uiml.Executing
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            Script script = new Script();
+            script.m_scriptSource = m_scriptSource;
+            script.m_type = m_type;
+            script.m_preCompiled = m_preCompiled;
+            script.m_compiledAssembly = m_compiledAssembly;
+            script.m_retValue = m_retValue;
+
+            return script;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != IAM)
@@ -87,6 +100,19 @@ namespace Uiml.Executing
 				Console.WriteLine("Warning: " + IAM + " should have \"" + TYPE + "\" attribute!");
 			Source = n.InnerText;
 		}
+
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            if (Type.Length > 0)
+            {
+                XmlAttribute type = doc.CreateAttribute(TYPE);
+                type.Value = Type;
+                node.Attributes.Append(type);
+            }
+            node.InnerText = Source;
+            return node;
+        }
 
 		public void GetEvents(ArrayList al)
 		{
@@ -274,6 +300,18 @@ namespace Uiml.Executing
 		{
 			get { return m_retValue; }
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+            }
+        }
 
 		
 		public const string IAM  = "script";
