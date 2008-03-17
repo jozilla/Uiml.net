@@ -63,7 +63,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             partial = false;
             bool result = IsComplete(out missingInputParams, out missingOutput, out missingInvoke);
 
-            if ((missingInputParams.Count == 0) || !missingOutput || !missingInvoke)
+            if ((missingInputParams.Count < Method.Inputs.Count) || !missingOutput || !missingInvoke)
                 partial = true;
 
             return result;

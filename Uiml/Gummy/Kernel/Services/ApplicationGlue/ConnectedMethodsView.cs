@@ -52,6 +52,8 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                     statusIcon.Image = global::gummy.Properties.Resources.connection_not_ok;
                 else
                     statusIcon.Image = global::gummy.Properties.Resources.no_connection;
+
+                row++;
             }
         }
 
