@@ -45,7 +45,7 @@ namespace Uiml.FrontEnd{
 	{
 		public static String FileName;
 		
-		
+		[STAThread]
 		public static void Main(string[] args)
 		{
 			UimlFrontEnd uef = null;
