@@ -7,7 +7,7 @@ using Uiml.Gummy.Domain;
 
 namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 {
-    public class MethodParameterDomainObjectInputBinding : MethodParameterDomainObjectBinding
+    public class MethodParameterDomainObjectInputBinding : MethodParameterDomainObjectIOBinding
     {
         public MethodParameterDomainObjectInputBinding(MethodParameterModel param, DomainObject dom, Property prop)
             : base(param, dom, prop)

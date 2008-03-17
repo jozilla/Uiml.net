@@ -17,21 +17,6 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
         public event EventHandler Updated;
 
-        public List<MethodParameterModel> Inputs
-        {
-            get { return m_method.Inputs; }
-        }
-
-        public DomainObject Invoke
-        {
-            get { return m_method.Invoke.Link; }
-        }
-
-        public DomainObject Output
-        {
-            get { return m_method.Outputs[0].Link; }
-        }
-
         public ConnectedMethod(MethodModel method)
         {
             m_method = method;
@@ -57,22 +42,31 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             }
         }
 
-        public bool IsLinked
+        public bool IsComplete()
         {
-            get 
-            { 
-                return m_method.Invoke.Linked || 
-                    m_method.Outputs.Exists(delegate(MethodParameterModel m) { return m.Linked; }) || 
-                    m_method.Inputs.Exists(delegate(MethodParameterModel m) { return m.Linked; }); 
-            }
+            bool partial = false;
+
+            return IsComplete(out partial);
         }
 
-        public bool IsComplete()
+        /// <summary>
+        /// Checks a method to see if it is completely bound.
+        /// </summary>
+        /// <param name="partial">True if at least one of the method's parameters are bound</param>
+        /// <returns>True if all the method is completely bound</returns>
+        public bool IsComplete(out bool partial)
         {
             List<MethodParameterModel> missingInputParams = null;
             bool missingOutput = false;
             bool missingInvoke = false;
-            return IsComplete(out missingInputParams, out missingOutput, out missingInvoke);
+
+            partial = false;
+            bool result = IsComplete(out missingInputParams, out missingOutput, out missingInvoke);
+
+            if ((missingInputParams.Count == 0) || !missingOutput || !missingInvoke)
+                partial = true;
+
+            return result;
         }
 
         public bool IsComplete(out List<MethodParameterModel> missingInputParams, out bool missingOutput, out bool missingInvoke)
@@ -83,30 +77,37 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             missingInvoke = false;
 
             bool invoke;
-            bool output;
+            bool outputs;
             bool inputs;
 
-            invoke = Invoke != null;
+            invoke = Method.Invoke.Bound;
 
             if (!invoke)
                 missingInvoke = true;
 
             inputs = true;
-            foreach (MethodParameterModel input in Inputs)
+            foreach (MethodParameterModel input in Method.Inputs)
             {
-                if (!(input.Linked || input.Bound))
+                if (!input.Bound)
                 {
                     inputs = false;
                     missingInputParams.Add(input);
                 }
             }
 
-            output = (Method.Outputs.Count > 0) ? Output != null : Output == null;
+            outputs = true;
+            foreach (MethodParameterModel output in Method.Outputs)
+            {
+                if (!output.Bound)
+                {
+                    outputs = false;
+                }
+            }
 
-            if (!output)
+            if (!outputs)
                 missingOutput = true;
 
-            return output && invoke && inputs;
+            return outputs && invoke && inputs;
         }
     }
 }

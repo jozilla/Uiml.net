@@ -336,7 +336,7 @@ namespace Uiml.Gummy.Visual
             if (e.Data.GetDataPresent(typeof(ReflectionMethodParameterModel)))
             {
                 // link a parameter
-                m_visDom.DomainObject.LinkMethodParameter((MethodParameterModel)e.Data.GetData(typeof(ReflectionMethodParameterModel)));
+                m_visDom.DomainObject.BindMethodParameter((MethodParameterModel)e.Data.GetData(typeof(ReflectionMethodParameterModel)));
             }
 
             // otherwise, do nothing
@@ -427,15 +427,17 @@ namespace Uiml.Gummy.Visual
                 Point p;
                 int i = 1;
 
-                foreach (MethodParameterModel mpm in m_visDom.DomainObject.MethodOutputParameterLinks)
+                foreach (MethodParameterDomainObjectOutputBinding binding in m_visDom.DomainObject.OutputBindings)
                 {
+                    MethodParameterModel mpm = binding.Parameter;
+
                     p = new Point(m_visDom.Width - i * width, 0);
                     g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
                     g.FillRectangle(new Pen(Color.LightCoral).Brush, new Rectangle(p, s));
                     i++;
                 }
 
-                if (m_visDom.DomainObject.MethodLink != null)
+                if (m_visDom.DomainObject.InvokeBinding != null)
                 {
                     p = new Point(m_visDom.Width - i * width, 0);
                     g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
@@ -443,8 +445,10 @@ namespace Uiml.Gummy.Visual
                     i++;
                 }
 
-                foreach (MethodParameterModel mpm in m_visDom.DomainObject.MethodInputParameterLinks)
+                foreach (MethodParameterDomainObjectInputBinding binding in m_visDom.DomainObject.InputBindings)
                 {
+                    MethodParameterModel mpm = binding.Parameter;
+
                     p = new Point(m_visDom.Width - i * width, 0);
                     g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
                     g.FillRectangle(new Pen(Color.LightGreen).Brush, new Rectangle(p, s));

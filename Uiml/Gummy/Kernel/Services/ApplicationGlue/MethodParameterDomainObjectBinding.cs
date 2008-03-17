@@ -16,18 +16,16 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             get { return m_domainObject; }
         }
 
-        protected Property m_domainProperty;
-
-        public Property Property
-        {
-            get { return m_domainProperty; }
-        }
-
-        public MethodParameterDomainObjectBinding(MethodParameterModel param, DomainObject dom, Property prop)
+        public MethodParameterDomainObjectBinding(MethodParameterModel param, DomainObject dom)
             : base(param)
         {
             m_domainObject = dom;
-            m_domainProperty = prop;
+        }
+
+        public override void Break()
+        {
+            base.Break();
+            DomainObject.BreakMethodParameter(Parameter);
         }
     }
 }

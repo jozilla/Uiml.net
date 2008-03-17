@@ -10,6 +10,7 @@ using Uiml;
 using Uiml.Gummy.Interpolation;
 using Shape;
 using Uiml.Gummy.Kernel.Services.ApplicationGlue;
+using Uiml.Peers;
 
 namespace Uiml.Gummy.Domain
 {
@@ -35,9 +36,9 @@ namespace Uiml.Gummy.Domain
 
         private Polygon m_shape = new Polygon();
 
-        private MethodModel m_methodLink = null;
-        private List<MethodParameterModel> m_methodOutParamLinks = new List<MethodParameterModel>();
-        private List<MethodParameterModel> m_methodInParamLinks = new List<MethodParameterModel>();
+        private MethodParameterDomainObjectInvokeBinding m_invokeBinding = null;
+        private List<MethodParameterDomainObjectOutputBinding> m_outputBindings = new List<MethodParameterDomainObjectOutputBinding>();
+        private List<MethodParameterDomainObjectInputBinding> m_inputBindings = new List<MethodParameterDomainObjectInputBinding>();
 
         private DomainObjectGroup m_domObjectGroup = null;
               
@@ -92,24 +93,24 @@ namespace Uiml.Gummy.Domain
             }
         }
 
-        public MethodModel MethodLink 
+        public MethodParameterDomainObjectInvokeBinding InvokeBinding 
         {
-            get { return m_methodLink; }
+            get { return m_invokeBinding; }
         }
 
-        public List<MethodParameterModel> MethodOutputParameterLinks 
+        public List<MethodParameterDomainObjectOutputBinding> OutputBindings 
         {
-            get { return m_methodOutParamLinks; } 
+            get { return m_outputBindings; } 
         }
 
-        public List<MethodParameterModel> MethodInputParameterLinks
+        public List<MethodParameterDomainObjectInputBinding> InputBindings
         {
-            get { return m_methodInParamLinks; }
+            get { return m_inputBindings; }
         }
 
         public bool Linked 
         {
-            get { return m_methodInParamLinks.Count > 0 || m_methodOutParamLinks.Count > 0 || m_methodLink != null; }
+            get { return m_inputBindings.Count > 0 || m_outputBindings.Count > 0 || m_invokeBinding != null; }
         }
 
         public String Identifier
@@ -247,38 +248,42 @@ namespace Uiml.Gummy.Domain
                 DomainObjectUpdated(this, new EventArgs());
         }
 
-        public void LinkMethodParameter(MethodParameterModel mpm)
+        public void BindMethodParameter(MethodParameterModel mpm)
         {
             if (mpm.ParameterType == MethodParameterType.Output)
             {
-                m_methodOutParamLinks.Add(mpm);
-                mpm.Link = this;
+                Property p = this.FindProperty("text");
+                MethodParameterDomainObjectOutputBinding binding = new MethodParameterDomainObjectOutputBinding(mpm, this, p);
+                m_outputBindings.Add(binding);
+                mpm.Binding = binding;
                 DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(mpm.Parent);
             }
             else if (mpm.ParameterType == MethodParameterType.Input)
             {
-                m_methodInParamLinks.Add(mpm);
-                mpm.Link = this;
+                Property p = this.FindProperty("text");
+                MethodParameterDomainObjectInputBinding binding = new MethodParameterDomainObjectInputBinding(mpm, this, p);
+                m_inputBindings.Add(binding);
+                mpm.Binding = binding;
                 DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(mpm.Parent);
             }
             else if (mpm.ParameterType == MethodParameterType.Invoke)
             {
-                m_methodLink = mpm.Parent;
-                mpm.Link = this;
+                m_invokeBinding = new MethodParameterDomainObjectInvokeBinding(mpm, this, "ButtonPressed");
+                mpm.Binding = m_invokeBinding;
                 DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(mpm.Parent);
             }
 
             Updated();
         }
 
-        public void UnlinkMethodParameter(MethodParameterModel mpm) 
+        public void BreakMethodParameter(MethodParameterModel mpm) 
         {
             if (mpm.ParameterType == MethodParameterType.Output)
-                m_methodOutParamLinks.Remove(mpm);
+                m_outputBindings.Remove((MethodParameterDomainObjectOutputBinding) mpm.Binding);
             else if (mpm.ParameterType == MethodParameterType.Input)
-                m_methodInParamLinks.Remove(mpm);
+                m_inputBindings.Remove((MethodParameterDomainObjectInputBinding) mpm.Binding);
             else if (mpm.ParameterType == MethodParameterType.Invoke)
-                m_methodLink = null;
+                m_invokeBinding = null;
             Updated();
         }
 

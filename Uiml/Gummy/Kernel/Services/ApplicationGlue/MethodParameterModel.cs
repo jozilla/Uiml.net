@@ -37,23 +37,6 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             get { return parent; }
         }
 
-        protected DomainObject link;
-
-        public DomainObject Link
-        {
-            get { return link; }
-            set 
-            { 
-                link = value;
-                Updated(this, null);
-            }
-        }
-
-        public bool Linked
-        {
-            get { return Link != null; }
-        }
-
         protected IMethodParameterBinding binding;
 
         public IMethodParameterBinding Binding

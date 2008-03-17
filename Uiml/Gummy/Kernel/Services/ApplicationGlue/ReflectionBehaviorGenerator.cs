@@ -103,6 +103,10 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                 {
                     try
                     {
+                        XmlNode rule = method.Method.Invoke.Binding.GetUiml(doc);
+                        behavior.AppendChild(rule);
+
+                        /*
                         // rule
                         XmlElement rule = doc.CreateElement("rule");
                         behavior.AppendChild(rule);
@@ -113,20 +117,25 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                         // <event>
                         XmlElement evnt = doc.CreateElement("event");
                         condition.AppendChild(evnt);
+                        */
 
                         /* Invoke */
+                        /*
                         XmlAttribute partName = doc.CreateAttribute("part-name");
                         partName.Value = method.Invoke.Part.Identifier;
                         evnt.Attributes.Append(partName);
                         XmlAttribute clss = doc.CreateAttribute("class");
                         clss.Value = m_vocMeta.GetEvent(method.Invoke.Part.Class);
                         evnt.Attributes.Append(clss);
+                        */
 
+                        /*
                         // <action>
                         XmlElement action = doc.CreateElement("action");
                         rule.AppendChild(action);
                         /* Output */
-                        // <property>
+                        // <property> 
+                        /*
                         XmlElement prop = doc.CreateElement("property");
                         XmlAttribute propPartName = doc.CreateAttribute("part-name");
                         propPartName.Value = method.Output.Part.Identifier;
@@ -143,16 +152,15 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                         call.Attributes.Append(callName);
                         prop.AppendChild(call);
                         /* Inputs */
+                        /*
                         foreach (MethodParameterModel param in method.Inputs)
                         {
-                            DomainObject dom = param.Link;
-
                             if (param.Bound)
                             {
                                 XmlNode callParam = param.Binding.GetUiml(doc);
                                 call.AppendChild(callParam);
                             }
-                            else
+                            /*else
                             {
                                 // <param>
                                 XmlElement callParam = doc.CreateElement("param");
@@ -169,8 +177,10 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
                                 XmlAttribute paramPropName = doc.CreateAttribute("name");
                                 paramPropName.Value = m_vocMeta.GetInputProperty(dom.Part.Class, param.Type);
                                 paramProp.Attributes.Append(paramPropName);
-                            }
+                            }*/
+                        /*
                         }
+                        */
                     }
                     catch (Exception e)
                     {
