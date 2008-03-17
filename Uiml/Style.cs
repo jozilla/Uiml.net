@@ -27,6 +27,7 @@ namespace Uiml{
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	public class Style : UimlAttributes, IUimlElement, ICloneable {
 
@@ -40,6 +41,24 @@ namespace Uiml{
 		{
 			Process(n);
 		}
+
+		//ICloneable interface implementation:
+		public object Clone()
+		{
+			Style clone = new Style();
+            clone.CopyAttributesFrom(this);
+            if(m_properties != null)
+            {
+                clone.m_properties = new ArrayList();
+                for(int i = 0; i < m_properties.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)m_properties[i];
+                    clone.m_properties.Add(element.Clone());
+                }
+            }
+
+            return clone;
+        }
 
 		public void Process(XmlNode n)
 		{
@@ -60,21 +79,45 @@ namespace Uiml{
 			}
 		}
 
-		public IEnumerator GetNamedProperties(string identifier)
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(STYLE);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < m_properties.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)m_properties[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+
+            return node;
+        }
+
+        public IEnumerator GetNamedProperties(string identifier)
 		{
-			ArrayList props = new ArrayList();
-
-			IEnumerator enumAll = m_properties.GetEnumerator();
-			while(enumAll.MoveNext())
-			{			
-				if( ((Property)enumAll.Current).PartName == identifier)
-				{
-					props.Add(enumAll.Current);
-				}
-			}
-
-			return props.GetEnumerator();
+			return GetNamedPropertiesList(identifier).GetEnumerator();
 		}
+
+        public ArrayList GetNamedPropertiesList(string identifier)
+        {
+            ArrayList props = new ArrayList();
+
+            IEnumerator enumAll = m_properties.GetEnumerator();
+            while (enumAll.MoveNext())
+            {
+                if (((Property)enumAll.Current).PartName == identifier)
+                {
+                    props.Add(enumAll.Current);
+                }
+            }
+
+            return props;
+        }
 
 		///<summary>
 		/// Searches for a specific property of a given part
@@ -90,6 +133,13 @@ namespace Uiml{
 			}
 			return null;
 		}
+
+        public void AddProperty(Property property, Part part)
+        {
+            property.PartName = part.Identifier;
+            m_properties.Add(property);
+        }
+
 
 		public IEnumerator GetClassProperties(string className)
 		{
@@ -150,16 +200,6 @@ namespace Uiml{
 			set { m_properties = value; }
 		}
 		
-		//ICloneable interface implementation:
-		public object Clone()
-		{
-			Style iamclone = new Style();
-			iamclone.Identifier = (string)Identifier.Clone();
-			iamclone.Source     = (string)Source.Clone();
-			iamclone.Children   = (ArrayList)Children.Clone();
-			return iamclone;
-		}
-
 		public const string STYLE = "style"; // deprecated
 		public const string IAM = "style";
 	}
