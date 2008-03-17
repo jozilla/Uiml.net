@@ -54,7 +54,23 @@ namespace Uiml.Gummy.Kernel.Services {
 
             foreach (MethodInfo m in t.GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance))
             {
-                DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(new ReflectionMethodModel(m));
+                // ignore asynchronous methods
+                bool asyncOutput = false;
+                bool asyncParams = false;
+                bool async = false;
+                
+                asyncOutput = m.ReturnType.Equals(typeof(IAsyncResult));
+
+                foreach (ParameterInfo param in m.GetParameters())
+                {
+                    if (param.ParameterType.Equals(typeof(IAsyncResult)))
+                        asyncParams = true;
+                }
+
+                async = asyncOutput || asyncParams;
+
+                if (!async) 
+                    DesignerKernel.Instance.CurrentDocument.Methods.AddMethod(new ReflectionMethodModel(m));
             }
             layout.Controls.Add(new ConnectedMethodsView(DesignerKernel.Instance.CurrentDocument.Methods));
         }

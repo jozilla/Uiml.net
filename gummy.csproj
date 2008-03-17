@@ -58,6 +58,12 @@
     <Compile Include="Uiml\Gummy\Interpolation\PlanarInterpolationAlgorithm.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignerLoader.cs" />
     <Compile Include="Uiml\Gummy\Kernel\DesignSpaceData.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\DefaultValueDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\DefaultValueDialog.Designer.cs">
+      <DependentUpon>DefaultValueDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\IMethodParameterBinding.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterBinding.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterDomainObjectBinding.cs" />
@@ -339,6 +345,10 @@
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlueServiceConfiguration.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ApplicationGlueServiceConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\DefaultValueDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DefaultValueDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_input.png" />
     <EmbeddedResource Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\link_method.png" />
