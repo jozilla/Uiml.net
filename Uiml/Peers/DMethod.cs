@@ -27,6 +27,7 @@
 using System;
 using System.Xml;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Uiml.Peers
 {
@@ -56,6 +57,26 @@ namespace Uiml.Peers
 			Process(n);
 		}
 
+        public object Clone()
+        {
+            DMethod clone = new DMethod();
+            clone.CopyAttributesFrom(this);
+            clone.m_mapsTo = m_mapsTo;
+            clone.m_returnType = m_returnType;
+
+            if(m_children != null)
+            {
+                clone.m_children = new ArrayList();
+                for(int i = 0; i < m_children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)m_children[i];
+                    clone.m_children.Add(element.Clone());
+                }
+            }
+
+            return clone;
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != IAM)
@@ -70,7 +91,7 @@ namespace Uiml.Peers
 				ReturnType = attr.GetNamedItem(RETURN_TYPE).Value;
 			
 			ProcessChildren(n.ChildNodes);
-		}
+		}        
 
 		protected void ProcessChildren(XmlNodeList l)
 		{
@@ -91,7 +112,42 @@ namespace Uiml.Peers
 			}
 		}
 
-		public bool HasChildren
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            if (MapsTo.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(MAPS_TO);
+                attr.Value = MapsTo;
+                attributes.Add(attr);
+            }
+            if (ReturnType.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(RETURN_TYPE);
+                attr.Value = ReturnType;
+                attributes.Add(attr);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            if (HasChildren)
+            {
+                for (int i = 0; i < Children.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)Children[i];
+                    node.AppendChild(element.Serialize(doc));
+                }
+            }
+
+            return node;
+
+        }
+
+        public bool HasChildren
 		{
 			get { return m_children != null; }
 		}

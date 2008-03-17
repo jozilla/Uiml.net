@@ -34,10 +34,10 @@ namespace Uiml.Executing
 	
 	public class Param : IExecutable, IUimlElement
 	{
-		private System.Object m_value;
-		private string m_identifier;
-		private string m_name;
-		private string m_type;
+		private System.Object m_value = null;
+		private string m_identifier = "";
+		private string m_name = "";
+		private string m_type = "";
 		private bool m_lazy;
 		private Part m_partTree;
 		private System.Object m_subprop;
@@ -52,6 +52,37 @@ namespace Uiml.Executing
 			m_partTree = topPart;
 			Process(xmlNode);
 		}
+
+        public virtual object Clone()
+        {
+            Param param = new Param();
+            
+            param.m_identifier = m_identifier;
+            param.m_name = m_name;
+            param.m_type = m_type;
+            param.m_lazy = m_lazy;
+
+            if(m_value != null)
+            {
+                if(m_value is IUimlElement)
+                {
+                    param.m_value = ((IUimlElement)m_value).Clone();
+                }
+                else
+                {
+                    param.m_value = m_value;
+                }
+            }
+            if(m_subprop != null)
+            {
+                param.m_subprop = m_subprop;
+            }
+
+            param.PartTree = m_partTree;
+
+            return param;
+
+        }        
 
 		public void Process(XmlNode n)
 		{
@@ -87,6 +118,36 @@ namespace Uiml.Executing
 			}
 			
 		}
+
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            if (Identifier.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(NAME);
+                attr.Value = Identifier;
+                node.Attributes.Append(attr);
+            }
+            if (Type.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(TYPE);
+                attr.Value = Type;
+                node.Attributes.Append(attr);
+            }
+
+            if (m_value != null)
+            {
+                if (m_value is IUimlElement)
+                {
+                    node.AppendChild(((IUimlElement)m_value).Serialize(doc));
+                }
+                else
+                {
+                    node.InnerText = m_value.ToString();
+                }
+            }
+            return node;
+        }
 
 		public void AttachLogic(ArrayList logicDocs)
 		{
@@ -166,6 +227,20 @@ namespace Uiml.Executing
 				return al; 
 			}
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_value is Call)
+                    ((Call)m_value).PartTree = value;
+            }
+        }
 
 
 		public const string PARAM    = "param";

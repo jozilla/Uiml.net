@@ -47,11 +47,21 @@ namespace Uiml{
 			Process(n);
 		}
 
+        public virtual object Clone()
+        {
+            return new Restructure();
+        }
+
 		public void Process(XmlNode n)
 		{
 			if(n.Name != IAM)
 				return;
 		}
+
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            return null;
+        }
 
 		public ArrayList Children
 		{

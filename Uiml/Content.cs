@@ -26,6 +26,7 @@ namespace Uiml{
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	///<summary>
 	///Represents the content element:
@@ -47,8 +48,25 @@ namespace Uiml{
 
 		public Content(XmlNode n) : this()
 		{
-			Process(n);
-		}
+			Process(n);        
+        }
+
+        public virtual object Clone()
+        {
+            Content clone = new Content();
+            clone.CopyAttributesFrom(this);
+            clone.m_urlName = m_urlName;
+            if(m_constantList != null)
+            {
+                clone.m_constantList = new ArrayList();
+                for(int i = 0; i<m_constantList.Count; i++)
+                {
+                    Constant c = (Constant)m_constantList[i];
+                    clone.m_constantList.Add(c.Clone());
+                }
+            }
+            return clone;
+        }
 
 		public void Process(XmlNode n)
 		{
@@ -64,7 +82,26 @@ namespace Uiml{
 			}
 		}
 
-		public ArrayList Children
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                IUimlElement child = (IUimlElement)Children[i];
+                node.AppendChild(child.Serialize(doc));
+            }
+
+            return node;
+
+        }
+
+        public ArrayList Children
 		{
 			get { return m_constantList; }
 		}

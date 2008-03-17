@@ -26,6 +26,7 @@ namespace Uiml{
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	using Uiml.Executing;
 
@@ -59,6 +60,25 @@ namespace Uiml{
 			m_waitingNode = n;
 		}
 
+        public virtual object Clone()
+        {
+            Behavior clone = new Behavior();
+            clone.CopyAttributesFrom(this);
+
+            if(m_rules != null)
+            {
+                clone.m_rules = new ArrayList();
+                for(int i = 0; i < m_rules.Count; i++)
+                {
+                    Rule rule = (Rule)m_rules[i];                    
+                    clone.m_rules.Add(rule.Clone());
+                }
+            }
+            clone.PartTree = PartTree;
+
+            return clone;
+        }
+
 		///<summary>
 		///Factory method that resolves this Behavior for a given Part 
 		///</summary>
@@ -87,7 +107,26 @@ namespace Uiml{
 			}
 		}
 
-		public void AttachPeers(ArrayList logics)
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = this.CreateAttributes(doc);
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < m_rules.Count; i++)
+            {
+                IUimlElement element = (IUimlElement)m_rules[i];
+                node.AppendChild(element.Serialize(doc));
+            }
+
+            return node;
+        }
+
+        public void AttachPeers(ArrayList logics)
 		{
 			
 			IEnumerator enumRules = Rules;
@@ -96,6 +135,26 @@ namespace Uiml{
 				AttachPeers((Rule)enumRules.Current, logics);
 			}
 		}
+
+        public Part PartTree
+        {
+            get
+            {
+                return m_partTree;
+            }
+            set
+            {
+                m_partTree = value;
+                if(m_rules != null)
+                {
+                    for(int i = 0; i < m_rules.Count; i++)
+                    {
+                        Rule rule = (Rule)m_rules[i];
+                        rule.PartTree = PartTree;
+                    }
+                }
+            }
+        }
 
 		private void AttachPeers(IUimlElement iue, ArrayList logics)
 		{

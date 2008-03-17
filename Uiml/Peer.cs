@@ -27,6 +27,7 @@ namespace Uiml
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 
 	public class Peer : UimlAttributes, IUimlElement
@@ -37,12 +38,49 @@ namespace Uiml
 
 		private Presentation m_selected;
 
-		public Peer(XmlNode nTopPeer)
+		public Peer(XmlNode nTopPeer):this()
 		{
-			m_presentations = new ArrayList();
-			m_logic = new ArrayList();
 			Process(nTopPeer);
 		}
+
+        protected Peer()
+        {
+            m_presentations = new ArrayList();
+            m_logic = new ArrayList();
+        }
+
+        public virtual object Clone()
+        {
+            Peer clone = new Peer();
+            clone.CopyAttributesFrom(this);
+
+            if(m_presentations != null)
+            {
+                clone.m_presentations = new ArrayList();
+                for(int i = 0; i < m_presentations.Count; i++)
+                {
+                    Presentation pres = (Presentation)((Presentation)m_presentations[i]).Clone();
+                    clone.AddPeer(pres);
+                }
+            }
+            if(m_logic != null)
+            {
+                clone.m_logic = new ArrayList();
+                for(int i = 0; i < m_logic.Count; i++)
+                {
+                    Logic logic = (Logic)((Logic)m_logic[i]).Clone();
+                    clone.AddLogic(logic);
+                    clone.GetVocabulary().MergeLogic(logic);
+                }
+            }
+            if(m_selected != null)
+            {
+                clone.m_selected = (Presentation)m_selected.Clone();
+            }
+
+            return clone;
+
+        }
 
 		public void AddPeer(Presentation presvoc)
 		{
@@ -74,10 +112,31 @@ namespace Uiml
 			}
 		}
 
-		///<summary>
-		/// Checks whether this peer has a presentation vocabulary for pattern
-		///</summary>
-		public bool Provides(string pattern)
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement("peers");
+
+            List<XmlAttribute> attributes = base.CreateAttributes(doc);
+
+            foreach(XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+            
+            ArrayList children = Children;
+            for(int i = 0; i < children.Count; i++)
+            {
+                IUimlElement child = (IUimlElement)children[i];
+                node.AppendChild(child.Serialize(doc));
+            }
+
+            return node;
+        }
+
+        ///<summary>
+        /// Checks whether this peer has a presentation vocabulary for pattern
+        ///</summary>
+        public bool Provides(string pattern)
 		{
 			IEnumerator enumPres = m_presentations.GetEnumerator();
 			while(enumPres.MoveNext())
