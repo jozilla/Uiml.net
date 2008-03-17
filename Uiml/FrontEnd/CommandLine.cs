@@ -32,6 +32,10 @@ namespace Uiml.FrontEnd{
 	using System.IO;
 	
 	using Uiml.Rendering;
+	
+	using System.Reflection;
+	using Uiml.Utils.Reflection;
+	using Uiml.Rendering.TypeDecoding;
 
 	using Uiml.Executing;
 
@@ -41,7 +45,7 @@ namespace Uiml.FrontEnd{
 	///</summary>
 	public class CommandLine : UimlFrontEnd
 	{
-		static public String[] options = {"voc","uiml","help","libs","version", "log"};
+		static public String[] options = {"voc","uiml","help","libs","version", "log", "decoders"};
 		static public char LIBSEP;
 		static public int VOCABULARY = 0;
 		static public int UIMLDOCUMENT = 1;
@@ -49,6 +53,7 @@ namespace Uiml.FrontEnd{
 		static public int LIBRARIES = 3;
 		static public int VERSIONINFO = 4;
 		static public int LOGGING = 5;
+		static public int DECODERS = 6;
 
 		
 
@@ -91,6 +96,13 @@ namespace Uiml.FrontEnd{
 				{
 					LoadLibraries(opt[options[LIBRARIES]]);
 				}
+				
+				if (opt.IsUsed(options[DECODERS]))
+				{
+				    Assembly a = AssemblyLoader.LoadFromPath(opt[options[DECODERS]]);
+				    TypeDecoder.Instance.Register(a);
+				}
+				
 				document = opt[options[UIMLDOCUMENT]];
 				UimlFileName = document;
 

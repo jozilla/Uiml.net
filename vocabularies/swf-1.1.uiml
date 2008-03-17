@@ -786,7 +786,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
       <d-param type="System.Int32"/>
     </d-property>
     <d-property id="selectedIndex" maps-type="getMethod" maps-to="SelectedIndex" return-type="System.Int32"/>
-    <d-property id="entry" return-type="System.String" maps-type="getMethod" maps-to="SelectedItem"/>
+    <d-property id="entries" return-type="System.Windows.Forms.ListView.SelectedListViewItemCollection" maps-type="getMethod" maps-to="SelectedItems"/>
     <!-- events -->
     <d-property id="select" maps-type="event" maps-to="SelectionChangeCommitted">
       <d-param type="System.EventHandler"/>

@@ -33,7 +33,8 @@ namespace Uiml.Executing.Callers
 	using System.Collections;
 	using System.Reflection;
 
-	using Uiml.Rendering; 
+	using Uiml.Rendering;
+    using Uiml.Rendering.TypeDecoding;
 	
 	/// <summary>
 	/// This class represents a caller that invokes functionality available on the same
@@ -109,7 +110,7 @@ namespace Uiml.Executing.Callers
 			for(int k=0; k<args.Length; k++)
 			{
 				String propValue = (string)((Uiml.Executing.Param)Call.Params[k]).Value(Call.Renderer);
-				args[k] = Call.Renderer.Decoder.GetArg(propValue, tparamTypes[k]);
+				args[k] = TypeDecoder.Instance.GetArg(propValue, tparamTypes[k]);
 			}
 			
 			Object result = null;

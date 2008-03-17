@@ -29,8 +29,25 @@ namespace Uiml.Rendering
 
 	public interface ITypeDecoder
 	{
-		Object[] GetArgs(Property p, Type[] types);
-		Object   GetArg(System.Object s, Type t);
-		Object[] GetMultipleArgs(Property[] p, Type[] types);
+		/// <summary>
+	    /// Returns the value of a property converted to the correct type.
+	    /// This function is used when a property maps onto a .NET property.
+	    /// <returns>The property's value</returns>
+	    /// </summary>
+		object GetArg(object o, Type t);
+
+	    /// <summary>
+	    /// Returns the value of a property converted to the correct types. 
+	    /// This function is used when a property maps onto a method.
+	    /// <returns>The property's value</returns>
+	    /// </summary>
+		object[] GetArgs(Property p, Type[] types);
+		
+		/// <summary>
+		/// Convenience function to get the converted values of multiple 
+		/// properties at once. 
+		/// <returns>An array with the values of each property</returns>
+		/// </summary>
+		object[] GetMultipleArgs(Property[] p, Type[] types);
 	}
 }

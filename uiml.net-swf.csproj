@@ -40,7 +40,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Uiml\Rendering\SWF\SWFRenderer.cs" />
-    <Compile Include="Uiml\Rendering\SWF\SWFTypeDecoder.cs" />
+    <Compile Include="Uiml\Rendering\SWF\SWFTypeDecoders.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cassowary.net\Cassowary.csproj">

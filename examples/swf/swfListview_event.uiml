@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="frame" class="Frame">			
+			<part id="bandsList" class="List"/>
+			<part id="copylist" class="List"/>
+		</part>
+		</structure>
+		<style>
+            <property part-name="frame" name="label">Belgian Bands</property>
+            <property part-name="frame" name="size">240,500</property>
+            <property part-name="bandsList" name="position">20,20</property>
+            <property part-name="bandsList" name="size">200,200</property>
+            <property part-name="bandsList" name="view">Details</property>
+            <property part-name="bandsList" name="title">Band Name</property>
+            <property part-name="bandsList" name="content">
+                <constant model="list">
+                    <constant value="dEUS"/>
+                    <constant value="Novastar"/>
+                    <constant value="Hooverphonic"/>
+                    <constant value="Arid"/>
+                </constant>
+            </property>
+            <property part-name="copylist" name="size">200,200</property>
+            <property part-name="copylist" name="position">20,240</property>
+            <property part-name="copylist" name="view">Details</property>
+            <property part-name="copylist" name="title">Band Name</property>
+		</style>
+        <behavior>
+            <rule>
+                <condition>
+                    <event part-name="bandsList" class="EntrySelect"/>
+                </condition>
+                <action>
+                    <property part-name="copylist" name="content">
+                        <property part-name="bandsList" name="entry"/>
+                    </property>
+                </action>
+            </rule>
+        </behavior>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>

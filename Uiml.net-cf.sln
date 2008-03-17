@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uiml.net-core-cf", "uiml.net-core-cf.csproj", "{F1E37418-065C-4DC5-8DD7-0E0BF7ADE12B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cassowary.Parsing-cf", "..\Cassowary.net\Cassowary.Parsing-cf.csproj", "{FC41CAD3-3310-47ED-B6AA-AFE5DF07AED6}"

@@ -1,8 +1,8 @@
 /*
- 	 Uiml.Net: a Uiml.Net renderer (http://lumumba.uhasselt.be/kris/research/uiml.net/)
+ 	 Uiml.Net: a Uiml.Net renderer (http://research.edm.uhasselt.be/kris/projects/uiml.net/)
 
 	 Copyright (C) 2003  Kris Luyten (kris.luyten@uhasselt.be)
-	                     Expertise Centre for Digital Media (http://edm.uhasselt.be)
+	                     Expertise Centre for Digital Media (http://www.edm.uhasselt.be)
 								Hasselt University
 
 	This program is free software; you can redistribute it and/or
@@ -25,225 +25,109 @@
 */
 
 
-namespace Uiml.Rendering.CompactSWF
+namespace Uiml.Rendering.SWF
 {
 	using System;
 	using System.Collections;
 	using System.Reflection;
+    using System.Net;
+    using System.IO;
 
 	using System.Windows.Forms;
 	using System.Drawing;
 	using Uiml;
 	using Uiml.Rendering;
+    using Uiml.Rendering.TypeDecoding;
 
-	public class CompactSWFTypeDecoder : TypeDecoder
-	{
+	public class SWFTypeDecoders
+	{	    
+        [TypeDecoderMethod]
+        public static System.Drawing.Point DecodePoint(string val)
+        {
+            string[] coords = val.Split(new Char[] {','});
+            return new System.Drawing.Point(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
+        }
 
-		public CompactSWFTypeDecoder()
+        [TypeDecoderMethod]
+        public static System.Drawing.Size DecodeSize(string val)
+        {
+			string[] coords = val.Split(new Char[] {','});
+			return new System.Drawing.Size(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
+        }
+
+        [TypeDecoderMethod]
+        public static System.Drawing.Image DecodeImage(string file)
+        {
+            if (file.StartsWith("http://"))
+            {
+                // load image from the web
+                Stream ImageStream = new WebClient().OpenRead(file);
+                return Image.FromStream(ImageStream);
+            }
+
+            return System.Drawing.Image.FromFile((string) file);
+        }
+
+   		[TypeDecoderMethod]
+		public static System.Drawing.Font DecodeFont(string value)
 		{
-		}
+			string name = "Microsoft Sans Serif";
+			float size = 8.25F;
+			FontStyle style = FontStyle.Regular;
+			GraphicsUnit unit = GraphicsUnit.Point;
 
-		public override System.Object[] GetArgs(Property p, Type[] types)
-		{
-		
-			System.Object[] args = new System.Object[types.Length];
+			string[] font = value.Split(new Char[] {','});
+
+			for(int i = 0; i < font.Length; i++)
+			{
+				string [] values = font[i].Split(new Char[] {'='});
 			
-			int i = 0;
-			foreach(Type t in types)
-			{
-				if(t.IsPrimitive)
-					args[i] = ConvertPrimitive(t, p);
-				else
-					args[i] = ConvertComplex(t, p);
-				i++;
+				if( values[0].Trim().ToLower() == "name")
+					name = values[1];
+				else if (values[0].Trim().ToLower() == "size" )
+					size = (float) Double.Parse(values[1]);
+				else if(values[0].Trim().ToLower() == "style")
+				{
+					string [] styles = values[1].Split(new char[] {'|'});
+
+					for (int j = 0; j < styles.Length; j++)
+					{
+						if(styles[j].Trim().ToLower() == "bold")
+							style = style | FontStyle.Bold;
+						else if(styles[j].Trim().ToLower() == "italic")
+							style = style | FontStyle.Italic;
+						else if(styles[j].Trim().ToLower() == "regular")
+							style = style | FontStyle.Regular;
+						else if(styles[j].Trim().ToLower() == "strikeout")
+							style = style | FontStyle.Strikeout;
+						else if(styles[j].Trim().ToLower() == "underline")
+							style = style | FontStyle.Underline;
+					}
+				}
+				else if (values[0].Trim().ToLower() == "unit")
+				{
+					if(values[1].Trim().ToLower() == "display")
+						unit = GraphicsUnit.Display;
+					else if(values[1].Trim().ToLower() == "document")
+						unit = GraphicsUnit.Document;
+					else if(values[1].Trim().ToLower() == "inch")
+						unit = GraphicsUnit.Inch;
+					else if(values[1].Trim().ToLower() == "millimeter")
+						unit = GraphicsUnit.Millimeter;
+					else if(values[1].Trim().ToLower() == "pixel")
+						unit = GraphicsUnit.Pixel;
+					else if(values[1].Trim().ToLower() == "point")
+						unit = GraphicsUnit.Point;
+					else if(values[1].Trim().ToLower() == "world")
+						unit = GraphicsUnit.World;
+				}
 			}
 			
-			return args;
-		}
-	
-		///<summary>
-		/// Given an array of properties and an array of types, this method will create
-		/// an array of objects by converting each property value (p[i].Value)
-		/// into its appropriate type according to the Type array (types[i])
-		///</summary>
-		public override System.Object[] GetMultipleArgs(Property[] p, Type[] types)
-		{
-		
-			System.Object[] args= new System.Object[types.Length];
-			
-			int i = 0;
-			foreach(Type t in types)
-			{
-				if(t.IsPrimitive)
-					args[i] = ConvertPrimitive(t, p[i]);
-				else
-					args[i] = ConvertComplex(t, p[i]);
-				i++;
-			}
-			
-			return args;
+			return new Font(name, size, style, unit);
 		}
 
-		public override System.Object GetArg(System.Object o, Type t)
-		{
-			if(t.IsPrimitive)
-			{
-				return ConvertPrimitive(t, o);
-			}
-			else
-			{
-				return ConvertComplex(t, o);
-			}
-		}
-
-		///<summary>
-		/// Converts the object oValue to the type given by t
-		///</summary>
-		protected override System.Object ConvertComplex(Type t, System.Object oValue)
-		{
-			string value = "";
-			if(oValue is string)
-				value = (string)oValue;
-			else if(t.FullName == "System.String")
-				return oValue.ToString();
-
-			string[] coords = null;
-			// TODO: use reflection to create SWF types!			
-			switch(t.FullName)
-			{
-				case "System.Int32":
-					return System.Int32.Parse(value);
-				case "System.Int64":
-					return System.Int64.Parse(value);
-				case "System.Int16":
-					return System.Int16.Parse(value);
-				case "System.Drawing.Point":
-					coords = value.Split(new Char[] {','});
-					return new System.Drawing.Point(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
-				case "System.Drawing.Size":
-					coords = value.Split(new Char[] {','});
-					return new System.Drawing.Size(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
-				case "System.Drawing.Color":
-					return DecodeColor(value);
-				case "System.Drawing.Image":
-					return new System.Drawing.Bitmap((string)value);
-				case "System.String":
-					return (System.String)value;
-				case "System.String[]":
-					return DecodeStringArray(oValue);				
-				case "System.DateTime":
-					return DecodeDateTime(value);
-				case "System.Windows.Forms.ScrollBars":
-					return DecodeScrollBars(value);
-				case "System.Windows.Forms.View":
-					return DecodeView(value);
-				case "System.Windows.Forms.Orientation":
-					return DecodeOrientation(value);
-				case "System.Drawing.Font":
-					return DecodeFont(value);
-				default:
-					return value;
-			}			
-		}
-
-		protected override System.Object ConvertComplex(Type t, Property p)
-		{
-			switch(t.FullName)
-			{
-				case "System.String[]":
-					return DecodeStringArray(p.Value);
-				case "System.Windows.Forms.ColumnHeader":
-					ColumnHeader result = new ColumnHeader();
-					result.Text = (string)p.Value;
-					return result;
-				case "System.Windows.Forms.ListViewItem":
-					return DecodeListViewItem(p);
-				case "System.Windows.Forms.ListViewItem[]":
-					return DecodeListViewItemArray(p);
-				case "System.Windows.Forms.TreeNode":
-					return new System.Windows.Forms.TreeNode((string)p.Value);
-				case "System.Windows.Forms.TreeNode[]":
-					return DecodeTreeNodeArray(p);
-				case "System.Drawing.Font":
-					return DecodeFont((string)p.Value);
-				default:
-					return p.Value;
-			}			
-		}
-
-		///<summary>
-		///Decodes a font from a given value
-		///Original code from the MyXaml project, Bert Bier
-		///</summary>
-		///<param name="value">Contains the font information that has to be decoded</param>
-		private System.Object DecodeFont(string value)
-		{
-			System.Drawing.Font c = new Font("MS Sans Serif", 10, FontStyle.Regular );
-			string [] Fontparts;
-			value = value.Replace(" ","");
-
-			Fontparts = value.Split(",".ToCharArray());
-			FontStyle fontstyle = FontStyle.Regular;
-			int fontsize = 10;
-
-			if (Fontparts.Length == 3) 
-			{
-				try 
-				{
-					Fontparts[1] = Fontparts[1].Replace("pt", "");
-					fontsize = Convert.ToInt16(Fontparts[1]);
-				}
-				catch (Exception e) 
-				{
-				}
-				try 
-				{
-					Fontparts[2] = Fontparts[2].Replace("style", "");
-					Fontparts[2] = Fontparts[2].Replace("=", "");
-				}
-				catch (Exception e) 
-				{
-				}
-
-				switch (Fontparts[2].ToLower()) 
-				{	
-					case "bold": fontstyle = FontStyle.Bold; break;
-					case "italic": fontstyle = FontStyle.Italic; break;
-					case "regular": fontstyle = FontStyle.Regular; break;
-					case "strikeout": fontstyle = FontStyle.Strikeout; break;
-					case "underline": fontstyle = FontStyle.Underline; break;
-				}
-				return new Font(Fontparts[0], fontsize, fontstyle);
-			}
-			else
-			{
-				return null;
-			}
-		}
-
-		///<summary>
-		///Decodes the border style from a given string. 
-		///Original code from the MyXaml project, Bert Bier
-		///</summary>
-		///<param name="value">The string containing a description for a font</param>
-		private System.Object DecodeFormBorderStyle(string value) 
-		{
-			switch (value.ToLower()) 
-			{
-				case "fixed3d": return System.Windows.Forms.FormBorderStyle.Fixed3D;
-				case "fixeddialog": return System.Windows.Forms.FormBorderStyle.FixedDialog;
-				case "fixedsingle": return System.Windows.Forms.FormBorderStyle.FixedSingle; 
-				case "fixedTooltindow": return System.Windows.Forms.FormBorderStyle.FixedToolWindow; 
-				case "none": return System.Windows.Forms.FormBorderStyle.None; 
-				case "sizable": return System.Windows.Forms.FormBorderStyle.Sizable; 
-				case "sizabletooltindow": return System.Windows.Forms.FormBorderStyle.SizableToolWindow; 
-				default :
-					return System.Windows.Forms.FormBorderStyle.Fixed3D; 
-
-			}
-		}
-
-		private System.Object DecodeDateTime(string value)
+   		[TypeDecoderMethod]		
+		public static DateTime DecodeDateTime(string value)
 		{
 			string[] coords = value.Split(new Char[] {'/'});
 			int month = int.Parse(coords[0]);
@@ -251,8 +135,18 @@ namespace Uiml.Rendering.CompactSWF
 			int year = int.Parse(coords[2]);
 			return new DateTime(year, month, day);
 		}
+		
+   		[TypeDecoderMethod]
+		public static Appearance DecodeAppearance(string value)
+		{
+			if(value == "Button")
+				return Appearance.Button;
+			else
+				return Appearance.Normal;
+		}
 
-		private System.Object DecodeScrollBars(string value)
+   		[TypeDecoderMethod]
+		public static ScrollBars DecodeScrollBars(string value)
 		{
 			if(value == "Both")
 				return ScrollBars.Both;
@@ -264,7 +158,21 @@ namespace Uiml.Rendering.CompactSWF
 				return ScrollBars.None;
 		}
 
-		private System.Object DecodeView(string value)
+   		[TypeDecoderMethod]
+		public static SelectionMode DecodeSelectionMode(string value)
+		{
+			if(value == "MultiExtended")
+				return SelectionMode.MultiExtended;
+			else if(value == "MultiSimple")
+				return SelectionMode.MultiSimple;
+			else if(value == "None")
+				return SelectionMode.None;
+			else
+				return SelectionMode.One;
+		}
+
+   		[TypeDecoderMethod]
+		public static View DecodeView(string value)
 		{
 			if(value == "LargeIcon")
 				return View.LargeIcon;
@@ -275,7 +183,9 @@ namespace Uiml.Rendering.CompactSWF
 			else
 				return View.Details;
 		}
-		private System.Object DecodeOrientation(string value)
+
+   		[TypeDecoderMethod]		
+		public static Orientation DecodeOrientation(string value)
 		{
 			if(value == "Vertical")
 				return Orientation.Vertical;
@@ -283,12 +193,38 @@ namespace Uiml.Rendering.CompactSWF
 				return Orientation.Horizontal;
 		}
 
-		private System.Object DecodeListViewItem(Property p)
+   		[TypeDecoderMethod]
+		public static TickStyle DecodeTickStyle(string value)
 		{
-			return DecodeListViewItem((string) p.Value);
+			if(value == "Both")
+				return TickStyle.Both;
+			else if(value == "BottomRight")
+				return TickStyle.BottomRight;
+			else if(value == "None")
+				return TickStyle.None;
+			else
+				return TickStyle.TopLeft;
 		}
 
-		private System.Object DecodeListViewItem(string s)
+   		[TypeDecoderMethod]
+        public static object DecodeTabAlignment(string value)
+        {
+            switch (value.ToLower())
+            {
+                case "left":
+                    return System.Windows.Forms.TabAlignment.Left;
+                case "right":
+                    return System.Windows.Forms.TabAlignment.Right;
+                case "bottom":
+                    return System.Windows.Forms.TabAlignment.Bottom;
+                case "top":
+                default:
+                    return System.Windows.Forms.TabAlignment.Top;
+            }
+        }
+
+   		[TypeDecoderMethod]
+		public static ListViewItem DecodeListViewItem(string s)
 		{
 			string[] vals = s.Split(new Char[] {';'});
 			ListViewItem top = new ListViewItem(s);
@@ -304,35 +240,53 @@ namespace Uiml.Rendering.CompactSWF
 			
 			return top;
 		}
-    
-		private System.Object DecodeListViewItemArray(Property p)
+
+        // Depends on Constant <=> string[] decoder method
+   		[TypeDecoderMethod(new Type[] {typeof(Constant), typeof(string[])})]
+		public static ListViewItem[] DecodeListViewItemArray(Constant c)
 		{
-			string[] a = DecodeStringArray(p.Value);
+			string[] a = (string[]) TypeDecoder.Instance.GetArg(c, typeof(string[]));
+			
 			ListViewItem[] b = new ListViewItem[a.Length];
 			for(int i = 0; i < a.Length; i++)
 			{
 				b[i] = (ListViewItem) DecodeListViewItem(a[i]);
 			}
-			
+
 			return b;
 		}
 
-		private System.Object DecodeTreeNodeArray(Property p)
+        [TypeDecoderMethod]
+        public static ListViewItem[] DecodeSelectedListViewItemCollection(ListView.SelectedListViewItemCollection selList)
+        {
+            ListViewItem[] list = new ListViewItem[selList.Count];
+
+            for (int i = 0; i < selList.Count; i++)
+            {
+                // a ListViewItem can only be in one list => clone
+                list[i] = (ListViewItem) selList[i].Clone();
+            }
+
+            return list;
+        }
+
+   		[TypeDecoderMethod]
+		public static TreeNode[] DecodeTreeNodeArray(Constant c)
 		{
-			Constant top = (Constant) p.Value;
-			TreeNode[] a = new TreeNode[top.ChildCount];
+			TreeNode[] a = new TreeNode[c.ChildCount];
 
 			int i = 0;
-			foreach(Constant c in top.Children)
+			foreach(Constant child in c.Children)
 			{
-				a[i] = (TreeNode)DecodeConstant(c);
+				a[i] = DecodeTreeNode(child);
 				i++;
 			}
 
 			return a;
 		}
 
-		private System.Object DecodeConstant(Constant c)
+   		[TypeDecoderMethod]
+		public static TreeNode DecodeTreeNode(Constant c)
 		{
 			TreeNode result = new TreeNode((string)c.Value);
 			
@@ -341,30 +295,41 @@ namespace Uiml.Rendering.CompactSWF
 						
 			foreach(Constant child in c.Children)
 			{
-				result.Nodes.Add((TreeNode)DecodeConstant(child));
+				result.Nodes.Add(DecodeTreeNode(child));
 			}
 
 			return result;
 		}
 
-		private System.String[] DecodeStringArray(System.Object value)
+   		[TypeDecoderMethod]
+		public static ColumnHeader DecodeColumnHeader(string val)
 		{
-			ArrayList strArrayList = new ArrayList();
-			IEnumerator enumConstants = (((Constant)value).Children).GetEnumerator();	
-			while(enumConstants.MoveNext())
-			{
-				Constant c = (Constant)enumConstants.Current;
-				strArrayList.Add(c.Value);
-			}
-			return (System.String[])(strArrayList.ToArray(Type.GetType("System.String")));		
+			ColumnHeader result = new ColumnHeader();
+			result.Text = val;
+			return result;
 		}
 
+        // Depends on Constant <=> string[] decoder method
+   		[TypeDecoderMethod(new Type[] {typeof(Constant), typeof(string[])})]
+		public static ColumnHeader[] DecodeColumnHeaderArray(Constant c)
+		{
+			string[] strHeaders = (string[]) TypeDecoder.Instance.GetArg(c, typeof(string[]));
+			ColumnHeader[] headers = new ColumnHeader[strHeaders.Length];
 
+			for (int i = 0; i < strHeaders.Length; i++)
+			{
+				headers[i] = (ColumnHeader) DecodeColumnHeader(strHeaders[i]); 
+			}
+
+			return headers;
+		}
+		
 		///<summary>
 		///Decodes color from a string
 		///</summary>
 		///<param name="value">String containing the specification for a color</param>
-		private System.Object DecodeColor(string value)
+		[TypeDecoderMethod]
+		public static System.Drawing.Color DecodeColor(string value)
 		{
 			string[] coords = value.Split(new Char[] {','});
 			if(coords.Length < 2)
@@ -378,7 +343,7 @@ namespace Uiml.Rendering.CompactSWF
 		/// Original source: MyXaml project, Bert Bier
 		///</summary>
 		///<param name="value">String containing the name of a color</param>
-		private System.Object DecodeKnownColor(string value) 
+		private static System.Drawing.Color DecodeKnownColor(string value)
 		{
 			switch (value.ToLower() )
 			{
@@ -523,10 +488,9 @@ namespace Uiml.Rendering.CompactSWF
 				case "whitesmoke" : return System.Drawing.Color.WhiteSmoke;
 				case "yellow" : return System.Drawing.Color.Yellow;
 				case "yellowgreen" : return System.Drawing.Color.YellowGreen;
-				default : return System.Drawing.Color.Black ;
+				default : return System.Drawing.Color.Black;
 			}
 		}
-
 	}	
 }
 
