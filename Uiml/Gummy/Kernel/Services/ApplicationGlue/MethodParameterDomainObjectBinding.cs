@@ -25,7 +25,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         public override void Break()
         {
             base.Break();
-            DomainObject.BreakMethodParameter(Parameter);
+            DomainObject.BreakBinding(this);
         }
     }
 }
