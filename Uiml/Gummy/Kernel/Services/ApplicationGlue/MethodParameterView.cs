@@ -74,8 +74,16 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             else
             {
                 // create default value
-                // FIXME: make generic
-                Model.Binding = new MethodParameterInputValueBinding(Model, "JdiuciRQFHIzogpsgXSTjvsA0JDPjoyx");
+                DefaultValueDialog d = new DefaultValueDialog(Model);
+                Point dialogLocation = PointToScreen(this.Location);
+                d.StartPosition = FormStartPosition.Manual;
+                d.SetDesktopLocation(dialogLocation.X, dialogLocation.Y);
+                d.ShowDialog();
+
+                if (d.DialogResult == DialogResult.OK)
+                {
+                    Model.Binding = new MethodParameterInputValueBinding(Model, d.Value);
+                }
             }
         }
 
