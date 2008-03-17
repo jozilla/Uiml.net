@@ -27,12 +27,13 @@ namespace Uiml{
 	using System;
 	using System.Xml;
 	using System.Collections;
+    using System.Collections.Generic;
 
 
 	public class Presentation : UimlAttributes, IUimlElement{
 
-		private Vocabulary m_voc;
-		private string m_base;
+		private Vocabulary m_voc = null;
+		private string m_base = "";
 
 		public Presentation()
 		{ }
@@ -42,6 +43,21 @@ namespace Uiml{
 		{
 			Process(nTopPeer);
 		}
+
+        public virtual object Clone()
+        {
+            Presentation pres = new Presentation();
+            pres.CopyAttributesFrom(this);
+
+            pres.m_base = m_base;
+            
+            if(m_voc != null)
+            {
+                pres.m_voc = (Vocabulary)m_voc.Clone();
+            }
+
+            return pres;
+        }
 
 		public void Process(XmlNode n){//Exception toevoegen
 			if(n.Name == IAM){
@@ -60,6 +76,26 @@ namespace Uiml{
 				}
 			}
 		}
+
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+
+            if (m_base.Length > 0)
+            {
+                XmlAttribute attribute = doc.CreateAttribute(BASE);
+                attribute.Value = m_base;
+                attributes.Add(attribute);
+            }
+
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            return node;
+        }
 
 		public string Base
 		{

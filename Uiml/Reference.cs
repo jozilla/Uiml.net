@@ -35,8 +35,8 @@ namespace Uiml
 	///                          url-name NMTOKEN #IMPLIED&gt;
 	///</summary>
 	public class Reference : IUimlElement{
-		private String m_constantName;
-		private String m_urlName;
+		private String m_constantName = "";
+		private String m_urlName = "";
 
 		public Reference()
 		{
@@ -46,6 +46,15 @@ namespace Uiml
 		{
 			Process(n);
 		}
+
+        public virtual object Clone()
+        {
+            Reference clone = new Reference();
+            clone.m_constantName = m_constantName;
+            clone.m_urlName = m_urlName;
+
+            return clone;
+        }
 
 		public void Process(XmlNode n)
 		{
@@ -59,6 +68,26 @@ namespace Uiml
 			   UrlName = attr.GetNamedItem(URL_NAME).Value; //it is always a string
 
 		}
+
+        public XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(REFERENCE);
+
+            if (ConstantName.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(CONSTANT_NAME);
+                attr.Value = ConstantName;
+                node.Attributes.Append(attr);
+            }
+            if (UrlName.Length > 0)
+            {
+                XmlAttribute attr = doc.CreateAttribute(URL_NAME);
+                attr.Value = UrlName;
+                node.Attributes.Append(attr);
+            }
+
+            return node;
+        }
 
 		public String ConstantName
 		{

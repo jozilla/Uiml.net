@@ -37,7 +37,7 @@ namespace Uiml.Peers
 	/// <summary>
 	/// Summary description for Vocabulary.
 	/// </summary>
-	public class Vocabulary
+	public class Vocabulary : ICloneable
 	{
 		// a Hashtable of (name, DClass) key-value pairs
 		protected Hashtable m_dictDCls;
@@ -61,6 +61,30 @@ namespace Uiml.Peers
 			
 			Load(vocName);
 		}
+
+        public virtual object Clone()
+        {
+            Vocabulary clone = new Vocabulary();
+
+            clone.m_identifier = m_identifier;
+            clone.m_doc = (XmlDocument)m_doc.Clone();
+            clone.m_vocName = m_vocName;
+            
+            IDictionaryEnumerator e = m_dictDCls.GetEnumerator();
+            while (e.MoveNext())
+            {
+                clone.m_dictDCls[e.Key] = ((DClass)e.Value).Clone();
+            }
+
+            e = m_dictDCmp.GetEnumerator();
+            while (e.MoveNext())
+            {
+                clone.m_dictDCmp[e.Key] = ((DComponent)e.Value).Clone();
+            }
+
+            return clone;
+        
+        }
 
 		protected void Load(string vocName)
 		{

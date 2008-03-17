@@ -148,6 +148,10 @@ namespace Uiml.Rendering.GTKsharp
 						while(enumParts.MoveNext())
 						{
 							Part subPart = (Part)enumParts.Current;
+                            if (subPart.Identifier == "textfield2")
+                            {
+                                int zz = 0;
+                            }
 							Widget b = Render(subPart, uiStyle);
 							//((Container)gtkObject).Add(b); replaced by:
 							MethodInfo m = classType.GetMethod(m_adder, new Type[] { b.GetType() } );

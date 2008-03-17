@@ -28,8 +28,10 @@ namespace Uiml{
 
 	using System;
 	using System.Xml;
+    using System.Xml.Serialization;
 	using System.IO;
 	using System.Collections;
+    using System.Collections.Generic;
 
 	using Uiml.LayoutManagement;
 
@@ -64,6 +66,39 @@ namespace Uiml{
 		private Interface()
 		{
 		}
+		
+        public virtual object Clone()
+		{
+			Interface clone  = new Interface();
+            clone.m_structure = cloneList(m_structure);
+            clone.m_style = cloneList(m_style);
+            clone.m_behavior = cloneList(m_behavior);
+            for (int i = 0; i < clone.m_behavior.Count; i++)
+            {
+                Behavior behavior = (Behavior)clone.m_behavior[i];
+                behavior.PartTree = ((Structure)clone.UStructure[0]).Top;
+            }
+            clone.m_content = cloneList(m_content);
+            clone.m_layout = cloneList(m_layout);
+
+            return clone;
+        }
+
+        private ArrayList cloneList(ArrayList list)
+        {
+            if(list != null)
+            {
+                ArrayList cloned = new ArrayList();
+                for(int i = 0; i < list.Count; i++)
+                {
+                    IUimlElement element = (IUimlElement)list[i];
+                    cloned.Add(element.Clone());
+                }
+                return cloned;
+            }
+
+            return null;
+        }
 
 		public void Process(XmlNode n)
 		{
@@ -111,7 +146,32 @@ namespace Uiml{
 
 		}
 
-		public ArrayList UStructure
+        public override XmlNode Serialize(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateElement(IAM);
+            List<XmlAttribute> attributes = CreateAttributes(doc);
+            foreach (XmlAttribute attr in attributes)
+            {
+                node.Attributes.Append(attr);
+            }
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i] != null)
+                {
+                    ArrayList list = (ArrayList)Children[i];
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        IUimlElement element = (IUimlElement)list[j];
+                        node.AppendChild(element.Serialize(doc));
+                    }
+                }
+            }
+
+            return node;
+        }
+
+        public ArrayList UStructure
 		{
 			get { 
 				if(m_structure.Count == 0)
@@ -133,7 +193,7 @@ namespace Uiml{
 			set { m_style.Add(value); }
 		}
 
-		public ArrayList UBehavior
+        public ArrayList UBehavior
 		{
 			get { 
 				if(m_behavior.Count == 0)
@@ -202,22 +262,6 @@ namespace Uiml{
 			} 
 		}
 		
-		//IClonaeble implementation:
-		public object Clone()
-		{
-			Interface iamclone  = new Interface();
-			if(UBehavior != null)
-				iamclone.UBehavior  = (ArrayList)UBehavior.Clone();
-			if(UContent != null)
-				iamclone.UContent   = (ArrayList)UContent.Clone();
-			if(UStructure != null)
-				iamclone.UStructure = (ArrayList)UStructure.Clone();
-			if(UStyle != null)
-				iamclone.UStyle     = (ArrayList)UStyle.Clone();
-			return iamclone;
-		}
-
-
 		public const string STRUCTURE = "structure";
 		public const string STYLE     = "style";
 		public const string CONTENT   = "content";
