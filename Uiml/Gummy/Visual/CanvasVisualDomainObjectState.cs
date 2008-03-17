@@ -419,7 +419,7 @@ namespace Uiml.Gummy.Visual
             Point location = new Point(this.Width - icon.Width - padding, this.Height - icon.Height - padding);
             pe.Graphics.DrawImage(icon, location);*/
 
-            if (m_visDom.DomainObject.Linked)
+            if (m_visDom.DomainObject.Bound)
             {
                 int width = 15;
                 int height = m_visDom.Height;
@@ -429,8 +429,6 @@ namespace Uiml.Gummy.Visual
 
                 foreach (MethodParameterDomainObjectOutputBinding binding in m_visDom.DomainObject.OutputBindings)
                 {
-                    MethodParameterModel mpm = binding.Parameter;
-
                     p = new Point(m_visDom.Width - i * width, 0);
                     g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
                     g.FillRectangle(new Pen(Color.LightCoral).Brush, new Rectangle(p, s));
@@ -447,8 +445,6 @@ namespace Uiml.Gummy.Visual
 
                 foreach (MethodParameterDomainObjectInputBinding binding in m_visDom.DomainObject.InputBindings)
                 {
-                    MethodParameterModel mpm = binding.Parameter;
-
                     p = new Point(m_visDom.Width - i * width, 0);
                     g.DrawRectangle(new Pen(Color.Gray), new Rectangle(p, s));
                     g.FillRectangle(new Pen(Color.LightGreen).Brush, new Rectangle(p, s));

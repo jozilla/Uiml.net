@@ -32,7 +32,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
         void DomainObjectSelected(DomainObject dom, EventArgs e)
         {
-            if (dom.Linked)
+            if (dom != null && dom.Bound)
                 DesignerKernel.Instance.CurrentDocument.UpdateSelectedMethod(dom);
         }
 

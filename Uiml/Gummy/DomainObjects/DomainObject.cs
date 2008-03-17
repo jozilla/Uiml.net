@@ -108,7 +108,7 @@ namespace Uiml.Gummy.Domain
             get { return m_inputBindings; }
         }
 
-        public bool Linked 
+        public bool Bound 
         {
             get { return m_inputBindings.Count > 0 || m_outputBindings.Count > 0 || m_invokeBinding != null; }
         }
@@ -276,13 +276,13 @@ namespace Uiml.Gummy.Domain
             Updated();
         }
 
-        public void BreakMethodParameter(MethodParameterModel mpm) 
+        public void BreakBinding(MethodParameterDomainObjectBinding binding) 
         {
-            if (mpm.ParameterType == MethodParameterType.Output)
-                m_outputBindings.Remove((MethodParameterDomainObjectOutputBinding) mpm.Binding);
-            else if (mpm.ParameterType == MethodParameterType.Input)
-                m_inputBindings.Remove((MethodParameterDomainObjectInputBinding) mpm.Binding);
-            else if (mpm.ParameterType == MethodParameterType.Invoke)
+            if (binding is MethodParameterDomainObjectInputBinding)
+                m_inputBindings.Remove((MethodParameterDomainObjectInputBinding)binding);
+            else if (binding is MethodParameterDomainObjectOutputBinding)
+                m_outputBindings.Remove((MethodParameterDomainObjectOutputBinding)binding);
+            else if (binding is MethodParameterDomainObjectInvokeBinding)
                 m_invokeBinding = null;
             Updated();
         }
