@@ -62,6 +62,8 @@
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterBinding.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterDomainObjectBinding.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterDomainObjectInputBinding.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterDomainObjectInvokeBinding.cs" />
+    <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterDomainObjectIOBinding.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterDomainObjectOutputBinding.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\MethodParameterInputValueBinding.cs" />
     <Compile Include="Uiml\Gummy\Kernel\Services\ApplicationGlue\VocabularyMetadata.cs" />

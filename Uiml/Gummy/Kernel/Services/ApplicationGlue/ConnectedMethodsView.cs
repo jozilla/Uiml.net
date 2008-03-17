@@ -33,7 +33,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         void DomainObjectSelected(DomainObject dom, EventArgs e)
         {
             if (dom.Linked)
-                DesignerKernel.Instance.CurrentDocument.UpdateSelectedMethod(dom.MethodLink);
+                DesignerKernel.Instance.CurrentDocument.UpdateSelectedMethod(dom);
         }
 
         void ModelUpdated(object sender, EventArgs e)
@@ -43,9 +43,12 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
             {
                 // connected icons
                 PictureBox statusIcon = (PictureBox) layout.GetControlFromPosition(3, row);
-                if (connMethod.IsComplete())
+
+                bool partial = false;
+
+                if (connMethod.IsComplete(out partial))
                     statusIcon.Image = global::gummy.Properties.Resources.connection_ok;
-                else if (connMethod.IsLinked)
+                else if (partial) // partially bound
                     statusIcon.Image = global::gummy.Properties.Resources.connection_not_ok;
                 else
                     statusIcon.Image = global::gummy.Properties.Resources.no_connection;

@@ -76,6 +76,35 @@ namespace Uiml.Gummy.Kernel
             get { return m_selectedMethod; }
         }
 
+        public void UpdateSelectedMethod(DomainObject dom)
+        {
+            MethodModel method = null;
+
+            if (dom.InvokeBinding != null)
+                method = dom.InvokeBinding.Parameter.Parent;
+            else
+            {
+                foreach (MethodParameterDomainObjectBinding iBinding in dom.InputBindings)
+                {
+                    method = iBinding.Parameter.Parent;
+                    break;
+                }
+
+                if (method == null)
+                {
+                    foreach (MethodParameterDomainObjectBinding oBinding in dom.OutputBindings)
+                    {
+                        method = oBinding.Parameter.Parent;
+                    }
+                }
+            }
+
+            if (method != null)
+            {
+                UpdateSelectedMethod(method);
+            }
+        }
+
         public void UpdateSelectedMethod(MethodModel m)
         {
             m_selectedMethod = Methods.GetMethod(m);

@@ -9,5 +9,6 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
     public interface IMethodParameterBinding
     {
         XmlNode GetUiml(XmlDocument doc);
+        void Break();
     }
 }

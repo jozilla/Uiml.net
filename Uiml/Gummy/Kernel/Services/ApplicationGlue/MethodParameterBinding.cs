@@ -20,5 +20,9 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
         }
 
         public abstract XmlNode GetUiml(XmlDocument doc);
+        public virtual void Break()
+        {
+            Parameter.Binding = null;
+        }
     }
 }

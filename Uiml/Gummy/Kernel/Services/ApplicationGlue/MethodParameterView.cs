@@ -29,7 +29,7 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
         void ModelUpdated(object sender, EventArgs e)
         {
-            if (Model.Linked)
+            if (Model.Bound)
                 linkIcon.Image = global::gummy.Properties.Resources.linked;
             else
                 linkIcon.Image = global::gummy.Properties.Resources.not_linked;
@@ -67,10 +67,9 @@ namespace Uiml.Gummy.Kernel.Services.ApplicationGlue
 
         private void linkIcon_DoubleClick(object sender, EventArgs e)
         {
-            if (Model.Linked)
+            if (Model.Bound)
             {
-                Model.Link.UnlinkMethodParameter(Model);
-                Model.Link = null;
+                Model.Binding.Break();
             }
             else
             {
