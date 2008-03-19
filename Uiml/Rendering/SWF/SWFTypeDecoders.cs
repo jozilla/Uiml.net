@@ -32,6 +32,7 @@ namespace Uiml.Rendering.SWF
 	using System.Reflection;
     using System.Net;
     using System.IO;
+    using System.Globalization;
 
 	using System.Windows.Forms;
 	using System.Drawing;
@@ -49,10 +50,22 @@ namespace Uiml.Rendering.SWF
         }
 
         [TypeDecoderMethod]
+        public static string DecodePointInverse(Point p)
+        {
+            return string.Format("{0},{1}", p.X, p.Y);
+        }
+
+        [TypeDecoderMethod]
         public static System.Drawing.Size DecodeSize(string val)
         {
 			string[] coords = val.Split(new Char[] {','});
 			return new System.Drawing.Size(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
+        }
+
+        [TypeDecoderMethod]
+        public static string DecodeSizeInverse(Size s)
+        {
+            return string.Format("{0},{1}", s.Width, s.Height);
         }
 
         [TypeDecoderMethod]
@@ -84,47 +97,57 @@ namespace Uiml.Rendering.SWF
 			
 				if( values[0].Trim().ToLower() == "name")
 					name = values[1];
-				else if (values[0].Trim().ToLower() == "size" )
-					size = (float) Double.Parse(values[1]);
-				else if(values[0].Trim().ToLower() == "style")
-				{
-					string [] styles = values[1].Split(new char[] {'|'});
+                else if (values[0].Trim().ToLower() == "size")
+                {
+                    NumberFormatInfo nfi = new NumberFormatInfo();
+                    nfi.NumberGroupSeparator = ".";
+                    size = (float)Double.Parse(values[1], nfi);
+                }
+                else if (values[0].Trim().ToLower() == "style")
+                {
+                    string[] styles = values[1].Split(new char[] { '|' });
 
-					for (int j = 0; j < styles.Length; j++)
-					{
-						if(styles[j].Trim().ToLower() == "bold")
-							style = style | FontStyle.Bold;
-						else if(styles[j].Trim().ToLower() == "italic")
-							style = style | FontStyle.Italic;
-						else if(styles[j].Trim().ToLower() == "regular")
-							style = style | FontStyle.Regular;
-						else if(styles[j].Trim().ToLower() == "strikeout")
-							style = style | FontStyle.Strikeout;
-						else if(styles[j].Trim().ToLower() == "underline")
-							style = style | FontStyle.Underline;
-					}
-				}
-				else if (values[0].Trim().ToLower() == "unit")
-				{
-					if(values[1].Trim().ToLower() == "display")
-						unit = GraphicsUnit.Display;
-					else if(values[1].Trim().ToLower() == "document")
-						unit = GraphicsUnit.Document;
-					else if(values[1].Trim().ToLower() == "inch")
-						unit = GraphicsUnit.Inch;
-					else if(values[1].Trim().ToLower() == "millimeter")
-						unit = GraphicsUnit.Millimeter;
-					else if(values[1].Trim().ToLower() == "pixel")
-						unit = GraphicsUnit.Pixel;
-					else if(values[1].Trim().ToLower() == "point")
-						unit = GraphicsUnit.Point;
-					else if(values[1].Trim().ToLower() == "world")
-						unit = GraphicsUnit.World;
-				}
+                    for (int j = 0; j < styles.Length; j++)
+                    {
+                        if (styles[j].Trim().ToLower() == "bold")
+                            style = style | FontStyle.Bold;
+                        else if (styles[j].Trim().ToLower() == "italic")
+                            style = style | FontStyle.Italic;
+                        else if (styles[j].Trim().ToLower() == "regular")
+                            style = style | FontStyle.Regular;
+                        else if (styles[j].Trim().ToLower() == "strikeout")
+                            style = style | FontStyle.Strikeout;
+                        else if (styles[j].Trim().ToLower() == "underline")
+                            style = style | FontStyle.Underline;
+                    }
+                }
+                else if (values[0].Trim().ToLower() == "unit")
+                {
+                    if (values[1].Trim().ToLower() == "display")
+                        unit = GraphicsUnit.Display;
+                    else if (values[1].Trim().ToLower() == "document")
+                        unit = GraphicsUnit.Document;
+                    else if (values[1].Trim().ToLower() == "inch")
+                        unit = GraphicsUnit.Inch;
+                    else if (values[1].Trim().ToLower() == "millimeter")
+                        unit = GraphicsUnit.Millimeter;
+                    else if (values[1].Trim().ToLower() == "pixel")
+                        unit = GraphicsUnit.Pixel;
+                    else if (values[1].Trim().ToLower() == "point")
+                        unit = GraphicsUnit.Point;
+                    else if (values[1].Trim().ToLower() == "world")
+                        unit = GraphicsUnit.World;
+                }
 			}
 			
 			return new Font(name, size, style, unit);
 		}
+
+        [TypeDecoderMethod]
+        public static string DecodeFontInverse(Font f)
+        {
+            return string.Format("Name={0},Size={1},Style={2},Unit={3}", f.Name, f.Size.ToString().Replace(',','.'), f.Style.ToString().Replace(',', '|'), f.Unit);
+        }
 
    		[TypeDecoderMethod]		
 		public static DateTime DecodeDateTime(string value)
@@ -135,6 +158,12 @@ namespace Uiml.Rendering.SWF
 			int year = int.Parse(coords[2]);
 			return new DateTime(year, month, day);
 		}
+
+        [TypeDecoderMethod]
+        public static string DecodeDateTimeInverse(DateTime dt)
+        {
+            return string.Format("{0}/{1}/{2}", dt.Month, dt.Day, dt.Year);
+        }
 		
    		[TypeDecoderMethod]
 		public static Appearance DecodeAppearance(string value)
@@ -144,6 +173,12 @@ namespace Uiml.Rendering.SWF
 			else
 				return Appearance.Normal;
 		}
+
+        [TypeDecoderMethod]
+        public static string DecodeAppearanceInverse(Appearance a)
+        {
+            return a.ToString();
+        }
 
    		[TypeDecoderMethod]
 		public static ScrollBars DecodeScrollBars(string value)
@@ -158,6 +193,12 @@ namespace Uiml.Rendering.SWF
 				return ScrollBars.None;
 		}
 
+        [TypeDecoderMethod]
+        public static string DecodeScrollBarsInverse(ScrollBars s)
+        {
+            return s.ToString();
+        }
+
    		[TypeDecoderMethod]
 		public static SelectionMode DecodeSelectionMode(string value)
 		{
@@ -170,6 +211,12 @@ namespace Uiml.Rendering.SWF
 			else
 				return SelectionMode.One;
 		}
+
+        [TypeDecoderMethod]
+        public static string DecodeSelectionModeInverse(SelectionMode sel)
+        {
+            return sel.ToString();
+        }
 
    		[TypeDecoderMethod]
 		public static View DecodeView(string value)
@@ -184,6 +231,12 @@ namespace Uiml.Rendering.SWF
 				return View.Details;
 		}
 
+        [TypeDecoderMethod]
+        public static string DecodeViewInverse(View v)
+        {
+            return v.ToString();
+        }
+
    		[TypeDecoderMethod]		
 		public static Orientation DecodeOrientation(string value)
 		{
@@ -192,6 +245,12 @@ namespace Uiml.Rendering.SWF
 			else
 				return Orientation.Horizontal;
 		}
+
+        [TypeDecoderMethod]
+        public static string DecodeOrientationInverse(Orientation o)
+        {
+            return o.ToString();
+        }
 
    		[TypeDecoderMethod]
 		public static TickStyle DecodeTickStyle(string value)
@@ -206,8 +265,14 @@ namespace Uiml.Rendering.SWF
 				return TickStyle.TopLeft;
 		}
 
+        [TypeDecoderMethod]
+        public static string DecodeTickStyleInverse(TickStyle t)
+        {
+            return t.ToString();
+        }
+
    		[TypeDecoderMethod]
-        public static object DecodeTabAlignment(string value)
+        public static TabAlignment DecodeTabAlignment(string value)
         {
             switch (value.ToLower())
             {
@@ -221,6 +286,12 @@ namespace Uiml.Rendering.SWF
                 default:
                     return System.Windows.Forms.TabAlignment.Top;
             }
+        }
+
+        [TypeDecoderMethod]
+        public static string DecodeTabAlignmentInverse(TabAlignment t)
+        {
+            return t.ToString();
         }
 
    		[TypeDecoderMethod]
@@ -240,6 +311,30 @@ namespace Uiml.Rendering.SWF
 			
 			return top;
 		}
+
+        [TypeDecoderMethod]
+        public static string DecodeListViewItemInverse(ListViewItem item)
+        {
+            string str = string.Empty;
+
+            if (item.SubItems.Count > 0)
+            {
+                int i = 0;
+                foreach (ListViewItem.ListViewSubItem child in item.SubItems)
+                {
+                    str += child.Text;
+
+                    if (i != item.SubItems.Count - 1)
+                        str += ";";
+
+                    i++;
+                }
+            }
+            else
+                str = item.Text;
+
+            return str;
+        }
 
         // Depends on Constant <=> string[] decoder method
    		[TypeDecoderMethod(new Type[] {typeof(Constant), typeof(string[])})]
@@ -337,6 +432,15 @@ namespace Uiml.Rendering.SWF
 			return System.Drawing.Color.FromArgb(Int32.Parse(coords[0]), Int32.Parse(coords[1]), Int32.Parse(coords[2]));
 		}
 
+        public static string DecodeColorInverse(Color col)
+        {
+            if (col.IsKnownColor)
+            {
+                return col.Name.ToLower();
+            }
+            else
+                return string.Format("{0},{1},{2}", col.R, col.G, col.B);
+        }
 
 		///<summary>
 		///Decodes a color description into a System.Drawing.Color constant color
@@ -491,6 +595,133 @@ namespace Uiml.Rendering.SWF
 				default : return System.Drawing.Color.Black;
 			}
 		}
+
+        public static bool Test()
+        {
+            bool ok = true;
+            string s = string.Empty;
+
+            // DecodePoint
+            Point p1 = new Point(5, 104);
+            s = DecodePointInverse(p1);
+            Point p2 = DecodePoint(s);
+
+            if (!p1.Equals(p2))
+                ok = false;
+
+            // DecodeSize
+            Size s1 = new Size(1254, 67);
+            s = DecodeSizeInverse(s1);
+            Size s2 = DecodeSize(s);
+
+            if (!s1.Equals(s2))
+                ok = false;
+
+            // DecodeFont
+            Font f1 = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            s = DecodeFontInverse(f1);
+            Font f2 = DecodeFont(s);
+
+            if (!f1.Equals(f2))
+                ok = false;
+
+            // DecodeDateTime
+            DateTime t1 = DateTime.Today;
+            s = DecodeDateTimeInverse(t1);
+            DateTime t2 = DecodeDateTime(s);
+
+            if (!t1.Equals(t2))
+                ok = false;
+
+            // DecodeAppearance
+            Appearance a1 = Appearance.Button;
+            s = DecodeAppearanceInverse(a1);
+            Appearance a2 = DecodeAppearance(s);
+
+            if (!t1.Equals(t2))
+                ok = false;
+
+            // DecodeScrollBars
+            ScrollBars sb1 = ScrollBars.Both;
+            s = DecodeScrollBarsInverse(sb1);
+            ScrollBars sb2 = DecodeScrollBars(s);
+
+            if (!sb1.Equals(sb2))
+                ok = false;
+
+            // DecodeSelectionMode
+            SelectionMode sm1 = SelectionMode.MultiSimple;
+            s = DecodeSelectionModeInverse(sm1);
+            SelectionMode sm2 = DecodeSelectionMode(s);
+
+            if (!sm1.Equals(sm2))
+                ok = false;
+
+            // DecodeView
+            View v1 = View.LargeIcon;
+            s = DecodeViewInverse(v1);
+            View v2 = DecodeView(s);
+
+            if (!v1.Equals(v2))
+                ok = false;
+
+            // DecodeOrientation
+            Orientation o1 = Orientation.Vertical;
+            s = DecodeOrientationInverse(o1);
+            Orientation o2 = DecodeOrientation(s);
+
+            if (!o1.Equals(o2))
+                ok = false;
+
+            // DecodeTickStyle
+            TickStyle ts1 = TickStyle.BottomRight;
+            s = DecodeTickStyleInverse(ts1);
+            TickStyle ts2 = DecodeTickStyle(s);
+
+            if (!ts1.Equals(ts2))
+                ok = false;
+
+            // DecodeTabAlignment
+            TabAlignment ta1 = TabAlignment.Right;
+            s = DecodeTabAlignmentInverse(ta1);
+            TabAlignment ta2 = DecodeTabAlignment(s);
+
+            if (!ta1.Equals(ta2))
+                ok = false;
+
+            // DecodeListViewItem (single)
+            ListViewItem lv1 = new ListViewItem("John Doe");
+            s = DecodeListViewItemInverse(lv1);
+            ListViewItem lv2 = DecodeListViewItem(s);
+
+            /* not comparable (only by reference)
+            if (!lv1.Equals(lv2))
+                ok = false;
+             */
+
+            // DecodeListViewItem (subitems)
+            lv1 = new ListViewItem();
+            lv1.SubItems.Add("John Doe");
+            lv1.SubItems.Add("Mountain View");
+            lv1.SubItems.Add("43");
+
+            s = DecodeListViewItemInverse(lv1);
+            lv2 = DecodeListViewItem(s);
+
+            /* not comparable (only by reference)
+            if (!lv1.Equals(lv2))
+                ok = false;
+             */
+
+            // DecodeColor
+            s = DecodeColorInverse(Color.BlanchedAlmond);
+            Color c = DecodeColor(s);
+
+            if (!c.Equals(Color.BlanchedAlmond))
+                ok = false;
+
+            return ok;
+        }
 	}	
 }
 
