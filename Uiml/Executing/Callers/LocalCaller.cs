@@ -109,7 +109,9 @@ namespace Uiml.Executing.Callers
 
 			for(int k=0; k<args.Length; k++)
 			{
-				String propValue = (string)((Uiml.Executing.Param)Call.Params[k]).Value(Call.Renderer);
+				//String propValue = (string)((Uiml.Executing.Param)Call.Params[k]).Value(Call.Renderer);
+                // don't use strings, but the real complex types!
+                object propValue = ((Uiml.Executing.Param)Call.Params[k]).Value(Call.Renderer);
 				args[k] = TypeDecoder.Instance.GetArg(propValue, tparamTypes[k]);
 			}
 			
