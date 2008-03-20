@@ -47,6 +47,9 @@ namespace Uiml.Rendering.SWF
 
 		public SWFRenderer()
 		{
+            Application.EnableVisualStyles();
+            Application.DoEvents();
+
 			ExternalLibraries.Instance.Add(SYSTEM_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(SYSTEM_ASSEMBLY));
 			ExternalLibraries.Instance.Add(DRAWING_ASSEMBLY, AssemblyLoader.LoadFromGacOrAppDir(DRAWING_ASSEMBLY));
 

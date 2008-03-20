@@ -48,7 +48,6 @@ namespace Uiml.Rendering.SWF
 		{
 			try
 			{
-                Application.EnableVisualStyles();
 				Application.Run(this);
 			}
 			catch(System.Exception e)
