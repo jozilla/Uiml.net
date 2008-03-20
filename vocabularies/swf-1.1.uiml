@@ -196,7 +196,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
     <d-property id="clicked" maps-type="event" maps-to="Click">
       <d-param type="System.Windows.Forms.Control.OnClick"/>
     </d-property>
-    <d-property id="entered" maps-type="event" maps-to="Entered">
+    <d-property id="entered" maps-type="event" maps-to="Enter">
       <d-param type="System.Windows.Forms.Control.OnEnter"/>
     </d-property>
     <d-property id="left" maps-type="event" maps-to="Leave">
@@ -316,6 +316,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
       <d-param type="System.Drawing.Color"/>
     </d-property>
     <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <!-- events -->
+    <d-property id="textChanged" maps-type="event" maps-to="TextChanged">
+      <d-param type="System.Windows.Forms.Control.OnTextChanged"/>
+    </d-property>
   </d-class>
 
   <d-class id="Text" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TextBox">
@@ -384,6 +388,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
       <d-param type="System.Windows.Forms.ScrollBars"/>
     </d-property>
     <d-property id="scrollbars" maps-type="getMethod" maps-to="ScrollBars" return-type="System.Windows.Forms.ScrollBars"/>
+    <!-- events -->
+    <d-property id="textChanged" maps-type="event" maps-to="TextChanged">
+      <d-param type="System.Windows.Forms.Control.OnTextChanged"/>
+    </d-property>
   </d-class>
 
   <d-class id="CheckButton" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.CheckBox">
@@ -447,7 +455,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
     <d-property id="clicked" maps-type="event" maps-to="Click">
       <d-param type="System.Windows.Forms.Control.OnClick"/>
     </d-property>
-    <d-property id="entered" maps-type="event" maps-to="Entered">
+    <d-property id="entered" maps-type="event" maps-to="Enter">
       <d-param type="System.Windows.Forms.Control.OnEnter"/>
     </d-property>
     <d-property id="left" maps-type="event" maps-to="Leave">
@@ -517,7 +525,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
     <d-property id="clicked" maps-type="event" maps-to="Click">
       <d-param type="System.Windows.Forms.Control.OnClick"/>
     </d-property>    
-    <d-property id="entered" maps-type="event" maps-to="Entered">
+    <d-property id="entered" maps-type="event" maps-to="Enter">
       <d-param type="System.Windows.Forms.Control.OnEnter"/>
     </d-property>
     <d-property id="left" maps-type="event" maps-to="Leave">
@@ -587,7 +595,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
     <d-property id="clicked" maps-type="event" maps-to="Click">
       <d-param type="System.Windows.Forms.Control.OnClick"/>
     </d-property>
-    <d-property id="entered" maps-type="event" maps-to="Entered">
+    <d-property id="entered" maps-type="event" maps-to="Enter">
       <d-param type="System.Windows.Forms.Control.OnEnter"/>
     </d-property>
     <d-property id="left" maps-type="event" maps-to="Leave">
@@ -787,9 +795,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
     </d-property>
     <d-property id="selectedIndex" maps-type="getMethod" maps-to="SelectedIndex" return-type="System.Int32"/>
     <d-property id="entries" return-type="System.Windows.Forms.ListView.SelectedListViewItemCollection" maps-type="getMethod" maps-to="SelectedItems"/>
+    <d-property id="entry" return-type="System.String" maps-type="getMethod" maps-to="SelectedItem"/>
     <!-- events -->
     <d-property id="select" maps-type="event" maps-to="SelectionChangeCommitted">
-      <d-param type="System.EventHandler"/>
+      <d-param type="System.Windows.Forms.ComboBox.OnSelectionChangeCommitted"/>
     </d-property>
   </d-class>
 
@@ -854,15 +863,16 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.Int32"/>
 		</d-property>
     <d-property id="selectedIndex" maps-type="getMethod" maps-to="SelectedIndex" return-type="System.Int32"/>
-		<d-property id="entry" return-type="System.Windows.Forms.ListBox.SelectedObjectCollection" maps-type="getMethod" maps-to="SelectedItems"/>
-		<d-property id="selectionMode" maps-type="setMethod" maps-to="SelectionMode">
-			<d-param type="System.Windows.Forms.SelectionMode"/>
-		</d-property>
+	<d-property id="entries" return-type="System.Windows.Forms.ListBox.SelectedObjectCollection" maps-type="getMethod" maps-to="SelectedItems"/>
+	<d-property id="entry" return-type="System.String" maps-type="getMethod" maps-to="SelectedItem"/>
+	<d-property id="selectionMode" maps-type="setMethod" maps-to="SelectionMode">
+		<d-param type="System.Windows.Forms.SelectionMode"/>
+	</d-property>
     <d-property id="selectionMode" maps-type="getMethod" maps-to="SelectionMode" return-type="System.Windows.Forms.SelectionMode"/>
-		<!-- events -->
-		<d-property id="select" maps-type="event" maps-to="SelectedValueChanged">
-			<d-param type="System.EventHandler"/>
-		</d-property>
+	<!-- events -->
+	<d-property id="select" maps-type="event" maps-to="SelectedValueChanged">
+		<d-param type="System.Windows.Forms.ListControl.OnSelectedValueChanged"/>
+	</d-property>
 	</d-class>
 	
 	<d-class id="Calendar" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.MonthCalendar">
@@ -938,13 +948,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.Boolean"/>
 		</d-property>
     <d-property id="showTodayCircle" maps-type="getMethod" maps-to="ShowTodayCircle" return-type="System.Boolean"/>
-		<d-property id="selectionStart" return-type="System.DateTime" maps-type="getMethod" maps-to="SelectionStart"/>
-		<d-property id="selectionRange" return-type="System.Windows.Forms.SelectionRange" maps-type="getMethod" maps-to="SelectionRange"/>
-		<d-property id="selectionEnd" return-type="System.DataTime" maps-type="getMethod" maps-to="SelectionEnd"/>
-		<!-- events -->
-		<d-property id="daySelected" maps-type="event" maps-to="DateSelected">
-			<d-param type="System.Windows.Forms.DateRangeEventHandler"/>
-		</d-property>
+	<d-property id="selectionStart" return-type="System.DateTime" maps-type="getMethod" maps-to="SelectionStart"/>
+	<d-property id="selectionRange" return-type="System.Windows.Forms.SelectionRange" maps-type="getMethod" maps-to="SelectionRange"/>
+	<d-property id="selectionEnd" return-type="System.DataTime" maps-type="getMethod" maps-to="SelectionEnd"/>
+	<!-- events -->
+	<d-property id="daySelected" maps-type="event" maps-to="DateChanged">
+		<d-param type="System.Windows.Forms.MonthCalendar.OnDateChanged"/>
+	</d-property>
 	</d-class>
 
 	<d-class id="HorizontalScroll" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.HScrollBar">
@@ -1139,10 +1149,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
       <d-param type="System.Windows.Forms.ColumnHeader"/>
     </d-property>
     <d-property id="title" maps-type="getMethod" maps-to="Columns.Add" return-type="System.Windows.Forms.ColumnHeader"/>
-    <!-- events -->
-    <d-property id="select" maps-type="event" maps-to="SelectedIndexChanged">
-      <d-param type="System.EventHandler"/>
-    </d-property>
+	<!-- events -->
+	<d-property id="select" maps-type="event" maps-to="SelectedIndexChanged">
+		<d-param type="System.Windows.Forms.ListView.OnSelectedIndexChanged"/>
+	</d-property>
   </d-class>
 
   <d-class id="Tree" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TreeView">
@@ -1429,14 +1439,14 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
       <d-param type="System.Drawing.Color"/>
     </d-property>
     <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
-		<d-property id="tabPos" return-type="System.Windows.Forms.TabAlignment" maps-type="getMethod" maps-to="Alignment"/>
-		<d-property id="tabPos" maps-type="setMethod" maps-to="Alignment">
-			<d-param type="System.Windows.Forms.TabAlignment"/>
-		</d-property>
-		<!-- events -->
-		<d-property id="switch" maps-type="event" maps-to="SelectedIndexChanged">
-			<d-param type="System.EventHandler"/>
-		</d-property>
+    <d-property id="tabPos" return-type="System.Windows.Forms.TabAlignment" maps-type="getMethod" maps-to="Alignment"/>
+    <d-property id="tabPos" maps-type="setMethod" maps-to="Alignment">
+        <d-param type="System.Windows.Forms.TabAlignment"/>
+    </d-property>
+    <!-- events -->
+    <d-property id="switch" maps-type="event" maps-to="SelectedIndexChanged">
+        <d-param type="System.Windows.Forms.TabControl.OnSelectedIndexChanged"/>
+    </d-property>
 	</d-class>
 
 	<d-class id="TabPage" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TabPage">
@@ -1498,11 +1508,14 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnClick"/>
 	<d-class id="ButtonLeft" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnLeave"/>
 	<d-class id="ButtonEntered" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnEnter"/>
-	<!-- TODO: make this event actually work! -->
-	<d-class id="DaySelected" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.DateRangeEventHandler"/>
-	<!-- /TODO -->
-	<d-class id="EntrySelect" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
-	<d-class id="TabSwitched" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
+    <!-- TODO: make this event actually work -> needs support for different event handlers -->
+	<d-class id="DateChanged" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.MonthCalendar.OnDateChanged"/>
+    <!-- /TODO -->
+	<d-class id="ComboSelectionChanged" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.ComboBox.OnSelectionChangeCommitted" />
+	<d-class id="ListBoxSelectionChanged" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.ListControl.OnSelectedValueChanged"/>
+	<d-class id="ListViewSelectionChanged" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.ListView.OnSelectedIndexChanged"/>
+	<d-class id="TextChanged" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnTextChanged"/>
+	<d-class id="TabSwitched" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.TabControl.OnSelectedIndexChanged"/>
  </presentation>
  <logic>
    <!-- 

@@ -474,6 +474,29 @@ namespace Uiml.Peers
 			throw new MappingNotFoundException(delegateTypeName);
 		}
 
+        public DClass GetEventClassFor(DProperty prop)
+        {
+            IEnumerator enumParam = prop.Search(typeof(DParam)).GetEnumerator();
+
+            while (enumParam.MoveNext())
+            {
+                DParam param = ((DParam)enumParam.Current);
+
+                IDictionaryEnumerator e = m_dictDCls.GetEnumerator();
+                
+                while (e.MoveNext())
+                {
+                    DClass cls = (DClass) e.Value;
+                    if (cls.MapsTo == param.Type)
+                        return cls;
+                }
+
+                throw new MappingNotFoundException(prop.Identifier, param.Type);
+            }
+            
+            throw new MappingNotFoundException(prop.Identifier);
+        }
+
         public DParam[] GetParams(string identifier, string abstractName)
         {
            return GetParams(identifier, abstractName, null);

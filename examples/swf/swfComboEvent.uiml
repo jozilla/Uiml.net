@@ -27,7 +27,7 @@
 		<behavior>
 			<rule>
 				<condition>
-					<event part-name="Com" class="EntrySelect"/>
+					<event part-name="Com" class="ComboSelectionChanged"/>
 				</condition>
 				<action>
 					<call name="Console.println">

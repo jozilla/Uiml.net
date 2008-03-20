@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+    <interface>
+        <structure>
+            <part id="container" class="Container">			
+                <part id="calendar" class="Calendar"/>			
+            </part>
+        </structure>
+        <style>
+            <property part-name="container" name="size">300,300</property>
+            <property part-name="calendar" name="position">20,20</property>
+            <property part-name="calendar" name="size">100,150</property>
+            <property part-name="calendar" name="label">Simple Calendar</property>
+            <!-- dates are specified as month/day/year -->
+            <property part-name="calendar" name="minDate">01/01/2004</property>
+            <property part-name="calendar" name="maxDate">12/31/2004</property>
+        </style>
+        <behavior>
+            <rule>
+                <condition>
+                    <event part-name="calendar" class="DateChanged"/>
+                </condition>
+                <action>
+                    <call name="Console.println">
+                        <param>
+                            <call name="String.concatenate">
+                                <param>
+                                    <call name="String.concatenate">
+                                        <param>You have selected "</param>
+                                        <param><property part-name="calendar" name="selectionStart"/></param>
+                                    </call>
+                                </param>
+                                <param>"</param>
+                            </call>
+                        </param>
+                    </call>
+                </action>
+            </rule>
+        </behavior>
+    </interface>
+    <peers>
+        <presentation base="swf-1.1.uiml"/>
+    </peers>
+</uiml>
