@@ -177,21 +177,23 @@ namespace Uiml.Executing
 		}
 		
 		public System.Object Value(IRenderer renderer)
-		{		
+		{
+            // don't convert to a string, because we might need
+            // complex types coming from the app logic!
 			if(Lazy)
 			{
 				if(m_value is Call)
-					return ((Call)m_value).Execute(renderer).ToString();
+					return ((Call)m_value).Execute(renderer);//.ToString();
 				if(m_value is Uiml.Property)
 				{
 					Property prop = (Property)m_value;
 					if(prop.Lazy)
 						prop.Resolve(renderer);
-					return prop.GetCurrentValue(renderer.PropertySetter, m_partTree).ToString();
+                    return prop.GetCurrentValue(renderer.PropertySetter, m_partTree);//.ToString();
 				}
 			}
 				
-			return (string)m_value;
+			return /*(string)*/m_value;
 		}
 
 		public bool Lazy
