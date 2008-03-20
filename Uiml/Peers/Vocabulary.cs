@@ -412,20 +412,35 @@ namespace Uiml.Peers
 			return null; 
 		}
 
-		protected string GetProperty(string identifier, string abstractName, string mapsType)
+        protected DProperty GetDProperty(string identifier, string abstractName, string mapsType)
+        {
+            DClass cls = FindDClass(abstractName);
+
+            if (cls == null)
+                throw new MappingNotFoundException(abstractName);
+
+            DProperty prop = FindDProperty(cls.Search(typeof(DProperty)), identifier, mapsType);
+
+            if (prop != null)
+                return prop;
+            else
+                throw new MappingNotFoundException(abstractName, identifier);
+        }
+
+		public string GetProperty(string identifier, string abstractName, string mapsType)
 		{
-			DClass cls = FindDClass(abstractName);
-
-			if(cls == null)
-				throw new MappingNotFoundException(abstractName);
-			
-			DProperty prop = FindDProperty(cls.Search(typeof(DProperty)), identifier, mapsType);
-
-			if(prop != null)
-				return prop.MapsTo;
-			else
-				throw new MappingNotFoundException(abstractName, identifier);			
+            return GetDProperty(identifier, abstractName, mapsType).MapsTo;
 		}
+
+        public DProperty GetDPropertyGetter(string identifier, string abstractName)
+        {
+            return GetDProperty(identifier, abstractName, DProperty.GET_METHOD);
+        }
+
+        public DProperty GetDPropertySetter(string identifier, string abstractName)
+        {
+            return GetDProperty(identifier, abstractName, DProperty.SET_METHOD);
+        }
 
 		public string GetPropertyGetter(string identifier, string abstractName)
 		{
