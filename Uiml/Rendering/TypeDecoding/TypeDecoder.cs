@@ -242,7 +242,10 @@ namespace Uiml.Rendering.TypeDecoding
 		    }
 		    
 		    // FIXME
-		    return null;
+            if (t.FullName == "System.String")
+                return oValue.ToString();
+            else
+                return null;
 		}
 		
 		public static string PARSE = "Parse";
