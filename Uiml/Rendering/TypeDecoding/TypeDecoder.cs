@@ -84,14 +84,30 @@ namespace Uiml.Rendering.TypeDecoding
 	
 		public object GetArg(object o, Type t)
 		{
+            object result;
+
 			if (t.IsPrimitive)
 			{
-				return ConvertPrimitive(t, o);
+				result = ConvertPrimitive(t, o);
 			}
 			else
 			{
-				return ConvertComplex(t, o);
+				result = ConvertComplex(t, o);
 			}
+
+            if (result == null)
+            {
+                try
+                {
+                    result = SystemConvert(t, o);
+                }
+                catch (Exception e)
+                {
+                    // ignore
+                }
+            }
+
+            return result;
 		}
 
 		public object[] GetArgs(Property p, Type[] types)
@@ -168,7 +184,7 @@ namespace Uiml.Rendering.TypeDecoding
 		/// </summary>
 		protected object ConvertComplex(Type t, Property p)
 		{
-		    return ConvertComplex(t, p.Value);
+            return ConvertComplex(t, p.Value);
 		}
 		
 		/// <summary>
@@ -241,12 +257,16 @@ namespace Uiml.Rendering.TypeDecoding
     		    }
 		    }
 		    
-		    // FIXME
-            if (t.FullName == "System.String")
-                return oValue.ToString();
-            else
-                return null;
+            return null;
 		}
+
+        protected object SystemConvert(Type t, object o)
+        {
+            Type convertType = Type.GetType("System.Convert");
+            string methodName = string.Format("To{0}", t.Name);
+            MethodInfo convertMethod = convertType.GetMethod(methodName, new Type[] { o.GetType() });
+            return convertMethod.Invoke(null, new object[] { o });
+        }
 		
 		public static string PARSE = "Parse";
 	}
