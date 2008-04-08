@@ -30,7 +30,7 @@ namespace Uiml.Rendering.CompactSWF
 	using System;
 	using System.Collections;
 	using System.Reflection;
-
+    
 	using System.Windows.Forms;
 	using System.Drawing;
 	using Uiml;
@@ -51,6 +51,12 @@ namespace Uiml.Rendering.CompactSWF
         {
             string[] coords = val.Split(new Char[] { ',' });
             return new System.Drawing.Size(Int32.Parse(coords[0]), Int32.Parse(coords[1]));
+        }
+
+        [TypeDecoderMethod]
+        public static System.Drawing.Image DecodeImage(string file)
+        {
+            return new Bitmap((string) file);
         }
 
 		///<summary>

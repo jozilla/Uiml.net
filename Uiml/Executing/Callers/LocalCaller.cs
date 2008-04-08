@@ -271,17 +271,12 @@ namespace Uiml.Executing.Callers
 					return null;	
 				}
 
+                object res = null;
+
                 try
                 {
-                    return ExecuteMethod(concreteMethodName, type/*, logic*/, out outputParams);
-                }
-                catch (TargetException)
-                {
-                    // non-static method: try to create default object
-                    object obj = Activator.CreateInstance(type);
-                    Call.Connect(obj);
-                    return ExecuteMethod(concreteMethodName, type, obj, out outputParams);
-
+                    res = ExecuteMethod(concreteMethodName, type/*, logic*/, out outputParams);
+                    return res;
                 }
                 catch (NullReferenceException)//method failed, try property
                 {
@@ -295,6 +290,28 @@ namespace Uiml.Executing.Callers
                         return ExecuteField(concreteMethodName, type);
                     }
                 }
+                #if COMPACT
+                catch (Exception e)
+                {
+                    if (res == null)
+                    {
+                        // non-static method: try to create default object
+                        object obj = Activator.CreateInstance(type);
+                        Call.Connect(obj);
+                        return ExecuteMethod(concreteMethodName, type, obj, out outputParams);
+                    }
+                    else
+                        throw e;
+                }
+                #else
+                catch (TargetException)
+                {
+                    // non-static method: try to create default object
+                    object obj = Activator.CreateInstance(type);
+                    Call.Connect(obj);
+                    return ExecuteMethod(concreteMethodName, type, obj, out outputParams);
+                }
+                #endif
             }
             catch(MappingNotFoundException mnfe) 
 			{
