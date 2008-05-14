@@ -87,6 +87,42 @@ namespace Uiml.Peers
 
             return clone;
         }
+        
+        public static DProperty FromProperty(Property prop, Part part, Vocabulary voc)
+        {
+            DProperty dprop;
+
+            try
+            {
+                dprop = voc.GetDPropertyGetter(prop.Name, part.Class);
+            }
+            catch
+            {
+                dprop = voc.GetDPropertySetter(prop.Name, part.Class);
+            }
+
+            return dprop;
+        }
+        
+        public Type GetTypeOfValue()
+        {
+            // getters
+            if (MapsType == DProperty.GET_METHOD)
+            {
+                return Type.GetType(ReturnType);
+            }
+            // setters
+            else if (MapsType == DProperty.SET_METHOD)
+            {
+                // only handle single parameter children for now
+                if (Children.Count == 1) 
+                {
+                    return Type.GetType(((DParam) Children[0]).Type);
+                }
+            }
+
+            return null;
+        }
 
 		public void Process(XmlNode n)
 		{
