@@ -104,24 +104,20 @@ namespace Uiml.Peers
             return dprop;
         }
         
-        public Type GetTypeOfValue()
+        public string GetTypeOfValue()
         {
             // getters
             if (MapsType == DProperty.GET_METHOD)
             {
-                return Type.GetType(ReturnType);
+                return ReturnType;
             }
-            // setters
-            else if (MapsType == DProperty.SET_METHOD)
+            // setters: only handle single parameter children for now
+            else if (MapsType == DProperty.SET_METHOD && Children.Count == 1)
             {
-                // only handle single parameter children for now
-                if (Children.Count == 1) 
-                {
-                    return Type.GetType(((DParam) Children[0]).Type);
-                }
+                return ((DParam)Children[0]).Type;
             }
-
-            return null;
+            else
+                return null;
         }
 
 		public void Process(XmlNode n)
