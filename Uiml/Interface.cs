@@ -173,63 +173,47 @@ namespace Uiml{
 
         public ArrayList UStructure
 		{
-			get { 
-				if(m_structure.Count == 0)
-					return null;
-				else
-					return m_structure;  
+			get
+            {
+                return m_structure;  
 			}
-			set { m_structure.Add(value); }
 		}
 
 		public ArrayList UStyle
 		{
-			get {
-				if(m_style.Count == 0)
-					return null;
-				else
-					return m_style;  
+			get 
+            {
+                return m_style;  
 			}
-			set { m_style.Add(value); }
 		}
 
         public ArrayList UBehavior
 		{
-			get { 
-				if(m_behavior.Count == 0)
-					return null;
-				else
-					return m_behavior;  
+			get 
+            { 
+			    return m_behavior;  
 			}
-			set { m_behavior.Add(value); }
 		}
 
 		public ArrayList UContent
 		{
-			get {
-				if(m_content.Count == 0)
-					return null;
-				else
-				 return m_content; 
-			}
-			set { m_content.Add(value); }
+			get 
+            {
+		        return m_content; 
+			}			
 		}
 
 		public ArrayList ULayout
 		{
 			get
 			{
-				if (m_layout.Count == 0)
- 					return null;
- 				else
-					return m_layout; 
+				return m_layout; 
  			}
- 			set { m_layout.Add(value); }
 		}
 
 		public bool HasLayout
 		{
-			get { return ULayout != null; }
+			get { return ULayout.Count > 0; }
 		}
 
 		public void AttachPeers(ArrayList peers)

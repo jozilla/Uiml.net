@@ -199,7 +199,7 @@ namespace Uiml {
 			ExternalObjects.Instance.Add(o.GetType().ToString(),o);
 		
 			// connect to the rules		
-			if(UInterface.UBehavior != null)
+			if(UInterface.UBehavior.Count > 0)
 			{				
 				IEnumerator er = ((Behavior)UInterface.UBehavior[0]).Rules;
 				while(er.MoveNext())
@@ -213,7 +213,7 @@ namespace Uiml {
 		{
 			((Structure)UInterface.UStructure[0]).Top.Disconnect(o, this);
 			ExternalObjects.Instance.Remove(o);
-			if(UInterface.UBehavior != null)
+			if(UInterface.UBehavior.Count > 0)
 			{				
 				IEnumerator er = ((Behavior)UInterface.UBehavior[0]).Rules;
 				while(er.MoveNext())
