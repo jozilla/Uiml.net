@@ -294,6 +294,31 @@ namespace Uiml.Rendering.SWF
             return t.ToString();
         }
 
+        [TypeDecoderMethod]
+        public static ImageLayout DecodeImageLayout(string value)
+        {
+            switch (value.ToLower())
+            {
+                case "none":
+                    return ImageLayout.None;
+                case "center":
+                    return ImageLayout.Center;
+                case "stretch":
+                    return ImageLayout.Stretch;
+                case "zoom":
+                    return ImageLayout.Zoom;
+                case "tile":
+                default:
+                    return ImageLayout.Tile;
+            }
+        }
+
+        [TypeDecoderMethod]
+        public static string DecodeImageLayoutInverse(ImageLayout il)
+        {
+            return il.ToString();
+        }
+
    		[TypeDecoderMethod]
 		public static ListViewItem DecodeListViewItem(string s)
 		{

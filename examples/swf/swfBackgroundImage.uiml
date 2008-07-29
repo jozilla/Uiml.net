@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="Container1" class="Container">			
+			<part id="Logo" class="Image"/>
+		</part>
+		</structure>
+		<style>
+			<property part-name="Container1" name="size">300,300</property>
+      <property part-name="Container1" name="backgroundImage">examples/gradient.gif</property>
+      <property part-name="Container1" name="backgroundImageLayout">Stretch</property>
+			<property part-name="Logo" name="position">10,10</property>
+      <property part-name="Logo" name="background">transparent</property>
+      <property part-name="Logo" name="size">191,26</property>      
+      <property part-name="Logo" name="file">examples/logo.gif</property>
+		</style>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+	</peers>
+</uiml>
