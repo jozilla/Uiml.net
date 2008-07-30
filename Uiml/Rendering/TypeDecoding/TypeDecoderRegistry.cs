@@ -281,17 +281,34 @@ namespace Uiml.Rendering.TypeDecoding
 	    /// </summary>
 	    /// <param name="from">The type that we want to decode from</param>
   	    /// <param name="to">The type that we want to decode to</param>
+        /// <param name="deep">If true, specifies that we want to include indirect type decoders (e.g. types A->C through A->B and B->C)</param>
 	    /// <returns>
 	    /// True if a decoder was found.
 	    /// </returns>
-		public bool HasDecoder(Type from, Type to)
+		public bool HasDecoder(Type from, Type to, bool deep)
 		{
-		    return HasDecoder(new Signature(from, to));
+		    return HasDecoder(new Signature(from, to), deep);
 		}
+
+        public bool HasDecoder(Type from, Type to)
+        {
+            return HasDecoder(from, to, false);
+        }
 		
-		public bool HasDecoder(Signature s)
+		public bool HasDecoder(Signature s, bool deep)
 		{
-		    return m_decoders.ContainsKey(s);
+            if (!deep)
+                return m_decoders.ContainsKey(s);
+            else
+            {
+                List<Signature[]> pairs = FindIndirect(s);
+                return pairs.Count > 0;
+            }
 		}
+
+        public bool HasDecoder(Signature s)
+        {
+            return HasDecoder(s, false);
+        }
     }
 }

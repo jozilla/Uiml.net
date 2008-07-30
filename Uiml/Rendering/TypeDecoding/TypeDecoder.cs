@@ -147,6 +147,33 @@ namespace Uiml.Rendering.TypeDecoding
 			return args;
 		}
 
+        /// <summary>
+        /// Checks whether a decoder exists for a certain signature.
+        /// </summary>
+        /// <param name="from">The type that we want to decode from</param>
+        /// <param name="to">The type that we want to decode to</param>
+        /// <param name="deep">If true, specifies that we want to include indirect type decoders (e.g. types A->C through A->B and B->C)</param>
+        /// <returns>
+        /// True if a decoder was found.
+        /// </returns>
+        public bool HasDecoder(Type from, Type to, bool deep)
+        {
+            return Registry.HasDecoder(new Signature(from, to), deep);
+        }
+
+        /// <summary>
+        /// Checks whether a decoder exists for a certain signature.
+        /// </summary>
+        /// <param name="from">The type that we want to decode from</param>
+        /// <param name="to">The type that we want to decode to</param>
+        /// <returns>
+        /// True if a decoder was found.
+        /// </returns>
+        public bool HasDecoder(Type from, Type to)
+        {
+            return Registry.HasDecoder(from, to, false);
+        }
+
 		/// <summary>
 		/// Helper function to convert a property's value to a primitive type 
 		/// (e.g. char, int, float, ...).
