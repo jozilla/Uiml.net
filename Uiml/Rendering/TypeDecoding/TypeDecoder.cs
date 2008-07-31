@@ -54,6 +54,22 @@ namespace Uiml.Rendering.TypeDecoding
 		private TypeDecoder() 
 		{
 		    Registry = new TypeDecoderRegistry();
+
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Boolean"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Char"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.SByte"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Byte"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Int16"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Int32"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Int64"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.UInt16"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.UInt32"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.UInt64"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Single"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Double"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Decimal"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.DateTime"));
+            SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.String"));
 		}
 		
 		public void Register(Type t)
@@ -158,7 +174,17 @@ namespace Uiml.Rendering.TypeDecoding
         /// </returns>
         public bool HasDecoder(Type from, Type to, bool deep)
         {
-            return Registry.HasDecoder(new Signature(from, to), deep);
+            bool inRegistry = Registry.HasDecoder(new Signature(from, to), deep);
+
+            if (inRegistry)
+                return true;
+            else if (SYSTEM_CONVERT_TYPES.Contains(from) && SYSTEM_CONVERT_TYPES.Contains(to))
+                // Check if they are both part of the System.Convert types. 
+                // This will also cover the case when to and from 
+                // are both the same type.
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
@@ -296,6 +322,7 @@ namespace Uiml.Rendering.TypeDecoding
         }
 		
 		public static string PARSE = "Parse";
+        public static List<Type> SYSTEM_CONVERT_TYPES = new List<Type>();
 	}
 
 }

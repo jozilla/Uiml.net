@@ -297,17 +297,12 @@ namespace Uiml.Rendering.TypeDecoding
 		
 		public bool HasDecoder(Signature s, bool deep)
 		{
-            if (s.From == s.To) // duh!
-                return true;
+            if (!deep)
+                return m_decoders.ContainsKey(s);
             else
             {
-                if (!deep)
-                    return m_decoders.ContainsKey(s);
-                else
-                {
-                    List<Signature[]> pairs = FindIndirect(s);
-                    return pairs.Count > 0;
-                }
+                List<Signature[]> pairs = FindIndirect(s);
+                return pairs.Count > 0;
             }
 		}
 
