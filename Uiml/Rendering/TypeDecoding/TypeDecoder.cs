@@ -55,6 +55,7 @@ namespace Uiml.Rendering.TypeDecoding
 		{
 		    Registry = new TypeDecoderRegistry();
 
+            SYSTEM_CONVERT_TYPES = new List<Type>();
             SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Boolean"));
             SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.Char"));
             SYSTEM_CONVERT_TYPES.Add(Type.GetType("System.SByte"));
@@ -322,7 +323,7 @@ namespace Uiml.Rendering.TypeDecoding
         }
 		
 		public static string PARSE = "Parse";
-        public static List<Type> SYSTEM_CONVERT_TYPES = new List<Type>();
+        public static List<Type> SYSTEM_CONVERT_TYPES;
 	}
 
 }

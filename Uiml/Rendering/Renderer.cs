@@ -95,7 +95,7 @@ namespace Uiml.Rendering
         public Renderer()
         {
             // register common type decoders
-			TypeDecoder.Instance.Register(typeof(TypeDecoders));
+            TypeDecoder.Instance.Register(typeof(TypeDecoders));
         }
 
 		///<summary>
