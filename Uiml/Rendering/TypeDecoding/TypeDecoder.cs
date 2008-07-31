@@ -198,7 +198,7 @@ namespace Uiml.Rendering.TypeDecoding
         /// </returns>
         public bool HasDecoder(Type from, Type to)
         {
-            return Registry.HasDecoder(from, to, false);
+            return HasDecoder(from, to, false);
         }
 
 		/// <summary>
