@@ -46,7 +46,7 @@ namespace Uiml.FrontEnd{
 	public class CommandLine : UimlFrontEnd
 	{
 		static public String[] options = {"voc","uiml","help","libs","version", "log", "decoders"};
-        static public char LIBSEP = ',';
+        static public char LIBSEP = '#';
 		static public int VOCABULARY = 0;
 		static public int UIMLDOCUMENT = 1;
 		static public int HELP = 2;
