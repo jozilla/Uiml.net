@@ -71,14 +71,23 @@ namespace Uiml.Rendering.SWF
         [TypeDecoderMethod]
         public static System.Drawing.Image DecodeImage(string file)
         {
-            if (file.StartsWith("http://"))
+            try
             {
-                // load image from the web
-                Stream ImageStream = new WebClient().OpenRead(file);
-                return Image.FromStream(ImageStream);
-            }
+                if (file.StartsWith("http://"))
+                {
+                    // load image from the web
+                    Stream ImageStream = new WebClient().OpenRead(file);
+                    return Image.FromStream(ImageStream);
+                }
 
-            return System.Drawing.Image.FromFile((string) file);
+                return System.Drawing.Image.FromFile((string) file);
+            }
+            catch
+            {
+                // loading the image failed
+                Console.WriteLine("Could not load image from path '{0}'", file);
+                return null;
+            }
         }
 
    		[TypeDecoderMethod]
