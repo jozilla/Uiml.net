@@ -176,12 +176,8 @@ namespace Uiml.Rendering.CompactSWF
             {
                 case "StretchImage":
                     return PictureBoxSizeMode.StretchImage;
-                case "AutoSize":
-                    return PictureBoxSizeMode.AutoSize;
                 case "CenterImage":
                     return PictureBoxSizeMode.CenterImage;
-                case "Zoom":
-                    return PictureBoxSizeMode.Zoom;
                 case "Normal":
                 default:
                     return PictureBoxSizeMode.Normal;
