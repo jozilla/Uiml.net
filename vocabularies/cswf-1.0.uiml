@@ -544,9 +544,14 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="file" maps-type="getMethod" maps-to="Image" return-type="System.Drawing.Image"/>    
 		<d-property id="file" maps-type="setMethod" maps-to="Image">
 			<d-param type="System.Drawing.Image"/>
 		</d-property>
+    <d-property id="sizemode" maps-type="setMethod" maps-to="SizeMode">
+      <d-param type="System.Windows.Forms.PictureBoxSizeMode"/>
+    </d-property>
+    <d-property id="sizemode" maps-type="getMethod" maps-to="SizeMode" return-type="System.Windows.Forms.PictureBoxSizeMode"/>    
 	</d-class>
 	
 	<d-class id="Combo" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.ComboBox">

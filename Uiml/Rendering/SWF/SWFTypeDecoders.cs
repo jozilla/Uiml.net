@@ -184,6 +184,30 @@ namespace Uiml.Rendering.SWF
 		}
 
         [TypeDecoderMethod]
+        public static PictureBoxSizeMode DecodePictureBoxSizeMode(string value)
+        {
+            switch (value)
+            {
+                case "StretchImage":
+                    return PictureBoxSizeMode.StretchImage;
+                case "AutoSize":
+                    return PictureBoxSizeMode.AutoSize;
+                case "CenterImage":
+                    return PictureBoxSizeMode.CenterImage;
+                case "Zoom":
+                    return PictureBoxSizeMode.Zoom;
+                case "Normal":
+                default:
+                    return PictureBoxSizeMode.Normal;
+            }
+        }
+
+        public static string DecodePictureBoxSizeModeInverse(PictureBoxSizeMode m)
+        {
+            return m.ToString();
+        }
+
+        [TypeDecoderMethod]
         public static string DecodeAppearanceInverse(Appearance a)
         {
             return a.ToString();
