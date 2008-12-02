@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uiml.net-core", "uiml.net-core.csproj", "{1512EF85-FCC2-41CB-B8CE-67871722EB82}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cassowary", "..\Cassowary.net\Cassowary.csproj", "{F01578A3-BA19-47E6-B333-40E41158658B}"

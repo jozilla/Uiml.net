@@ -69,7 +69,7 @@ namespace Uiml.Rendering.SWF
         }
 
         [TypeDecoderMethod]
-        public static System.Drawing.Image DecodeImage(string file)
+        public static Image DecodeImage(string file)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace Uiml.Rendering.SWF
                     return Image.FromStream(ImageStream);
                 }
 
-                return System.Drawing.Image.FromFile((string) file);
+                return Image.FromFile((string) file);
             }
             catch
             {
@@ -88,6 +88,32 @@ namespace Uiml.Rendering.SWF
                 Console.WriteLine("Could not load image from path '{0}'", file);
                 return null;
             }
+        }
+
+        [TypeDecoderMethod]
+        public static Image DecodeImageFromBytes(byte[] bytes)
+        {
+            Image i;
+            using (MemoryStream ms = new MemoryStream(bytes, 0, bytes.Length))
+            {
+                ms.Write(bytes, 0, bytes.Length);
+                i = Image.FromStream(ms);
+            }
+            return i;
+        }
+
+        [TypeDecoderMethod]
+        public static byte[] DecodeBytesFromBitmap(Bitmap b)
+        {
+            byte[] bytes;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                b.Save(ms, b.RawFormat);
+                bytes = ms.ToArray();
+            }
+
+            return bytes;
         }
 
    		[TypeDecoderMethod]
