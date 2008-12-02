@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+		<part id="Container1" class="Container">			
+			<part id="Plaatje" class="Image"/>
+			<part id="Plaatje2" class="Image"/>
+			<part id="Knopje" class="Button"/>
+			<part id="Knopje2" class="Button"/>
+		</part>
+		</structure>
+		<style>
+			<property part-name="Container1" name="size">400,400</property>
+			<property part-name="Container1" name="background">255,255,255</property>
+			<property part-name="Plaatje" name="position">10,10</property>
+			<property part-name="Plaatje" name="size">184,79</property>
+            <property part-name="Plaatje" name="file">examples/logo.gif</property>
+			<property part-name="Plaatje2" name="position">190,10</property>
+			<property part-name="Plaatje2" name="size">184,79</property>
+			<property part-name="Plaatje2" name="background">100,100,100</property>
+			<property part-name="Knopje" name="position">10,100</property>
+			<property part-name="Knopje" name="size">130,30</property>
+			<property part-name="Knopje" name="label">Vul afbeelding 2 met bytes </property>
+            <property part-name="Knopje2" name="position">150,100</property>
+            <property part-name="Knopje2" name="size">150,30</property>
+			<property part-name="Knopje2" name="label">Vul bytes van afbeelding 1</property>
+		</style>
+        <behavior>
+            <rule>
+                <condition>
+                    <event part-name="Knopje" class="ButtonPressed"/>
+                </condition>
+                <action>
+                    <property part-name="Plaatje2" name="file">
+                        <call name="ImageToBytes.GetSampleBytes"/>
+                    </property>
+                </action>
+            </rule>
+            <rule>
+                <condition>
+                    <event part-name="Knopje2" class="ButtonPressed"/>
+                </condition>
+                <action>
+                    <call name="ImageToBytes.PrintBytes">
+                        <param>
+                            <property part-name="Plaatje" name="file"/>
+                        </param>
+                    </call>
+                </action>
+            </rule>
+        </behavior>
+	</interface>
+	<peers>
+		<presentation base="swf-1.1.uiml"/>
+        <logic>
+            <d-component id="ImageToBytes" maps-to="ImageToBytes">
+                <d-method id="GetSampleBytes" return-type="System.Byte[]" maps-to="GetSampleBytes"/>
+                <d-method id="PrintBytes" maps-to="PrintBytes">
+                    <d-param type="System.Byte[]"/>
+                </d-method>
+            </d-component>
+        </logic>
+	</peers>
+</uiml>
