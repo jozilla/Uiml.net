@@ -63,7 +63,23 @@ namespace Uiml.Executing.Callers
 							// TODO
 							//return null;
 						case Location.Protocol.Local:
-							return new LocalCaller(Call);
+                            try
+                            {
+                                // we specified a library as location so we need to load it first
+                                Console.Write("Trying to load library {0} ...", l.Value);
+                                Assembly externalLib = AssemblyLoader.LoadAny(l.Value);
+                                ExternalLibraries.Instance.Add(externalLib.GetName().Name, externalLib);
+                                // done!
+                                Caller caller = new LocalCaller(Call);
+                                Console.WriteLine("OK!");
+                                return caller;
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("FAILED!\n{0}: {1}", e, e.StackTrace);
+                                return null; // FIXME: should exit here!
+                            }
+                            break;
 						default:
 							return null;
 					}
@@ -75,7 +91,7 @@ namespace Uiml.Executing.Callers
 						return  new LocalCaller(Call);
 			}
 		}
-		
+
 		#if !COMPACT
 		private Caller LoadCaller(string lib, string caller, object[] parameters)
 		{

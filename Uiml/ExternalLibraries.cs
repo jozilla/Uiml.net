@@ -97,8 +97,8 @@ namespace Uiml
 
 		///<summary>
 		///Converts the values in this hashtable into an ArrayList. 
-		//To speed things up, the list will be created only the first time,
-		//or if m_dirty is set.
+		///To speed things up, the list will be created only the first time,
+		///or if m_dirty is set.
 		///</summary>
 		public ArrayList Assemblies
 		{
