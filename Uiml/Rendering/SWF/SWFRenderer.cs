@@ -115,12 +115,12 @@ namespace Uiml.Rendering.SWF
 			IRenderedInstance instance = PreRender(uimlDoc);
 			uimlDoc.SolveLayoutProperties(this);
 			
-			// render again
-			instance = PreRender(uimlDoc);
-			
-			// of course only if there's a layout specified, it's possible to reorder
+			// of course only if there's a layout specified
 			if (uimlDoc.HasLayout) 
 			{
+                // render again
+                instance = PreRender(uimlDoc);
+			
 				// now do reordering
 				Structure uiStruct   = (Structure)uimlDoc.UInterface.UStructure[0];
 				Console.Write("Trying to reorder the interface... ");
