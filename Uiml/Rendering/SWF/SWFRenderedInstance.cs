@@ -27,6 +27,7 @@
 
 namespace Uiml.Rendering.SWF
 {
+    using System;
 	using System.Windows.Forms;
 
 	///<summary>
@@ -37,26 +38,61 @@ namespace Uiml.Rendering.SWF
 	public class SWFRenderedInstance : Form, IRenderedInstance
 	{
 		public SWFRenderedInstance()
-		{ }
+		{
+            // window closed event
+            Closed += new EventHandler(OnCloseWindow);
+            // init event
+            Load += new EventHandler(OnInit);
+        }
 
-		public SWFRenderedInstance(string title)
+        public SWFRenderedInstance(string title)
 		{		
 			Text = title;
 		}
-	
+
 		public void ShowIt()
 		{
-			try
-			{
-				Application.Run(this);
-			}
-			catch(System.Exception e)
-			{
-				//Application thread is already running...
-				this.Show(null);
-			}
+            // set the window size automatically
+            AutoResize();
+
+            try
+            {
+                this.Activate();
+                Application.Run(this);
+            }
+            catch (InvalidOperationException e)
+            {
+                //Application thread is already running...
+                if (!this.Visible)
+                {
+                    this.Show(null);
+                }
+                else
+                {
+                    this.Activate();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Could not load SWF form: {0}", e);
+                Console.WriteLine(e.StackTrace);
+            }
 		}
-		
+
+        public void AutoResize()
+        {
+            try
+            {
+                // get first control
+                Control first = this.Controls[0];
+                this.ClientSize = ((System.Drawing.Size)(first.Location + first.Size));
+            }
+            catch
+            {
+                Console.WriteLine("Auto sizing of window failed");
+            }
+        }
+
 		public void Add(Control c) 
 		{
 			this.Controls.Add(c); 			
@@ -73,5 +109,23 @@ namespace Uiml.Rendering.SWF
 				Text = value;
 			}
 		}
+
+        #region CloseWindow event
+        public event EventHandler CloseWindow;
+        public void OnCloseWindow(object sender, EventArgs e)
+        {
+            if (CloseWindow != null)
+                CloseWindow(this, e);
+        }
+        #endregion
+
+        #region Init event
+        public event EventHandler Init;
+        public void OnInit(object sender, EventArgs e)
+        {
+            if (Init != null)
+                Init(this, e);
+        }
+        #endregion
 	}	
 }

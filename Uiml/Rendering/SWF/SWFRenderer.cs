@@ -60,7 +60,7 @@ namespace Uiml.Rendering.SWF
 			TypeDecoder.Instance.Register(typeof(SWFTypeDecoders));
 		}
 
-		public IRenderedInstance TopWindow
+		public override IRenderedInstance TopWindow
 		{
 			get { return m_topWindow; }
 		}
@@ -77,6 +77,7 @@ namespace Uiml.Rendering.SWF
 			{	
 				m_topWindow = new SWFRenderedInstance();		
 				m_topWindow.Title = uimlDoc.Title;
+                // beware: documents must have a structure and style for now!
 				Structure uiStruct   = (Structure)uimlDoc.UInterface.UStructure[0];
 				Style     uiStyle    = (Style)uimlDoc.UInterface.UStyle[0];
 				Behavior  uiBehavior = null;
@@ -100,7 +101,6 @@ namespace Uiml.Rendering.SWF
 				Console.WriteLine("The Rendering Engine says: Check the input documents, they seem to be invalid");
 				throw nrfe;
 			}
-			
 			catch(Exception e)
 			{
 				Console.WriteLine("Unexpected failure ({0}) while processing {1}:", e.GetType(), uimlDoc);

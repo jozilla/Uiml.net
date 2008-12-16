@@ -56,7 +56,7 @@ namespace Uiml.Rendering.GTKsharp
 			TypeDecoder.Instance.Register(typeof(GtkTypeDecoders));
 		}
 
-		public IRenderedInstance TopWindow
+		public override IRenderedInstance TopWindow
 		{
 			get { return m_topWindow; }
 		}

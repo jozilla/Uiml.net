@@ -24,11 +24,14 @@
 namespace Uiml {
 
 	using System;
+    using System.IO;
 	using System.Xml;
 	using System.Collections;
     using System.Xml.Serialization;
 
 	using Uiml.LayoutManagement;
+    using Uiml.Rendering;
+    using Uiml.Utils;
 
 	public class UimlDocument : IUimlElement, IUimlComponent, ICloneable {
 		private Interface m_interface;
@@ -38,6 +41,8 @@ namespace Uiml {
 		private bool m_hasLayout;
 		private ConstraintSystem m_solver = null;
 
+        private IRenderedInstance m_instance = null;
+
 		///<summary>
 		///Reads a UIML document in memory specified in fName
 		///</summary>
@@ -45,8 +50,12 @@ namespace Uiml {
 		{
 			//try
 			//{
+                // transform uiml:// style locations to regular file paths
+                string file = Location.Transform(fName);
 				XmlDocument doc = new XmlDocument();
-				doc.Load(fName);
+				doc.Load(file);
+                // update the UIML file directory
+                Location.UimlFileDirectory = Path.GetDirectoryName(file);
 				Load(doc);
 			//}
 			//catch(Exception e)
@@ -141,7 +150,7 @@ namespace Uiml {
 					return UHead.Title;
 				}
 				else
-					return "Uiml container";
+					return "UIML container";
 			}
 		}
 
@@ -325,6 +334,19 @@ namespace Uiml {
                 clone.m_interface.AttachPeers(clone.m_peers);
 			return clone;
 		}
+
+        public IRenderedInstance Instance
+        {
+            get { return m_instance; }
+            set
+            {
+                if (m_instance != null)
+                    Disconnect(m_instance);
+
+                m_instance = value;
+                Connect(value);
+            }
+        }
 		
 		// IUimlComponent methods:
 		//public ArrayList Children { get ; } //This method already exist to return a "complete" UIML document in an ArrayList

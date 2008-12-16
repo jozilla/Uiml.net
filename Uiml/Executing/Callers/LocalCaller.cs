@@ -235,15 +235,31 @@ namespace Uiml.Executing.Callers
 				while((enumObjects.MoveNext()) && (type==null))
 				{			
 					Object obj = enumObjects.Current;
-					if(obj.GetType().FullName == concreteObjectName)
-					{
-						type = obj.GetType();
+                    Type objType = obj.GetType();
+                    Type mappedType = null;
+                    foreach (Assembly a in ExternalLibraries.Instance.Assemblies)
+                    {
+                        try
+                        {
+                            mappedType = a.GetType(concreteObjectName, true);
+                            break;
+                        }
+                        catch
+                        {
+                        }
+                    }
+
+                    // subclasses are OK as well!
+                    if (objType.Equals(mappedType) || objType.IsSubclassOf(mappedType))
+                    {
+                        type = objType;
+
 						try { return ExecuteMethod(concreteMethodName, type, obj, out outputParams); } 
-						catch(NullReferenceException)//method failed, try property
+						catch(NullReferenceException nre)//method failed, try property
 						{
 								try { return ExecuteProperty(concreteMethodName, type,obj); }
 							  //property failed, try field
-						  catch(NullReferenceException)	{ return ExecuteField(concreteMethodName, type, obj); 	}
+						  catch(NullReferenceException)	{ return ExecuteField(concreteMethodName, type, obj); }
 						}
 					}	
 				}

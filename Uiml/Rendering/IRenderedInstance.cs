@@ -20,6 +20,7 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+using System;
 
 namespace Uiml.Rendering
 {
@@ -27,5 +28,10 @@ namespace Uiml.Rendering
 	public interface IRenderedInstance
 	{
 		void ShowIt();
+
+        event EventHandler CloseWindow;
+        void OnCloseWindow(object sender, EventArgs e);
+        event EventHandler Init;
+        void OnInit(object sender, EventArgs e);
 	}
 }

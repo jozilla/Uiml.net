@@ -50,6 +50,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="font" maps-type="setMethod" maps-to="ModifyFont">
 			<d-param type="Pango.FontDescription"/>
 		</d-property>
+		<d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Sensitive"/>
+		<d-property id="enabled" maps-type="setMethod" maps-to="Sensitive">
+			<d-param type="System.Boolean"/>
+		</d-property>
 		<d-property id="underLineMnemonic" return-type="System.Boolean" maps-type="getMethod" maps-to="UseUnderline"/>
 		<d-property id="underLineMnemonic" maps-type="setMethod" maps-to="UseUnderline">
 			<d-param type="System.Boolean"/>
@@ -573,6 +577,9 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		</d-property>
 	</d-class>
 
+    <!-- special event class for when UIML UI is loaded -->
+    <d-class id="init" used-in-tag="event" maps-type="delegate" maps-to="Uiml.Rendering.IRenderedInstance.Init"/>
+	<!-- event classes -->
 	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonPressEventHandler"/>
 	<d-class id="ButtonLeft" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonLeftEventHandler"/>
 	<d-class id="ButtonEntered" used-in-tag="event" maps-type="delegate" maps-to="GtkSharp.ButtonEnteredEventHandler"/>
@@ -590,11 +597,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 
  </presentation>
  <logic>
-   <!-- 
-	Static methods for now. Didn't figure out how to attach to 
-	instances (objects) instead of classes.  I guess this problem has never
-	been tackled...
-	-->
+    <!-- Multi-dialog support -->
+    <d-component id="UimlDotNet" maps-to="Uiml.FrontEnd.UimlFrontEnd">
+      <d-method id="Show" maps-to="Show">
+        <d-param id="file" type="System.String"/>
+        <d-param id="replace" type="System.Boolean"/>
+      </d-method>
+    </d-component>
  	<d-component id="Math" maps-to="System.Math">
 		<d-method id="absolute" returns-value="System.Int32" maps-to="Abs">
 			<d-param id="in" type="System.Int32"/>

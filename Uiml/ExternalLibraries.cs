@@ -45,6 +45,25 @@ namespace Uiml
 		private ExternalLibraries() : base()
 		{
 			//m_externalLibs = new ArrayList();
+
+            // also add the core assemblies
+            #if !COMPACT
+            string[] coreLibs = { "uiml.net", "uiml.net-core" };
+            #else
+            string[] coreLibs = { "uiml.net-cf", "uiml.net-core-cf" };
+            #endif
+            foreach (string ass in coreLibs)
+            {
+                try
+                {
+                    Assembly a = AssemblyLoader.LoadAny(ass);
+                    if (a != null)
+                        Add(a.FullName, a);
+                }
+                catch
+                {
+                }
+            }
 		}
 
 

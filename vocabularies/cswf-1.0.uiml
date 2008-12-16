@@ -1094,7 +1094,8 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 	</d-class>
-
+  <!-- special event class for when UIML UI is loaded -->
+  <d-class id="init" used-in-tag="event" maps-type="delegate" maps-to="Uiml.Rendering.IRenderedInstance.Init"/>
 	<!-- event classes -->
 	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnClick"/>
 	<d-class id="ButtonLeft" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnLeave"/>
@@ -1103,11 +1104,13 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	<d-class id="TabSwitched" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
  </presentation>
  <logic>
-   <!-- 
-	Static methods for now. Didn't figure out how to attach to 
-	instances (objects) instead of classes.  I guess this problem has never
-	been tackled...
-	-->
+   <!-- Multi-dialog support -->
+   <d-component id="UimlDotNet" maps-to="Uiml.FrontEnd.UimlFrontEnd">
+     <d-method id="Show" maps-to="Show">
+       <d-param id="file" type="System.String"/>
+       <d-param id="replace" type="System.Boolean"/>
+     </d-method>
+   </d-component>
  	<d-component id="Math" maps-to="System.Math">
 		<d-method id="absolute" returns-value="int" maps-to="Abs">
 			<d-param id="in" type="System.Int32"/>

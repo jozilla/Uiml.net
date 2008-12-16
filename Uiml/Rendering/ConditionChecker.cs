@@ -106,8 +106,16 @@ namespace Uiml.Rendering
         {
             // check if event is triggered
             string tempPartName = ((Event)((Condition)m_exer).ConditionObject).PartName;
-            string temp = Renderer.Voc.MapsOnCls(((Event)((Condition)m_exer).ConditionObject).Class);
-            string name = ConditionManager.GetEventName(temp);
+            string tempClass = ((Event)((Condition)m_exer).ConditionObject).Class;
+            string tempMapsTo = Renderer.Voc.MapsOnCls(((Event)((Condition)m_exer).ConditionObject).Class);
+            string name = ConditionManager.GetEventName(tempMapsTo);
+
+            // FIXME: clean this up so it fits better in the entire code
+            if (tempClass == "init")
+            {
+                // special case: part name doesn't matter!
+                return true;
+            }
 
             if (tempPartName == partName && m_eventsTriggered.ContainsKey(name))
                 if (((Hashtable)m_eventsTriggered[name]).ContainsKey(partName))

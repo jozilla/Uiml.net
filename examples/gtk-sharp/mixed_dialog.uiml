@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+            <part class="HBox">
+                <part id="prev" class="Button"/>
+                <part id="next" class="Button"/>
+            </part>
+		</structure>
+		<style>
+            <property part-name="prev" name="label">Previous</property>
+            <property part-name="prev" name="enabled">false</property>
+            <property part-name="next" name="label">Next</property>
+            <property part-name="next" name="enabled">true</property>
+		</style>
+        <behavior>
+            <rule>
+                <condition>
+                    <event part-name="next" class="ButtonPressed"/>
+                </condition>
+                <action>
+                    <call name="UimlDotNet.Show">
+                        <param id="file">uiml://../swf/swfMixedDialog.uiml</param>
+                        <param id="replace">true</param>
+                    </call>
+                </action>
+            </rule>
+        </behavior>
+	</interface>
+	<peers>
+		<presentation base="gtk-sharp-1.0.uiml"/>
+	</peers>
+</uiml>

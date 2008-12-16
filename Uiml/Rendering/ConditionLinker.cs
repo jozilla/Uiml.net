@@ -142,6 +142,79 @@ namespace Uiml.Rendering
         {
             Event e = (Event)ie;
             Part thePart = part.SearchPart(e.PartName);
+
+            if (e.Class == "init")
+            {
+                // special case: init event
+                string fullEventName = m_renderer.Voc.MapsOnCls(e.Class);
+                string typeName = fullEventName.Substring(0, fullEventName.LastIndexOf('.'));
+                string eventName = fullEventName.Substring(fullEventName.LastIndexOf('.') + 1);
+
+                // get the top part
+                Part top = m_renderer.Top;
+
+                // get the current rendered instances
+                IRenderedInstance instance = m_renderer.TopWindow;
+                Type type = instance.GetType();
+
+                /*Type type = null;
+                foreach (Assembly a in ExternalLibraries.Instance.Assemblies)
+                {
+                    try
+                    {
+                        type = a.GetType(typeName, true);
+                        break;
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                if (type == null)
+                {
+                    Console.WriteLine("Error in behavior specification: init event cannot be linked. Please check your vocabulary (e.g. the maps-to attribute of the 'init' d-class).");
+                    return;
+                }*/
+
+                EventInfo init = type.GetEvent(eventName);
+                // now create a correct handler
+                EventHandler handler = delegate(object sender, EventArgs args)
+                {
+                    // add the top part as the part-name
+                    m_conditions.Execute(instance, args, "init", top.Identifier);
+                };
+
+                // add the handler to the event
+                init.AddEventHandler(instance, handler);
+
+                // tada!
+                return;
+
+                /*// get the connected object                
+                IEnumerator enumObjects = ExternalObjects.Instance.LoadedObjects;
+                while (enumObjects.MoveNext())
+                {
+                    object obj = enumObjects.Current;
+                    Type objType = obj.GetType();
+                    if (objType.Equals(type) || objType.IsSubclassOf(type))
+                    {
+                        // found it
+                        // now create a correct handler
+                        EventHandler handler = delegate(object sender, EventArgs args) 
+                        { 
+                            // add the top part as the part-name
+                            m_conditions.Execute(obj, args, "init", "top");
+                        };
+
+                        // add the handler to the event
+                        init.AddEventHandler(obj, handler);
+
+                        // tada!
+                        return;
+                    }
+                }*/
+            }
+
             if (thePart == null)
             {
                 if (e.PartName == "")

@@ -41,6 +41,7 @@ namespace Uiml.Utils
         private const string ONLINE_VOCS = "http://research.edm.uhasselt.be/~uiml/vocabularies";
         private const string HARMONIA_VOCS = "http://uiml.org/toolkits";
 
+        private static string uimlFileDir = string.Empty;
         private static string appDir;
         private static string frontEndsDir;
         private static string examplesDir;
@@ -65,6 +66,28 @@ namespace Uiml.Utils
                     // and finally at Harmonia's online vocabularies (very unlikely)
                     HARMONIA_VOCS
             };
+        }
+
+        public static string Transform(string file)
+        {
+            if (file.StartsWith("uiml://"))
+            {
+                return Path.Combine(UimlFileDirectory, file.Replace("uiml://", string.Empty));
+            }
+
+            return file;
+        }
+
+        public static string UimlFileDirectory
+        {
+            get 
+            {
+                if (uimlFileDir == string.Empty)
+                    return ApplicationDirectory;
+                else
+                    return uimlFileDir;
+            }
+            set { uimlFileDir = value; }
         }
 
         public static string ApplicationDirectory 

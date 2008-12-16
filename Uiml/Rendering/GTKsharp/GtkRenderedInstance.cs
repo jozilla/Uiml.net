@@ -23,7 +23,7 @@
 
 namespace Uiml.Rendering.GTKsharp
 {
-
+    using System;
 	using Gtk;
 	using GLib;
 	using GtkSharp;
@@ -38,8 +38,12 @@ namespace Uiml.Rendering.GTKsharp
 		
         private static int numMainloops = 0;
 
-		public GtkRenderedInstance() : base( GType)
-		{ }
+		public GtkRenderedInstance() : base("UIML container")
+		{
+            // events
+            Destroyed +=new System.EventHandler(OnCloseWindow);
+            Realized += new EventHandler(OnInit);
+        }
 
 		public static new GLib.GType GType {
 			get {
@@ -66,14 +70,33 @@ namespace Uiml.Rendering.GTKsharp
 
 		public void ShowIt()
         {
-            ShowAll();
             //DeleteEvent  += new DeleteEventHandler(Window_Delete);
+
+            ShowAll();
+            this.Present(); // raise window if it already exists
             if (GtkRenderedInstance.numMainloops == 0)
             {
                 GtkRenderedInstance.numMainloops++;
                 Application.Run();
             }
-		}		
+		}
+
+        #region CloseWindow event
+        public event EventHandler CloseWindow;
+        public void OnCloseWindow(object sender, EventArgs e)
+        {
+            if (CloseWindow != null)
+                CloseWindow(this, e);
+        }
+        #endregion
+
+        #region Init event
+        public event EventHandler Init;
+        public void OnInit(object sender, EventArgs e)
+        {
+            if (Init != null)
+                Init(this, e);
+        }
+        #endregion
 	}
-	
 }

@@ -33,6 +33,8 @@ namespace Uiml.Rendering
 		IRenderedInstance PreRender(UimlDocument uimlDoc);
 		IRenderedInstance Render(UimlDocument uimlDoc);
 		Vocabulary        Voc              { get; }
+        Part              Top              { get; }
+        IRenderedInstance TopWindow        { get; }
 		IPropertySetter   PropertySetter   { get; }
 	}
 }

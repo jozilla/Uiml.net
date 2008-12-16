@@ -31,6 +31,7 @@ namespace Uiml.FrontEnd{
 	using System.Xml;
 	using System.IO;
 	using System.Collections;
+    using System.Collections.Generic;
     using System.Reflection;
 
     using Uiml.Utils;
@@ -51,16 +52,13 @@ namespace Uiml.FrontEnd{
         private string m_frontendLib;
 		
         private ArrayList aList = new ArrayList();
+        private Dictionary<string, IRenderedInstance> renderedUIs = new Dictionary<string, IRenderedInstance>();
 
-        protected IRenderedInstance instance;
 		protected static IRenderer renderer;
-        private BackendFactory backendFactory;
 
-
-		public UimlFrontEnd()
-		{
-			backendFactory = new BackendFactory();
-		}
+        public UimlFrontEnd()
+        {
+        }
 
 		public UimlFrontEnd(string frontendFile, string frontendLib) : this()
 		{
@@ -82,10 +80,12 @@ namespace Uiml.FrontEnd{
 			{
                 UimlDocument feUimlDoc = new UimlDocument(m_frontendFile);
 				renderer =  (new BackendFactory()).CreateRenderer(feUimlDoc.Vocabulary);
-				instance = renderer.Render(feUimlDoc);
+                IRenderedInstance instance = renderer.Render(feUimlDoc);
                 ExternalLibraries.Instance.Add(m_frontendLib);
 				feUimlDoc.Connect(this);
-				instance.ShowIt();
+                // add to the list
+                renderedUIs.Add(m_frontendFile, instance);
+                instance.ShowIt();
 			}
 			catch(Exception e)
 			{
@@ -132,15 +132,54 @@ namespace Uiml.FrontEnd{
 			set { uiFileName = value; }
 		}
 
-		public void Render()
-		{
+        public String FriendlyUimlFileName
+        {
+            get { return Path.GetFileName(uiFileName); }
+        }
+
+        public void Render()
+        {
+            Render(UimlFileName);
+        }
+
+        /// <summary>
+        /// Displays a new UIML dialog. Will render it if necessary, otherwise just try to bring it to the front.
+        /// </summary>
+        /// <param name="file">The UIML file to display (or render)</param>
+        /// <param name="replace">Indicates whether Uiml.net should hide the current window when displaying the new one.</param>
+        public void Show(string file, bool replace)
+        {
+            // transform file to key format
+            string key = FileToDictionaryKey(file);
+
+            // make sure that existing files just get focused again, instead of re-rendering them!
+            if (renderedUIs.ContainsKey(key))
+            {
+                renderedUIs[key].ShowIt();
+            }
+            else
+            {
+                Render(file);
+            }
+        }
+
+        private void Render(string file)
+        {
 			try
 			{
-				UimlDoc = new UimlDocument(UimlFileName);	
-				Console.WriteLine("render [" + uimlDoc.Vocabulary + "]-[" + UimlFileName + "]");
-				IRenderer renderer =  backendFactory.CreateRenderer(uimlDoc.Vocabulary);	
+                UimlDoc = new UimlDocument(file);	
+				Console.WriteLine("render [" + uimlDoc.Vocabulary + "]-[" + file + "]");
+				IRenderer renderer =  (new BackendFactory()).CreateRenderer(uimlDoc.Vocabulary);	
 				IRenderedInstance instance = renderer.Render(uimlDoc);
-				instance.ShowIt();	
+                // connect the frontend to the document, to allow communication at runtime
+                UimlDoc.Connect(this);
+                // connect the rendered instance to the document
+                UimlDoc.Instance = instance;
+                // add to the list
+                renderedUIs.Add(FileToDictionaryKey(file), instance);
+                // connect close event
+                instance.CloseWindow += new EventHandler(UimlDocument_Closed);
+                instance.ShowIt();
 			}
 			catch (NoRendererAvailableException rue)
 			{
@@ -156,6 +195,26 @@ namespace Uiml.FrontEnd{
 				Console.WriteLine("Could not create GUI for {0} with uiml.net", UimlFileName);
 			}
 		}
+
+        private string FileToDictionaryKey(string file)
+        {
+            string dictionaryKey = Path.GetFileName(file);
+            dictionaryKey.Replace("uiml://", string.Empty);
+
+            return dictionaryKey;
+        }
+
+        void UimlDocument_Closed(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, IRenderedInstance> item in renderedUIs)
+            {
+                if (item.Value == sender)
+                {
+                    renderedUIs.Remove(item.Key);
+                    return;
+                }
+            }
+        }
 	}
 }
 

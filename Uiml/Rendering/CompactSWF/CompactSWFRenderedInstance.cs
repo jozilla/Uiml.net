@@ -27,6 +27,7 @@
 
 namespace Uiml.Rendering.CompactSWF
 {
+    using System;
 	using System.Windows.Forms;
 
 	///<summary>
@@ -39,6 +40,10 @@ namespace Uiml.Rendering.CompactSWF
 		public CompactSWFRenderedInstance()
 		{
             this.Menu = new System.Windows.Forms.MainMenu();
+            // window closed event
+            Closed += new EventHandler(OnCloseWindow);
+            // init event
+            Load += new EventHandler(OnInit);
 		}
 
 		public CompactSWFRenderedInstance(string title)
@@ -50,13 +55,26 @@ namespace Uiml.Rendering.CompactSWF
 		{
 			try
 			{
+                this.Activate();
 				Application.Run(this);
 			}
-			catch(System.Exception e)
-			{
-				//Application thread is already running...
-                this.Show();
-			}
+            catch (InvalidOperationException e)
+            {
+                //Application thread is already running...
+                if (!this.Visible)
+                {
+                    this.Show();
+                }
+                else
+                {
+                    this.Activate();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Could not load SWF form: {0}", e);
+                Console.WriteLine(e.StackTrace);
+            }
 		}
 		
 		public void Add(Control c) 
@@ -75,5 +93,23 @@ namespace Uiml.Rendering.CompactSWF
 				Text = value;
 			}
 		}
+
+        #region CloseWindow event
+        public event EventHandler CloseWindow;
+        public void OnCloseWindow(object sender, EventArgs e)
+        {
+            if (CloseWindow != null)
+                CloseWindow(this, e);
+        }
+        #endregion
+
+        #region Init event
+        public event EventHandler Init;
+        public void OnInit(object sender, EventArgs e)
+        {
+            if (Init != null)
+                Init(this, e);
+        }
+        #endregion
 	}	
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
+<uiml>
+	<interface>
+		<structure>
+            <part id="info" class="Label"/>
+		</structure>
+		<style>
+      <property part-name="info" name="position">5,5</property>
+      <property part-name="info" name="size">200,20</property>
+      <property part-name="info" name="text">UIML UI not initialized</property>
+    </style>
+        <behavior>
+            <rule>
+                <condition>
+                    <event class="init"/>
+                </condition>
+                <action>
+                    <property part-name="info" name="text">UIML UI initialized!</property>
+                </action>
+            </rule>
+        </behavior>
+	</interface>
+	<peers>
+		<presentation base="cswf-1.0.uiml"/>
+	</peers>
+</uiml>

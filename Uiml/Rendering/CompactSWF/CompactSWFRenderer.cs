@@ -55,7 +55,7 @@ namespace Uiml.Rendering.CompactSWF
             TypeDecoder.Instance.Register(typeof(CompactSWFTypeDecoders));
 		}
 
-		public IRenderedInstance TopWindow
+		public override IRenderedInstance TopWindow
 		{
 			get { return m_topWindow; }
 		}

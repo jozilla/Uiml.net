@@ -92,6 +92,8 @@ namespace Uiml.Rendering
 			set { m_top = value; }
 		}
 
+        public abstract IRenderedInstance TopWindow { get; }
+
         public Renderer()
         {
             // register common type decoders
