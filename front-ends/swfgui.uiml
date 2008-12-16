@@ -15,11 +15,11 @@
     <property part-name="render" name="label">Render Interface</property>
     <property part-name="quit" name="label">Quit Uiml.net</property>
     <!-- Absolute positioning and scaling -->
-    <property part-name="cont" name="size">1000,1000</property>
+    <property part-name="cont" name="size">180,160</property>
     <property part-name="uimlfileOpen" name="position">10,10</property>
     <property part-name="uimlfileOpen" name="size">150,23</property>
     <property part-name="uimlfileName" name="position">10,34</property>
-    <property part-name="uimlfileName" name="size">350,43</property>
+    <property part-name="uimlfileName" name="size">150,43</property>
     <property part-name="render" name="position">10,78</property>
     <property part-name="render" name="size">150,23</property>
     <property part-name="quit" name="position">10,111</property>
@@ -60,7 +60,7 @@
 	<logic id="SwfGUI">
 		<d-component id="GUI" maps-to="Uiml.FrontEnd.SwfGUI">
 			<d-method id="Open" return-type="void" maps-to="OpenUimlFile" />
-			<d-method id="Name" return-type="String" maps-to="UimlFileName" />
+			<d-method id="Name" return-type="String" maps-to="FriendlyUimlFileName" />
 			<d-method id="Show" return-type="void" maps-to="Render" />
       <d-method id="Quit" return-type="void" maps-to="Quit" />
 		</d-component>
