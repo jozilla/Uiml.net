@@ -80,6 +80,8 @@ namespace Uiml.Rendering.SWF
                     return Image.FromStream(ImageStream);
                 }
 
+                // transform uiml:// style locations to regular file paths
+                file = Uiml.Utils.Location.Transform(file);
                 return Image.FromFile((string) file);
             }
             catch

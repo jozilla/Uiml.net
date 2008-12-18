@@ -56,6 +56,8 @@ namespace Uiml.Rendering.CompactSWF
         [TypeDecoderMethod]
         public static System.Drawing.Image DecodeImage(string file)
         {
+            // transform uiml:// style locations to regular file paths
+            file = Uiml.Utils.Location.Transform(file);
             return new Bitmap((string) file);
         }
 

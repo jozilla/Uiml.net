@@ -67,9 +67,15 @@ namespace Uiml.Peers
 					case REST:
 						m_type = Protocol.Rest;
 						break;
+                    case UIML:
+                        // uiml:// style location
+                        m_type = Protocol.Local;
+                        m_value = Uiml.Utils.Location.Transform(s);
+                        break;
 				}
 
-				m_value = s.Substring(separatorIndex + SEPARATOR.Length);
+                if (m_value == string.Empty) // only if not already assigned
+				    m_value = s.Substring(separatorIndex + SEPARATOR.Length);
 			}
 			else
 			{
@@ -94,5 +100,6 @@ namespace Uiml.Peers
 		public const string SOAP 	= "soap";
 		public const string SEPARATOR 	= "://";
 		public const string REST	= "rest";
+        public const string UIML = "uiml";
 	}
 }

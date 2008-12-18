@@ -113,8 +113,22 @@ namespace Uiml.Rendering
             // FIXME: clean this up so it fits better in the entire code
             if (tempClass == "init")
             {
-                // special case: part name doesn't matter!
-                return true;
+                try
+                {
+                    // special case: part name is automatically set to top container!
+                    bool itsAnInitEvent = (tempPartName == string.Empty && partName == m_renderer.Top.Identifier);
+                    // FIXME: will fire on all events of topContainer!
+                    if (itsAnInitEvent)
+                        return true;
+                    else
+                        return false;
+                }
+                catch (Exception e)
+                {
+                    Console.Write("{0}: ", e);
+                    Console.WriteLine(e.StackTrace);
+                    return false;
+                }
             }
 
             if (tempPartName == partName && m_eventsTriggered.ContainsKey(name))
