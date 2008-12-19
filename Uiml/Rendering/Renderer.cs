@@ -224,8 +224,8 @@ namespace Uiml.Rendering
 			if(part == null)
 				part = m_top;
 			Part p = part.SearchPart(prop.PartName);
-			if(prop.Lazy)
-				prop.Resolve(this);
+			/*if(prop.Lazy) // not necessary because ApplyProperty will do it anyway!
+				prop.Resolve(this);*/ 
 			string className  = Voc.MapsOnCls(p.Class);
 			Type classType = GuiAssembly.GetType(className);
 			System.Object uiObj =  p.UiObject;
