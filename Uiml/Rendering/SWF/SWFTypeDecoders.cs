@@ -105,6 +105,20 @@ namespace Uiml.Rendering.SWF
         }
 
         [TypeDecoderMethod]
+        public static Bitmap DecodeBitmapFromBytes(byte[] bytes)
+        {
+            return (Bitmap)DecodeImageFromBytes(bytes);
+        }
+
+        [TypeDecoderMethod]
+        public static byte[] DecodeBytesFromImage(Image i)
+        {
+            Bitmap b = (Bitmap)i;
+            return DecodeBytesFromBitmap(b);
+        }
+
+
+        [TypeDecoderMethod]
         public static byte[] DecodeBytesFromBitmap(Bitmap b)
         {
             byte[] bytes;
