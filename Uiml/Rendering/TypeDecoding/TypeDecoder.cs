@@ -20,6 +20,7 @@
 	Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+using Uiml.Utils.Reflection;
 
 namespace Uiml.Rendering.TypeDecoding
 {
@@ -197,6 +198,40 @@ namespace Uiml.Rendering.TypeDecoding
         /// True if a decoder was found.
         /// </returns>
         public bool HasDecoder(Type from, Type to)
+        {
+            return HasDecoder(from, to, false);
+        }
+
+        /// <summary>
+        /// Checks whether a decoder exists for a certain signature.
+        /// </summary>
+        /// <param name="from">The name of the type that we want to decode from</param>
+        /// <param name="to">The name of the type that we want to decode to</param>
+        /// <param name="deep">If true, specifies that we want to include indirect type decoders (e.g. types A->C through A->B and B->C)</param>
+        /// <returns>
+        /// True if a decoder was found.
+        /// </returns>
+        public bool HasDecoder(string from, string to, bool deep)
+        {
+            // try to load the types
+            Type fromType = TypeLoader.LoadType(from);
+            Type toType = TypeLoader.LoadType(to);
+
+            if (fromType != null && toType != null)
+                return HasDecoder(fromType, toType, deep);
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Checks whether a decoder exists for a certain signature.
+        /// </summary>
+        /// <param name="from">The name of the type that we want to decode from</param>
+        /// <param name="to">The name of the type that we want to decode to</param>
+        /// <returns>
+        /// True if a decoder was found.
+        /// </returns>
+        public bool HasDecoder(string from, string to)
         {
             return HasDecoder(from, to, false);
         }
