@@ -27,10 +27,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 <uiml>
  <presentation base="cswf-1.0" id="CompactSWF">
 	<d-class id="Container" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.Panel">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
+    <d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
 		<d-property id="position" maps-type="setMethod" maps-to="Location">
 			<d-param type="System.Drawing.Point"/>
 		</d-property>
@@ -70,13 +71,15 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
-		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
+    <d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-	</d-class>		
+  </d-class>		
 
 	<d-class id="Button" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.Button">
 		<d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
@@ -123,9 +126,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
-		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
+    <d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
@@ -180,9 +185,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
@@ -236,15 +243,22 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="readonly" maps-type="getMethod" maps-to="ReadOnly" return-type="System.Boolean"/>
 		<d-property id="readonly" maps-type="setMethod" maps-to="ReadOnly">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <!-- events -->
+    <d-property id="textChanged" maps-type="event" maps-to="TextChanged">
+      <d-param type="System.Windows.Forms.Control.OnTextChanged"/>
+    </d-property>
 	</d-class>
 
 	<d-class id="Text" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TextBox">
@@ -292,22 +306,31 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="readonly" maps-type="getMethod" maps-to="ReadOnly" return-type="System.Boolean"/>
 		<d-property id="readonly" maps-type="setMethod" maps-to="ReadOnly">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="multiline" maps-type="getMethod" maps-to="Multiline" return-type="System.Boolean"/>
 		<!-- multiline is set automatically for a Text class -->
 		<d-property id="multiline" maps-type="setMethod" maps-to="Multiline">
             <d-param type="System.Boolean">true</d-param>
 		</d-property>
+    <d-property id="scrollbars" maps-type="getMethod" maps-to="ScrollBars" return-type="System.Windows.Forms.ScrollBars"/>
 		<d-property id="scrollbars" maps-type="setMethod" maps-to="ScrollBars">
 			<d-param type="System.Windows.Forms.ScrollBars"/>
 		</d-property>
+    <!-- events -->
+    <d-property id="textChanged" maps-type="event" maps-to="TextChanged">
+      <d-param type="System.Windows.Forms.Control.OnTextChanged"/>
+    </d-property>
 	</d-class>
 	
 	<d-class id="CheckButton" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.CheckBox">
@@ -355,13 +378,15 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
-		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
+    <d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-        <d-property id="checked" return-type="System.Boolean" maps-type="getMethod" maps-to="Checked"/>
+    <d-property id="checked" return-type="System.Boolean" maps-type="getMethod" maps-to="Checked"/>
 		<d-property id="checked" maps-type="setMethod" maps-to="Checked">
 			<d-param type="System.Boolean"/>
 		</d-property>
@@ -416,9 +441,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
@@ -477,24 +504,30 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="maximum" maps-type="getMethod" maps-to="Maximum" return-type="System.Int32"/>
 		<d-property id="maximum" maps-type="setMethod" maps-to="Maximum">
 			<d-param type="System.Int32"/>
 		</d-property>
+    <d-property id="minimum" maps-type="getMethod" maps-to="Minimum" return-type="System.Int32"/>
 		<d-property id="minimum" maps-type="setMethod" maps-to="Minimum">
 			<d-param type="System.Int32"/>
 		</d-property>
+    <d-property id="value" maps-type="getMethod" maps-to="Value" return-type="System.Int32"/>
 		<d-property id="value" maps-type="setMethod" maps-to="Value">
 			<d-param type="System.Int32"/>
 		</d-property>
 	</d-class>
 	
 	<d-class id="Image" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.PictureBox">
+    <d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
 		<d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
@@ -538,9 +571,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
@@ -548,14 +583,15 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="file" maps-type="setMethod" maps-to="Image">
 			<d-param type="System.Drawing.Image"/>
 		</d-property>
+    <d-property id="sizemode" maps-type="getMethod" maps-to="SizeMode" return-type="System.Windows.Forms.PictureBoxSizeMode"/>
     <d-property id="sizemode" maps-type="setMethod" maps-to="SizeMode">
       <d-param type="System.Windows.Forms.PictureBoxSizeMode"/>
     </d-property>
-    <d-property id="sizemode" maps-type="getMethod" maps-to="SizeMode" return-type="System.Windows.Forms.PictureBoxSizeMode"/>    
 	</d-class>
 	
 	<d-class id="Combo" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.ComboBox">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
 		<d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
@@ -598,18 +634,22 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
-		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
+    <d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 		<!-- ad hoc -->
+    <d-property id="content" maps-type="getMethod" maps-to="Items" return-type="System.String[]"/>
 		<d-property id="content" maps-type="setMethod" maps-to="Items.AddRange">
 			<d-param type="System.String[]"/>
 		</d-property>
 		<!-- /ad hoc -->
-		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
+    <d-property id="selectedIndex" maps-type="getMethod" maps-to="SelectedIndex" return-type="System.Int32"/>
+    <d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
 			<d-param type="System.Int32"/>
 		</d-property>
 		<d-property id="entry" return-type="System.String" maps-type="getMethod" maps-to="SelectedItem"/>
@@ -620,7 +660,8 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	</d-class>
 
 	<d-class id="ListBox" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.ListBox">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" return-type="System.String" maps-type="getMethod" maps-to="Text"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
 		<d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
@@ -663,17 +704,21 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>    
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 		<!-- ad hoc -->
+    <d-property id="content" maps-type="getMethod" maps-to="Items" return-type="System.String[]"/>
 		<d-property id="content" maps-type="setMethod" maps-to="Items.AddRange">
 			<d-param type="System.String[]"/>
 		</d-property>
 		<!-- /ad hoc -->
+    <d-property id="selectedIndex" maps-type="getMethod" maps-to="SelectedIndex" return-type="System.Int32"/>    
 		<d-property id="selectedIndex" maps-type="setMethod" maps-to="SelectedIndex">
 			<d-param type="System.Int32"/>
 		</d-property>
@@ -685,94 +730,122 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	</d-class>
 	
 	<d-class id="HorizontalScroll" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.HScrollBar">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" maps-type="getMethod" maps-to="Text" return-type="System.String"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
+    <d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
 		<d-property id="position" maps-type="setMethod" maps-to="Location">
 			<d-param type="System.Drawing.Point"/>
 		</d-property>
+    <d-property id="size" return-type="System.Drawing.Size" maps-type="getMethod" maps-to="Size"/>
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
+    <d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
 			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" maps-type="setMethod" maps-to="Height">
+    <d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
+    <d-property id="height" maps-type="setMethod" maps-to="Height">
 			<d-param type="System.Int32"/>		
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 	</d-class>
 
 	<d-class id="VerticalScroll" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.VScrollBar">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" maps-type="getMethod" maps-to="Text" return-type="System.String"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
+    <d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
 		<d-property id="position" maps-type="setMethod" maps-to="Location">
 			<d-param type="System.Drawing.Point"/>
 		</d-property>
+    <d-property id="size" return-type="System.Drawing.Size" maps-type="getMethod" maps-to="Size"/>    
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
+    <d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
 			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" maps-type="setMethod" maps-to="Height">
+    <d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
+    <d-property id="height" maps-type="setMethod" maps-to="Height">
 			<d-param type="System.Int32"/>		
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
-		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
+    <d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>    
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 	</d-class>
 
 	<d-class id="List" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.ListView">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" maps-type="getMethod" maps-to="Text" return-type="System.String"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
+    <d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
 		<d-property id="position" maps-type="setMethod" maps-to="Location">
 			<d-param type="System.Drawing.Point"/>
 		</d-property>
+    <d-property id="size" return-type="System.Drawing.Size" maps-type="getMethod" maps-to="Size"/>
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" maps-type="setMethod" maps-to="Width">
+    <d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
+    <d-property id="width" maps-type="setMethod" maps-to="Width">
 			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" maps-type="setMethod" maps-to="Height">
+    <d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
+    <d-property id="height" maps-type="setMethod" maps-to="Height">
 			<d-param type="System.Int32"/>		
 		</d-property>
-		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
+    <d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
-		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
+    <d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 		<!-- ad hoc -->
+    <d-property id="content" maps-type="getMethod" maps-to="Items" return-type="System.Windows.Forms.ListViewItem[]"/>
 		<d-property id="content" maps-type="setMethod" maps-to="Items.AddRange">
 			<d-param type="System.Windows.Forms.ListViewItem[]"/>
 		</d-property>
@@ -781,9 +854,11 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param type="System.Windows.Forms.ListViewItem"/>
 		</d-property>
 		<d-property id="entry" return-type="System.Windows.Forms.ListView.SelectedIndexCollection" maps-type="getMethod" maps-to="SelectedItems"/>
-		<d-property id="view" maps-type="setMethod" maps-to="View">
+    <d-property id="view" maps-type="getMethod" maps-to="View" return-type="System.Windows.Forms.View"/>
+    <d-property id="view" maps-type="setMethod" maps-to="View">
 			<d-param type="System.Windows.Forms.View"/>
 		</d-property>
+    <d-property id="title" maps-type="getMethod" maps-to="Columns" return-type="System.Windows.Forms.ColumnHeader"/>
 		<d-property id="title" maps-type="setMethod" maps-to="Columns.Add">
 			<d-param type="System.Windows.Forms.ColumnHeader"/>
 		</d-property>
@@ -794,84 +869,109 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	</d-class>
 
 	<d-class id="Tree" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TreeView">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" maps-type="getMethod" maps-to="Text" return-type="System.String"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
-		<d-property id="position" maps-type="setMethod" maps-to="Location">
+    <d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
+    <d-property id="position" maps-type="setMethod" maps-to="Location">
 			<d-param type="System.Drawing.Point"/>
 		</d-property>
+    <d-property id="size" return-type="System.Drawing.Size" maps-type="getMethod" maps-to="Size"/>
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
-		<d-property id="width" maps-type="setMethod" maps-to="Width">
+    <d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
+    <d-property id="width" maps-type="setMethod" maps-to="Width">
 			<d-param type="System.Int32"/>	
 		</d-property>
-		<d-property id="height" maps-type="setMethod" maps-to="Height">
+    <d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
+    <d-property id="height" maps-type="setMethod" maps-to="Height">
 			<d-param type="System.Int32"/>		
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>    
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="content" maps-type="getMethod" maps-to="Nodes" return-type="System.Windows.Forms.TreeNode[]"/>
 		<d-property id="content" maps-type="setMethod" maps-to="Nodes.AddRange">
 			<d-param type="System.Windows.Forms.TreeNode[]"/>
 		</d-property>
 		<d-property id="add" maps-type="setMethod" maps-to="Nodes.Add">
 			<d-param type="System.Windows.Forms.TreeNode"/>
 		</d-property>
+    <d-property id="selectedNode" maps-type="getMethod" maps-to="SelectedNode" return-type="System.Windows.Forms.TreeNode"/>
 		<d-property id="selectedNode" maps-type="setMethod" maps-to="SelectedNode">
 			<d-param type="System.Windows.Forms.TreeNode"/>
 		</d-property>
 	</d-class>
 
 	<d-class id="HorizontalRange" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TrackBar">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" maps-type="getMethod" maps-to="Text" return-type="System.String"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
+    <d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
 		<d-property id="position" maps-type="setMethod" maps-to="Location">
 			<d-param type="System.Drawing.Point"/>
 		</d-property>
+    <d-property id="size" return-type="System.Drawing.Size" maps-type="getMethod" maps-to="Size"/>
 		<d-property id="size" maps-type="setMethod" maps-to="Size">
 			<d-param type="System.Drawing.Size"/>		
 		</d-property>
+    <d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
 		<d-property id="width" maps-type="setMethod" maps-to="Width">
 			<d-param type="System.Int32"/>	
 		</d-property>
+    <d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
 		<d-property id="height" maps-type="setMethod" maps-to="Height">
 			<d-param type="System.Int32"/>		
 		</d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
 		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
 		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
+    <d-property id="min" maps-type="getMethod" maps-to="Minimum" return-type="System.Int32"/>
 		<d-property id="min" maps-type="setMethod" maps-to="Minimum">
 			<d-param type="System.Int32" />
 		</d-property>
+    <d-property id="max" maps-type="getMethod" maps-to="Maximum" return-type="System.Int32"/>
 		<d-property id="max" maps-type="setMethod" maps-to="Maximum">
 			<d-param type="System.Int32" />
 		</d-property>
+    <d-property id="step" maps-type="getMethod" maps-to="SmallChange" return-type="System.Int32"/>
 		<d-property id="step" maps-type="setMethod" maps-to="SmallChange">
 			<d-param type="System.Int32" />
 		</d-property>
+    <d-property id="ticks" maps-type="getMethod" maps-to="TickFrequency" return-type="System.Int32"/>
 		<d-property id="ticks" maps-type="setMethod" maps-to="TickFrequency">
 			<d-param type="System.Int32"/>
 		</d-property>
+    <d-property id="orientation" maps-type="getMethod" maps-to="Orientation" return-type="System.Windows.Forms.Orientation"/>
 		<!-- orientation is set automatically for a HorizontalRange class -->
 		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
             <d-param type="System.Windows.Forms.Orientation">Horizontal</d-param>
@@ -879,45 +979,59 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	</d-class>
 
 	<d-class id="VerticalRange" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TrackBar">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
-			<d-param type="System.String"/>
-		</d-property>
-		<d-property id="position" maps-type="setMethod" maps-to="Location">
-			<d-param type="System.Drawing.Point"/>
-		</d-property>
-		<d-property id="size" maps-type="setMethod" maps-to="Size">
-			<d-param type="System.Drawing.Size"/>		
-		</d-property>
-		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int32"/>	
-		</d-property>
-		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int32"/>		
-		</d-property>
-		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
-			<d-param type="System.Boolean"/>						
-		</d-property>
-		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
-			<d-param type="System.Boolean"/>						
-		</d-property>
-		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
-			<d-param type="System.Drawing.Color"/>
-		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
-			<d-param type="System.Drawing.Color"/>
-		</d-property>
-		<d-property id="min" maps-type="setMethod" maps-to="Minimum">
-			<d-param type="System.Int32" />
-		</d-property>
-		<d-property id="max" maps-type="setMethod" maps-to="Maximum">
-			<d-param type="System.Int32" />
-		</d-property>
-		<d-property id="step" maps-type="setMethod" maps-to="SmallChange">
-			<d-param type="System.Int32" />
-		</d-property>
-		<d-property id="ticks" maps-type="setMethod" maps-to="TickFrequency">
-			<d-param type="System.Int32"/>
-		</d-property>
+    <d-property id="label" maps-type="getMethod" maps-to="Text" return-type="System.String"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
+      <d-param type="System.String"/>
+    </d-property>
+    <d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
+    <d-property id="position" maps-type="setMethod" maps-to="Location">
+      <d-param type="System.Drawing.Point"/>
+    </d-property>
+    <d-property id="size" return-type="System.Drawing.Size" maps-type="getMethod" maps-to="Size"/>
+    <d-property id="size" maps-type="setMethod" maps-to="Size">
+      <d-param type="System.Drawing.Size"/>
+    </d-property>
+    <d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
+    <d-property id="width" maps-type="setMethod" maps-to="Width">
+      <d-param type="System.Int32"/>
+    </d-property>
+    <d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
+    <d-property id="height" maps-type="setMethod" maps-to="Height">
+      <d-param type="System.Int32"/>
+    </d-property>
+    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
+    <d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+      <d-param type="System.Boolean"/>
+    </d-property>
+    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
+    <d-property id="visible" maps-type="setMethod" maps-to="Visible">
+      <d-param type="System.Boolean"/>
+    </d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
+    <d-property id="background" maps-type="setMethod" maps-to="BackColor">
+      <d-param type="System.Drawing.Color"/>
+    </d-property>
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+      <d-param type="System.Drawing.Color"/>
+    </d-property>
+    <d-property id="min" maps-type="getMethod" maps-to="Minimum" return-type="System.Int32"/>
+    <d-property id="min" maps-type="setMethod" maps-to="Minimum">
+      <d-param type="System.Int32" />
+    </d-property>
+    <d-property id="max" maps-type="getMethod" maps-to="Maximum" return-type="System.Int32"/>
+    <d-property id="max" maps-type="setMethod" maps-to="Maximum">
+      <d-param type="System.Int32" />
+    </d-property>
+    <d-property id="step" maps-type="getMethod" maps-to="SmallChange" return-type="System.Int32"/>
+    <d-property id="step" maps-type="setMethod" maps-to="SmallChange">
+      <d-param type="System.Int32" />
+    </d-property>
+    <d-property id="ticks" maps-type="getMethod" maps-to="TickFrequency" return-type="System.Int32"/>
+    <d-property id="ticks" maps-type="setMethod" maps-to="TickFrequency">
+      <d-param type="System.Int32"/>
+    </d-property>
+    <d-property id="orientation" maps-type="getMethod" maps-to="Orientation" return-type="System.Windows.Forms.Orientation"/>
 		<!-- orientation is set automatically for a VerticalRange class -->
 		<d-property id="orientation" maps-type="setMethod" maps-to="Orientation">
             <d-param type="System.Windows.Forms.Orientation">Vertical</d-param>
@@ -965,86 +1079,90 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
      <d-property id="visible" maps-type="setMethod" maps-to="Visible">
        <d-param type="System.Boolean"/>
      </d-property>
+     <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
      <d-property id="background" maps-type="setMethod" maps-to="BackColor">
        <d-param type="System.Drawing.Color"/>
      </d-property>
-     <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
+     <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
      <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
        <d-param type="System.Drawing.Color"/>
      </d-property>
-     <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+     <d-property id="min" maps-type="getMethod" maps-to="Minimum" return-type="System.Decimal"/>
      <d-property id="min" maps-type="setMethod" maps-to="Minimum">
        <d-param type="System.Decimal"/>
      </d-property>
-     <d-property id="min" maps-type="getMethod" maps-to="Minimum" return-type="System.Decimal"/>
+     <d-property id="max" maps-type="getMethod" maps-to="Maximum" return-type="System.Decimal"/>
      <d-property id="max" maps-type="setMethod" maps-to="Maximum">
        <d-param type="System.Decimal"/>
      </d-property>
-     <d-property id="max" maps-type="getMethod" maps-to="Maximum" return-type="System.Decimal"/>
+     <d-property id="value" maps-type="getMethod" maps-to="Value" return-type="System.Decimal"/>
      <d-property id="value" maps-type="setMethod" maps-to="Value">
        <d-param type="System.Decimal"/>
      </d-property>
-     <d-property id="value" maps-type="getMethod" maps-to="Value" return-type="System.Decimal"/>
    </d-class>
 
    <d-class id="Tabs" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TabControl">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
-			<d-param type="System.String"/>
-		</d-property>
-		<d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
-		<d-property id="position" maps-type="setMethod" maps-to="Location">
-			<d-param type="System.Drawing.Point"/>
-		</d-property>
-		<d-property id="size" return-type="System.Drawing.Size" maps-type="getMethod" maps-to="Size"/>
-		<d-property id="size" maps-type="setMethod" maps-to="Size">
-			<d-param type="System.Drawing.Size"/>		
-		</d-property>
-		<d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
-		<d-property id="width" maps-type="setMethod" maps-to="Width">
-			<d-param type="System.Int32"/>	
-		</d-property>
-		<d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
-		<d-property id="height" maps-type="setMethod" maps-to="Height">
-			<d-param type="System.Int32"/>		
-		</d-property>
-		<d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
-		<d-property id="top" maps-type="setMethod" maps-to="Top">
-			<d-param type="System.Int32"/>
-		</d-property>
-		<d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
-		<d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
-			<d-param type="System.Int32"/>
-		</d-property>
-		<d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
-		<d-property id="left" maps-type="setMethod" maps-to="Left">
-			<d-param type="System.Int32"/>
-		</d-property>
-		<d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
-		<d-property id="right" maps-type="setMethod" maps-to="Right">
-			<d-param type="System.Int32"/>
-		</d-property>
-    <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
-		<d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
-			<d-param type="System.Boolean"/>						
-		</d-property>
-    <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
-		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
-			<d-param type="System.Boolean"/>						
-		</d-property>
-		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
-			<d-param type="System.Drawing.Color"/>
-		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
-			<d-param type="System.Drawing.Color"/>
-		</d-property>
-		<!-- events -->
-		<d-property id="switch" maps-type="event" maps-to="SelectedIndexChanged">
-			<d-param type="System.EventHandler"/>
-		</d-property>
+     <d-property id="label" maps-type="getMethod" maps-to="Text" return-type="System.String"/>     
+     <d-property id="label" maps-type="setMethod" maps-to="Text">
+       <d-param type="System.String"/>
+     </d-property>
+     <d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
+     <d-property id="position" maps-type="setMethod" maps-to="Location">
+       <d-param type="System.Drawing.Point"/>
+     </d-property>
+     <d-property id="size" return-type="System.Drawing.Size" maps-type="getMethod" maps-to="Size"/>
+     <d-property id="size" maps-type="setMethod" maps-to="Size">
+       <d-param type="System.Drawing.Size"/>		
+     </d-property>
+     <d-property id="width" return-type="System.Int32" maps-type="getMethod" maps-to="Width"/>
+     <d-property id="width" maps-type="setMethod" maps-to="Width">
+       <d-param type="System.Int32"/>	
+     </d-property>
+     <d-property id="height" return-type="System.Int32" maps-type="getMethod" maps-to="Height"/>
+     <d-property id="height" maps-type="setMethod" maps-to="Height">
+       <d-param type="System.Int32"/>		
+     </d-property>
+     <d-property id="top" return-type="System.Int32" maps-type="getMethod" maps-to="Top"/>
+     <d-property id="top" maps-type="setMethod" maps-to="Top">
+       <d-param type="System.Int32"/>
+     </d-property>
+     <d-property id="bottom" return-type="System.Int32" maps-type="getMethod" maps-to="Bottom"/>
+     <d-property id="bottom" maps-type="setMethod" maps-to="Bottom">
+       <d-param type="System.Int32"/>
+     </d-property>
+     <d-property id="left" return-type="System.Int32" maps-type="getMethod" maps-to="Left"/>
+     <d-property id="left" maps-type="setMethod" maps-to="Left">
+       <d-param type="System.Int32"/>
+     </d-property>
+     <d-property id="right" return-type="System.Int32" maps-type="getMethod" maps-to="Right"/>
+     <d-property id="right" maps-type="setMethod" maps-to="Right">
+       <d-param type="System.Int32"/>
+     </d-property>
+     <d-property id="enabled" return-type="System.Boolean" maps-type="getMethod" maps-to="Enabled"/>
+     <d-property id="enabled" maps-type="setMethod" maps-to="Enabled">
+       <d-param type="System.Boolean"/>						
+     </d-property>
+     <d-property id="visible" return-type="System.Boolean" maps-type="getMethod" maps-to="Visible"/>
+     <d-property id="visible" maps-type="setMethod" maps-to="Visible">
+       <d-param type="System.Boolean"/>						
+     </d-property>
+     <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
+     <d-property id="background" maps-type="setMethod" maps-to="BackColor">
+       <d-param type="System.Drawing.Color"/>
+     </d-property>
+     <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+     <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+       <d-param type="System.Drawing.Color"/>
+     </d-property>
+     <!-- events -->
+     <d-property id="switch" maps-type="event" maps-to="SelectedIndexChanged">
+       <d-param type="System.EventHandler"/>
+     </d-property>
 	</d-class>
 
 	<d-class id="TabPage" used-in-tag="part" maps-type="class" maps-to="System.Windows.Forms.TabPage">
-		<d-property id="label" maps-type="setMethod" maps-to="Text">
+    <d-property id="label" maps-type="getMethod" maps-to="Text" return-type="System.String"/>
+    <d-property id="label" maps-type="setMethod" maps-to="Text">
 			<d-param type="System.String"/>
 		</d-property>
 		<d-property id="position" return-type="System.Drawing.Point" maps-type="getMethod" maps-to="Location"/>
@@ -1087,10 +1205,12 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 		<d-property id="visible" maps-type="setMethod" maps-to="Visible">
 			<d-param type="System.Boolean"/>						
 		</d-property>
+    <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
 		<d-property id="background" maps-type="setMethod" maps-to="BackColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
-		<d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
+    <d-property id="foreground" maps-type="getMethod" maps-to="ForeColor" return-type="System.Drawing.Color"/>
+    <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
 			<d-param type="System.Drawing.Color"/>
 		</d-property>
 	</d-class>
@@ -1100,6 +1220,7 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 	<d-class id="ButtonPressed" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnClick"/>
 	<d-class id="ButtonLeft" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnLeave"/>
 	<d-class id="ButtonEntered" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnEnter"/>
+  <d-class id="TextChanged" used-in-tag="event" maps-type="delegate" maps-to="System.Windows.Forms.Control.OnTextChanged"/>
 	<d-class id="EntrySelect" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
 	<d-class id="TabSwitched" used-in-tag="event" maps-type="delegate" maps-to="System.EventHandler"/>
  </presentation>

@@ -151,6 +151,7 @@
     <Compile Include="Uiml\UnionTemplateResolver.cs" />
     <Compile Include="Uiml\Utils\Reflection\AssemblyLoader.cs" />
     <Compile Include="Uiml\Utils\Reflection\AssemblyNotFoundException.cs" />
+    <Compile Include="Uiml\Utils\Reflection\TypeLoader.cs" />
     <Compile Include="Uiml\Utils\TodoAttribute.cs" />
     <Compile Include="Uiml\Utils\Location.cs" />
     <Compile Include="Uiml\VocabularyUnavailableException.cs" />
