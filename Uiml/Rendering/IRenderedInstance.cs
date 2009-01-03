@@ -28,10 +28,13 @@ namespace Uiml.Rendering
 	public interface IRenderedInstance
 	{
 		void ShowIt();
+        void CloseIt();
 
         event EventHandler CloseWindow;
         void OnCloseWindow(object sender, EventArgs e);
         event EventHandler Init;
         void OnInit(object sender, EventArgs e);
+        event EventHandler ActivateWindow;
+        void OnActivateWindow(object sender, EventArgs e);
 	}
 }

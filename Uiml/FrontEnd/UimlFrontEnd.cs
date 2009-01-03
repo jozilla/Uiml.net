@@ -52,6 +52,7 @@ namespace Uiml.FrontEnd{
         private string m_frontendLib;
 		
         private ArrayList aList = new ArrayList();
+        private IRenderedInstance currentlyFocusedUI = null;
         private Dictionary<string, IRenderedInstance> renderedUIs = new Dictionary<string, IRenderedInstance>();
 
 		protected static IRenderer renderer;
@@ -152,6 +153,9 @@ namespace Uiml.FrontEnd{
             // transform file to key format
             string key = FileToDictionaryKey(file);
 
+            // the UI that called this method is the currently active one: save it for later
+            IRenderedInstance caller = currentlyFocusedUI;
+
             // make sure that existing files just get focused again, instead of re-rendering them!
             if (renderedUIs.ContainsKey(key))
             {
@@ -161,6 +165,10 @@ namespace Uiml.FrontEnd{
             {
                 Render(file);
             }
+
+            // replace the existing window
+            if (replace && caller != null)
+                caller.CloseIt();
         }
 
         private void Render(string file)
@@ -179,6 +187,8 @@ namespace Uiml.FrontEnd{
                 renderedUIs.Add(FileToDictionaryKey(file), instance);
                 // connect close event
                 instance.CloseWindow += new EventHandler(UimlDocument_Closed);
+                // connect activate event
+                instance.ActivateWindow += new EventHandler(UimlDocument_Activated);
                 instance.ShowIt();
 			}
 			catch (NoRendererAvailableException rue)
@@ -211,6 +221,18 @@ namespace Uiml.FrontEnd{
                 if (item.Value == sender)
                 {
                     renderedUIs.Remove(item.Key);
+                    return;
+                }
+            }
+        }
+
+        void UimlDocument_Activated(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<string, IRenderedInstance> item in renderedUIs)
+            {
+                if (item.Value == sender)
+                {
+                    currentlyFocusedUI = item.Value;
                     return;
                 }
             }

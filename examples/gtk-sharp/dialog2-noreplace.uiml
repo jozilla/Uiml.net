@@ -2,7 +2,7 @@
 <!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
 <uiml>
   <head>
-    <meta name="title" content="Dialog 2"/>
+    <meta name="title" content="Dialog 2 (no replace)"/>
   </head>
   <interface>
 		<structure>
@@ -24,8 +24,8 @@
                 </condition>
                 <action>
                     <call name="UimlDotNet.Show">
-                        <param id="file">uiml://dialog1.uiml</param>
-                        <param id="replace">true</param>
+                        <param id="file">uiml://dialog1-noreplace.uiml</param>
+                        <param id="replace">false</param>
                     </call>
                 </action>
             </rule>

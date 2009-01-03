@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
 <uiml>
+  <head>
+    <meta name="title" content="Dialog 2"/>
+  </head>  
 	<interface>
 		<structure>
             <part id="cont" class="Container">
@@ -21,6 +24,16 @@
             <property part-name="next" name="size">80,20</property>
 		</style>
         <behavior>
+          <rule>
+            <condition>
+              <event class="init"/>
+            </condition>
+            <action>
+              <call name="Popup.show">
+                <param>UIML UI loaded for the first time.</param>
+              </call>
+            </action>
+          </rule>          
             <rule>
                 <condition>
                     <event part-name="prev" class="ButtonPressed"/>

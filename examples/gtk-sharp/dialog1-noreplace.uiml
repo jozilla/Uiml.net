@@ -2,7 +2,7 @@
 <!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
 <uiml>
   <head>
-    <meta name="title" content="Dialog 2"/>
+    <meta name="title" content="Dialog 1 (no replace)"/>
   </head>
   <interface>
 		<structure>
@@ -13,19 +13,19 @@
 		</structure>
 		<style>
             <property part-name="prev" name="label">Previous</property>
-            <property part-name="prev" name="enabled">true</property>
+            <property part-name="prev" name="enabled">false</property>
             <property part-name="next" name="label">Next</property>
-            <property part-name="next" name="enabled">false</property>
+            <property part-name="next" name="enabled">true</property>
 		</style>
         <behavior>
             <rule>
                 <condition>
-                    <event part-name="prev" class="ButtonPressed"/>
+                    <event part-name="next" class="ButtonPressed"/>
                 </condition>
                 <action>
                     <call name="UimlDotNet.Show">
-                        <param id="file">uiml://dialog1.uiml</param>
-                        <param id="replace">true</param>
+                        <param id="file">uiml://dialog2-noreplace.uiml</param>
+                        <param id="replace">false</param>
                     </call>
                 </action>
             </rule>
@@ -35,4 +35,3 @@
 		<presentation base="gtk-sharp-1.0.uiml"/>
 	</peers>
 </uiml>
-

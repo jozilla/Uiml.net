@@ -43,6 +43,7 @@ namespace Uiml.Rendering.GTKsharp
             // events
             Destroyed +=new System.EventHandler(OnCloseWindow);
             Realized += new EventHandler(OnInit);
+            Mapped += new EventHandler(OnActivateWindow);
         }
 
 		public static new GLib.GType GType {
@@ -81,6 +82,11 @@ namespace Uiml.Rendering.GTKsharp
             }
 		}
 
+        public void CloseIt()
+        {
+            this.Destroy();
+        }
+
         #region CloseWindow event
         public event EventHandler CloseWindow;
         public void OnCloseWindow(object sender, EventArgs e)
@@ -96,6 +102,15 @@ namespace Uiml.Rendering.GTKsharp
         {
             if (Init != null)
                 Init(this, e);
+        }
+        #endregion
+
+        #region ActivateWindow event
+        public event EventHandler ActivateWindow;
+        public void OnActivateWindow(object sender, EventArgs e)
+        {
+            if (ActivateWindow != null)
+                ActivateWindow(this, e);
         }
         #endregion
 	}

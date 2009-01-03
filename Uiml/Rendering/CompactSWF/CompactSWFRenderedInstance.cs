@@ -44,6 +44,8 @@ namespace Uiml.Rendering.CompactSWF
             Closed += new EventHandler(OnCloseWindow);
             // init event
             Load += new EventHandler(OnInit);
+            // activated event
+            Activated += new EventHandler(OnActivateWindow);
 		}
 
 		public CompactSWFRenderedInstance(string title)
@@ -56,7 +58,8 @@ namespace Uiml.Rendering.CompactSWF
 			try
 			{
                 this.Activate();
-				Application.Run(this);
+                this.Show();
+                Application.Run(this);
 			}
             catch (InvalidOperationException e)
             {
@@ -76,6 +79,11 @@ namespace Uiml.Rendering.CompactSWF
                 Console.WriteLine(e.StackTrace);
             }
 		}
+
+        public void CloseIt()
+        {
+            this.Close();
+        }
 		
 		public void Add(Control c) 
 		{
@@ -109,6 +117,15 @@ namespace Uiml.Rendering.CompactSWF
         {
             if (Init != null)
                 Init(this, e);
+        }
+        #endregion
+
+        #region ActivateWindow event
+        public event EventHandler ActivateWindow;
+        public void OnActivateWindow(object sender, EventArgs e)
+        {
+            if (ActivateWindow != null)
+                ActivateWindow(this, e);
         }
         #endregion
 	}	

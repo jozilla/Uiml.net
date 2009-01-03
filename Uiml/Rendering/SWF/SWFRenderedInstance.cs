@@ -43,6 +43,8 @@ namespace Uiml.Rendering.SWF
             Closed += new EventHandler(OnCloseWindow);
             // init event
             Load += new EventHandler(OnInit);
+            // activated event
+            Activated += new EventHandler(OnActivateWindow);
         }
 
         public SWFRenderedInstance(string title)
@@ -58,7 +60,18 @@ namespace Uiml.Rendering.SWF
             try
             {
                 this.Activate();
-                Application.Run(this);
+                /* 
+                 * This previously was:
+                 * 
+                 * Application.Run(this);
+                 * 
+                 * However, this will not work well with multiple dialogs 
+                 * that replace each other (like in a wizard) since closing 
+                 * the main form kills all other forms as well. Therefore, 
+                 * we just use a parameterless call to Application.Run.
+                 */
+                this.Show();
+                Application.Run();
             }
             catch (InvalidOperationException e)
             {
@@ -78,6 +91,11 @@ namespace Uiml.Rendering.SWF
                 Console.WriteLine(e.StackTrace);
             }
 		}
+
+        public void CloseIt()
+        {
+            this.Close();
+        }
 
         public void AutoResize()
         {
@@ -125,6 +143,15 @@ namespace Uiml.Rendering.SWF
         {
             if (Init != null)
                 Init(this, e);
+        }
+        #endregion
+
+        #region ActivateWindow event
+        public event EventHandler ActivateWindow;
+        public void OnActivateWindow(object sender, EventArgs e)
+        {
+            if (ActivateWindow != null)
+                ActivateWindow(this, e);
         }
         #endregion
 	}	

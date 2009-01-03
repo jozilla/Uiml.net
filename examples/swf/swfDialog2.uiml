@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
 <uiml>
-	<interface>
+  <head>
+    <meta name="title" content="Dialog 2"/>
+  </head>
+  <interface>
 		<structure>
             <part id="cont" class="Container">
                 <part id="prev" class="Button"/>
