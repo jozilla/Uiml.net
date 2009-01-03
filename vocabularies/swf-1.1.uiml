@@ -1644,7 +1644,12 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
 			<d-param id="message" type="System.String"/>
 		</d-method>
 	</d-component>
-	<d-component id="Date" maps-to="System.DateTime">
+   <d-component id="Popup" maps-to="System.Windows.Forms.MessageBox">
+     <d-method id="show" returns-value="System.Windows.Forms.DialogResult" maps-to="Show">
+       <d-param type="System.String"/>
+     </d-method>
+   </d-component>
+   <d-component id="Date" maps-to="System.DateTime">
 		<d-method id="now"   returns-value="DateTime" maps-to="Now"/>
 		<d-method id="today" returns-value="DateTime" maps-to="Today"/>
 		<d-method id="compare" returns-value="int" maps-to="Compare">

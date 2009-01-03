@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- <!DOCTYPE uiml PUBLIC "-//Harmonia//DTD UIML 2.0 Draft//EN" "UIML3_0a.dtd"> -->
 <uiml>
 	<interface>
 		<structure>
@@ -25,6 +26,6 @@
 		</behavior>
 	</interface>
 	<peers>
-		<presentation base="cswf-1.0.uiml"/>
+		<presentation base="swf-1.1.uiml"/>
 	</peers>
 </uiml>

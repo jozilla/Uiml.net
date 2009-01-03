@@ -3,18 +3,19 @@
 	<interface>
 		<structure>
 		<part id="c_body" class="Container">			
-			<part id="b_hello" class="Button"/>
+			<part id="t_hello" class="Text"/>
 		</part>
 		</structure>
 		<style>
 			<property part-name="c_body" name="size">300,300</property>
-			<property part-name="b_hello" name="position">50,50</property>
-			<property part-name="b_hello" name="label">Hello</property>
+			<property part-name="t_hello" name="position">10,10</property>
+      <property part-name="t_hello" name="size">200,50</property>
+      <property part-name="t_hello" name="text">Hello there. Change me to see if it works!</property>
 		</style>
 		<behavior>
 			<rule>
 				<condition>
-					<event part-name="b_hello" class="ButtonPressed"/>
+					<event part-name="t_hello" class="TextChanged"/>
 				</condition>
 				<action>
 					<call name="Popup.show">

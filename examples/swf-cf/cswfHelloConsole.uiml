@@ -17,7 +17,7 @@
 					<event part-name="b_hello" class="ButtonPressed"/>
 				</condition>
 				<action>
-					<call name="Popup.show">
+					<call name="Console.println">
 						<param>Uiml says hello!</param>
 					</call>
 				</action>
