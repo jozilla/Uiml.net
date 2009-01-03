@@ -30,9 +30,12 @@ namespace Uiml.Rendering.CompactSWF
 	using System;
 	using System.Collections;
 	using System.Reflection;
-    
+
+    using System.IO;
+    using System.Net;
 	using System.Windows.Forms;
 	using System.Drawing;
+    using System.Drawing.Imaging;
 	using Uiml;
 	using Uiml.Rendering;
     using Uiml.Rendering.TypeDecoding;
@@ -47,6 +50,12 @@ namespace Uiml.Rendering.CompactSWF
         }
 
         [TypeDecoderMethod]
+        public static string DecodePointInverse(Point p)
+        {
+            return string.Format("{0},{1}", p.X, p.Y);
+        }
+
+        [TypeDecoderMethod]
         public static System.Drawing.Size DecodeSize(string val)
         {
             string[] coords = val.Split(new Char[] { ',' });
@@ -54,11 +63,79 @@ namespace Uiml.Rendering.CompactSWF
         }
 
         [TypeDecoderMethod]
-        public static System.Drawing.Image DecodeImage(string file)
+        public static string DecodeSizeInverse(Size s)
         {
-            // transform uiml:// style locations to regular file paths
-            file = Uiml.Utils.Location.Transform(file);
-            return new Bitmap((string) file);
+            return string.Format("{0},{1}", s.Width, s.Height);
+        }
+
+        [TypeDecoderMethod]
+        public static Image DecodeImage(string file)
+        {
+            try
+            {
+                if (file.StartsWith("http://"))
+                {
+                    // load image from the web
+                    HttpWebRequest Request = (HttpWebRequest)System.Net.WebRequest.Create(file);
+                    Request.AllowAutoRedirect = true;
+                    Request.Accept = "*/*";
+                    Request.AllowWriteStreamBuffering = true;
+                    HttpWebResponse resp = (HttpWebResponse)Request.GetResponse();
+                    Stream imgStream = resp.GetResponseStream();
+
+                    return new Bitmap(imgStream);
+                }
+
+                // transform uiml:// style locations to regular file paths
+                file = Uiml.Utils.Location.Transform(file);
+                return new Bitmap(file);
+            }
+            catch
+            {
+                // loading the image failed
+                Console.WriteLine("Could not load image from path '{0}'", file);
+                return null;
+            }
+        }
+
+        [TypeDecoderMethod]
+        public static Image DecodeImageFromBytes(byte[] bytes)
+        {
+            Image i;
+            using (MemoryStream ms = new MemoryStream(bytes, 0, bytes.Length))
+            {
+                ms.Write(bytes, 0, bytes.Length);
+                i = new Bitmap(ms);
+            }
+            return i;
+        }
+
+        [TypeDecoderMethod]
+        public static Bitmap DecodeBitmapFromBytes(byte[] bytes)
+        {
+            return (Bitmap)DecodeImageFromBytes(bytes);
+        }
+
+        [TypeDecoderMethod]
+        public static byte[] DecodeBytesFromImage(Image i)
+        {
+            Bitmap b = (Bitmap)i;
+            return DecodeBytesFromBitmap(b);
+        }
+
+
+        [TypeDecoderMethod]
+        public static byte[] DecodeBytesFromBitmap(Bitmap b)
+        {
+            byte[] bytes;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                b.Save(ms, ImageFormat.Bmp);
+                bytes = ms.ToArray();
+            }
+
+            return bytes;
         }
 
 		///<summary>
@@ -146,30 +223,10 @@ namespace Uiml.Rendering.CompactSWF
 		}
 
         [TypeDecoderMethod]
-		public static ScrollBars DecodeScrollBars(string value)
-		{
-			if(value == "Both")
-				return ScrollBars.Both;
-			else if(value == "Horizontal")
-				return ScrollBars.Horizontal;
-			else if(value == "Vertical")
-				return ScrollBars.Vertical;
-			else
-				return ScrollBars.None;
-		}
-
-        [TypeDecoderMethod]
-		public static View DecodeView(string value)
-		{
-			if(value == "LargeIcon")
-				return View.LargeIcon;
-			else if(value == "SmallIcon")
-				return View.SmallIcon;
-			else if(value == "List")
-				return View.List;
-			else
-				return View.Details;
-		}
+        public static string DecodeDateTimeInverse(DateTime dt)
+        {
+            return string.Format("{0}/{1}/{2}", dt.Month, dt.Day, dt.Year);
+        }
 
         [TypeDecoderMethod]
         public static PictureBoxSizeMode DecodePictureBoxSizeMode(string value)
@@ -185,19 +242,43 @@ namespace Uiml.Rendering.CompactSWF
                     return PictureBoxSizeMode.Normal;
             }
         }
-
+        
+        [TypeDecoderMethod]
         public static string DecodePictureBoxSizeModeInverse(PictureBoxSizeMode m)
         {
             return m.ToString();
         }
 
         [TypeDecoderMethod]
-		public static Orientation DecodeOrientation(string value)
+		public static ScrollBars DecodeScrollBars(string value)
 		{
-			if(value == "Vertical")
-				return Orientation.Vertical;
+			if(value == "Both")
+				return ScrollBars.Both;
+			else if(value == "Horizontal")
+				return ScrollBars.Horizontal;
+			else if(value == "Vertical")
+				return ScrollBars.Vertical;
 			else
-				return Orientation.Horizontal;
+				return ScrollBars.None;
+		}
+
+        [TypeDecoderMethod]
+        public static string DecodeScrollBarsInverse(ScrollBars s)
+        {
+            return s.ToString();
+        }
+
+        [TypeDecoderMethod]
+		public static View DecodeView(string value)
+		{
+			if(value == "LargeIcon")
+				return View.LargeIcon;
+			else if(value == "SmallIcon")
+				return View.SmallIcon;
+			else if(value == "List")
+				return View.List;
+			else
+				return View.Details;
 		}
 
         [TypeDecoderMethod]
@@ -218,6 +299,29 @@ namespace Uiml.Rendering.CompactSWF
 			return top;
 		}
 
+        [TypeDecoderMethod]
+        public static string DecodeListViewItemInverse(ListViewItem item)
+        {
+            string str = string.Empty;
+
+            if (item.SubItems.Count > 0)
+            {
+                int i = 0;
+                foreach (ListViewItem.ListViewSubItem child in item.SubItems)
+                {
+                    str += child.Text;
+
+                    if (i != item.SubItems.Count - 1)
+                        str += ";";
+
+                    i++;
+                }
+            }
+            else
+                str = item.Text;
+
+            return str;
+        }
         // Depends on Constant <=> string[] decoder method
         [TypeDecoderMethod(new Type[] { typeof(Constant), typeof(string[]) })]
 		public static ListViewItem[] DecodeListViewItemArray(Constant c)
@@ -285,6 +389,11 @@ namespace Uiml.Rendering.CompactSWF
 			return System.Drawing.Color.FromArgb(Int32.Parse(coords[0]), Int32.Parse(coords[1]), Int32.Parse(coords[2]));
 		}
 
+        [TypeDecoderMethod]
+        public static string DecodeColorInverse(Color col)
+        {
+            return string.Format("{0},{1},{2}", col.R, col.G, col.B);
+        }
 
 		///<summary>
 		///Decodes a color description into a System.Drawing.Color constant color
