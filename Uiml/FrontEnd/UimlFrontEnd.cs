@@ -166,8 +166,8 @@ namespace Uiml.FrontEnd{
                 Render(file);
             }
 
-            // replace the existing window
-            if (replace && caller != null)
+            // replace the existing window (of course never close the current window)
+            if (replace && caller != renderedUIs[key] && caller != null)
                 caller.CloseIt();
         }
 
