@@ -251,7 +251,17 @@ namespace Uiml.Rendering.TypeDecoding
 		/// </summary>
 		protected object ConvertPrimitive(Type t, System.Object oValue)
 		{
-			string value = (string)oValue;
+            string value;
+
+            try
+            {
+                value = (string)oValue; // FIXME: bug
+            }
+            catch (InvalidCastException ice)
+            {
+                value = oValue.ToString();
+            }
+
 			if(oValue is string)
 				value = (string)oValue;
 			else if(t.FullName == "System.String")
