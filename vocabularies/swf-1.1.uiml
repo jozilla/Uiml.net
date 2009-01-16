@@ -195,6 +195,10 @@ Uiml.net: a .Net Uiml renderer (http://research.edm.uhasselt.be/kris/projects/ui
     <d-property id="background" maps-type="setMethod" maps-to="BackColor">
       <d-param type="System.Drawing.Color"/>
     </d-property>
+	<d-property id="backgroundImage" maps-type="setMethod" maps-to="BackgroundImage">
+      <d-param type="System.Drawing.Bitmap"/>
+    </d-property>
+	<d-property id="backgroundImage" maps-type="getMethod" maps-to="BackgroundImage" return-type="System.Drawing.Bitmap"/>
     <d-property id="background" maps-type="getMethod" maps-to="BackColor" return-type="System.Drawing.Color"/>
     <d-property id="foreground" maps-type="setMethod" maps-to="ForeColor">
       <d-param type="System.Drawing.Color"/>
