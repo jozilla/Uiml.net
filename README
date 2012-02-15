@@ -1,13 +1,35 @@
 Uiml.net is a Uiml renderer for the .Net framework.  
 
-It has support for the Gtk#, system.Windows.Forms and Wx.NET widget
-sets.  It is still under heavy development, so building the code can
-be challinging but it should work...
+Copyright (C) 2004-2012 Kris Luyten (kris.luyten@uhasselt.be)
+                        Expertise Centre for Digital Media 
+                        (http://www.uhasselt.be/edm)
+                        Hasselt University
+
+HISTORY:
+Prof. dr. Kris Luyten started the project in 2003. Uiml.net is written
+in C# and can render a UIML description using different widget sets
+and platforms. Fully supported toolkits include System.Windows.Forms,
+System.Windows.Forms on the Compact.NET framework and Gtk#. We used to
+have support for Wx.Net, but that backend is now deprecated. Jo
+Vermeulen and Jan Meskens also significantly contributed to the code
+both during their studies and while working at Hasselt University. 
+
+PEOPLE:
+Here is a list of key people that have contributed to Uiml.net: 
+* Kris Luyten
+* Jo Vermeulen 
+* Jan Meskens 
+* Kristof Thys 
+* Ingo Berben       
+* Rob Van Roey      
+* Neal Robben       
+* Tijl Lathouwers   
 
 
 HOW TO BUILD THE CODE:
-On Linux with mono: "make" in Uiml directory.
-On MS Windows: mail me for the MS Developer Studio project files
+On Linux with mono: run "make" in Uiml directory.
+On MS Windows: use the Microsoft Visual Studio project files
+
 
 HOW TO RUN:
 uiml.net.exe will start a simple file open dialog
@@ -19,11 +41,10 @@ link the user interface with mylib1,mylib2,...
 
 uiml.net.exe -help for a full explanation
 
-
-You can find uiml examples on
-http://research.edm.uhasselt.be/kris/projects/uiml.net/examples/
+You can find UIML examples in the examples directory.
 
 
-For more information about the Cassowary.net constraint solver, see
-the Cassowary.net.README file.
+DEPENDENCIES:
+The layout backend requires the Cassowary.net constraint solver by Jo
+Vermeulen.
 
