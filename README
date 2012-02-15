@@ -10,20 +10,19 @@ Prof. dr. Kris Luyten started the project in 2003. Uiml.net is written
 in C# and can render a UIML description using different widget sets
 and platforms. Fully supported toolkits include System.Windows.Forms,
 System.Windows.Forms on the Compact.NET framework and Gtk#. We used to
-have support for Wx.Net, but that backend is now deprecated. Jo
-Vermeulen and Jan Meskens also significantly contributed to the code
-both during their studies and while working at Hasselt University. 
+have support for Wx.Net, but that backend is now deprecated. 
+Jo Vermeulen and Jan Meskens also significantly contributed to the
+code both during their studies and while working at Hasselt
+University. 
 
 PEOPLE:
-Here is a list of key people that have contributed to Uiml.net: 
+Here is a list of people that have made significant contributions to
+Uiml.net: 
 * Kris Luyten
 * Jo Vermeulen 
 * Jan Meskens 
 * Kristof Thys 
-* Ingo Berben       
-* Rob Van Roey      
-* Neal Robben       
-* Tijl Lathouwers   
+* Ingo Berben
 
 
 HOW TO BUILD THE CODE:
